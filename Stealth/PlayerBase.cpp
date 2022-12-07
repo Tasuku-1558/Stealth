@@ -2,7 +2,8 @@
 
 
 const float  PlayerBase::SPEED	  = 400.0f;						//移動速度
-const VECTOR PlayerBase::POSITION = VGet(0.0f, 200.0f, 150.0f);	//モデルの位置
+const VECTOR PlayerBase::POSITION = { 0.0f, 0.0f, 0.0f };		//モデルの位置
+const VECTOR PlayerBase::DIR	  = { 0.0f,0.0f,1.0f };			//モデルの向き
 
 PlayerBase::PlayerBase()
 	: inputDirection()

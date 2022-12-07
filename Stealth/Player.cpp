@@ -4,14 +4,14 @@
 
 using namespace Math3d;
 
-const VECTOR Player::RIGHT_ARM_POSITION = { -150.0f, 200.0f, -5.0f };
+const VECTOR Player::RIGHT_ARM_POSITION = { 150.0f, 0.0f, 110.0f };
 
 //コンストラクタ
 Player::Player() : PlayerBase()
 	, rightArmHandle(0)
 	, rightArmPosition()
 {
-	//処理なし
+	playerState = PlayerState::Nomal;
 }
 
 //デストラクタ
@@ -60,6 +60,8 @@ void Player::Activate()
 {
 	position = POSITION;
 	rightArmPosition = RIGHT_ARM_POSITION;
+
+	dir = { 0.0f,0.0f,1.0f };
 }
 
 //更新処理
@@ -84,23 +86,23 @@ void Player::Move(float deltaTime)
 	//上下
 	if (CheckHitKey(KEY_INPUT_UP))
 	{
-		inputDirection.z -= 1.0f;
+		inputDirection.z += 1.0f;
 		inputFlag = true;
 	}
 	else if (CheckHitKey(KEY_INPUT_DOWN))
 	{
-		inputDirection.z += 1.0f;
+		inputDirection.z -= 1.0f;
 		inputFlag = true;
 	}
 	//左右
 	else if (CheckHitKey(KEY_INPUT_RIGHT))
 	{
-		inputDirection.x -= 1.0f;
+		inputDirection.x += 1.0f;
 		inputFlag = true;
 	}
 	else if (CheckHitKey(KEY_INPUT_LEFT))
 	{
-		inputDirection.x += 1.0f;
+		inputDirection.x -= 1.0f;
 		inputFlag = true;
 	}
 
@@ -110,16 +112,43 @@ void Player::Move(float deltaTime)
 		//十字キーの入力方向を正規化
 		inputDirection = VNorm(inputDirection);
 
+		//十字キーの入力方向をキャラの向きとする
+		dir = inputDirection;
+
 		//十字キーの移動方向に移動
 		position += inputDirection * SPEED * deltaTime;
 
 		rightArmPosition += inputDirection * SPEED * deltaTime;
+
+	}
+
+	//z軸が逆を向いているのでdirを180度回転させる
+	MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
+	VECTOR negativeVec = VTransform(dir, rotYMat);
+
+	//モデルに回転をセット dirを向く
+	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
+	MV1SetRotationZYAxis(rightArmHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
+	
+}
+
+void Player::pUpdate()
+{
+	switch (playerState)
+	{
+	case PlayerState::Nomal:
+		break;
+
+	case PlayerState::Damage:
+		break;
 	}
 }
 
 //描画処理
 void Player::Draw()
 {
+	pUpdate();
+
 	MV1DrawModel(modelHandle);
 
 	MV1DrawModel(rightArmHandle);

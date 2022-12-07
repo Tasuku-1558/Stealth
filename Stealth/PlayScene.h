@@ -3,7 +3,9 @@
 #include "SceneBase.h"
 
 class Player;
+class Enemy;
 class Camera;
+class Light;
 
 //プレイシーンクラス
 class PlayScene final : public SceneBase
@@ -29,11 +31,14 @@ private:
 	PlayScene(const PlayScene&);		//コピーコンストラクタ
 
 	Player* player;
+	Enemy* enemy;
 	Camera* camera;
+	Light* light;
 
 	void UpdateStart(float deltaTime);				//ゲーム開始前
 	void UpdateGame(float deltaTime);				//ゲーム中
 	void (PlayScene::* pUpdate)(float deltaTime);
 
 	State state;		//ゲーム状態
+	int font;
 };

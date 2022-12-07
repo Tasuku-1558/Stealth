@@ -2,9 +2,10 @@
 #include "DxLib.h"
 
 
-const string ModelManager::MODEL_FOLDER_PATH="data/model/";     //modelフォルダまでのパス
-const string ModelManager::PLAYER_BODY_PATH = "body.mv1";       //player_bodyモデルファイルのパス
-const string ModelManager::PLAYER_ARM_PATH = "arm.mv1";         //player_armモデルファイルのパス
+const string ModelManager::MODEL_FOLDER_PATH ="data/model/";      //modelフォルダまでのパス
+const string ModelManager::PLAYER_BODY_PATH  = "body.mv1";        //player_bodyモデルファイルのパス
+const string ModelManager::PLAYER_ARM_PATH   = "arm.mv1";         //player_armモデルファイルのパス
+const string ModelManager::ENEMY_BODY_PATH   = "enemy_body.mv1";  //enemy_bodyモデルファイルのパス
 
 ModelManager::ModelManager()
     : modelHandle()
@@ -31,6 +32,9 @@ void ModelManager::LoadAllModel()
 
     FailePath = MODEL_FOLDER_PATH + PLAYER_ARM_PATH;
     modelHandle[PLAYER_ARM] = MV1LoadModel(FailePath.c_str());
+
+    FailePath = MODEL_FOLDER_PATH + ENEMY_BODY_PATH;
+    modelHandle[ENEMY_BODY] = MV1LoadModel(FailePath.c_str());
 
 
     //読み込み失敗ならエラー

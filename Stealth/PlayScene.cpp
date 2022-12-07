@@ -3,14 +3,19 @@
 
 #include "Common.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Camera.h"
+#include "Light.h"
 
 PlayScene::PlayScene()
 		: SceneBase()
 		, state()
 		, player(nullptr)
+		, enemy(nullptr)
 		, camera(nullptr)
+		, light(nullptr)
 		, pUpdate(nullptr)
+		, font(0)
 {
 	//処理なし
 }
@@ -26,24 +31,44 @@ void PlayScene::Initialize()
 	camera = new Camera();
 	camera->Initialize();
 
+	//ライトクラス
+	light = new Light();
+	light->Initialize();
+
 	//プレイヤークラス
 	player = new Player();
 	player->Initialize();
+
+	//エネミークラス
+	enemy = new Enemy();
+	enemy->Initialize();
 }
 
 void PlayScene::Finalize()
 {
 	SafeDelete(camera);
 
+	SafeDelete(light);
+
 	SafeDelete(player);
+
+	SafeDelete(enemy);
+
+	//作成したフォントデータの削除
+	DeleteFontToHandle(font);
 }
 
 void PlayScene::Activate()
 {
 	state = START;
+
+	font = CreateFontToHandle("Oranienbaum", 50, 1);
+
 	pUpdate = &PlayScene::UpdateStart;
 
 	player->Activate();
+
+	enemy->Activate();
 }
 
 void PlayScene::Update(float deltaTime)
@@ -65,6 +90,8 @@ void PlayScene::UpdateGame(float deltaTime)
 	camera->Update();
 
 	player->Update(deltaTime);
+
+	enemy->Update(deltaTime);
 	
 }
 
@@ -73,5 +100,10 @@ void PlayScene::Draw()
 	//プレイヤー描画
 	player->Draw();
 
-	camera->Draw();
+	//エネミー描画
+	enemy->Draw();
+
+	//デバック用
+	DrawFormatStringToHandle(100, 50, GetColor(255, 0, 0), font, "X : %d", player->GetX());
+	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 }

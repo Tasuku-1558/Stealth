@@ -4,6 +4,12 @@
 #include "PlayerBase.h"
 #include "Math3D.h"
 
+//プレイヤー状態
+enum class PlayerState
+{
+	Nomal,
+	Damage,
+};
 
 // プレイヤークラス
 class Player final : public PlayerBase
@@ -18,12 +24,21 @@ public:
 	void Update(float deltaTime);
 	void Draw();
 
+	int GetX() { return position.x; }
+	int GetZ() { return position.z; }
+
+	enum class PlayerState playerState;
+
 private:
 	Player(const Player&);			//コピーコンストラクタ
 
 	void Move(float deltaTime);		//移動処理
+	void pUpdate();
+
 
 	int rightArmHandle;
 	VECTOR rightArmPosition;
+
+
 	static const VECTOR RIGHT_ARM_POSITION;
 };

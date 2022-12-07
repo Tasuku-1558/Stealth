@@ -7,7 +7,7 @@
 //--------------------------------------------------
 const bool IS_WINDOW_MODE = true;					//ウィンドウモードにするか
 
-const int  SCREEN_WIDTH = 1920;					    //ウィンドウの幅
+const int  SCREEN_WIDTH  = 1920;					//ウィンドウの幅
 const int  SCREEN_HEIGHT = 1080;					//ウィンドウの高さ
 
 const VECTOR ZERO_VECTOR = { 0.0f, 0.0f, 0.0f };	//ゼロベクトル
