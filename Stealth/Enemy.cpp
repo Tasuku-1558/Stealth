@@ -1,6 +1,8 @@
 #include "Enemy.h"
 #include "ModelManager.h"
+#include "Field.h"
 #include "Common.h"
+#include <math.h>
 
 using namespace Math3d;
 
@@ -42,19 +44,24 @@ void Enemy::Activate()
 	dir = DIR;
 }
 
-void Enemy::Update(float deltaTime)
+void Enemy::Update(float deltaTime,Field* field)
 {
-	GoBuck(deltaTime);
+	GoBuck(deltaTime,field);
 
 	//エネミーの位置をセット
 	MV1SetPosition(modelHandle, position);
 }
 
-void Enemy::GoBuck(float deltaTime)
+void Enemy::GoBuck(float deltaTime,Field* field)
 {
-	position += dir * SPEED * deltaTime;
+	dir = field->GetPosition() - position;
 
-	if (position.z < -300)
+	dir = VNorm(dir);
+
+	position += dir * SPEED * deltaTime;
+	
+
+	/*if (position.z < -300)
 	{
 		dir = VGet(-1.0f, 0.0f, 0.0f);
 
@@ -64,13 +71,19 @@ void Enemy::GoBuck(float deltaTime)
 
 			if (position.z < 400)
 			{
-				dir = VGet(.0f, 0.0f, 1.0f);
-
-				
+				dir = VGet(0.0f, 0.0f, 1.0f);
 			}
 		}
-	}
+	}*/
 
+
+	//z軸が逆を向いているのでdirを180度回転させる
+	MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
+	VECTOR negativeVec = VTransform(dir, rotYMat);
+
+	//モデルに回転をセット dirを向く
+	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
+	
 }
 
 void Enemy::eUpdate()

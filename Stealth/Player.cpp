@@ -62,6 +62,8 @@ void Player::Activate()
 	rightArmPosition = RIGHT_ARM_POSITION;
 
 	dir = { 0.0f,0.0f,1.0f };
+
+	hp = HP;
 }
 
 //XVˆ—

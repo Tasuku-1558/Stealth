@@ -2,6 +2,8 @@
 
 #include "DxLib.h"
 
+class Player;
+
 class Camera final
 {
 public:
@@ -9,7 +11,7 @@ public:
 	~Camera();	//デストラクタ
 
 	void Initialize();
-	void Update();
+	void Update(Player* player);
 	
 private:
 

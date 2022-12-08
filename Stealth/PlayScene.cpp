@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "Camera.h"
 #include "Light.h"
+#include "Field.h"
 
 PlayScene::PlayScene()
 		: SceneBase()
@@ -15,6 +16,7 @@ PlayScene::PlayScene()
 		, camera(nullptr)
 		, light(nullptr)
 		, pUpdate(nullptr)
+		, field(nullptr)
 		, font(0)
 {
 	//処理なし
@@ -42,6 +44,10 @@ void PlayScene::Initialize()
 	//エネミークラス
 	enemy = new Enemy();
 	enemy->Initialize();
+
+	//デバック用
+	field = new Field();
+	field->Initialize();
 }
 
 void PlayScene::Finalize()
@@ -56,6 +62,9 @@ void PlayScene::Finalize()
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
+
+	//デバック用
+	SafeDelete(field);
 }
 
 void PlayScene::Activate()
@@ -69,6 +78,9 @@ void PlayScene::Activate()
 	player->Activate();
 
 	enemy->Activate();
+
+	//デバック用
+	field->Activate();
 }
 
 void PlayScene::Update(float deltaTime)
@@ -87,12 +99,14 @@ void PlayScene::UpdateStart(float deltaTime)
 
 void PlayScene::UpdateGame(float deltaTime)
 {
-	camera->Update();
+	//camera->Update(player);
 
 	player->Update(deltaTime);
 
-	enemy->Update(deltaTime);
+	enemy->Update(deltaTime,field);
 	
+	//デバック用
+	field->Update();
 }
 
 void PlayScene::Draw()
@@ -106,4 +120,7 @@ void PlayScene::Draw()
 	//デバック用
 	DrawFormatStringToHandle(100, 50, GetColor(255, 0, 0), font, "X : %d", player->GetX());
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
+	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "HP : %d", player->GetHP());
+
+	field->Draw();
 }

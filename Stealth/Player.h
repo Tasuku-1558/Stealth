@@ -26,6 +26,7 @@ public:
 
 	int GetX() { return position.x; }
 	int GetZ() { return position.z; }
+	int GetHP() { return hp; }
 
 	enum class PlayerState playerState;
 
