@@ -24,9 +24,17 @@ public:
 	void Update(float deltaTime);
 	void Draw();
 
+	VECTOR GetUp() { return UP; }
+	VECTOR GetDown() { return DOWN; }
+	VECTOR GetLeft() { return LEFT; }
+	VECTOR GetRight() { return RIGHT; }
+
+	//デバック用
 	int GetX() { return position.x; }
 	int GetZ() { return position.z; }
 	int GetHP() { return hp; }
+	int GetSpeed() { return SPEED; }
+
 
 	enum class PlayerState playerState;
 

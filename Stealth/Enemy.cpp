@@ -1,6 +1,5 @@
 #include "Enemy.h"
 #include "ModelManager.h"
-#include "Field.h"
 #include "Common.h"
 #include <math.h>
 
@@ -9,7 +8,7 @@ using namespace Math3d;
 //コンストラクタ
 Enemy::Enemy() : EnemyBase()
 {
-	enemyState = EnemyState::Nomal;
+	enemyState = EnemyState::Crawl;
 }
 
 //デストラクタ
@@ -44,19 +43,16 @@ void Enemy::Activate()
 	dir = DIR;
 }
 
-void Enemy::Update(float deltaTime,Field* field)
+void Enemy::Update(float deltaTime)
 {
-	GoBuck(deltaTime,field);
+	GoBuck(deltaTime);
 
 	//エネミーの位置をセット
 	MV1SetPosition(modelHandle, position);
 }
 
-void Enemy::GoBuck(float deltaTime,Field* field)
+void Enemy::GoBuck(float deltaTime)
 {
-	dir = field->GetPosition() - position;
-
-	dir = VNorm(dir);
 
 	position += dir * SPEED * deltaTime;
 	
@@ -90,10 +86,10 @@ void Enemy::eUpdate()
 {
 	switch (enemyState)
 	{
-	case EnemyState::Nomal:
+	case EnemyState::Crawl:
 		break;
 
-	case EnemyState::Attack:
+	case EnemyState::Tracking:
 		break;
 
 	}

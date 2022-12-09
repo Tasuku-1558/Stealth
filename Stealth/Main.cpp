@@ -51,7 +51,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		deltaTime = (nowTime - prevTime) / 1000.0f;
 
 		prevTime = nowTime;
-		
+
 		playScene->Update(deltaTime);
 
 		// 画面を初期化する
@@ -60,31 +60,33 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		playScene->Draw();
 
 		//デバック用
-		int i;
-		VECTOR Pos1;
-		VECTOR Pos2;
-
-		SetUseZBufferFlag(TRUE);
-
-		Pos1 = VGet(-LINE_AREA_SIZE / 2.0f, 0.0f, -LINE_AREA_SIZE / 2.0f);
-		Pos2 = VGet(-LINE_AREA_SIZE / 2.0f, 0.0f, LINE_AREA_SIZE / 2.0f);
-		for (i = 0; i <= LINE_NUM; i++)
 		{
-			DrawLine3D(Pos1, Pos2, GetColor(255, 255, 255));
-			Pos1.x += LINE_AREA_SIZE / LINE_NUM;
-			Pos2.x += LINE_AREA_SIZE / LINE_NUM;
-		}
+			int i;
+			VECTOR Pos1;
+			VECTOR Pos2;
 
-		Pos1 = VGet(-LINE_AREA_SIZE / 2.0f, 0.0f, -LINE_AREA_SIZE / 2.0f);
-		Pos2 = VGet(LINE_AREA_SIZE / 2.0f, 0.0f, -LINE_AREA_SIZE / 2.0f);
-		for (i = 0; i < LINE_NUM; i++)
-		{
-			DrawLine3D(Pos1, Pos2, GetColor(255, 255, 255));
-			Pos1.z += LINE_AREA_SIZE / LINE_NUM;
-			Pos2.z += LINE_AREA_SIZE / LINE_NUM;
-		}
+			SetUseZBufferFlag(TRUE);
 
-		SetUseZBufferFlag(FALSE);
+			Pos1 = VGet(-LINE_AREA_SIZE / 2.0f, 0.0f, -LINE_AREA_SIZE / 2.0f);
+			Pos2 = VGet(-LINE_AREA_SIZE / 2.0f, 0.0f, LINE_AREA_SIZE / 2.0f);
+			for (i = 0; i <= LINE_NUM; i++)
+			{
+				DrawLine3D(Pos1, Pos2, GetColor(255, 255, 255));
+				Pos1.x += LINE_AREA_SIZE / LINE_NUM;
+				Pos2.x += LINE_AREA_SIZE / LINE_NUM;
+			}
+
+			Pos1 = VGet(-LINE_AREA_SIZE / 2.0f, 0.0f, -LINE_AREA_SIZE / 2.0f);
+			Pos2 = VGet(LINE_AREA_SIZE / 2.0f, 0.0f, -LINE_AREA_SIZE / 2.0f);
+			for (i = 0; i < LINE_NUM; i++)
+			{
+				DrawLine3D(Pos1, Pos2, GetColor(255, 255, 255));
+				Pos1.z += LINE_AREA_SIZE / LINE_NUM;
+				Pos2.z += LINE_AREA_SIZE / LINE_NUM;
+			}
+
+			SetUseZBufferFlag(FALSE);
+		}
 
 		// 裏画面の内容を表画面に反映させる
 		ScreenFlip();

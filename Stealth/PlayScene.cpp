@@ -99,11 +99,11 @@ void PlayScene::UpdateStart(float deltaTime)
 
 void PlayScene::UpdateGame(float deltaTime)
 {
-	//camera->Update(player);
+	camera->Update(player);
 
 	player->Update(deltaTime);
 
-	enemy->Update(deltaTime,field);
+	enemy->Update(deltaTime);
 	
 	//デバック用
 	field->Update();
@@ -121,6 +121,7 @@ void PlayScene::Draw()
 	DrawFormatStringToHandle(100, 50, GetColor(255, 0, 0), font, "X : %d", player->GetX());
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "HP : %d", player->GetHP());
+	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 
 	field->Draw();
 }

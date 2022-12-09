@@ -88,23 +88,23 @@ void Player::Move(float deltaTime)
 	//è„â∫
 	if (CheckHitKey(KEY_INPUT_UP))
 	{
-		inputDirection.z += 1.0f;
+		inputDirection += UP;
 		inputFlag = true;
 	}
 	else if (CheckHitKey(KEY_INPUT_DOWN))
 	{
-		inputDirection.z -= 1.0f;
+		inputDirection += DOWN;
 		inputFlag = true;
 	}
 	//ç∂âE
 	else if (CheckHitKey(KEY_INPUT_RIGHT))
 	{
-		inputDirection.x += 1.0f;
+		inputDirection += RIGHT;
 		inputFlag = true;
 	}
 	else if (CheckHitKey(KEY_INPUT_LEFT))
 	{
-		inputDirection.x -= 1.0f;
+		inputDirection += LEFT;
 		inputFlag = true;
 	}
 

@@ -11,9 +11,14 @@ public:
 	~Camera();	//デストラクタ
 
 	void Initialize();
+	void Activate();
 	void Update(Player* player);
 	
 private:
+
+	VECTOR position;
+	const float radius;
+	float yaw;
 
 	//静的定数
 	static const float  NEAR_DISTANCE;		//カメラに映る手前の範囲
