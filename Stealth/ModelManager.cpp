@@ -6,6 +6,7 @@ const string ModelManager::MODEL_FOLDER_PATH ="data/model/";      //modelƒtƒHƒ‹ƒ
 const string ModelManager::PLAYER_BODY_PATH  = "body.mv1";        //player_bodyƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::PLAYER_ARM_PATH   = "arm.mv1";         //player_armƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::ENEMY_BODY_PATH   = "enemy_body.mv1";  //enemy_bodyƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
+const string ModelManager::BOAL_PATH         = "boal.mv1";        //boalƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 
 //ƒfƒoƒbƒN—p
 const string ModelManager::BLOCK_PATH = "Object.mv1";
@@ -38,6 +39,9 @@ void ModelManager::LoadAllModel()
 
     FailePath = MODEL_FOLDER_PATH + ENEMY_BODY_PATH;
     modelHandle[ENEMY_BODY] = MV1LoadModel(FailePath.c_str());
+
+    FailePath = MODEL_FOLDER_PATH + BOAL_PATH;
+    modelHandle[BOAL] = MV1LoadModel(FailePath.c_str());
 
     //ƒfƒoƒbƒN—p
     FailePath = MODEL_FOLDER_PATH + BLOCK_PATH;

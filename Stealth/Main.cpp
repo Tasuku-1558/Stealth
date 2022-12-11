@@ -71,7 +71,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			Pos2 = VGet(-LINE_AREA_SIZE / 2.0f, 0.0f, LINE_AREA_SIZE / 2.0f);
 			for (i = 0; i <= LINE_NUM; i++)
 			{
-				DrawLine3D(Pos1, Pos2, GetColor(255, 255, 255));
+				DrawLine3D(Pos1, Pos2, GetColor(0, 255, 0));
 				Pos1.x += LINE_AREA_SIZE / LINE_NUM;
 				Pos2.x += LINE_AREA_SIZE / LINE_NUM;
 			}
@@ -80,7 +80,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			Pos2 = VGet(LINE_AREA_SIZE / 2.0f, 0.0f, -LINE_AREA_SIZE / 2.0f);
 			for (i = 0; i < LINE_NUM; i++)
 			{
-				DrawLine3D(Pos1, Pos2, GetColor(255, 255, 255));
+				DrawLine3D(Pos1, Pos2, GetColor(0, 255, 0));
 				Pos1.z += LINE_AREA_SIZE / LINE_NUM;
 				Pos2.z += LINE_AREA_SIZE / LINE_NUM;
 			}

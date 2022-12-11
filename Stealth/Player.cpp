@@ -10,6 +10,7 @@ const VECTOR Player::RIGHT_ARM_POSITION = { 150.0f, 0.0f, 110.0f };
 Player::Player() : PlayerBase()
 	, rightArmHandle(0)
 	, rightArmPosition()
+	, boalGet(false)
 {
 	playerState = PlayerState::Nomal;
 }
@@ -29,7 +30,6 @@ void Player::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::PLAYER_BODY));
 	
-
 	//ì«Ç›çûÇ›é∏îsÇ≈ÉGÉâÅ[
 	if (modelHandle < 0)
 	{
@@ -150,7 +150,7 @@ void Player::pUpdate()
 void Player::Draw()
 {
 	pUpdate();
-
+	
 	MV1DrawModel(modelHandle);
 
 	MV1DrawModel(rightArmHandle);

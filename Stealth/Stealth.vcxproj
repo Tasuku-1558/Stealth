@@ -88,13 +88,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\takum\OneDrive\デスクトップ\Stealth\Dxlib_h</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\takum\Desktop\Stealth\Dxlib_h</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\takum\OneDrive\デスクトップ\Stealth\Dxlib_h</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\takum\Desktop\Stealth\Dxlib_h</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,13 +122,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\takum\OneDrive\デスクトップ\Stealth\Dxlib_h</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\takum\Desktop\Stealth\Dxlib_h</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\takum\OneDrive\デスクトップ\Stealth\Dxlib_h</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\takum\Desktop\Stealth\Dxlib_h</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -154,7 +154,8 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBase.cpp" />
-    <ClCompile Include="Field.cpp" />
+    <ClCompile Include="Boal.cpp" />
+    <ClCompile Include="HitChecker.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math3D.cpp" />
@@ -169,7 +170,8 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBase.h" />
-    <ClInclude Include="Field.h" />
+    <ClInclude Include="Boal.h" />
+    <ClInclude Include="HitChecker.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Math3D.h" />
     <ClInclude Include="ModelManager.h" />

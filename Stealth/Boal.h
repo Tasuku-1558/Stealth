@@ -2,11 +2,11 @@
 
 #include "ObjectBase.h"
 
-class Field final : public ObjectBase
+class Boal final : public ObjectBase
 {
 public:
-	 Field();
-	~Field();
+	 Boal();
+	~Boal();
 
 	void Initialize();
 	void Finalize();

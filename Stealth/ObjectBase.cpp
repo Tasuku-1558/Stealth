@@ -24,3 +24,8 @@ const VECTOR& ObjectBase::GetDir() const
 {
 	return dir;
 }
+
+const int& ObjectBase::GetModelHandle() const
+{
+	return modelHandle;
+}

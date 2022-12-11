@@ -4,6 +4,7 @@
 #include "PlayerBase.h"
 #include "Math3D.h"
 
+
 //ƒvƒŒƒCƒ„[ó‘Ô
 enum class PlayerState
 {
@@ -44,9 +45,9 @@ private:
 	void Move(float deltaTime);		//ˆÚ“®ˆ—
 	void pUpdate();
 
-
 	int rightArmHandle;
 	VECTOR rightArmPosition;
+	bool boalGet;
 
 
 	static const VECTOR RIGHT_ARM_POSITION;

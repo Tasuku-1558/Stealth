@@ -6,7 +6,8 @@ class Player;
 class Enemy;
 class Camera;
 class Light;
-class Field;
+class Boal;
+class HitChecker;
 
 //プレイシーンクラス
 class PlayScene final : public SceneBase
@@ -35,7 +36,8 @@ private:
 	Enemy* enemy;
 	Camera* camera;
 	Light* light;
-	Field* field;
+	Boal* boal;
+	HitChecker* hitChecker;
 
 	void UpdateStart(float deltaTime);				//ゲーム開始前
 	void UpdateGame(float deltaTime);				//ゲーム中

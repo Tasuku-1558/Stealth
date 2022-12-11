@@ -6,7 +6,8 @@
 #include "Enemy.h"
 #include "Camera.h"
 #include "Light.h"
-#include "Field.h"
+#include "Boal.h"
+#include "HitChecker.h"
 
 PlayScene::PlayScene()
 		: SceneBase()
@@ -16,7 +17,8 @@ PlayScene::PlayScene()
 		, camera(nullptr)
 		, light(nullptr)
 		, pUpdate(nullptr)
-		, field(nullptr)
+		, boal(nullptr)
+		, hitChecker(nullptr)
 		, font(0)
 {
 	//処理なし
@@ -45,9 +47,13 @@ void PlayScene::Initialize()
 	enemy = new Enemy();
 	enemy->Initialize();
 
-	//デバック用
-	field = new Field();
-	field->Initialize();
+	//ボールクラス
+	boal = new Boal();
+	boal->Initialize();
+
+	//ヒットチェッカークラス
+	hitChecker = new HitChecker();
+
 }
 
 void PlayScene::Finalize()
@@ -60,11 +66,12 @@ void PlayScene::Finalize()
 
 	SafeDelete(enemy);
 
+	SafeDelete(boal);
+
+	SafeDelete(hitChecker);
+
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
-
-	//デバック用
-	SafeDelete(field);
 }
 
 void PlayScene::Activate()
@@ -79,8 +86,7 @@ void PlayScene::Activate()
 
 	enemy->Activate();
 
-	//デバック用
-	field->Activate();
+	boal->Activate();
 }
 
 void PlayScene::Update(float deltaTime)
@@ -105,8 +111,9 @@ void PlayScene::UpdateGame(float deltaTime)
 
 	enemy->Update(deltaTime);
 	
-	//デバック用
-	field->Update();
+	boal->Update();
+
+	hitChecker->Check(player, boal);
 }
 
 void PlayScene::Draw()
@@ -117,11 +124,13 @@ void PlayScene::Draw()
 	//エネミー描画
 	enemy->Draw();
 
+	//ボール描画
+	boal->Draw();
+
 	//デバック用
 	DrawFormatStringToHandle(100, 50, GetColor(255, 0, 0), font, "X : %d", player->GetX());
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "HP : %d", player->GetHP());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 
-	field->Draw();
 }

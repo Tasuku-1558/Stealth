@@ -17,6 +17,7 @@ public:
 		PLAYER_ARM,
 		ENEMY_BODY,
 		BLOCK,
+		BOAL,
 		MODEL_AMOUNT	//モデルの個数
 	};
 
@@ -39,6 +40,7 @@ private:
 	 static const string PLAYER_BODY_PATH;		//player_bodyモデルファイルのパス
 	 static const string PLAYER_ARM_PATH;		//player_armモデルファイルのパス
 	 static const string ENEMY_BODY_PATH;		//enemy_bodyモデルファイルのパス
+	 static const string BOAL_PATH;				//boalモデルファイルのパス
 
 	 //デバック用
 	 static const string BLOCK_PATH;
