@@ -55,22 +55,6 @@ void Enemy::GoBuck(float deltaTime)
 {
 
 	position += dir * SPEED * deltaTime;
-	
-
-	/*if (position.z < -300)
-	{
-		dir = VGet(-1.0f, 0.0f, 0.0f);
-
-		if (position.x < -450)
-		{
-			dir = VGet(0.0f, 0.0f, 1.0f);
-
-			if (position.z < 400)
-			{
-				dir = VGet(0.0f, 0.0f, 1.0f);
-			}
-		}
-	}*/
 
 
 	//zŽ²‚ª‹t‚ðŒü‚¢‚Ä‚¢‚é‚Ì‚Ådir‚ð180“x‰ñ“]‚³‚¹‚é

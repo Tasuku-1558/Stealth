@@ -4,24 +4,26 @@
 
 
 HitChecker::HitChecker()
-	: HitPolyDim()
+	: hitPolyDim()
 {
+	//ˆ—‚È‚µ
 }
 
 HitChecker::~HitChecker()
 {
+	//ˆ—‚È‚µ
 }
 
 void HitChecker::Check(Player* player, Boal* boal)
 {
-	BoalAndPlayer(player,boal);
+	BoalAndPlayer(player, boal);
 }
 
 void HitChecker::BoalAndPlayer(Player* player, Boal* boal)
 {
-	HitPolyDim = MV1CollCheck_Sphere(player->GetModelHandle(), -1, boal->GetPosition(), 100.0f);
+	hitPolyDim = MV1CollCheck_Sphere(player->GetModelHandle(), -1, boal->GetPosition(), 100.0f);
 
-	if (HitPolyDim.HitNum >= 1)
+	if (hitPolyDim.HitNum >= 1)
 	{
 		printfDx("hit");
 	}

@@ -19,6 +19,6 @@ private:
 
 	void BoalAndPlayer(Player* player, Boal* boal);
 
-	MV1_COLL_RESULT_POLY_DIM HitPolyDim;
+	MV1_COLL_RESULT_POLY_DIM hitPolyDim;
 
 };
