@@ -4,10 +4,10 @@
 
 using namespace Math3d;
 
-const float  Camera::NEAR_DISTANCE	   = 1.0f;							//カメラに映る手前の範囲
-const float  Camera::FAR_DISTANCE	   = 3000.0f;						//カメラに映る最奥の範囲
-const float  Camera::ROTATING_VELOCITY = 0.02f;							//カメラの回転速度
-const VECTOR Camera::INITIAL_POSITION  = { 0.0f, 2000.0f, -100.0f };	//初期位置
+const float  Camera::NEAR_DISTANCE	   = 1.0f;								//カメラに映る手前の範囲
+const float  Camera::FAR_DISTANCE	   = 3000.0f;							//カメラに映る最奥の範囲
+const float  Camera::ROTATING_VELOCITY = 0.02f;								//カメラの回転速度
+const VECTOR Camera::INITIAL_POSITION  = { 0.0f, 2000.0f, -100.0f };		//初期位置
 const VECTOR Camera::UP_VECTOR		   = { 0.0f, /*1200.0f*/0.0f, 0.0f };	//カメラの注視点
 
 Camera::Camera()

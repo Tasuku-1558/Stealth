@@ -2,9 +2,11 @@
 
 #include "ObjectBase.h"
 
-//Enemyの親クラス
-//ObjectBaseを継承
 
+/// <summary>
+/// Enemyの親クラス
+/// ObjectBaseを継承
+/// </summary>
 class EnemyBase : public ObjectBase
 {
 public:

@@ -6,7 +6,9 @@ using namespace Math3d;
 
 const VECTOR Player::RIGHT_ARM_POSITION = { 150.0f, 0.0f, 110.0f };
 
-//コンストラクタ
+/// <summary>
+/// コンストラクタ
+/// </summary>
 Player::Player() : PlayerBase()
 	, rightArmHandle(0)
 	, rightArmPosition()
@@ -15,7 +17,9 @@ Player::Player() : PlayerBase()
 	playerState = PlayerState::Nomal;
 }
 
-//デストラクタ
+/// <summary>
+/// デストラクタ
+/// </summary>
 Player::~Player()
 {
 	//終了処理が呼ばれていなければ
@@ -25,7 +29,9 @@ Player::~Player()
 	}
 }
 
-//初期化処理
+/// <summary>
+/// 初期化処理
+/// </summary>
 void Player::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::PLAYER_BODY));
@@ -45,7 +51,9 @@ void Player::Initialize()
 	}
 }
 
-//終了処理
+/// <summary>
+/// 終了処理
+/// </summary>
 void Player::Finalize()
 {
 	MV1DeleteModel(modelHandle);
@@ -55,7 +63,9 @@ void Player::Finalize()
 	rightArmHandle = NULL;
 }
 
-//活性化処理
+/// <summary>
+/// 活性化処理
+/// </summary>
 void Player::Activate()
 {
 	position = POSITION;
@@ -66,7 +76,9 @@ void Player::Activate()
 	hp = HP;
 }
 
-//更新処理
+/// <summary>
+/// 更新処理
+/// </summary>
 void Player::Update(float deltaTime)
 {
 	Move(deltaTime);
@@ -78,7 +90,9 @@ void Player::Update(float deltaTime)
 	MV1SetPosition(rightArmHandle, rightArmPosition);
 }
 
-//移動処理
+/// <summary>
+/// 移動処理
+/// </summary>
 void Player::Move(float deltaTime)
 {
 	inputDirection = ZERO_VECTOR;
@@ -146,7 +160,9 @@ void Player::pUpdate()
 	}
 }
 
-//描画処理
+/// <summary>
+/// 描画処理
+/// </summary>
 void Player::Draw()
 {
 	pUpdate();

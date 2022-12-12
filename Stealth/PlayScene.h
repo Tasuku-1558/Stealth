@@ -8,8 +8,11 @@ class Camera;
 class Light;
 class Boal;
 class HitChecker;
+class BackGround;
 
-//プレイシーンクラス
+/// <summary>
+/// プレイシーンクラス
+/// </summary>
 class PlayScene final : public SceneBase
 {
 public:
@@ -38,6 +41,7 @@ private:
 	Light* light;
 	Boal* boal;
 	HitChecker* hitChecker;
+	BackGround* backGround;
 
 	void UpdateStart(float deltaTime);				//ゲーム開始前
 	void UpdateGame(float deltaTime);				//ゲーム中

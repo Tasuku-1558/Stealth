@@ -4,8 +4,10 @@
 
 using namespace std;
 
-//シングルトン
-//モデル管理クラス
+/// <summary>
+/// シングルトン
+/// モデル管理クラス
+/// </summary>
 class ModelManager final
 {
 public:
@@ -16,8 +18,8 @@ public:
 		PLAYER_BODY,
 		PLAYER_ARM,
 		ENEMY_BODY,
-		BLOCK,
 		BOAL,
+		STAGE1,
 		MODEL_AMOUNT	//モデルの個数
 	};
 
@@ -41,9 +43,8 @@ private:
 	 static const string PLAYER_ARM_PATH;		//player_armモデルファイルのパス
 	 static const string ENEMY_BODY_PATH;		//enemy_bodyモデルファイルのパス
 	 static const string BOAL_PATH;				//boalモデルファイルのパス
+	 static const string STAGE1_PATH;			//stage1モデルファイルのパス
 
-	 //デバック用
-	 static const string BLOCK_PATH;
 
 	 int modelHandle[MODEL_AMOUNT];				//モデルハンドル
 };

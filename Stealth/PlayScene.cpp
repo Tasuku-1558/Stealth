@@ -8,6 +8,7 @@
 #include "Light.h"
 #include "Boal.h"
 #include "HitChecker.h"
+#include "BackGround.h"
 
 PlayScene::PlayScene()
 		: SceneBase()
@@ -19,6 +20,7 @@ PlayScene::PlayScene()
 		, pUpdate(nullptr)
 		, boal(nullptr)
 		, hitChecker(nullptr)
+		, backGround(nullptr)
 		, font(0)
 {
 	//処理なし
@@ -54,6 +56,10 @@ void PlayScene::Initialize()
 	//ヒットチェッカークラス
 	hitChecker = new HitChecker();
 
+	//背景クラス
+	backGround = new BackGround();
+	backGround->Initialize();
+
 }
 
 void PlayScene::Finalize()
@@ -69,6 +75,8 @@ void PlayScene::Finalize()
 	SafeDelete(boal);
 
 	SafeDelete(hitChecker);
+
+	SafeDelete(backGround);
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
@@ -113,6 +121,8 @@ void PlayScene::UpdateGame(float deltaTime)
 	
 	boal->Update();
 
+	backGround->Update();
+
 	hitChecker->Check(player, boal);
 }
 
@@ -126,6 +136,8 @@ void PlayScene::Draw()
 
 	//ボール描画
 	boal->Draw();
+
+	backGround->Draw();
 
 	//デバック用
 	DrawFormatStringToHandle(100, 50, GetColor(255, 0, 0), font, "X : %d", player->GetX());

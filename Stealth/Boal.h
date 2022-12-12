@@ -2,6 +2,9 @@
 
 #include "ObjectBase.h"
 
+/// <summary>
+/// ボールクラス
+/// </summary>
 class Boal final : public ObjectBase
 {
 public:

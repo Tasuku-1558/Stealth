@@ -5,14 +5,18 @@
 #include "Math3D.h"
 
 
-//エネミーの状態
+/// <summary>
+/// エネミーの状態
+/// </summary>
 enum class EnemyState
 {
 	Crawl,			//巡回モード
 	Tracking,		//追尾モード
 };
 
-//エネミークラス
+/// <summary>
+/// エネミークラス
+/// </summary>
 class Enemy final : public EnemyBase
 {
 public:

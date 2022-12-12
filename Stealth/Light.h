@@ -2,7 +2,9 @@
 
 #include "DxLib.h"
 
-//ライトクラス
+/// <summary>
+/// ライトクラス
+/// </summary>
 class Light final
 {
 public:

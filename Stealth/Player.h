@@ -4,15 +4,18 @@
 #include "PlayerBase.h"
 #include "Math3D.h"
 
-
-//プレイヤー状態
+/// <summary>
+/// プレイヤー状態
+/// </summary>
 enum class PlayerState
 {
 	Nomal,
 	Damage,
 };
 
-// プレイヤークラス
+/// <summary>
+/// プレイヤークラス
+/// </summary>
 class Player final : public PlayerBase
 {
 public:

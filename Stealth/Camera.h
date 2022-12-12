@@ -4,6 +4,9 @@
 
 class Player;
 
+/// <summary>
+/// ƒJƒƒ‰ƒNƒ‰ƒX
+/// </summary>
 class Camera final
 {
 public:

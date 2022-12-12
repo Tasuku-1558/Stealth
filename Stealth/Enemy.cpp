@@ -5,13 +5,17 @@
 
 using namespace Math3d;
 
-//コンストラクタ
+/// <summary>
+/// コンストラクタ
+/// </summary>
 Enemy::Enemy() : EnemyBase()
 {
 	enemyState = EnemyState::Crawl;
 }
 
-//デストラクタ
+/// <summary>
+/// デストラクタ
+/// </summary>
 Enemy::~Enemy()
 {
 	//終了処理が呼ばれてなければ

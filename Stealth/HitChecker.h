@@ -5,6 +5,9 @@
 class Player;
 class Boal;
 
+/// <summary>
+/// ヒットチェッカークラス
+/// </summary>
 class HitChecker final
 {
 public:
