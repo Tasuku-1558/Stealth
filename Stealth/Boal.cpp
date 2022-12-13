@@ -2,7 +2,7 @@
 #include "ModelManager.h"
 
 
-const VECTOR Boal::POSITION = { 500.0f,0.0f,100.0f };
+const VECTOR Boal::POSITION = { 2300.0f,0.0f,-540.0f };
 
 Boal::Boal() : ObjectBase()
 {

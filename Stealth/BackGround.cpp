@@ -4,10 +4,11 @@
 
 
 const VECTOR BackGround::SIZE	  = { 30.0f, 10.0f, 30.0f };		//モデルの倍率
-const VECTOR BackGround::POSITION = { 10.0f, 0.0f, 500.0f };		//モデルの位置
+const VECTOR BackGround::POSITION = { -1500.0f, 0.0f, 0.0f };		//モデルの位置
 
 BackGround::BackGround() : ObjectBase()
 {
+	//処理なし
 }
 
 BackGround::~BackGround()
@@ -23,7 +24,9 @@ void BackGround::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE1));
 	MV1SetScale(modelHandle, SIZE);
-	MV1SetRotationXYZ(modelHandle, VGet(0.0f, -90.0f * DX_PI_F / 180.0f, 0.0f));
+	MV1SetRotationXYZ(modelHandle, VGet(0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f));
+
+	position = POSITION;
 
 	MV1SetPosition(modelHandle, position);
 
@@ -42,7 +45,7 @@ void BackGround::Finalize()
 
 void BackGround::Activate()
 {
-	position = POSITION;
+	
 }
 
 void BackGround::Draw()
