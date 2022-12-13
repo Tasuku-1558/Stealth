@@ -3,7 +3,8 @@
 #include "ModelManager.h"
 
 
-const VECTOR BackGround::SIZE = { 10.0f, 10.0f, 10.0f };
+const VECTOR BackGround::SIZE	  = { 30.0f, 10.0f, 30.0f };		//モデルの倍率
+const VECTOR BackGround::POSITION = { 10.0f, 0.0f, 500.0f };		//モデルの位置
 
 BackGround::BackGround() : ObjectBase()
 {
@@ -22,6 +23,9 @@ void BackGround::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE1));
 	MV1SetScale(modelHandle, SIZE);
+	MV1SetRotationXYZ(modelHandle, VGet(0.0f, -90.0f * DX_PI_F / 180.0f, 0.0f));
+
+	MV1SetPosition(modelHandle, position);
 
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
@@ -38,11 +42,7 @@ void BackGround::Finalize()
 
 void BackGround::Activate()
 {
-}
-
-void BackGround::Update()
-{
-	MV1SetPosition(modelHandle, position);
+	position = POSITION;
 }
 
 void BackGround::Draw()

@@ -2,7 +2,7 @@
 #include "DxLib.h"
 
 
-const VECTOR Light::DIRECTION = { 0.0f,-0.1f,0.0f };	//ライトの方向
+const VECTOR Light::DIRECTION = { 0.0f,-1.0f,0.0f };	//ライトの方向
 
 Light::Light()
 {

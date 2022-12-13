@@ -71,7 +71,7 @@ void Player::Activate()
 	position = POSITION;
 	rightArmPosition = RIGHT_ARM_POSITION;
 
-	dir = { 0.0f,0.0f,1.0f };
+	dir = DIR;
 
 	hp = HP;
 }
@@ -82,7 +82,7 @@ void Player::Activate()
 void Player::Update(float deltaTime)
 {
 	Move(deltaTime);
-
+	
 	//プレイヤーの位置をセット
 	MV1SetPosition(modelHandle, position);
 
@@ -105,18 +105,18 @@ void Player::Move(float deltaTime)
 		inputDirection += UP;
 		inputFlag = true;
 	}
-	else if (CheckHitKey(KEY_INPUT_DOWN))
+	if (CheckHitKey(KEY_INPUT_DOWN))
 	{
 		inputDirection += DOWN;
 		inputFlag = true;
 	}
 	//左右
-	else if (CheckHitKey(KEY_INPUT_RIGHT))
+	if (CheckHitKey(KEY_INPUT_RIGHT))
 	{
 		inputDirection += RIGHT;
 		inputFlag = true;
 	}
-	else if (CheckHitKey(KEY_INPUT_LEFT))
+	if (CheckHitKey(KEY_INPUT_LEFT))
 	{
 		inputDirection += LEFT;
 		inputFlag = true;
@@ -125,6 +125,12 @@ void Player::Move(float deltaTime)
 	//十字キーの入力があったら
 	if (inputFlag)
 	{
+		// 左右・上下同時押しなどで入力ベクトルが0の時
+		if (VSquareSize(inputDirection) < 0.5f)
+		{
+			return;
+		}
+
 		//十字キーの入力方向を正規化
 		inputDirection = VNorm(inputDirection);
 
@@ -169,5 +175,5 @@ void Player::Draw()
 	
 	MV1DrawModel(modelHandle);
 
-	MV1DrawModel(rightArmHandle);
+	//MV1DrawModel(rightArmHandle);
 }

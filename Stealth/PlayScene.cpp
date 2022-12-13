@@ -95,6 +95,10 @@ void PlayScene::Activate()
 	enemy->Activate();
 
 	boal->Activate();
+
+	backGround->Activate();
+
+	camera->Activate();
 }
 
 void PlayScene::Update(float deltaTime)
@@ -120,8 +124,6 @@ void PlayScene::UpdateGame(float deltaTime)
 	enemy->Update(deltaTime);
 	
 	boal->Update();
-
-	backGround->Update();
 
 	hitChecker->Check(player, boal);
 }

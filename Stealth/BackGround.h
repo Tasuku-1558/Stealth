@@ -15,13 +15,13 @@ public:
     void Initialize();
     void Finalize();
     void Activate();
-    void Update();
     void Draw();
 
 
 private:
 
     //静的定数
-    static const VECTOR SIZE;
+    static const VECTOR SIZE;           //モデルの倍率
+    static const VECTOR POSITION;       //モデルの位置
 
 };

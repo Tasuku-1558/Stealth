@@ -34,6 +34,7 @@ void Camera::Initialize()
 
 void Camera::Activate()
 {
+	//position = INITIAL_POSITION;
 }
 
 void Camera::Update(Player* player)
