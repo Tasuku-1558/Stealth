@@ -4,7 +4,7 @@
 
 
 const VECTOR BackGround::SIZE	  = { 30.0f, 10.0f, 30.0f };		//モデルの倍率
-const VECTOR BackGround::POSITION = { -1500.0f, 0.0f, 0.0f };		//モデルの位置
+const VECTOR BackGround::POSITION = { -5000.0f, 0.0f, 500.0f };		//モデルの位置
 
 BackGround::BackGround() : ObjectBase()
 {
@@ -33,7 +33,7 @@ void BackGround::Initialize()
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
 	{
-		printfDx("モデルデータ読み込みに失敗 [PLAYER]\n");
+		printfDx("モデルデータ読み込みに失敗 [STAGE]\n");
 	}
 }
 

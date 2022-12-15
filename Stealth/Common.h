@@ -12,6 +12,8 @@ const int  SCREEN_HEIGHT = 1080;					//ウィンドウの高さ
 
 const VECTOR ZERO_VECTOR = { 0.0f, 0.0f, 0.0f };	//ゼロベクトル
 
+const float PLAYER_RADIUS = 100.0f;                 //プレイヤー半径
+const float BOAL_RADIUS   = 50.0f;                  //ボール半径
 
 
 // インスタンスをdeleteしてNULLを入れる

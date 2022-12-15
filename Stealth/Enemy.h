@@ -11,7 +11,6 @@
 enum class EnemyState
 {
 	Crawl,			//巡回モード
-	Tracking,		//追尾モード
 };
 
 /// <summary>

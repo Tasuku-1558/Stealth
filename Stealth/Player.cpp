@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Common.h"
 #include "ModelManager.h"
+#include "Camera.h"
 
 using namespace Math3d;
 
@@ -72,16 +73,14 @@ void Player::Activate()
 	rightArmPosition = RIGHT_ARM_POSITION;
 
 	dir = DIR;
-
-	hp = HP;
 }
 
 /// <summary>
 /// 更新処理
 /// </summary>
-void Player::Update(float deltaTime)
+void Player::Update(float deltaTime, Camera* camera)
 {
-	Move(deltaTime);
+	Move(deltaTime,camera);
 	
 	//プレイヤーの位置をセット
 	MV1SetPosition(modelHandle, position);
@@ -93,32 +92,32 @@ void Player::Update(float deltaTime)
 /// <summary>
 /// 移動処理
 /// </summary>
-void Player::Move(float deltaTime)
+void Player::Move(float deltaTime, Camera* camera)
 {
 	inputDirection = ZERO_VECTOR;
 
 	inputFlag = false;
-
+	
 	//上下
 	if (CheckHitKey(KEY_INPUT_UP))
 	{
-		inputDirection += UP;
+		inputDirection += camera->GetUp();
 		inputFlag = true;
 	}
 	if (CheckHitKey(KEY_INPUT_DOWN))
 	{
-		inputDirection += DOWN;
+		inputDirection += camera->GetDown();
 		inputFlag = true;
 	}
 	//左右
 	if (CheckHitKey(KEY_INPUT_RIGHT))
 	{
-		inputDirection += RIGHT;
+		inputDirection += camera->GetRight();
 		inputFlag = true;
 	}
 	if (CheckHitKey(KEY_INPUT_LEFT))
 	{
-		inputDirection += LEFT;
+		inputDirection += camera->GetLeft();
 		inputFlag = true;
 	}
 
@@ -152,6 +151,14 @@ void Player::Move(float deltaTime)
 	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
 	MV1SetRotationZYAxis(rightArmHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
 	
+}
+
+void Player::Shot()
+{
+	if (CheckHitKey(KEY_INPUT_SPACE) == 1)
+	{
+		
+	}
 }
 
 void Player::pUpdate()

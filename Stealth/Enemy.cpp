@@ -76,10 +76,6 @@ void Enemy::eUpdate()
 	{
 	case EnemyState::Crawl:
 		break;
-
-	case EnemyState::Tracking:
-		break;
-
 	}
 }
 

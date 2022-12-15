@@ -1,10 +1,14 @@
 #include "HitChecker.h"
 #include "Player.h"
 #include "Boal.h"
+#include "Common.h"
+#include <math.h>
 
 
 HitChecker::HitChecker()
-	: hitPolyDim()
+	: direction(0.0f)
+	, hit(false)
+	, possessionBoal(false)
 {
 	//処理なし
 }
@@ -20,13 +24,29 @@ void HitChecker::Check(Player* player, Boal* boal)
 	BoalAndPlayer(player, boal);
 }
 
+//ボールとプレイヤーの当たり判定
 void HitChecker::BoalAndPlayer(Player* player, Boal* boal)
 {
-	MV1SetupCollInfo(player->GetModelHandle(), -1, 8, 8, 8);
-	hitPolyDim = MV1CollCheck_Sphere(player->GetModelHandle(), -1, boal->GetPosition(), 100.0f);
+	
+	//プレイヤーからボールの座標を引いた値を取得
+	double posX = player->GetPosition().x - boal->GetPosition().x;
+	double posZ = player->GetPosition().z - boal->GetPosition().z;
 
-	if (hitPolyDim.HitNum >= 1)
+	//プレイヤーとボールの2点間の距離を計算
+	direction = sqrt(pow(posX, 2) + pow(posZ, 2));
+	
+	//ボールを所持していないならば
+	if (!possessionBoal)
 	{
-		printfDx("hit");
+		if (direction < PLAYER_RADIUS + BOAL_RADIUS)
+		{
+			printfDx("hit");
+			hit = true;
+		}
+		else
+		{
+			hit = false;
+		}
 	}
+	
 }

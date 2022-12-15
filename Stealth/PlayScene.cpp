@@ -45,13 +45,13 @@ void PlayScene::Initialize()
 	player = new Player();
 	player->Initialize();
 
-	//エネミークラス
-	enemy = new Enemy();
-	enemy->Initialize();
-
 	//ボールクラス
 	boal = new Boal();
 	boal->Initialize();
+
+	//エネミークラス
+	enemy = new Enemy();
+	enemy->Initialize();
 
 	//ヒットチェッカークラス
 	hitChecker = new HitChecker();
@@ -90,15 +90,16 @@ void PlayScene::Activate()
 
 	pUpdate = &PlayScene::UpdateStart;
 
+	camera->Activate();
+
+	backGround->Activate();
+
 	player->Activate();
 
 	enemy->Activate();
 
 	boal->Activate();
-
-	backGround->Activate();
-
-	camera->Activate();
+	
 }
 
 void PlayScene::Update(float deltaTime)
@@ -109,42 +110,63 @@ void PlayScene::Update(float deltaTime)
 	}
 }
 
+//ゲーム開始前
 void PlayScene::UpdateStart(float deltaTime)
 {
 	state = GAME;
 	pUpdate = &PlayScene::UpdateGame;
 }
 
+//ゲーム中
 void PlayScene::UpdateGame(float deltaTime)
 {
+
 	camera->Update(player);
 
-	player->Update(deltaTime);
+	player->Update(deltaTime,camera);
 
 	enemy->Update(deltaTime);
 	
-	boal->Update();
+	if (!hitChecker->Hit())
+	{
+		boal->Update();
+	}
+	else
+	{
+		return;
+	}
 
 	hitChecker->Check(player, boal);
+
 }
 
 void PlayScene::Draw()
 {
+	//マップ描画
+	backGround->Draw();
+
 	//プレイヤー描画
 	player->Draw();
 
 	//エネミー描画
 	enemy->Draw();
 
-	//ボール描画
-	boal->Draw();
-
-	backGround->Draw();
-
 	//デバック用
 	DrawFormatStringToHandle(100, 50, GetColor(255, 0, 0), font, "X : %d", player->GetX());
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
-	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "HP : %d", player->GetHP());
+	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Found : %d", player->GetFind());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
+	DrawFormatStringToHandle(100, 250, GetColor(255, 0, 0), font, "Boal : %d", hitChecker->PossessionBoal());
 
+	if (!hitChecker->Hit())
+	{
+		//ボール描画
+		boal->Draw();
+	}
+	else
+	{
+		return;
+	}
+
+	
 }

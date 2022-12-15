@@ -43,10 +43,12 @@ private:
 	HitChecker* hitChecker;
 	BackGround* backGround;
 
+
 	void UpdateStart(float deltaTime);				//ゲーム開始前
 	void UpdateGame(float deltaTime);				//ゲーム中
-	void (PlayScene::* pUpdate)(float deltaTime);
+	void (PlayScene::* pUpdate)(float deltaTime);	//Update関数ポインタ
 
 	State state;		//ゲーム状態
-	int font;
+	int font;			//ゲームフォント
+
 };

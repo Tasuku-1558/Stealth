@@ -3,6 +3,7 @@
 //-----------------------------------------------------------------------------
 #include "DxLib.h"
 #include "Common.h"
+#include "PathSearch.h"
 #include "ModelManager.h"
 #include "PlayScene.h"
 
@@ -34,7 +35,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 時間計測
 	int nowTime;
 	int prevTime = nowTime = GetNowCount();
-
+	
 	ModelManager::GetInstance();	//モデル管理クラスの生成
 
 	PlayScene* playScene = new PlayScene();
@@ -58,7 +59,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ClearDrawScreen();
 
 		playScene->Draw();
-
+		
 		//デバック用
 		{
 			int i;

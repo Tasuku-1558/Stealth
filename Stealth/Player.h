@@ -4,6 +4,7 @@
 #include "PlayerBase.h"
 #include "Math3D.h"
 
+class Camera;
 
 /// <summary>
 /// プレイヤー状態
@@ -26,18 +27,18 @@ public:
 	void Initialize();
 	void Finalize();
 	void Activate();
-	void Update(float deltaTime);
+	void Update(float deltaTime, Camera* camera);
 	void Draw();
 
-	VECTOR GetUp() { return UP; }
+	/*VECTOR GetUp() { return UP; }
 	VECTOR GetDown() { return DOWN; }
 	VECTOR GetLeft() { return LEFT; }
-	VECTOR GetRight() { return RIGHT; }
+	VECTOR GetRight() { return RIGHT; }*/
 
 	//デバック用
 	int GetX() { return position.x; }
 	int GetZ() { return position.z; }
-	int GetHP() { return hp; }
+	int GetFind() { return foundTimes; }
 	int GetSpeed() { return SPEED; }
 
 
@@ -46,7 +47,8 @@ public:
 private:
 	Player(const Player&);			//コピーコンストラクタ
 
-	void Move(float deltaTime);		//移動処理
+	void Move(float deltaTime, Camera* camera);		//移動処理
+	void Shot();
 	void pUpdate();
 
 	int rightArmHandle;

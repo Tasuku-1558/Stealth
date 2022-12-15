@@ -1,9 +1,8 @@
 #pragma once
 
-#include "DxLib.h"
-
 class Player;
 class Boal;
+
 
 /// <summary>
 /// ヒットチェッカークラス
@@ -15,6 +14,10 @@ public:
 	~HitChecker();
 
 	void Check(Player* player, Boal* boal);
+	bool Hit() { return hit; }
+
+	//デバック用
+	bool PossessionBoal() { return possessionBoal; }
 
 private:
 
@@ -22,6 +25,8 @@ private:
 
 	void BoalAndPlayer(Player* player, Boal* boal);
 
-	MV1_COLL_RESULT_POLY_DIM hitPolyDim;
+	double direction;
+	bool hit;				//衝突したならば
+	bool possessionBoal;	//所持しているボールの数
 
 };
