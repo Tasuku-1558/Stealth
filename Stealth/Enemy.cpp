@@ -1,9 +1,11 @@
 #include "Enemy.h"
 #include "ModelManager.h"
+#include "Map.h"
 #include "Common.h"
-#include <math.h>
+
 
 using namespace Math3d;
+using namespace std;
 
 /// <summary>
 /// コンストラクタ
@@ -25,7 +27,7 @@ Enemy::~Enemy()
 	}
 }
 
-void Enemy::Initialize()
+void Enemy::Initialize(Map* map)
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY_BODY));
 
@@ -34,6 +36,19 @@ void Enemy::Initialize()
 	{
 		printfDx("モデルデータ読み込みに失敗[ENEMY_BODY]\n");
 	}
+
+	Position(map);
+}
+
+void Enemy::Position(Map* map)
+{
+	pointList = map->GetMap(0);		//マップから座標リストを受け取る
+
+	itr = pointList.begin();		//イテレータを先頭に設定
+
+	position = *itr;				//イテレータから敵座標を設定
+
+	itr++;
 }
 
 void Enemy::Finalize()
@@ -43,22 +58,28 @@ void Enemy::Finalize()
 
 void Enemy::Activate()
 {
-	position = POSITION;
 	dir = DIR;
 }
 
 void Enemy::Update(float deltaTime)
 {
-	GoBuck(deltaTime);
+	ActionPattern(deltaTime);
 
 	//エネミーの位置をセット
 	MV1SetPosition(modelHandle, position);
 }
 
-void Enemy::GoBuck(float deltaTime)
+/// <summary>
+/// エネミー行動パターン
+/// </summary>
+void Enemy::ActionPattern(float deltaTime)
 {
-
+	
 	position += dir * SPEED * deltaTime;
+	
+	
+	
+
 
 
 	//z軸が逆を向いているのでdirを180度回転させる
@@ -67,14 +88,20 @@ void Enemy::GoBuck(float deltaTime)
 
 	//モデルに回転をセット dirを向く
 	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
-	
 }
 
+//エネミーの状態
 void Enemy::eUpdate()
 {
 	switch (enemyState)
 	{
 	case EnemyState::Crawl:
+		break;
+
+	case EnemyState::Arrival:
+		break;
+
+	case EnemyState::Discovery:
 		break;
 	}
 }

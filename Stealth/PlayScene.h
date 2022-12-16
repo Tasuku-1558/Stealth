@@ -8,7 +8,7 @@ class Camera;
 class Light;
 class Boal;
 class HitChecker;
-class BackGround;
+class Map;
 
 /// <summary>
 /// プレイシーンクラス
@@ -41,7 +41,7 @@ private:
 	Light* light;
 	Boal* boal;
 	HitChecker* hitChecker;
-	BackGround* backGround;
+	Map* map;
 
 
 	void UpdateStart(float deltaTime);				//ゲーム開始前

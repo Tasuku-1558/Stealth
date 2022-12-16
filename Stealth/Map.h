@@ -2,23 +2,31 @@
 
 #include "DxLib.h"
 #include "ObjectBase.h"
+#include <vector>
 
 /// <summary>
-/// ステージクラス
+/// マップクラス
 /// </summary>
-class BackGround final : public ObjectBase
+class Map final : public ObjectBase
 {
 public:
-     BackGround();
-    ~BackGround();
+     Map();
+    ~Map();
 
     void Initialize();
     void Finalize();
     void Activate();
     void Draw();
 
+    std::vector<VECTOR>& GetMap(int number) { return positionList; }
+
 
 private:
+
+    void MapList();
+
+    std::vector<VECTOR> positionList;
+    std::vector<VECTOR>::iterator itr;
 
     //静的定数
     static const VECTOR SIZE;           //モデルの倍率

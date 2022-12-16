@@ -3,15 +3,20 @@
 #include "DxLib.h"
 #include "EnemyBase.h"
 #include "Math3D.h"
+#include <vector>
 
+class Map;
 
 /// <summary>
 /// エネミーの状態
 /// </summary>
 enum class EnemyState
 {
-	Crawl,			//巡回モード
+	Crawl,			//巡回中
+	Arrival,		//目的地に到着
+	Discovery,		//プレイヤー発見
 };
+
 
 /// <summary>
 /// エネミークラス
@@ -22,7 +27,7 @@ public:
 	 Enemy();		//コンストラクタ
 	~Enemy();		//デストラクタ
 
-	void Initialize();
+	void Initialize(Map* map);
 	void Finalize();
 	void Activate();
 	void Update(float deltaTime);
@@ -33,8 +38,12 @@ public:
 private:
 	Enemy(const Enemy&);		//コピーコンストラクタ
 
-	void eUpdate();						//状態変化
-	void GoBuck(float deltaTime);		//エネミー各行動パターン
+	void Position(Map* map);
+	void eUpdate();								//状態変化
+	void ActionPattern(float deltaTime);		//エネミー各行動パターン
 
+	
+	std::vector<VECTOR>::iterator itr;
+	std::vector<VECTOR> pointList;
 	
 };

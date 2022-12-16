@@ -7,7 +7,7 @@ const string ModelManager::PLAYER_BODY_PATH  = "player_body.mv1";        //playe
 const string ModelManager::PLAYER_ARM_PATH   = "arm.mv1";         //player_armモデルファイルのパス
 const string ModelManager::ENEMY_BODY_PATH   = "enemy_body.mv1";  //enemy_bodyモデルファイルのパス
 const string ModelManager::BOAL_PATH         = "boal.mv1";        //boalモデルファイルのパス
-const string ModelManager::STAGE1_PATH       = "stage4.mv1";      //stage1モデルファイルのパス
+const string ModelManager::STAGE1_PATH       = "stage1.mv1";      //stage1モデルファイルのパス
 
 
 ModelManager::ModelManager()

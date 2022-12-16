@@ -1,17 +1,19 @@
-#include "BackGround.h"
+#include "Map.h"
 #include "Common.h"
 #include "ModelManager.h"
 
 
-const VECTOR BackGround::SIZE	  = { 30.0f, 10.0f, 30.0f };		//モデルの倍率
-const VECTOR BackGround::POSITION = { -5000.0f, 0.0f, 500.0f };		//モデルの位置
+const VECTOR Map::SIZE	   = { 30.0f, 10.0f, 30.0f };		//モデルの倍率
+const VECTOR Map::POSITION = { -5000.0f, 0.0f, 500.0f };	//モデルの位置
 
-BackGround::BackGround() : ObjectBase()
+using namespace std;
+
+Map::Map() : ObjectBase()
 {
 	//処理なし
 }
 
-BackGround::~BackGround()
+Map::~Map()
 {
 	//終了処理が呼ばれてなければ
 	if (modelHandle != NULL)
@@ -20,7 +22,7 @@ BackGround::~BackGround()
 	}
 }
 
-void BackGround::Initialize()
+void Map::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE1));
 	MV1SetScale(modelHandle, SIZE);
@@ -35,20 +37,30 @@ void BackGround::Initialize()
 	{
 		printfDx("モデルデータ読み込みに失敗 [STAGE]\n");
 	}
+
+	MapList();
+	
 }
 
-void BackGround::Finalize()
+void Map::MapList()
+{
+	positionList.push_back(VGet(-2700.0f, 100.0f, 1400.0f));
+	positionList.push_back(VGet(-2700.0f, 100.0f, -1300.0f));
+
+	itr = positionList.begin();   //  イテレータを先頭に設定
+}
+
+void Map::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 	modelHandle = NULL;
 }
 
-void BackGround::Activate()
+void Map::Activate()
 {
-	
 }
 
-void BackGround::Draw()
+void Map::Draw()
 {
 	MV1DrawModel(modelHandle);
 }

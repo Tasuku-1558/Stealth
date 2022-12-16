@@ -50,9 +50,13 @@ void Camera::Update(Player* player)
 	if (CheckHitKey(KEY_INPUT_E)) { yaw -= ROTATING_VELOCITY; }
 
 
-	position.x = radius * cos(yaw) + player->GetPosition().x;
+	/*position.x = radius * cos(yaw) + player->GetPosition().x;
 	position.y = 3000.0f;
-	position.z = radius * sin(yaw) + player->GetPosition().z;
+	position.z = radius * sin(yaw) + player->GetPosition().z;*/
+
+	position = VGet(radius * cos(yaw) + player->GetPosition().x, 
+					3000.0f, 
+					radius * sin(yaw) + player->GetPosition().z);
 
 	SetCameraPositionAndTarget_UpVecY(position, player->GetPosition());
 	

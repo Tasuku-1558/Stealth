@@ -8,7 +8,7 @@
 #include "Light.h"
 #include "Boal.h"
 #include "HitChecker.h"
-#include "BackGround.h"
+#include "Map.h"
 
 PlayScene::PlayScene()
 		: SceneBase()
@@ -20,7 +20,7 @@ PlayScene::PlayScene()
 		, pUpdate(nullptr)
 		, boal(nullptr)
 		, hitChecker(nullptr)
-		, backGround(nullptr)
+		, map(nullptr)
 		, font(0)
 {
 	//処理なし
@@ -49,16 +49,17 @@ void PlayScene::Initialize()
 	boal = new Boal();
 	boal->Initialize();
 
+	//マップクラス
+	map = new Map();
+	map->Initialize();
+
 	//エネミークラス
 	enemy = new Enemy();
-	enemy->Initialize();
+	enemy->Initialize(map);
 
 	//ヒットチェッカークラス
 	hitChecker = new HitChecker();
 
-	//背景クラス
-	backGround = new BackGround();
-	backGround->Initialize();
 
 }
 
@@ -76,7 +77,7 @@ void PlayScene::Finalize()
 
 	SafeDelete(hitChecker);
 
-	SafeDelete(backGround);
+	SafeDelete(map);
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
@@ -92,7 +93,7 @@ void PlayScene::Activate()
 
 	camera->Activate();
 
-	backGround->Activate();
+	map->Activate();
 
 	player->Activate();
 
@@ -143,7 +144,7 @@ void PlayScene::UpdateGame(float deltaTime)
 void PlayScene::Draw()
 {
 	//マップ描画
-	backGround->Draw();
+	map->Draw();
 
 	//プレイヤー描画
 	player->Draw();
@@ -156,7 +157,7 @@ void PlayScene::Draw()
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Found : %d", player->GetFind());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
-	DrawFormatStringToHandle(100, 250, GetColor(255, 0, 0), font, "Boal : %d", hitChecker->PossessionBoal());
+	DrawFormatStringToHandle(100, 250, GetColor(255, 0, 0), font, "Boal : %d", hitChecker->Hit());
 
 	if (!hitChecker->Hit())
 	{
