@@ -28,7 +28,6 @@ public:
 	~Enemy();		//デストラクタ
 
 	void Initialize(Map* map);
-	void Finalize();
 	void Activate();
 	void Update(float deltaTime);
 	void Draw();
@@ -38,12 +37,18 @@ public:
 private:
 	Enemy(const Enemy&);		//コピーコンストラクタ
 
-	void Position(Map* map);
-	void eUpdate();								//状態変化
-	void ActionPattern(float deltaTime);		//エネミー各行動パターン
+	void Position(Map* map);	//エネミー位置設定
+	bool IsGoal(float deltaTime);				//目的地に到達したならば
+	void eUpdate(float deltaTime);				//状態変化
+	void SetTargetPosition();	//移動処理
+	void Finalize();
 
 	
 	std::vector<VECTOR>::iterator itr;
 	std::vector<VECTOR> pointList;
-	
+
+	VECTOR targetPosition;			//目的地の座標
+
+	const float DELTA = 0.01;
+
 };

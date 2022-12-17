@@ -11,6 +11,7 @@ using namespace std;
 /// コンストラクタ
 /// </summary>
 Enemy::Enemy() : EnemyBase()
+	, targetPosition()
 {
 	enemyState = EnemyState::Crawl;
 }
@@ -40,16 +41,20 @@ void Enemy::Initialize(Map* map)
 	Position(map);
 }
 
+/// <summary>
+/// エネミー位置設定
+/// </summary>
 void Enemy::Position(Map* map)
 {
 	pointList = map->GetMap(0);		//マップから座標リストを受け取る
 
 	itr = pointList.begin();		//イテレータを先頭に設定
 
-	position = *itr;				//イテレータから敵座標を設定
+	position = *itr++;				//イテレータから敵座標を設定
 
-	itr++;
+	enemyState = EnemyState::Arrival;
 }
+
 
 void Enemy::Finalize()
 {
@@ -58,47 +63,66 @@ void Enemy::Finalize()
 
 void Enemy::Activate()
 {
-	dir = DIR;
 }
 
 void Enemy::Update(float deltaTime)
 {
-	ActionPattern(deltaTime);
-
 	//エネミーの位置をセット
 	MV1SetPosition(modelHandle, position);
+
+	//ベクトルの正規化
+	dir = VNorm(targetPosition - position);
+
+	position += dir * SPEED* deltaTime;
+
+	eUpdate(deltaTime);
 }
 
 /// <summary>
-/// エネミー行動パターン
+/// 移動処理
 /// </summary>
-void Enemy::ActionPattern(float deltaTime)
+void Enemy::SetTargetPosition()
 {
 	
-	position += dir * SPEED * deltaTime;
+	targetPosition = *itr++;
+
+	if (itr == pointList.end())
+	{
+		itr = pointList.begin();
+	}
+
+	enemyState = EnemyState::Crawl;
+
 	
-	
-	
+	////z軸が逆を向いているのでdirを180度回転させる
+	//MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
+	//VECTOR negativeVec = VTransform(dir, rotYMat);
 
+	////モデルに回転をセット dirを向く
+	//MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
+}
 
-
-	//z軸が逆を向いているのでdirを180度回転させる
-	MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
-	VECTOR negativeVec = VTransform(dir, rotYMat);
-
-	//モデルに回転をセット dirを向く
-	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
+//目的地に到達したならば
+bool Enemy::IsGoal(float deltaTime)
+{
+	return VSize(targetPosition - position) < SPEED * deltaTime;
 }
 
 //エネミーの状態
-void Enemy::eUpdate()
+void Enemy::eUpdate(float deltaTime)
 {
 	switch (enemyState)
 	{
 	case EnemyState::Crawl:
+
+		if (IsGoal(deltaTime))
+		{
+			enemyState = EnemyState::Arrival;
+		}
 		break;
 
 	case EnemyState::Arrival:
+		SetTargetPosition();
 		break;
 
 	case EnemyState::Discovery:
@@ -108,7 +132,5 @@ void Enemy::eUpdate()
 
 void Enemy::Draw()
 {
-	eUpdate();
-
 	MV1DrawModel(modelHandle);
 }
