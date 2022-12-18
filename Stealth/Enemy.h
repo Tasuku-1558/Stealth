@@ -37,10 +37,10 @@ public:
 private:
 	Enemy(const Enemy&);		//コピーコンストラクタ
 
-	void Position(Map* map);	//エネミー位置設定
+	void Position(Map* map);					//エネミー位置設定
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 	void eUpdate(float deltaTime);				//状態変化
-	void SetTargetPosition();	//移動処理
+	void SetTargetPosition();					//移動処理
 	void Finalize();
 
 	
@@ -48,7 +48,5 @@ private:
 	std::vector<VECTOR> pointList;
 
 	VECTOR targetPosition;			//目的地の座標
-
-	const float DELTA = 0.01;
 
 };

@@ -39,7 +39,6 @@ void Map::Initialize()
 	}
 
 	MapList();
-	
 }
 
 void Map::MapList()

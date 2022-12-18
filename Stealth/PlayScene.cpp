@@ -59,8 +59,6 @@ void PlayScene::Initialize()
 
 	//ヒットチェッカークラス
 	hitChecker = new HitChecker();
-
-
 }
 
 void PlayScene::Finalize()
@@ -71,13 +69,13 @@ void PlayScene::Finalize()
 
 	SafeDelete(player);
 
+	SafeDelete(map);
+
 	SafeDelete(enemy);
 
 	SafeDelete(boal);
 
 	SafeDelete(hitChecker);
-
-	SafeDelete(map);
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
@@ -93,11 +91,7 @@ void PlayScene::Activate()
 
 	camera->Activate();
 
-	map->Activate();
-
 	player->Activate();
-
-	enemy->Activate();
 
 	boal->Activate();
 	
@@ -169,5 +163,4 @@ void PlayScene::Draw()
 		return;
 	}
 
-	
 }

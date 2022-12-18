@@ -55,7 +55,6 @@ void Enemy::Position(Map* map)
 	enemyState = EnemyState::Arrival;
 }
 
-
 void Enemy::Finalize()
 {
 	MV1DeleteModel(modelHandle);
@@ -73,9 +72,16 @@ void Enemy::Update(float deltaTime)
 	//ベクトルの正規化
 	dir = VNorm(targetPosition - position);
 
-	position += dir * SPEED* deltaTime;
+	position += dir * SPEED * deltaTime;
 
 	eUpdate(deltaTime);
+
+	//z軸が逆を向いているのでdirを180度回転させる
+	MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
+	VECTOR negativeVec = VTransform(dir, rotYMat);
+
+	//モデルに回転をセット dirを向く
+	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
 }
 
 /// <summary>
@@ -83,7 +89,6 @@ void Enemy::Update(float deltaTime)
 /// </summary>
 void Enemy::SetTargetPosition()
 {
-	
 	targetPosition = *itr++;
 
 	if (itr == pointList.end())
@@ -92,14 +97,6 @@ void Enemy::SetTargetPosition()
 	}
 
 	enemyState = EnemyState::Crawl;
-
-	
-	////z軸が逆を向いているのでdirを180度回転させる
-	//MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
-	//VECTOR negativeVec = VTransform(dir, rotYMat);
-
-	////モデルに回転をセット dirを向く
-	//MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
 }
 
 //目的地に到達したならば
