@@ -24,10 +24,10 @@ enum class EnemyState
 class Enemy final : public EnemyBase
 {
 public:
-	 Enemy();		//コンストラクタ
+	 Enemy(Map* map);		//コンストラクタ
 	~Enemy();		//デストラクタ
 
-	void Initialize(Map* map);
+	void Initialize(/*Map* map*/);
 	void Activate();
 	void Update(float deltaTime);
 	void Draw();

@@ -54,8 +54,8 @@ void PlayScene::Initialize()
 	map->Initialize();
 
 	//エネミークラス
-	enemy = new Enemy();
-	enemy->Initialize(map);
+	enemy = new Enemy(map);
+	enemy->Initialize();
 
 	//ヒットチェッカークラス
 	hitChecker = new HitChecker();

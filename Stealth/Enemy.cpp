@@ -9,10 +9,11 @@ using namespace std;
 /// <summary>
 /// コンストラクタ
 /// </summary>
-Enemy::Enemy() : EnemyBase()
+Enemy::Enemy(Map* map) : EnemyBase()
 	, targetPosition()
 {
 	enemyState = EnemyState::Crawl;
+	Position(map);
 }
 
 /// <summary>
@@ -27,7 +28,7 @@ Enemy::~Enemy()
 	}
 }
 
-void Enemy::Initialize(Map* map)
+void Enemy::Initialize(/*Map* map*/)
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY_BODY));
 
@@ -37,7 +38,7 @@ void Enemy::Initialize(Map* map)
 		printfDx("モデルデータ読み込みに失敗[ENEMY_BODY]\n");
 	}
 
-	Position(map);
+	//Position(map);
 }
 
 /// <summary>
