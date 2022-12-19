@@ -5,6 +5,7 @@
 #include "Math3D.h"
 
 class Camera;
+class Shot;
 
 /// <summary>
 /// プレイヤー状態
@@ -12,7 +13,6 @@ class Camera;
 enum class PlayerState
 {
 	Nomal,
-	Damage,
 };
 
 /// <summary>
@@ -48,8 +48,10 @@ private:
 	Player(const Player&);			//コピーコンストラクタ
 
 	void Move(float deltaTime, Camera* camera);		//移動処理
-	void Shot();
+	void Shoot();							//弾の発射処理
 	void pUpdate();
+
+	Shot* shot;
 
 	int rightArmHandle;
 	VECTOR rightArmPosition;

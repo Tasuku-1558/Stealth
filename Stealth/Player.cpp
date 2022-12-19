@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Common.h"
+#include "Shot.h"
 #include "ModelManager.h"
 #include "Camera.h"
 
@@ -14,6 +15,7 @@ Player::Player() : PlayerBase()
 	, rightArmHandle(0)
 	, rightArmPosition()
 	, boalGet(false)
+	, shot(nullptr)
 {
 	playerState = PlayerState::Nomal;
 }
@@ -50,6 +52,10 @@ void Player::Initialize()
 	{
 		printfDx("モデルデータ読み込みに失敗[PLAYER_ARM]\n");
 	}
+
+	//ショットクラス
+	shot = new Shot();
+	shot->Initialize();
 }
 
 /// <summary>
@@ -62,6 +68,8 @@ void Player::Finalize()
 
 	MV1DeleteModel(rightArmHandle);
 	rightArmHandle = NULL;
+
+	shot->Finalize();
 }
 
 /// <summary>
@@ -73,6 +81,8 @@ void Player::Activate()
 	rightArmPosition = RIGHT_ARM_POSITION;
 
 	dir = DIR;
+
+	shot->Activate();
 }
 
 /// <summary>
@@ -80,13 +90,15 @@ void Player::Activate()
 /// </summary>
 void Player::Update(float deltaTime, Camera* camera)
 {
-	Move(deltaTime,camera);
+	Move(deltaTime, camera);
+
+	Shoot();
 	
 	//プレイヤーの位置をセット
 	MV1SetPosition(modelHandle, position);
 
-
 	MV1SetPosition(rightArmHandle, rightArmPosition);
+
 }
 
 /// <summary>
@@ -153,8 +165,10 @@ void Player::Move(float deltaTime, Camera* camera)
 	
 }
 
-void Player::Shot()
+//弾の発射処理
+void Player::Shoot()
 {
+	shot->Update(position);
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1)
 	{
 		
@@ -167,9 +181,6 @@ void Player::pUpdate()
 	{
 	case PlayerState::Nomal:
 		break;
-
-	case PlayerState::Damage:
-		break;
 	}
 }
 
@@ -177,10 +188,10 @@ void Player::pUpdate()
 /// 描画処理
 /// </summary>
 void Player::Draw()
-{
-	pUpdate();
-	
+{	
 	MV1DrawModel(modelHandle);
+
+	shot->Draw();
 
 	//MV1DrawModel(rightArmHandle);
 }

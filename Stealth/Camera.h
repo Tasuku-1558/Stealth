@@ -14,7 +14,6 @@ public:
 	~Camera();	//デストラクタ
 
 	void Initialize();
-	void Activate();
 	void Update(Player* player);
 
 	VECTOR GetUp() { return Up; }

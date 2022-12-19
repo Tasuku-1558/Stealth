@@ -1,8 +1,9 @@
 #include "Boal.h"
 #include "ModelManager.h"
+#include "HitChecker.h"
 
 
-const VECTOR Boal::SIZE = { 2.0f, 2.0f, 2.0f };		//モデルの倍率
+const VECTOR Boal::SIZE		= { 2.0f, 2.0f, 2.0f };		//モデルの倍率
 const VECTOR Boal::POSITION = { -1500.0f,30.0f,0.0f };	//モデルの位置
 
 Boal::Boal() : ObjectBase()
@@ -52,4 +53,21 @@ void Boal::Update()
 void Boal::Draw()
 {
 	MV1DrawModel(modelHandle);
+}
+
+/// <summary>
+/// 生きてるか死んでいるか
+/// </summary>
+/// <param name="hitChecker"></param>
+/// <returns></returns>
+bool Boal::IsAlive(HitChecker* hitChecker)
+{
+	if (hitChecker->Hit())
+	{
+		return alive = false;
+	}
+	else
+	{
+		return alive = true;
+	}
 }

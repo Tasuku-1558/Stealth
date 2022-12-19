@@ -36,11 +36,6 @@ void Camera::Initialize()
 	//SetCameraPositionAndTarget_UpVecY(INITIAL_POSITION, UP_VECTOR);
 }
 
-void Camera::Activate()
-{
-	//position = INITIAL_POSITION;
-}
-
 void Camera::Update(Player* player)
 {
 	//Qキーで左回転
@@ -48,11 +43,6 @@ void Camera::Update(Player* player)
 
 	//Eキーで右回転
 	if (CheckHitKey(KEY_INPUT_E)) { yaw -= ROTATING_VELOCITY; }
-
-
-	/*position.x = radius * cos(yaw) + player->GetPosition().x;
-	position.y = 3000.0f;
-	position.z = radius * sin(yaw) + player->GetPosition().z;*/
 
 	position = VGet(radius * cos(yaw) + player->GetPosition().x, 
 					3000.0f, 

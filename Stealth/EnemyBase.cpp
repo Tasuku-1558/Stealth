@@ -1,7 +1,7 @@
 #include "EnemyBase.h"
 
 
-const float  EnemyBase::SPEED	 = 700.0f;						//ˆÚ“®‘¬“x
+const float  EnemyBase::SPEED	 = 900.0f;						//ˆÚ“®‘¬“x
 
 EnemyBase::EnemyBase()
 {

@@ -89,8 +89,6 @@ void PlayScene::Activate()
 
 	pUpdate = &PlayScene::UpdateStart;
 
-	camera->Activate();
-
 	player->Activate();
 
 	boal->Activate();
@@ -118,7 +116,7 @@ void PlayScene::UpdateGame(float deltaTime)
 
 	camera->Update(player);
 
-	player->Update(deltaTime,camera);
+	player->Update(deltaTime, camera);
 
 	enemy->Update(deltaTime);
 	

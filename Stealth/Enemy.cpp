@@ -1,7 +1,6 @@
 #include "Enemy.h"
 #include "ModelManager.h"
 #include "Map.h"
-#include "Common.h"
 
 
 using namespace Math3d;
