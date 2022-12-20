@@ -2,7 +2,7 @@
 // ƒƒCƒ“ˆ—
 //-----------------------------------------------------------------------------
 #include "DxLib.h"
-#include "Common.h"
+#include "PreCompiledHeader.h"
 #include "ModelManager.h"
 #include "PlayScene.h"
 

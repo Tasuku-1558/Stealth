@@ -16,7 +16,7 @@ public:
 
 	  const VECTOR& GetPosition() const; 	//positionÇÃgetter
 	  const VECTOR& GetDir() const;			//dirÇÃgetter
-	  const int& GetModelHandle() const;
+	 
 
 protected:
 	VECTOR position;						//åªç›ÇÃç¿ïW

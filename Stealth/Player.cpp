@@ -1,6 +1,6 @@
 #include "Player.h"
-#include "Common.h"
-#include "Shot.h"
+#include "PreCompiledHeader.h"
+#include "Bullet.h"
 #include "ModelManager.h"
 #include "Camera.h"
 
@@ -15,7 +15,7 @@ Player::Player() : PlayerBase()
 	, rightArmHandle(0)
 	, rightArmPosition()
 	, boalGet(false)
-	, shot(nullptr)
+	, bullet(nullptr)
 {
 	playerState = PlayerState::Nomal;
 }
@@ -54,8 +54,8 @@ void Player::Initialize()
 	}
 
 	//ショットクラス
-	shot = new Shot();
-	shot->Initialize();
+	bullet = new Bullet();
+	bullet->Initialize();
 }
 
 /// <summary>
@@ -69,7 +69,7 @@ void Player::Finalize()
 	MV1DeleteModel(rightArmHandle);
 	rightArmHandle = NULL;
 
-	shot->Finalize();
+	bullet->Finalize();
 }
 
 /// <summary>
@@ -82,7 +82,7 @@ void Player::Activate()
 
 	dir = DIR;
 
-	shot->Activate();
+	bullet->Activate();
 }
 
 /// <summary>
@@ -165,13 +165,15 @@ void Player::Move(float deltaTime, Camera* camera)
 	
 }
 
-//弾の発射処理
+/// <summary>
+/// 弾の発射処理
+/// </summary>
 void Player::Shoot()
 {
-	shot->Update(position);
+	
 	if (CheckHitKey(KEY_INPUT_SPACE) == 1)
 	{
-		
+		bullet->Update();
 	}
 }
 
@@ -191,7 +193,7 @@ void Player::Draw()
 {	
 	MV1DrawModel(modelHandle);
 
-	shot->Draw();
+	bullet->Draw();
 
 	//MV1DrawModel(rightArmHandle);
 }

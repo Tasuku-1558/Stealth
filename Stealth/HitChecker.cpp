@@ -1,7 +1,7 @@
 #include "HitChecker.h"
 #include "Player.h"
 #include "Boal.h"
-#include "Common.h"
+#include "PreCompiledHeader.h"
 #include <math.h>
 
 

@@ -1,7 +1,7 @@
 #include "PlayScene.h"
 #include "DxLib.h"
 
-#include "Common.h"
+#include "PreCompiledHeader.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Camera.h"
@@ -120,7 +120,7 @@ void PlayScene::UpdateGame(float deltaTime)
 
 	enemy->Update(deltaTime);
 	
-	if (!hitChecker->Hit())
+	if (boal->IsAlive(hitChecker))
 	{
 		boal->Update();
 	}
@@ -151,7 +151,7 @@ void PlayScene::Draw()
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 250, GetColor(255, 0, 0), font, "Boal : %d", hitChecker->Hit());
 
-	if (!hitChecker->Hit())
+	if (boal->IsAlive(hitChecker))
 	{
 		//ƒ{[ƒ‹•`‰æ
 		boal->Draw();

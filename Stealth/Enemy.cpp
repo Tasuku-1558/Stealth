@@ -28,7 +28,7 @@ Enemy::~Enemy()
 	}
 }
 
-void Enemy::Initialize(/*Map* map*/)
+void Enemy::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY_BODY));
 
@@ -37,8 +37,6 @@ void Enemy::Initialize(/*Map* map*/)
 	{
 		printfDx("モデルデータ読み込みに失敗[ENEMY_BODY]\n");
 	}
-
-	//Position(map);
 }
 
 /// <summary>
@@ -99,13 +97,20 @@ void Enemy::SetTargetPosition()
 	enemyState = EnemyState::Crawl;
 }
 
-//目的地に到達したならば
+/// <summary>
+/// 目的地に到達したならば
+/// </summary>
+/// <param name="deltaTime"></param>
+/// <returns></returns>
 bool Enemy::IsGoal(float deltaTime)
 {
 	return VSize(targetPosition - position) < SPEED * deltaTime;
 }
 
-//エネミーの状態
+/// <summary>
+/// エネミーの状態
+/// </summary>
+/// <param name="deltaTime"></param>
 void Enemy::eUpdate(float deltaTime)
 {
 	switch (enemyState)
@@ -127,6 +132,9 @@ void Enemy::eUpdate(float deltaTime)
 	}
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
 void Enemy::Draw()
 {
 	MV1DrawModel(modelHandle);

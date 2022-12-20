@@ -5,7 +5,7 @@
 #include "Math3D.h"
 
 class Camera;
-class Shot;
+class Bullet;
 
 /// <summary>
 /// ƒvƒŒƒCƒ„[ó‘Ô
@@ -51,7 +51,7 @@ private:
 	void Shoot();							//’e‚Ì”­Ëˆ—
 	void pUpdate();
 
-	Shot* shot;
+	Bullet* bullet;
 
 	int rightArmHandle;
 	VECTOR rightArmPosition;

@@ -27,7 +27,7 @@ public:
 	 Enemy(Map* map);		//コンストラクタ
 	~Enemy();		//デストラクタ
 
-	void Initialize(/*Map* map*/);
+	void Initialize();
 	void Activate();
 	void Update(float deltaTime);
 	void Draw();
