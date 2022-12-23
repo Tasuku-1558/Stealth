@@ -3,7 +3,7 @@
 #include "ObjectBase.h"
 #include "Math3D.h"
 
-class Player;
+class Boal;
 
 /// <summary>
 /// プレイヤーショットクラス
@@ -16,14 +16,14 @@ public:
 
 	void Initialize();
 	void Finalize();
-	void Activate(/*Player* player*/);
-	void Update();
+	void Activate(VECTOR inPosition, VECTOR inDir);
+	void Update(float deltaTime, Boal* boal);
 	void Draw();
 
 
 private:
 
-	void OnShot();			//球が撃たれた時
+	void OnShot(float deltaTime);			//球が撃たれた時
 
 	//静的定数
 	static const VECTOR SIZE;           //モデルの倍率

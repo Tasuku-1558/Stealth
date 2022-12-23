@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "ModelManager.h"
 #include "Camera.h"
+#include "Boal.h"
 
 using namespace Math3d;
 
@@ -82,23 +83,23 @@ void Player::Activate()
 
 	dir = DIR;
 
-	bullet->Activate();
+	
 }
 
 /// <summary>
 /// 更新処理
 /// </summary>
-void Player::Update(float deltaTime, Camera* camera)
+void Player::Update(float deltaTime, Camera* camera, Boal* boal)
 {
 	Move(deltaTime, camera);
 
-	Shoot();
+	Shoot(deltaTime, boal);
 	
 	//プレイヤーの位置をセット
 	MV1SetPosition(modelHandle, position);
 
 	MV1SetPosition(rightArmHandle, rightArmPosition);
-
+	
 }
 
 /// <summary>
@@ -152,7 +153,9 @@ void Player::Move(float deltaTime, Camera* camera)
 		position += inputDirection * SPEED * deltaTime;
 
 		rightArmPosition += inputDirection * SPEED * deltaTime;
-
+		
+		bullet->Activate(position, dir);
+		
 	}
 
 	//z軸が逆を向いているのでdirを180度回転させる
@@ -168,13 +171,14 @@ void Player::Move(float deltaTime, Camera* camera)
 /// <summary>
 /// 弾の発射処理
 /// </summary>
-void Player::Shoot()
+void Player::Shoot(float deltaTime, Boal* boal)
 {
-	
-	if (CheckHitKey(KEY_INPUT_SPACE) == 1)
+	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
-		bullet->Update();
+		bullet->Update(deltaTime, boal);
+
 	}
+	
 }
 
 void Player::pUpdate()

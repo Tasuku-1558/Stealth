@@ -116,11 +116,13 @@ void PlayScene::UpdateGame(float deltaTime)
 
 	camera->Update(player);
 
-	player->Update(deltaTime, camera);
+	player->Update(deltaTime, camera, boal);
 
 	enemy->Update(deltaTime);
 	
-	if (boal->IsAlive(hitChecker))
+	hitChecker->Check(player, boal);
+
+	if (boal->GetAlive())
 	{
 		boal->Update();
 	}
@@ -128,8 +130,6 @@ void PlayScene::UpdateGame(float deltaTime)
 	{
 		return;
 	}
-
-	hitChecker->Check(player, boal);
 
 }
 
@@ -151,7 +151,7 @@ void PlayScene::Draw()
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 250, GetColor(255, 0, 0), font, "Boal : %d", hitChecker->Hit());
 
-	if (boal->IsAlive(hitChecker))
+	if (boal->GetAlive())
 	{
 		//ƒ{[ƒ‹•`‰æ
 		boal->Draw();

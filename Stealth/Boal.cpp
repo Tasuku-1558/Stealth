@@ -59,15 +59,14 @@ void Boal::Draw()
 /// ¶‚«‚Ä‚é‚©€‚ñ‚Å‚¢‚é‚©
 /// </summary>
 /// <param name="hitChecker"></param>
-/// <returns></returns>
-bool Boal::IsAlive(HitChecker* hitChecker)
+void Boal::IsAlive(HitChecker* hitChecker)
 {
 	if (hitChecker->Hit())
 	{
-		return alive = false;
+		alive = false;
 	}
 	else
 	{
-		return alive = true;
+		alive = true;
 	}
 }

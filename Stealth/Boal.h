@@ -19,9 +19,11 @@ public:
 	void Update();
 	void Draw();
 
-	bool IsAlive(HitChecker* hitChecker);			//¶‚«‚Ä‚é‚©€‚ñ‚Å‚¢‚é‚©
+	bool GetAlive() { return alive; }
 
 private:
+
+	void IsAlive(HitChecker* hitChecker);			//¶‚«‚Ä‚é‚©€‚ñ‚Å‚¢‚é‚©
 
 	bool alive;			//ƒ{[ƒ‹‚ª¶‚«‚Ä‚é‚©€‚ñ‚Å‚¢‚é‚©
 

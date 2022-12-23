@@ -1,10 +1,10 @@
 #include "Bullet.h"
 #include "ModelManager.h"
-#include "Player.h"
+#include "Boal.h"
 
 
 const VECTOR Bullet::SIZE  = { 2.0f, 2.0f, 2.0f };		//モデルの倍率
-const float  Bullet::SPEED = 50.0f;						//モデルのスピード
+const float  Bullet::SPEED = 800.0f;						//モデルのスピード
 
 
 using namespace Math3d;
@@ -41,27 +41,35 @@ void Bullet::Finalize()
 	modelHandle = NULL;
 }
 
-void Bullet::Activate(/*Player* player*/)
+void Bullet::Activate(VECTOR inPosition, VECTOR inDir)
 {
-	//position = player->GetPosition();
-	//dir = player->GetDir();
-	dir = VGet(-1.0f, 0.0f, 0.0f);
+	position = inPosition;
+	dir = inDir;
+	
 }
 
-void Bullet::Update()
+void Bullet::Update(float deltaTime, Boal* boal)
 {
-	OnShot();
+	if (!boal->GetAlive())
+	{
+		OnShot(deltaTime);
+	}
+	else
+	{
+		return;
+	}
 	
 }
 
 /// <summary>
 /// 球が撃たれた時
 /// </summary>
-void Bullet::OnShot()
+void Bullet::OnShot(float deltaTime)
 {
-	position += dir * SPEED;
+	position += dir * deltaTime * SPEED;
 
 	MV1SetPosition(modelHandle, position);
+	
 }
 
 void Bullet::Draw()

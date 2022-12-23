@@ -36,7 +36,7 @@ void HitChecker::BoalAndPlayer(Player* player, Boal* boal)
 	direction = sqrt(pow(posX, 2) + pow(posZ, 2));
 	
 	//ƒ{[ƒ‹‚ğŠ‚µ‚Ä‚¢‚È‚¢‚È‚ç‚Î
-	if (!possessionBoal)
+	//if (!possessionBoal)
 	{
 		if (direction < PLAYER_RADIUS + BOAL_RADIUS)
 		{

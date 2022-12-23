@@ -6,6 +6,7 @@
 
 class Camera;
 class Bullet;
+class Boal;
 
 /// <summary>
 /// プレイヤー状態
@@ -27,7 +28,7 @@ public:
 	void Initialize();
 	void Finalize();
 	void Activate();
-	void Update(float deltaTime, Camera* camera);
+	void Update(float deltaTime, Camera* camera, Boal* boal);
 	void Draw();
 
 	/*VECTOR GetUp() { return UP; }
@@ -48,7 +49,7 @@ private:
 	Player(const Player&);			//コピーコンストラクタ
 
 	void Move(float deltaTime, Camera* camera);		//移動処理
-	void Shoot();							//弾の発射処理
+	void Shoot(float deltaTime, Boal* boal);							//弾の発射処理
 	void pUpdate();
 
 	Bullet* bullet;
