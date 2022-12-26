@@ -3,7 +3,7 @@
 
 
 const string ModelManager::MODEL_FOLDER_PATH ="data/model/";      //modelフォルダまでのパス
-const string ModelManager::PLAYER_BODY_PATH  = "player_body.mv1";        //player_bodyモデルファイルのパス
+const string ModelManager::PLAYER_BODY_PATH  = "player_body.mv1"; //player_bodyモデルファイルのパス
 const string ModelManager::PLAYER_ARM_PATH   = "arm.mv1";         //player_armモデルファイルのパス
 const string ModelManager::ENEMY_BODY_PATH   = "enemy_body.mv1";  //enemy_bodyモデルファイルのパス
 const string ModelManager::BOAL_PATH         = "boal.mv1";        //boalモデルファイルのパス
@@ -30,20 +30,20 @@ ModelManager& ModelManager::GetInstance()
 void ModelManager::LoadAllModel()
 {
     //モデルファイルのパス
-    string FailePath = MODEL_FOLDER_PATH + PLAYER_BODY_PATH;
-    modelHandle[PLAYER_BODY] = MV1LoadModel(FailePath.c_str());
+    string failePath = MODEL_FOLDER_PATH + PLAYER_BODY_PATH;
+    modelHandle[PLAYER_BODY] = MV1LoadModel(failePath.c_str());
 
-    FailePath = MODEL_FOLDER_PATH + PLAYER_ARM_PATH;
-    modelHandle[PLAYER_ARM] = MV1LoadModel(FailePath.c_str());
+    failePath = MODEL_FOLDER_PATH + PLAYER_ARM_PATH;
+    modelHandle[PLAYER_ARM] = MV1LoadModel(failePath.c_str());
 
-    FailePath = MODEL_FOLDER_PATH + ENEMY_BODY_PATH;
-    modelHandle[ENEMY_BODY] = MV1LoadModel(FailePath.c_str());
+    failePath = MODEL_FOLDER_PATH + ENEMY_BODY_PATH;
+    modelHandle[ENEMY_BODY] = MV1LoadModel(failePath.c_str());
 
-    FailePath = MODEL_FOLDER_PATH + BOAL_PATH;
-    modelHandle[BOAL] = MV1LoadModel(FailePath.c_str());
+    failePath = MODEL_FOLDER_PATH + BOAL_PATH;
+    modelHandle[BOAL] = MV1LoadModel(failePath.c_str());
 
-    FailePath = MODEL_FOLDER_PATH + STAGE1_PATH;
-    modelHandle[STAGE1] = MV1LoadModel(FailePath.c_str());
+    failePath = MODEL_FOLDER_PATH + STAGE1_PATH;
+    modelHandle[STAGE1] = MV1LoadModel(failePath.c_str());
 
     //読み込み失敗ならエラー
     for (int i = 0; i < MODEL_AMOUNT; ++i)

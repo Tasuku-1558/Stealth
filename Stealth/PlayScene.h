@@ -9,6 +9,7 @@ class Light;
 class Boal;
 class HitChecker;
 class Map;
+class UiManager;
 
 /// <summary>
 /// プレイシーンクラス
@@ -42,7 +43,7 @@ private:
 	Boal* boal;
 	HitChecker* hitChecker;
 	Map* map;
-
+	UiManager* uiManager;
 
 	void UpdateStart(float deltaTime);				//ゲーム開始前
 	void UpdateGame(float deltaTime);				//ゲーム中

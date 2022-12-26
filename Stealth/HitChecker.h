@@ -13,17 +13,16 @@ public:
 	 HitChecker();
 	~HitChecker();
 
-	void Check(Player* player, Boal* boal);
+	void Check(Player* player, Boal* boal);			//衝突判定
 	bool Hit() { return hit; }
 
-	//デバック用
-	bool PossessionBoal() { return possessionBoal; }
 
 private:
 
 	HitChecker(const HitChecker&);		//コピーコンストラクタ
 
-	void BoalAndPlayer(Player* player, Boal* boal);
+	void BoalAndPlayer(Player* player, Boal* boal);			//ボールとプレイヤーの当たり判定
+	void MapAndPlayer();
 
 	double direction;
 	bool hit;				//衝突したならば

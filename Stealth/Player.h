@@ -56,7 +56,7 @@ private:
 
 	int rightArmHandle;
 	VECTOR rightArmPosition;
-	bool boalGet;
+	
 
 
 	static const VECTOR RIGHT_ARM_POSITION;

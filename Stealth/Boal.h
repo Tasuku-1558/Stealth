@@ -16,7 +16,7 @@ public:
 	void Initialize();
 	void Finalize();
 	void Activate();
-	void Update();
+	void Update(HitChecker* hitChecker);
 	void Draw();
 
 	bool GetAlive() { return alive; }

@@ -9,6 +9,7 @@
 #include "Boal.h"
 #include "HitChecker.h"
 #include "Map.h"
+#include "UiManager.h"
 
 PlayScene::PlayScene()
 		: SceneBase()
@@ -21,6 +22,7 @@ PlayScene::PlayScene()
 		, boal(nullptr)
 		, hitChecker(nullptr)
 		, map(nullptr)
+		, uiManager(nullptr)
 		, font(0)
 {
 	//処理なし
@@ -59,6 +61,10 @@ void PlayScene::Initialize()
 
 	//ヒットチェッカークラス
 	hitChecker = new HitChecker();
+
+	//UI管理クラス
+	uiManager = new UiManager();
+	uiManager->Initialize();
 }
 
 void PlayScene::Finalize()
@@ -76,6 +82,8 @@ void PlayScene::Finalize()
 	SafeDelete(boal);
 
 	SafeDelete(hitChecker);
+
+	SafeDelete(uiManager);
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
@@ -103,17 +111,22 @@ void PlayScene::Update(float deltaTime)
 	}
 }
 
-//ゲーム開始前
+/// <summary>
+/// ゲーム開始前
+/// </summary>
+/// <param name="deltaTime"></param>
 void PlayScene::UpdateStart(float deltaTime)
 {
 	state = GAME;
 	pUpdate = &PlayScene::UpdateGame;
 }
 
-//ゲーム中
+/// <summary>
+/// ゲーム中
+/// </summary>
+/// <param name="deltaTime"></param>
 void PlayScene::UpdateGame(float deltaTime)
 {
-
 	camera->Update(player);
 
 	player->Update(deltaTime, camera, boal);
@@ -124,13 +137,13 @@ void PlayScene::UpdateGame(float deltaTime)
 
 	if (boal->GetAlive())
 	{
-		boal->Update();
+		boal->Update(hitChecker);
 	}
 	else
 	{
 		return;
 	}
-
+	
 }
 
 void PlayScene::Draw()
@@ -144,12 +157,15 @@ void PlayScene::Draw()
 	//エネミー描画
 	enemy->Draw();
 
+	//UI管理クラス描画
+	uiManager->Draw(state);
+
 	//デバック用
 	DrawFormatStringToHandle(100, 50, GetColor(255, 0, 0), font, "X : %d", player->GetX());
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Found : %d", player->GetFind());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
-	DrawFormatStringToHandle(100, 250, GetColor(255, 0, 0), font, "Boal : %d", hitChecker->Hit());
+	DrawFormatStringToHandle(100, 250, GetColor(255, 0, 0), font, "Alive : %d \n(1:true 0:false)", boal->GetAlive());
 
 	if (boal->GetAlive())
 	{
@@ -160,5 +176,6 @@ void PlayScene::Draw()
 	{
 		return;
 	}
+
 
 }

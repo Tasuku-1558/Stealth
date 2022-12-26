@@ -15,7 +15,6 @@ const VECTOR Player::RIGHT_ARM_POSITION = { 150.0f, 0.0f, 110.0f };
 Player::Player() : PlayerBase()
 	, rightArmHandle(0)
 	, rightArmPosition()
-	, boalGet(false)
 	, bullet(nullptr)
 {
 	playerState = PlayerState::Nomal;
@@ -57,6 +56,7 @@ void Player::Initialize()
 	//ショットクラス
 	bullet = new Bullet();
 	bullet->Initialize();
+
 }
 
 /// <summary>
@@ -83,7 +83,6 @@ void Player::Activate()
 
 	dir = DIR;
 
-	
 }
 
 /// <summary>
@@ -99,7 +98,9 @@ void Player::Update(float deltaTime, Camera* camera, Boal* boal)
 	MV1SetPosition(modelHandle, position);
 
 	MV1SetPosition(rightArmHandle, rightArmPosition);
-	
+
+	bullet->Activate(position, dir);
+
 }
 
 /// <summary>
@@ -112,23 +113,23 @@ void Player::Move(float deltaTime, Camera* camera)
 	inputFlag = false;
 	
 	//上下
-	if (CheckHitKey(KEY_INPUT_UP))
+	if (CheckHitKey(KEY_INPUT_W))
 	{
 		inputDirection += camera->GetUp();
 		inputFlag = true;
 	}
-	if (CheckHitKey(KEY_INPUT_DOWN))
+	if (CheckHitKey(KEY_INPUT_S))
 	{
 		inputDirection += camera->GetDown();
 		inputFlag = true;
 	}
 	//左右
-	if (CheckHitKey(KEY_INPUT_RIGHT))
+	if (CheckHitKey(KEY_INPUT_D))
 	{
 		inputDirection += camera->GetRight();
 		inputFlag = true;
 	}
-	if (CheckHitKey(KEY_INPUT_LEFT))
+	if (CheckHitKey(KEY_INPUT_A))
 	{
 		inputDirection += camera->GetLeft();
 		inputFlag = true;
@@ -154,8 +155,6 @@ void Player::Move(float deltaTime, Camera* camera)
 
 		rightArmPosition += inputDirection * SPEED * deltaTime;
 		
-		bullet->Activate(position, dir);
-		
 	}
 
 	//z軸が逆を向いているのでdirを180度回転させる
@@ -173,12 +172,14 @@ void Player::Move(float deltaTime, Camera* camera)
 /// </summary>
 void Player::Shoot(float deltaTime, Boal* boal)
 {
-	if (CheckHitKey(KEY_INPUT_SPACE))
+	int mouse = GetMouseInput();
+
+	if (mouse && MOUSE_INPUT_LEFT)
 	{
 		bullet->Update(deltaTime, boal);
 
+
 	}
-	
 }
 
 void Player::pUpdate()

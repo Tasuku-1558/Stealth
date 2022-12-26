@@ -18,16 +18,23 @@ HitChecker::~HitChecker()
 	//処理なし
 }
 
-//衝突判定
+/// <summary>
+/// 衝突判定
+/// </summary>
+/// <param name="player"></param>
+/// <param name="boal"></param>
 void HitChecker::Check(Player* player, Boal* boal)
 {
 	BoalAndPlayer(player, boal);
 }
 
-//ボールとプレイヤーの当たり判定
+/// <summary>
+/// ボールとプレイヤーの当たり判定
+/// </summary>
+/// <param name="player"></param>
+/// <param name="boal"></param>
 void HitChecker::BoalAndPlayer(Player* player, Boal* boal)
 {
-	
 	//プレイヤーからボールの座標を引いた値を取得
 	double posX = player->GetPosition().x - boal->GetPosition().x;
 	double posZ = player->GetPosition().z - boal->GetPosition().z;
@@ -40,7 +47,6 @@ void HitChecker::BoalAndPlayer(Player* player, Boal* boal)
 	{
 		if (direction < PLAYER_RADIUS + BOAL_RADIUS)
 		{
-			printfDx("hit");
 			hit = true;
 		}
 		else
@@ -49,4 +55,8 @@ void HitChecker::BoalAndPlayer(Player* player, Boal* boal)
 		}
 	}
 	
+}
+
+void HitChecker::MapAndPlayer()
+{
 }

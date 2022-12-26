@@ -11,6 +11,7 @@ using namespace std;
 /// </summary>
 Enemy::Enemy(Map* map) : EnemyBase()
 	, targetPosition()
+	, playerCount(0)
 {
 	enemyState = EnemyState::Crawl;
 	Position(map);
@@ -80,6 +81,8 @@ void Enemy::Update(float deltaTime)
 
 	//ƒ‚ƒfƒ‹‚É‰ñ“]‚ðƒZƒbƒg dir‚ðŒü‚­
 	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
+
+	
 }
 
 /// <summary>
@@ -105,6 +108,11 @@ void Enemy::SetTargetPosition()
 bool Enemy::IsGoal(float deltaTime)
 {
 	return VSize(targetPosition - position) < SPEED * deltaTime;
+}
+
+//Ž‹–ìŠpŒvŽZ
+void Enemy::VisualAngle()
+{
 }
 
 /// <summary>

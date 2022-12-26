@@ -14,7 +14,10 @@ ObjectBase::~ObjectBase()
 	//処理なし
 }
 
-//ゲッター関数群
+/// <summary>
+/// ゲッター関数群
+/// </summary>
+/// <returns></returns>
 const VECTOR& ObjectBase::GetPosition() const
 {
 	return position;

@@ -45,9 +45,11 @@ void Boal::Activate()
 	position = POSITION;
 }
 
-void Boal::Update()
+void Boal::Update(HitChecker* hitChecker)
 {
 	MV1SetPosition(modelHandle, position);
+
+	IsAlive(hitChecker);
 }
 
 void Boal::Draw()

@@ -2,7 +2,12 @@
 
 namespace Math3d
 {
-	// ベクトル同士の加算
+	/// <summary>
+	/// ベクトル同士の加算
+	/// </summary>
+	/// <param name="lhs"></param>
+	/// <param name="rhs"></param>
+	/// <returns></returns>
 	VECTOR operator+(const VECTOR& lhs, const VECTOR& rhs)
 	{
 		VECTOR ret;
@@ -12,7 +17,12 @@ namespace Math3d
 		return ret;
 	}
 
-	// ベクトル同士の減算
+	/// <summary>
+	/// ベクトル同士の減算
+	/// </summary>
+	/// <param name="lhs"></param>
+	/// <param name="rhs"></param>
+	/// <returns></returns>
 	VECTOR operator-(const VECTOR& lhs, const VECTOR& rhs)
 	{
 		VECTOR ret;
@@ -22,7 +32,12 @@ namespace Math3d
 		return ret;
 	}
 
-	// ベクトルのスカラー倍
+	/// <summary>
+	/// ベクトルのスカラー倍
+	/// </summary>
+	/// <param name="s"></param>
+	/// <param name="rhs"></param>
+	/// <returns></returns>
 	VECTOR operator*(float s, const VECTOR& rhs)
 	{
 		VECTOR ret;
@@ -32,7 +47,12 @@ namespace Math3d
 		return ret;
 	}
 
-	// ベクトルのスカラー倍
+	/// <summary>
+	/// ベクトルのスカラー倍
+	/// </summary>
+	/// <param name="lhs"></param>
+	/// <param name="s"></param>
+	/// <returns></returns>
 	VECTOR operator*(const VECTOR& lhs, float s)
 	{
 		VECTOR ret;
@@ -42,14 +62,24 @@ namespace Math3d
 		return ret;
 	}
 
-	// += VECTORの演算子
+	/// <summary>
+	/// += VECTORの演算子
+	/// </summary>
+	/// <param name="lhs"></param>
+	/// <param name="rhs"></param>
+	/// <returns></returns>
 	VECTOR operator+=(VECTOR& lhs, const VECTOR& rhs)
 	{
 		lhs = lhs + rhs;
 		return lhs;
 	}
 
-	// *= VECTORのスカラー倍の複合代入演算子
+	/// <summary>
+	/// *= VECTORのスカラー倍の複合代入演算子
+	/// </summary>
+	/// <param name="lhs"></param>
+	/// <param name="rhs"></param>
+	/// <returns></returns>
 	VECTOR operator*=(VECTOR& lhs, float rhs)
 	{
 		lhs = lhs * rhs;

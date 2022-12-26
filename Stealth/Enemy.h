@@ -41,6 +41,7 @@ private:
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 	void eUpdate(float deltaTime);				//状態変化
 	void SetTargetPosition();					//移動処理
+	void VisualAngle();							//視野角計算
 	void Finalize();
 
 	
@@ -48,5 +49,7 @@ private:
 	std::vector<VECTOR> pointList;
 
 	VECTOR targetPosition;			//目的地の座標
+
+	int playerCount;
 
 };
