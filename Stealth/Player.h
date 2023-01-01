@@ -7,13 +7,16 @@
 class Camera;
 class Bullet;
 class Boal;
+class Enemy;
+
 
 /// <summary>
-/// プレイヤー状態
+/// カーソルの状態
 /// </summary>
-enum class PlayerState
+enum class Cursor
 {
-	Nomal,
+	SELECTION,
+	PUSH,
 };
 
 /// <summary>
@@ -22,19 +25,15 @@ enum class PlayerState
 class Player final : public PlayerBase
 {
 public:
-	 Player();		//コンストラクタ
+	 Player(Object PLAYER);		//コンストラクタ
 	~Player();		//デストラクタ
 
 	void Initialize();
 	void Finalize();
 	void Activate();
-	void Update(float deltaTime, Camera* camera, Boal* boal);
+	void Update(float deltaTime, Camera* camera, Boal* boal, Enemy* enemy);
 	void Draw();
-
-	/*VECTOR GetUp() { return UP; }
-	VECTOR GetDown() { return DOWN; }
-	VECTOR GetLeft() { return LEFT; }
-	VECTOR GetRight() { return RIGHT; }*/
+	bool Geta() { return a; }
 
 	//デバック用
 	int GetX() { return position.x; }
@@ -43,21 +42,22 @@ public:
 	int GetSpeed() { return SPEED; }
 
 
-	enum class PlayerState playerState;
+	enum class Cursor cursor;
 
 private:
-	Player(const Player&);			//コピーコンストラクタ
+	Player(const Player&);							//コピーコンストラクタ
 
 	void Move(float deltaTime, Camera* camera);		//移動処理
-	void Shoot(float deltaTime, Boal* boal);							//弾の発射処理
-	void pUpdate();
+	void Shoot(float deltaTime, Boal* boal);		//弾の発射処理
+	void FoundEnemy(Enemy* enemy);					//エネミーに見つかる
+	void cUpdate(Boal* boal);
 
 	Bullet* bullet;
 
 	int rightArmHandle;
 	VECTOR rightArmPosition;
-	
-
+	int count;
+	bool a;
 
 	static const VECTOR RIGHT_ARM_POSITION;
 };

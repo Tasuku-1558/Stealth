@@ -4,6 +4,7 @@
 #include "ModelManager.h"
 #include "Camera.h"
 #include "Boal.h"
+#include "Enemy.h"
 
 using namespace Math3d;
 
@@ -12,12 +13,15 @@ const VECTOR Player::RIGHT_ARM_POSITION = { 150.0f, 0.0f, 110.0f };
 /// <summary>
 /// コンストラクタ
 /// </summary>
-Player::Player() : PlayerBase()
+/// <param name="PLAYER"></param>
+Player::Player(Object PLAYER) : PlayerBase()
 	, rightArmHandle(0)
 	, rightArmPosition()
 	, bullet(nullptr)
+	, count(0)
+	, a(false)
 {
-	playerState = PlayerState::Nomal;
+	cursor = Cursor::SELECTION;
 }
 
 /// <summary>
@@ -54,7 +58,7 @@ void Player::Initialize()
 	}
 
 	//ショットクラス
-	bullet = new Bullet();
+	bullet = new Bullet(ObjectBase::BOAL);
 	bullet->Initialize();
 
 }
@@ -88,24 +92,33 @@ void Player::Activate()
 /// <summary>
 /// 更新処理
 /// </summary>
-void Player::Update(float deltaTime, Camera* camera, Boal* boal)
+/// <param name="deltaTime"></param>
+/// <param name="camera"></param>
+/// <param name="boal"></param>
+void Player::Update(float deltaTime, Camera* camera, Boal* boal, Enemy* enemy)
 {
 	Move(deltaTime, camera);
 
 	Shoot(deltaTime, boal);
+
+	FoundEnemy(enemy);
+
+	cUpdate(boal);
 	
 	//プレイヤーの位置をセット
 	MV1SetPosition(modelHandle, position);
 
 	MV1SetPosition(rightArmHandle, rightArmPosition);
 
-	bullet->Activate(position, dir);
+	bullet->Activate();
 
 }
 
 /// <summary>
 /// 移動処理
 /// </summary>
+/// <param name="deltaTime"></param>
+/// <param name="camera"></param>
 void Player::Move(float deltaTime, Camera* camera)
 {
 	inputDirection = ZERO_VECTOR;
@@ -153,8 +166,6 @@ void Player::Move(float deltaTime, Camera* camera)
 		//十字キーの移動方向に移動
 		position += inputDirection * SPEED * deltaTime;
 
-		rightArmPosition += inputDirection * SPEED * deltaTime;
-		
 	}
 
 	//z軸が逆を向いているのでdirを180度回転させる
@@ -170,23 +181,46 @@ void Player::Move(float deltaTime, Camera* camera)
 /// <summary>
 /// 弾の発射処理
 /// </summary>
+/// <param name="deltaTime"></param>
+/// <param name="boal"></param>
 void Player::Shoot(float deltaTime, Boal* boal)
 {
-	int mouse = GetMouseInput();
-
-	if (mouse && MOUSE_INPUT_LEFT)
+	//マウスカーソルを左クリックしたならば
+	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
 	{
 		bullet->Update(deltaTime, boal);
+		cursor = Cursor::PUSH;
+		
+		
+	}
 
+	bullet->MouseMove(boal);
+}
 
+/// <summary>
+/// エネミーに見つかる
+/// </summary>
+/// <param name="enemy"></param>
+void Player::FoundEnemy(Enemy* enemy)
+{
+	if (enemy->Discovery())
+	{
+		WaitTimer(1000);
+
+		//位置と向きを初期化
+		position = ZERO_VECTOR;
+		dir = DIR;
 	}
 }
 
-void Player::pUpdate()
+void Player::cUpdate(Boal* boal)
 {
-	switch (playerState)
+	switch (cursor)
 	{
-	case PlayerState::Nomal:
+	case Cursor::SELECTION:
+		break;
+
+	case Cursor::PUSH:
 		break;
 	}
 }
@@ -200,5 +234,8 @@ void Player::Draw()
 
 	bullet->Draw();
 
-	//MV1DrawModel(rightArmHandle);
+	//デバック用
+	DrawFormatString(100, 500, GetColor(255, 0, 0), "mouseX : %d", bullet->GetMX());
+	DrawFormatString(100, 600, GetColor(255, 0, 0), "mouseY : %d", bullet->GetMY());
+
 }

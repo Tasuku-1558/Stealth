@@ -1,19 +1,24 @@
 #include "Enemy.h"
 #include "ModelManager.h"
 #include "Map.h"
+#include "Player.h"
 
 
 using namespace Math3d;
 using namespace std;
 
 /// <summary>
-/// コンストラクタ
+/// コンストラク
 /// </summary>
+/// <param name="map"></param>
 Enemy::Enemy(Map* map) : EnemyBase()
+	, object()
 	, targetPosition()
+	, length(400.0f)
+	, discovery(false)
 	, playerCount(0)
 {
-	enemyState = EnemyState::Crawl;
+	enemyState = EnemyState::CRAWL;
 	Position(map);
 }
 
@@ -43,6 +48,7 @@ void Enemy::Initialize()
 /// <summary>
 /// エネミー位置設定
 /// </summary>
+/// <param name="map"></param>
 void Enemy::Position(Map* map)
 {
 	pointList = map->GetMap(0);		//マップから座標リストを受け取る
@@ -51,7 +57,7 @@ void Enemy::Position(Map* map)
 
 	position = *itr++;				//イテレータから敵座標を設定
 
-	enemyState = EnemyState::Arrival;
+	enemyState = EnemyState::ARRIVAL;
 }
 
 void Enemy::Finalize()
@@ -63,15 +69,17 @@ void Enemy::Activate()
 {
 }
 
-void Enemy::Update(float deltaTime)
+void Enemy::Update(float deltaTime, Player* player)
 {
 	//エネミーの位置をセット
 	MV1SetPosition(modelHandle, position);
-
+	
 	//ベクトルの正規化
 	dir = VNorm(targetPosition - position);
-
+	
 	position += dir * SPEED * deltaTime;
+
+	VisualAngle(player);
 
 	eUpdate(deltaTime);
 
@@ -81,8 +89,6 @@ void Enemy::Update(float deltaTime)
 
 	//モデルに回転をセット dirを向く
 	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
-
-	
 }
 
 /// <summary>
@@ -97,7 +103,7 @@ void Enemy::SetTargetPosition()
 		itr = pointList.begin();
 	}
 
-	enemyState = EnemyState::Crawl;
+	enemyState = EnemyState::CRAWL;
 }
 
 /// <summary>
@@ -110,9 +116,66 @@ bool Enemy::IsGoal(float deltaTime)
 	return VSize(targetPosition - position) < SPEED * deltaTime;
 }
 
-//視野角計算
-void Enemy::VisualAngle()
+/// <summary>
+/// 視野角の計算
+/// </summary>
+/// <param name="player"></param>
+void Enemy::VisualAngle(Player* player)
 {
+	//プレイヤーとエネミーの距離を取得
+	VECTOR sub = player->GetPosition() - position;
+
+	//距離をfloatに置き換え
+	float direction = VSize(sub);
+
+	//エネミーの前方とプレイヤーの位置の角度
+	float radian = VDot(player->GetPosition(), dir);
+
+	float a = RANGE_DEGREE * (float)(DX_PI / 180.0f);
+	float b = radian * (float)(DX_PI / 180.0f);
+
+
+	float range_Cos = cosf(a);
+	float radian_Cos = cosf(b);
+	discovery = false;
+
+	// 見つかっているかどうか
+	if (length > direction)
+	{
+		//printfDx("索敵範囲内");
+
+		if (radian_Cos <= range_Cos)
+		{
+			//printfDx("発見");
+			
+			Reaction(object);
+		}
+
+	}
+}
+
+/// <summary>
+/// エネミーのオブジェクトごとの反応
+/// </summary>
+/// <param name="object"></param>
+void Enemy::Reaction(Object object)
+{
+	switch (object)
+	{
+	case ObjectBase::PLAYER:
+		printfDx("PLAYER");
+		discovery = true;
+		playerCount++;
+		break;
+
+	case ObjectBase::BOAL:
+		printfDx("BOAL");
+		break;
+
+	case ObjectBase::WALL:
+		break;
+	}
+	
 }
 
 /// <summary>
@@ -123,19 +186,16 @@ void Enemy::eUpdate(float deltaTime)
 {
 	switch (enemyState)
 	{
-	case EnemyState::Crawl:
+	case EnemyState::CRAWL:
 
 		if (IsGoal(deltaTime))
 		{
-			enemyState = EnemyState::Arrival;
+			enemyState = EnemyState::ARRIVAL;
 		}
 		break;
 
-	case EnemyState::Arrival:
+	case EnemyState::ARRIVAL:
 		SetTargetPosition();
-		break;
-
-	case EnemyState::Discovery:
 		break;
 	}
 }

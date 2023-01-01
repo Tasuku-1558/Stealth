@@ -37,6 +37,9 @@ private:
 	 void LoadAllModel();						//全てのモデルの読み込み
 	 void DeleteAllModel();						//全てのモデルの削除
 
+
+	 int modelHandle[MODEL_AMOUNT];				//モデルハンドル
+
 	 //静的定数
 	 static const string MODEL_FOLDER_PATH;		//modelフォルダまでのパス
 	 static const string PLAYER_BODY_PATH;		//player_bodyモデルファイルのパス
@@ -45,6 +48,4 @@ private:
 	 static const string BOAL_PATH;				//boalモデルファイルのパス
 	 static const string STAGE1_PATH;			//stage1モデルファイルのパス
 
-
-	 int modelHandle[MODEL_AMOUNT];				//モデルハンドル
 };

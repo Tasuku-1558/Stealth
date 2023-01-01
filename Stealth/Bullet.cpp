@@ -5,17 +5,15 @@
 
 const VECTOR Bullet::SIZE  = { 2.0f, 2.0f, 2.0f };			//モデルの倍率
 const float  Bullet::SPEED = 800.0f;						//モデルのスピード
-const VECTOR Bullet::COURSOR_POSITION = { -2000.0f,0.0f,200.0f };
 const string Bullet::IMAGE_FOLDER_PATH = "data/image/";     //imageフォルダまでのパス
-const string Bullet::CURSOR_PATH = "pointer.png";		//カーソル画像のパス
+const string Bullet::CURSOR_PATH	   = "pointer.png";		//カーソル画像のパス
 
 
 using namespace Math3d;
 
-Bullet::Bullet()
-	: cursorPosition()
-	, cursorImage(0)
-	, mouseX(0)
+Bullet::Bullet(Object BOAL)
+	: cursorImage(0)
+	, mouseX(-50)
 	, mouseY(0)
 {
 	//処理なし
@@ -44,7 +42,6 @@ void Bullet::Initialize()
 
 	string failePath = IMAGE_FOLDER_PATH + CURSOR_PATH;
 	cursorImage = LoadGraph(failePath.c_str());
-
 }
 
 void Bullet::Finalize()
@@ -55,12 +52,10 @@ void Bullet::Finalize()
 	DeleteGraph(cursorImage);
 }
 
-void Bullet::Activate(VECTOR inPosition, VECTOR inDir)
+void Bullet::Activate()
 {
-	position = inPosition;
-	dir = inDir;
 	
-	cursorPosition = COURSOR_POSITION;
+	position = VGet(0.0f, 0.0f, 0.0f);
 }
 
 void Bullet::Update(float deltaTime, Boal* boal)
@@ -68,18 +63,21 @@ void Bullet::Update(float deltaTime, Boal* boal)
 	if (!boal->GetAlive())
 	{
 		OnShot(deltaTime);
-
+		//MouseMove(boal);
 	}
 	
-	Move();
 }
 
 /// <summary>
-/// マウスカーソル移動
+/// マウスカーソルの移動
 /// </summary>
-void Bullet::Move()
+/// <param name="boal"></param>
+void Bullet::MouseMove(Boal* boal)
 {
-	GetMousePoint(&mouseX, &mouseY);                //マウスの座標取得
+	if (!boal->GetAlive())
+	{
+		GetMousePoint(&mouseX, &mouseY);                //マウスの座標取得
+	}
 }
 
 /// <summary>
@@ -88,15 +86,15 @@ void Bullet::Move()
 /// <param name="deltaTime"></param>
 void Bullet::OnShot(float deltaTime)
 {
-	position += dir * deltaTime * SPEED;
+	
+	position += VGet(mouseY-2700, 0.0f, mouseX-500);
 
 	MV1SetPosition(modelHandle, position);
-	
 }
 
 void Bullet::Draw()
 {
 	MV1DrawModel(modelHandle);
 
-	DrawRotaGraph(mouseX - 20, mouseY - 20, 0.4f, 0, cursorImage, TRUE);
+	DrawRotaGraph(mouseX, mouseY, 0.04f, 0, cursorImage, TRUE);
 }

@@ -5,7 +5,7 @@
 
 /// <summary>
 /// Playerの親クラス
-/// ObjectBaseを継承
+/// ObjectBaseクラスを継承
 /// </summary>
 class PlayerBase : public ObjectBase
 {

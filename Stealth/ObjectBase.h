@@ -3,6 +3,9 @@
 #include "DxLib.h"
 
 
+/// <summary>
+/// オブジェクトベースクラス
+/// </summary>
 class ObjectBase
 {
 public:
@@ -16,11 +19,20 @@ public:
 
 	  const VECTOR& GetPosition() const; 	//positionのgetter
 	  const VECTOR& GetDir() const;			//dirのgetter
-	 
+
+
+	  //オブジェクトのタグ
+	  enum Object
+	  {
+		  PLAYER,
+		  BOAL,
+		  WALL,
+	  };
+
 
 protected:
 	VECTOR position;						//現在の座標
 	VECTOR dir;								//向きベクトル
-	int	   modelHandle;						//モデルハンドル
+	int modelHandle;						//モデルハンドル
 
 };

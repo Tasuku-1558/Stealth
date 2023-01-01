@@ -63,9 +63,11 @@ void Boal::Draw()
 /// <param name="hitChecker"></param>
 void Boal::IsAlive(HitChecker* hitChecker)
 {
+	
 	if (hitChecker->Hit())
 	{
 		alive = false;
+		
 	}
 	else
 	{

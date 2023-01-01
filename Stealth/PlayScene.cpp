@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "UiManager.h"
 
+
 PlayScene::PlayScene()
 		: SceneBase()
 		, state()
@@ -44,7 +45,7 @@ void PlayScene::Initialize()
 	light->Initialize();
 
 	//プレイヤークラス
-	player = new Player();
+	player = new Player(ObjectBase::PLAYER);
 	player->Initialize();
 
 	//ボールクラス
@@ -129,9 +130,9 @@ void PlayScene::UpdateGame(float deltaTime)
 {
 	camera->Update(player);
 
-	player->Update(deltaTime, camera, boal);
+	enemy->Update(deltaTime, player);
 
-	enemy->Update(deltaTime);
+	player->Update(deltaTime, camera, boal, enemy);
 	
 	hitChecker->Check(player, boal);
 
@@ -166,6 +167,10 @@ void PlayScene::Draw()
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Found : %d", player->GetFind());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 250, GetColor(255, 0, 0), font, "Alive : %d \n(1:true 0:false)", boal->GetAlive());
+	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "discovery : %d", enemy->Discovery());
+	DrawFormatStringToHandle(100, 450, GetColor(255, 0, 0), font, "PlayerCount : %d", enemy->GetPlayerCount());
+
+	
 
 	if (boal->GetAlive())
 	{

@@ -16,10 +16,10 @@ public:
 	void Initialize();
 	void Update(Player* player);
 
-	VECTOR GetUp() { return Up; }
-	VECTOR GetDown() { return Down; }
+	VECTOR GetUp()	  { return Up; }
+	VECTOR GetDown()  { return Down; }
 	VECTOR GetRight() { return Right; }
-	VECTOR GetLeft() { return Left; }
+	VECTOR GetLeft()  { return Left; }
 	
 private:
 

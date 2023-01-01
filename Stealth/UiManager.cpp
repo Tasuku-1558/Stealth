@@ -26,12 +26,12 @@ UiManager::~UiManager()
 void UiManager::Initialize()
 {
 	//UI画像読み込み
-	string path = FOLDER_PATH + UI_GRAPHIC_PATH; // フォルダパス + ファイル名
-	string fullPath = path;
+	string failePath = FOLDER_PATH + UI_GRAPHIC_PATH; // フォルダパス + ファイル名
+	string fullPath = failePath;
 
 	for (int i = 0; i < GRAPHIC_AMOUNT; ++i)
 	{
-		fullPath = path + std::to_string(i) + FILENAME_EXTENSION;
+		fullPath = failePath + std::to_string(i) + FILENAME_EXTENSION;
 		uiHandle[i] = LoadGraph(fullPath.c_str());
 
 		if (uiHandle[i] < 0)
