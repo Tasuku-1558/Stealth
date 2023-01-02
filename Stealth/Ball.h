@@ -7,11 +7,11 @@ class HitChecker;
 /// <summary>
 /// ボールクラス
 /// </summary>
-class Boal final : public ObjectBase
+class Ball final : public ObjectBase
 {
 public:
-	 Boal();
-	~Boal();
+	 Ball();
+	~Ball();
 
 	void Initialize();
 	void Finalize();

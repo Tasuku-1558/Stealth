@@ -1,18 +1,18 @@
-#include "Boal.h"
+#include "Ball.h"
 #include "ModelManager.h"
 #include "HitChecker.h"
 
 
-const VECTOR Boal::SIZE		= { 2.0f, 2.0f, 2.0f };		//モデルの倍率
-const VECTOR Boal::POSITION = { -1500.0f,30.0f,0.0f };	//モデルの位置
+const VECTOR Ball::SIZE		= { 2.0f, 2.0f, 2.0f };		//モデルの倍率
+const VECTOR Ball::POSITION = { -1500.0f,30.0f,0.0f };	//モデルの位置
 
-Boal::Boal() : ObjectBase()
+Ball::Ball() : ObjectBase()
 	, alive(true)
 {
 	//処理なし
 }
 
-Boal::~Boal()
+Ball::~Ball()
 {
 	// 終了処理が呼ばれていなければ
 	if (modelHandle != NULL)
@@ -21,9 +21,9 @@ Boal::~Boal()
 	}
 }
 
-void Boal::Initialize()
+void Ball::Initialize()
 {
-	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::BOAL));
+	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::BALL));
 	MV1SetScale(modelHandle, SIZE);
 
 
@@ -34,43 +34,43 @@ void Boal::Initialize()
 	}
 }
 
-void Boal::Finalize()
+void Ball::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 	modelHandle = NULL;
 }
 
-void Boal::Activate()
+void Ball::Activate()
 {
 	position = POSITION;
 }
 
-void Boal::Update(HitChecker* hitChecker)
+void Ball::Update(HitChecker* hitChecker)
 {
 	MV1SetPosition(modelHandle, position);
 
 	IsAlive(hitChecker);
 }
 
-void Boal::Draw()
-{
-	MV1DrawModel(modelHandle);
-}
-
 /// <summary>
 /// 生きてるか死んでいるか
 /// </summary>
 /// <param name="hitChecker"></param>
-void Boal::IsAlive(HitChecker* hitChecker)
+void Ball::IsAlive(HitChecker* hitChecker)
 {
-	
+
 	if (hitChecker->Hit())
 	{
 		alive = false;
-		
+
 	}
 	else
 	{
 		alive = true;
 	}
+}
+
+void Ball::Draw()
+{
+	MV1DrawModel(modelHandle);
 }

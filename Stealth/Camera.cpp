@@ -15,10 +15,10 @@ Camera::Camera()
 	, radius(200.0f)
 	, yaw(0.0f)
 	, front()
-	, Up()
-	, Down()
-	, Right()
-	, Left()
+	, up()
+	, down()
+	, right()
+	, left()
 {
 	//èàóùÇ»Çµ
 }
@@ -59,8 +59,8 @@ void Camera::Update(Player* player)
 
 	VECTOR yaxis = { 0,1,0 };
 
-	Up	  = front;
-	Down  = VScale(front, -1.0f);
-	Right = VCross(yaxis, front);
-	Left  = VScale(Right, -1.0f);
+	up	  = front;
+	down  = VScale(front, -1.0f);
+	right = VCross(yaxis, front);
+	left  = VScale(right, -1.0f);
 }

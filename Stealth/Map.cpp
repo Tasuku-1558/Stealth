@@ -35,7 +35,7 @@ void Map::Initialize()
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
 	{
-		printfDx("モデルデータ読み込みに失敗 [STAGE]\n");
+		printfDx("モデルデータ読み込みに失敗 [STAGE1]\n");
 	}
 
 	MapList();

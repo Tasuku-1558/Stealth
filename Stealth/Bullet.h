@@ -6,7 +6,7 @@
 
 using namespace std;
 
-class Boal;
+class Ball;
 
 /// <summary>
 /// プレイヤーショットクラス
@@ -14,14 +14,14 @@ class Boal;
 class Bullet final : public ObjectBase
 {
 public:
-	 Bullet(Object BOAL);
+	 Bullet(Object BALL);
 	~Bullet();
 
 	void Initialize();
 	void Finalize();
 	void Activate();
-	void Update(float deltaTime, Boal* boal);
-	void MouseMove(Boal* boal);							//マウスカーソルの移動
+	void Update(float deltaTime, Ball* ball);
+	void MouseMove(Ball* ball);							//マウスカーソルの移動
 
 	void Draw();
 

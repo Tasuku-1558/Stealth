@@ -6,7 +6,7 @@
 
 class Camera;
 class Bullet;
-class Boal;
+class Ball;
 class Enemy;
 
 
@@ -26,12 +26,12 @@ class Player final : public PlayerBase
 {
 public:
 	 Player(Object PLAYER);		//コンストラクタ
-	~Player();		//デストラクタ
+	~Player();					//デストラクタ
 
 	void Initialize();
 	void Finalize();
 	void Activate();
-	void Update(float deltaTime, Camera* camera, Boal* boal, Enemy* enemy);
+	void Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy);
 	void Draw();
 	bool Geta() { return a; }
 
@@ -48,9 +48,9 @@ private:
 	Player(const Player&);							//コピーコンストラクタ
 
 	void Move(float deltaTime, Camera* camera);		//移動処理
-	void Shoot(float deltaTime, Boal* boal);		//弾の発射処理
-	void FoundEnemy(Enemy* enemy);					//エネミーに見つかる
-	void cUpdate(Boal* boal);
+	void Shoot(float deltaTime, Ball* ball);		//弾の発射処理
+	void FoundEnemy(Enemy* enemy);					//エネミーに見つかった場合
+	void cUpdate(Ball* ball);
 
 	Bullet* bullet;
 

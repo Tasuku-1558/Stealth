@@ -1,7 +1,10 @@
 #pragma once
 
+#include "DxLib.h"
+
 class Player;
-class Boal;
+class Ball;
+class Map;
 
 
 /// <summary>
@@ -13,7 +16,7 @@ public:
 	 HitChecker();
 	~HitChecker();
 
-	void Check(Player* player, Boal* boal);			//衝突判定
+	void Check(Player* player, Ball* ball, Map* map);			//衝突判定
 	bool Hit() { return hit; }
 
 
@@ -21,8 +24,8 @@ private:
 
 	HitChecker(const HitChecker&);		//コピーコンストラクタ
 
-	void BoalAndPlayer(Player* player, Boal* boal);			//ボールとプレイヤーの当たり判定
-	void MapAndPlayer();
+	void BallAndPlayer(Player* player, Ball* ball);			//ボールとプレイヤーの当たり判定
+	void MapAndPlayer(Map* map);
 
 	double direction;
 	bool hit;				//衝突したならば

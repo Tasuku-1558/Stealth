@@ -1,6 +1,6 @@
 #include "Bullet.h"
 #include "ModelManager.h"
-#include "Boal.h"
+#include "Ball.h"
 
 
 const VECTOR Bullet::SIZE  = { 2.0f, 2.0f, 2.0f };			//モデルの倍率
@@ -11,7 +11,7 @@ const string Bullet::CURSOR_PATH	   = "pointer.png";		//カーソル画像のパス
 
 using namespace Math3d;
 
-Bullet::Bullet(Object BOAL)
+Bullet::Bullet(Object BALL)
 	: cursorImage(0)
 	, mouseX(-50)
 	, mouseY(0)
@@ -30,14 +30,14 @@ Bullet::~Bullet()
 
 void Bullet::Initialize()
 {
-	modelHandle = ModelManager::GetInstance().GetModelHandle(ModelManager::BOAL);
+	modelHandle = ModelManager::GetInstance().GetModelHandle(ModelManager::BALL);
 	MV1SetScale(modelHandle, SIZE);
 
 
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
 	{
-		printfDx("モデルデータ読み込みに失敗 [BOAL]\n");
+		printfDx("モデルデータ読み込みに失敗 [BALL]\n");
 	}
 
 	string failePath = IMAGE_FOLDER_PATH + CURSOR_PATH;
@@ -58,12 +58,12 @@ void Bullet::Activate()
 	position = VGet(0.0f, 0.0f, 0.0f);
 }
 
-void Bullet::Update(float deltaTime, Boal* boal)
+void Bullet::Update(float deltaTime, Ball* ball)
 {
-	if (!boal->GetAlive())
+	if (!ball->GetAlive())
 	{
 		OnShot(deltaTime);
-		//MouseMove(boal);
+		//MouseMove(ball);
 	}
 	
 }
@@ -71,10 +71,10 @@ void Bullet::Update(float deltaTime, Boal* boal)
 /// <summary>
 /// マウスカーソルの移動
 /// </summary>
-/// <param name="boal"></param>
-void Bullet::MouseMove(Boal* boal)
+/// <param name="ball"></param>
+void Bullet::MouseMove(Ball* ball)
 {
-	if (!boal->GetAlive())
+	if (!ball->GetAlive())
 	{
 		GetMousePoint(&mouseX, &mouseY);                //マウスの座標取得
 	}

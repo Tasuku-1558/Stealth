@@ -6,10 +6,11 @@
 #include "Enemy.h"
 #include "Camera.h"
 #include "Light.h"
-#include "Boal.h"
+#include "Ball.h"
 #include "HitChecker.h"
 #include "Map.h"
 #include "UiManager.h"
+#include "FadeManager.h"
 
 
 PlayScene::PlayScene()
@@ -20,7 +21,7 @@ PlayScene::PlayScene()
 		, camera(nullptr)
 		, light(nullptr)
 		, pUpdate(nullptr)
-		, boal(nullptr)
+		, ball(nullptr)
 		, hitChecker(nullptr)
 		, map(nullptr)
 		, uiManager(nullptr)
@@ -49,8 +50,8 @@ void PlayScene::Initialize()
 	player->Initialize();
 
 	//ボールクラス
-	boal = new Boal();
-	boal->Initialize();
+	ball = new Ball();
+	ball->Initialize();
 
 	//マップクラス
 	map = new Map();
@@ -66,6 +67,9 @@ void PlayScene::Initialize()
 	//UI管理クラス
 	uiManager = new UiManager();
 	uiManager->Initialize();
+
+	//画面効果クラス
+	fadeManager = new FadeManager();
 }
 
 void PlayScene::Finalize()
@@ -80,11 +84,13 @@ void PlayScene::Finalize()
 
 	SafeDelete(enemy);
 
-	SafeDelete(boal);
+	SafeDelete(ball);
 
 	SafeDelete(hitChecker);
 
 	SafeDelete(uiManager);
+
+	SafeDelete(fadeManager);
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
@@ -100,7 +106,7 @@ void PlayScene::Activate()
 
 	player->Activate();
 
-	boal->Activate();
+	ball->Activate();
 	
 }
 
@@ -132,19 +138,16 @@ void PlayScene::UpdateGame(float deltaTime)
 
 	enemy->Update(deltaTime, player);
 
-	player->Update(deltaTime, camera, boal, enemy);
+	player->Update(deltaTime, camera, ball, enemy);
 	
-	hitChecker->Check(player, boal);
+	hitChecker->Check(player, ball, map);
 
-	if (boal->GetAlive())
+	if (ball->GetAlive())
 	{
-		boal->Update(hitChecker);
-	}
-	else
-	{
-		return;
+		ball->Update(hitChecker);
 	}
 	
+	//fadeManager->FadeMove();
 }
 
 void PlayScene::Draw()
@@ -158,6 +161,12 @@ void PlayScene::Draw()
 	//エネミー描画
 	enemy->Draw();
 
+	if (ball->GetAlive())
+	{
+		//ボール描画
+		ball->Draw();
+	}
+
 	//UI管理クラス描画
 	uiManager->Draw(state);
 
@@ -166,21 +175,13 @@ void PlayScene::Draw()
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Found : %d", player->GetFind());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
-	DrawFormatStringToHandle(100, 250, GetColor(255, 0, 0), font, "Alive : %d \n(1:true 0:false)", boal->GetAlive());
+	DrawFormatStringToHandle(100, 250, GetColor(255, 0, 0), font, "Alive : %d \n(1:true 0:false)", ball->GetAlive());
 	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "discovery : %d", enemy->Discovery());
 	DrawFormatStringToHandle(100, 450, GetColor(255, 0, 0), font, "PlayerCount : %d", enemy->GetPlayerCount());
 
-	
 
-	if (boal->GetAlive())
-	{
-		//ボール描画
-		boal->Draw();
-	}
-	else
-	{
-		return;
-	}
 
+	//画面効果クラス描画
+	fadeManager->Draw();
 
 }

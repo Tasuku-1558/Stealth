@@ -4,6 +4,10 @@
 #include "Player.h"
 
 
+const string Enemy::IMAGE_FOLDER_PATH = "data/image/";     //imageフォルダまでのパス
+const string Enemy::FIND_PATH = "a.png";		//カーソル画像のパス
+
+
 using namespace Math3d;
 using namespace std;
 
@@ -16,7 +20,8 @@ Enemy::Enemy(Map* map) : EnemyBase()
 	, targetPosition()
 	, length(400.0f)
 	, discovery(false)
-	, playerCount(0)
+	, playerFindCount(0)
+	, findImage(0)
 {
 	enemyState = EnemyState::CRAWL;
 	Position(map);
@@ -43,6 +48,9 @@ void Enemy::Initialize()
 	{
 		printfDx("モデルデータ読み込みに失敗[ENEMY_BODY]\n");
 	}
+
+	string failePath = IMAGE_FOLDER_PATH + FIND_PATH;
+	findImage = LoadGraph(failePath.c_str());
 }
 
 /// <summary>
@@ -63,6 +71,7 @@ void Enemy::Position(Map* map)
 void Enemy::Finalize()
 {
 	MV1DeleteModel(modelHandle);
+	DeleteGraph(findImage);
 }
 
 void Enemy::Activate()
@@ -77,7 +86,7 @@ void Enemy::Update(float deltaTime, Player* player)
 	//ベクトルの正規化
 	dir = VNorm(targetPosition - position);
 	
-	position += dir * SPEED * deltaTime;
+	//position += dir * SPEED * deltaTime;
 
 	VisualAngle(player);
 
@@ -131,26 +140,28 @@ void Enemy::VisualAngle(Player* player)
 	//エネミーの前方とプレイヤーの位置の角度
 	float radian = VDot(player->GetPosition(), dir);
 
-	float a = RANGE_DEGREE * (float)(DX_PI / 180.0f);
-	float b = radian * (float)(DX_PI / 180.0f);
+	//float a = RANGE_DEGREE * (float)(DX_PI / 180.0f);
+	//float b = radian * (float)(DX_PI / 180.0f);
 
 
-	float range_Cos = cosf(a);
-	float radian_Cos = cosf(b);
+	float range_Cos = cosf(RANGE_DEGREE * (float)(DX_PI / 180.0f));
+	float radian_Cos = cosf(radian * (float)(DX_PI / 180.0f));
+
 	discovery = false;
+	
 
 	// 見つかっているかどうか
 	if (length > direction)
 	{
 		//printfDx("索敵範囲内");
 
+		//プレイヤーを発見
 		if (radian_Cos <= range_Cos)
 		{
 			//printfDx("発見");
 			
 			Reaction(object);
 		}
-
 	}
 }
 
@@ -165,11 +176,13 @@ void Enemy::Reaction(Object object)
 	case ObjectBase::PLAYER:
 		printfDx("PLAYER");
 		discovery = true;
-		playerCount++;
+
+		DrawGraph(0, -50, findImage, TRUE);
+		playerFindCount++;
 		break;
 
-	case ObjectBase::BOAL:
-		printfDx("BOAL");
+	case ObjectBase::BALL:
+		printfDx("BALL");
 		break;
 
 	case ObjectBase::WALL:

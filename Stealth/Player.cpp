@@ -3,7 +3,7 @@
 #include "Bullet.h"
 #include "ModelManager.h"
 #include "Camera.h"
-#include "Boal.h"
+#include "Ball.h"
 #include "Enemy.h"
 
 using namespace Math3d;
@@ -58,7 +58,7 @@ void Player::Initialize()
 	}
 
 	//ショットクラス
-	bullet = new Bullet(ObjectBase::BOAL);
+	bullet = new Bullet(ObjectBase::BALL);
 	bullet->Initialize();
 
 }
@@ -94,16 +94,16 @@ void Player::Activate()
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="camera"></param>
-/// <param name="boal"></param>
-void Player::Update(float deltaTime, Camera* camera, Boal* boal, Enemy* enemy)
+/// <param name="ball"></param>
+void Player::Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy)
 {
 	Move(deltaTime, camera);
 
-	Shoot(deltaTime, boal);
+	Shoot(deltaTime, ball);
 
 	FoundEnemy(enemy);
 
-	cUpdate(boal);
+	cUpdate(ball);
 	
 	//プレイヤーの位置をセット
 	MV1SetPosition(modelHandle, position);
@@ -151,6 +151,7 @@ void Player::Move(float deltaTime, Camera* camera)
 	//十字キーの入力があったら
 	if (inputFlag)
 	{
+
 		// 左右・上下同時押しなどで入力ベクトルが0の時
 		if (VSquareSize(inputDirection) < 0.5f)
 		{
@@ -176,29 +177,30 @@ void Player::Move(float deltaTime, Camera* camera)
 	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
 	MV1SetRotationZYAxis(rightArmHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
 	
+	
 }
 
 /// <summary>
 /// 弾の発射処理
 /// </summary>
 /// <param name="deltaTime"></param>
-/// <param name="boal"></param>
-void Player::Shoot(float deltaTime, Boal* boal)
+/// <param name="ball"></param>
+void Player::Shoot(float deltaTime, Ball* ball)
 {
 	//マウスカーソルを左クリックしたならば
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
 	{
-		bullet->Update(deltaTime, boal);
+		bullet->Update(deltaTime, ball);
 		cursor = Cursor::PUSH;
 		
 		
 	}
 
-	bullet->MouseMove(boal);
+	bullet->MouseMove(ball);
 }
 
 /// <summary>
-/// エネミーに見つかる
+/// エネミーに見つかった場合
 /// </summary>
 /// <param name="enemy"></param>
 void Player::FoundEnemy(Enemy* enemy)
@@ -213,7 +215,7 @@ void Player::FoundEnemy(Enemy* enemy)
 	}
 }
 
-void Player::cUpdate(Boal* boal)
+void Player::cUpdate(Ball* ball)
 {
 	switch (cursor)
 	{

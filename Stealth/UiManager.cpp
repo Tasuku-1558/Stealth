@@ -69,7 +69,7 @@ void UiManager::Draw(PlayScene::State state)
 /// </summary>
 void UiManager::StartGameDraw()
 {
-	count += 1;
+	count++;
 
 	if (count < 50)
 	{

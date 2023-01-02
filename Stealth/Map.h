@@ -20,6 +20,8 @@ public:
 
     std::vector<VECTOR>& GetMap(int number) { return positionList; }
 
+    int GetModel() { return modelHandle; }
+
 
 private:
 

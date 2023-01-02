@@ -25,7 +25,7 @@ public:
 	  enum Object
 	  {
 		  PLAYER,
-		  BOAL,
+		  BALL,
 		  WALL,
 	  };
 

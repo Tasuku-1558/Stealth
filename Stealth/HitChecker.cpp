@@ -1,6 +1,7 @@
 #include "HitChecker.h"
 #include "Player.h"
-#include "Boal.h"
+#include "Ball.h"
+#include "Map.h"
 #include "PreCompiledHeader.h"
 #include <math.h>
 
@@ -22,22 +23,23 @@ HitChecker::~HitChecker()
 /// 衝突判定
 /// </summary>
 /// <param name="player"></param>
-/// <param name="boal"></param>
-void HitChecker::Check(Player* player, Boal* boal)
+/// <param name="ball"></param>
+void HitChecker::Check(Player* player, Ball* ball, Map* map)
 {
-	BoalAndPlayer(player, boal);
+	BallAndPlayer(player, ball);
+	MapAndPlayer(map);
 }
 
 /// <summary>
 /// ボールとプレイヤーの当たり判定
 /// </summary>
 /// <param name="player"></param>
-/// <param name="boal"></param>
-void HitChecker::BoalAndPlayer(Player* player, Boal* boal)
+/// <param name="ball"></param>
+void HitChecker::BallAndPlayer(Player* player, Ball* ball)
 {
 	//プレイヤーからボールの座標を引いた値を取得
-	double posX = player->GetPosition().x - boal->GetPosition().x;
-	double posZ = player->GetPosition().z - boal->GetPosition().z;
+	double posX = player->GetPosition().x - ball->GetPosition().x;
+	double posZ = player->GetPosition().z - ball->GetPosition().z;
 
 	//プレイヤーとボールの2点間の距離を計算
 	direction = sqrt(pow(posX, 2) + pow(posZ, 2));
@@ -45,7 +47,7 @@ void HitChecker::BoalAndPlayer(Player* player, Boal* boal)
 	//ボールを所持していないならば
 	//if (!possessionBoal)
 	{
-		if (direction < PLAYER_RADIUS + BOAL_RADIUS)
+		if (direction < PLAYER_RADIUS + BALL_RADIUS)
 		{
 			hit = true;
 		}
@@ -57,6 +59,6 @@ void HitChecker::BoalAndPlayer(Player* player, Boal* boal)
 	
 }
 
-void HitChecker::MapAndPlayer()
+void HitChecker::MapAndPlayer(Map* map)
 {
 }
