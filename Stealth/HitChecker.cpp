@@ -3,13 +3,16 @@
 #include "Ball.h"
 #include "Map.h"
 #include "PreCompiledHeader.h"
-#include <math.h>
 
+
+using namespace Math3d;
 
 HitChecker::HitChecker()
 	: direction(0.0f)
 	, hit(false)
 	, possessionBoal(false)
+	, HitPolyDim()
+	, a(false)
 {
 	//処理なし
 }
@@ -27,7 +30,7 @@ HitChecker::~HitChecker()
 void HitChecker::Check(Player* player, Ball* ball, Map* map)
 {
 	BallAndPlayer(player, ball);
-	MapAndPlayer(map);
+	MapAndPlayer(map, player);
 }
 
 /// <summary>
@@ -38,11 +41,10 @@ void HitChecker::Check(Player* player, Ball* ball, Map* map)
 void HitChecker::BallAndPlayer(Player* player, Ball* ball)
 {
 	//プレイヤーからボールの座標を引いた値を取得
-	double posX = player->GetPosition().x - ball->GetPosition().x;
-	double posZ = player->GetPosition().z - ball->GetPosition().z;
+	VECTOR sub = player->GetPosition() - ball->GetPosition();
 
-	//プレイヤーとボールの2点間の距離を計算
-	direction = sqrt(pow(posX, 2) + pow(posZ, 2));
+	//プレイヤーとエネミーの2点間の距離を計算
+	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
 	
 	//ボールを所持していないならば
 	//if (!possessionBoal)
@@ -59,6 +61,25 @@ void HitChecker::BallAndPlayer(Player* player, Ball* ball)
 	
 }
 
-void HitChecker::MapAndPlayer(Map* map)
+void HitChecker::MapAndPlayer(Map* map, Player* player)
 {
+
+	// モデル全体のコリジョン情報を構築
+	MV1SetupCollInfo(map->GetModel(), -1, 8, 8, 8);
+
+	// モデルと球との当たり判定
+	HitPolyDim = MV1CollCheck_Sphere(map->GetModel(), -1, player->GetPosition(), 100.0f);
+
+	// 当たったかどうかで処理を分岐
+	if (HitPolyDim.HitNum >= 1)
+	{
+
+		printfDx("hit");
+		a = true;
+		HitPolyDim.HitNum = 0;
+	}
+	else
+	{
+		a = false;
+	}
 }

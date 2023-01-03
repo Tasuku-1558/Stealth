@@ -7,7 +7,7 @@ const string ModelManager::PLAYER_BODY_PATH  = "player_body.mv1"; //player_bodyƒ
 const string ModelManager::PLAYER_ARM_PATH   = "arm.mv1";         //player_armƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::ENEMY_BODY_PATH   = "enemy_body.mv1";  //enemy_bodyƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::BALL_PATH         = "ball.mv1";        //ballƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
-const string ModelManager::STAGE1_PATH       = "stage1.mv1";      //stage1ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
+const string ModelManager::STAGE1_PATH       = "stage1_.mv1";      //stage1ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 
 
 ModelManager::ModelManager()

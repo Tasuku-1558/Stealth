@@ -55,7 +55,7 @@ void Bullet::Finalize()
 void Bullet::Activate()
 {
 	
-	position = VGet(0.0f, 0.0f, 0.0f);
+	position = VGet(0.0f, 30.0f, 0.0f);
 }
 
 void Bullet::Update(float deltaTime, Ball* ball)
@@ -87,7 +87,7 @@ void Bullet::MouseMove(Ball* ball)
 void Bullet::OnShot(float deltaTime)
 {
 	
-	position += VGet(mouseY-2700, 0.0f, mouseX-500);
+	position += VGet(mouseY-2700, 30.0f, mouseX-500);
 
 	MV1SetPosition(modelHandle, position);
 }

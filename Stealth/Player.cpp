@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Ball.h"
 #include "Enemy.h"
+#include "HitChecker.h"
 
 using namespace Math3d;
 
@@ -18,8 +19,6 @@ Player::Player(Object PLAYER) : PlayerBase()
 	, rightArmHandle(0)
 	, rightArmPosition()
 	, bullet(nullptr)
-	, count(0)
-	, a(false)
 {
 	cursor = Cursor::SELECTION;
 }
@@ -95,13 +94,15 @@ void Player::Activate()
 /// <param name="deltaTime"></param>
 /// <param name="camera"></param>
 /// <param name="ball"></param>
-void Player::Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy)
+void Player::Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy, HitChecker* hitChecker)
 {
 	Move(deltaTime, camera);
 
 	Shoot(deltaTime, ball);
 
 	FoundEnemy(enemy);
+
+	aa(hitChecker);
 
 	cUpdate(ball);
 	
@@ -212,6 +213,14 @@ void Player::FoundEnemy(Enemy* enemy)
 		//ˆÊ’u‚ÆŒü‚«‚ð‰Šú‰»
 		position = ZERO_VECTOR;
 		dir = DIR;
+	}
+}
+
+void Player::aa(HitChecker* hitChecker)
+{
+	if (hitChecker->ai())
+	{
+		
 	}
 }
 

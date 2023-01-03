@@ -62,9 +62,9 @@ private:
 	const float length;				//視野角の距離
 	bool discovery;					//発見
 
-	int playerFindCount;				//プレイヤーを見つけた回数
+	int playerFindCount;			//プレイヤーを見つけた回数
 
-	int findImage;
+	int findImage;					//見つかった画像格納用
 
 
 	//静的定数

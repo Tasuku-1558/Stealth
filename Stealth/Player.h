@@ -8,7 +8,7 @@ class Camera;
 class Bullet;
 class Ball;
 class Enemy;
-
+class HitChecker;
 
 /// <summary>
 /// カーソルの状態
@@ -31,14 +31,13 @@ public:
 	void Initialize();
 	void Finalize();
 	void Activate();
-	void Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy);
+	void Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy, HitChecker* hitChecker);
 	void Draw();
-	bool Geta() { return a; }
+
 
 	//デバック用
 	int GetX() { return position.x; }
 	int GetZ() { return position.z; }
-	int GetFind() { return foundTimes; }
 	int GetSpeed() { return SPEED; }
 
 
@@ -50,14 +49,13 @@ private:
 	void Move(float deltaTime, Camera* camera);		//移動処理
 	void Shoot(float deltaTime, Ball* ball);		//弾の発射処理
 	void FoundEnemy(Enemy* enemy);					//エネミーに見つかった場合
+	void aa(HitChecker* hitChecker);
 	void cUpdate(Ball* ball);
 
 	Bullet* bullet;
 
 	int rightArmHandle;
 	VECTOR rightArmPosition;
-	int count;
-	bool a;
 
 	static const VECTOR RIGHT_ARM_POSITION;
 };

@@ -17,7 +17,6 @@ protected:
 
 	VECTOR inputDirection;			//入力された方向
 	bool   inputFlag;				//キー入力フラグ
-	int	   foundTimes;				//敵に見つかった回数
 
 	//静的定数
 	static const float  SPEED;			//移動速度

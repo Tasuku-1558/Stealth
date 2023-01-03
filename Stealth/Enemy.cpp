@@ -4,8 +4,8 @@
 #include "Player.h"
 
 
-const string Enemy::IMAGE_FOLDER_PATH = "data/image/";     //imageフォルダまでのパス
-const string Enemy::FIND_PATH = "a.png";		//カーソル画像のパス
+const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
+const string Enemy::FIND_PATH		  = "find.png";			//見つかった画像のパス
 
 
 using namespace Math3d;
@@ -86,7 +86,7 @@ void Enemy::Update(float deltaTime, Player* player)
 	//ベクトルの正規化
 	dir = VNorm(targetPosition - position);
 	
-	//position += dir * SPEED * deltaTime;
+	position += dir * SPEED * deltaTime;
 
 	VisualAngle(player);
 
@@ -131,35 +131,34 @@ bool Enemy::IsGoal(float deltaTime)
 /// <param name="player"></param>
 void Enemy::VisualAngle(Player* player)
 {
-	//プレイヤーとエネミーの距離を取得
+	//プレイヤーからエネミーの座標を引いた値を取得
 	VECTOR sub = player->GetPosition() - position;
 
-	//距離をfloatに置き換え
-	float direction = VSize(sub);
+	//プレイヤーとエネミーの2点間の距離を計算
+	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
 
-	//エネミーの前方とプレイヤーの位置の角度
-	float radian = VDot(player->GetPosition(), dir);
+	//ベクトルの正規化
+	sub = VNorm(sub);
 
-	//float a = RANGE_DEGREE * (float)(DX_PI / 180.0f);
-	//float b = radian * (float)(DX_PI / 180.0f);
+	//内積計算
+	float dot = VDot(sub, dir);
 
+	float range = RANGE_DEGREE * (float)(DX_PI / 180.0f);
 
-	float range_Cos = cosf(RANGE_DEGREE * (float)(DX_PI / 180.0f));
-	float radian_Cos = cosf(radian * (float)(DX_PI / 180.0f));
+	//エネミーの視野をcosにする
+	float radian = cosf(range / 2.0f);
 
+	//発見していない
 	discovery = false;
-	
 
-	// 見つかっているかどうか
+	//ベクトルとエネミーの長さの比較
 	if (length > direction)
 	{
-		//printfDx("索敵範囲内");
-
-		//プレイヤーを発見
-		if (radian_Cos <= range_Cos)
+		//プレイヤーがエネミーの視野範囲内にいるか比較
+		if (radian <= dot)
 		{
 			//printfDx("発見");
-			
+			//視野範囲内ならば
 			Reaction(object);
 		}
 	}
@@ -177,7 +176,7 @@ void Enemy::Reaction(Object object)
 		printfDx("PLAYER");
 		discovery = true;
 
-		DrawGraph(0, -50, findImage, TRUE);
+		DrawGraph(200, 0, findImage, TRUE);		//敵に見つかったというUI画像を描画
 		playerFindCount++;
 		break;
 

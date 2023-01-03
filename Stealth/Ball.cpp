@@ -30,7 +30,7 @@ void Ball::Initialize()
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
 	{
-		printfDx("モデルデータ読み込みに失敗 [BOAL]\n");
+		printfDx("モデルデータ読み込みに失敗 [BALL]\n");
 	}
 }
 

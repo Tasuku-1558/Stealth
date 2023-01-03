@@ -2,6 +2,7 @@
 
 #include "DxLib.h"
 #include "ObjectBase.h"
+#include "Math3D.h"
 #include <vector>
 
 /// <summary>
@@ -29,6 +30,8 @@ private:
 
     std::vector<VECTOR> positionList;
     std::vector<VECTOR>::iterator itr;
+
+    int collisionModel;
 
     //Ã“I’è”
     static const VECTOR SIZE;           //ƒ‚ƒfƒ‹‚Ì”{—¦
