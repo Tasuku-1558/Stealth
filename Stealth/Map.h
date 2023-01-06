@@ -4,6 +4,7 @@
 #include "Math3D.h"
 #include <vector>
 
+
 /// <summary>
 /// マップクラス
 /// </summary>
@@ -15,7 +16,6 @@ public:
 
     void Initialize();
     void Finalize();
-    void Activate();
     void Draw();
 
     std::vector<VECTOR>& GetMap(int number) { return positionList; }
@@ -34,5 +34,6 @@ private:
     //静的定数
     static const VECTOR SIZE;           //モデルの倍率
     static const VECTOR POSITION;       //モデルの位置
+    static const VECTOR ROTATE;         //モデルの回転値
 
 };

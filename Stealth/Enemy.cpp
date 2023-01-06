@@ -1,7 +1,5 @@
 #include "Enemy.h"
 #include "ModelManager.h"
-#include "Map.h"
-#include "Player.h"
 
 
 const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
@@ -12,7 +10,7 @@ using namespace Math3d;
 using namespace std;
 
 /// <summary>
-/// コンストラク
+/// コンストラクタ
 /// </summary>
 /// <param name="map"></param>
 Enemy::Enemy(Map* map) : EnemyBase()
@@ -41,7 +39,7 @@ Enemy::~Enemy()
 
 void Enemy::Initialize()
 {
-	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY_BODY));
+	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY));
 
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
@@ -72,10 +70,6 @@ void Enemy::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 	DeleteGraph(findImage);
-}
-
-void Enemy::Activate()
-{
 }
 
 void Enemy::Update(float deltaTime, Player* player)
@@ -157,7 +151,6 @@ void Enemy::VisualAngle(Player* player)
 		//プレイヤーがエネミーの視野範囲内にいるか比較
 		if (radian <= dot)
 		{
-			//printfDx("発見");
 			//視野範囲内ならば
 			Reaction(object);
 		}
@@ -188,7 +181,6 @@ void Enemy::Reaction(Object object)
 		printfDx("WALL");
 		break;
 	}
-	
 }
 
 /// <summary>

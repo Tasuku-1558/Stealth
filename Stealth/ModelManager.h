@@ -15,9 +15,9 @@ public:
 	//ƒ‚ƒfƒ‹‚ÌŽí—Þ
 	enum ModelType
 	{
-		PLAYER_BODY,
+		PLAYER,
 		PLAYER_ARM,
-		ENEMY_BODY,
+		ENEMY,
 		WALL,
 		BALL,
 		STAGE1,

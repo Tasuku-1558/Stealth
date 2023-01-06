@@ -3,13 +3,11 @@
 #include "DxLib.h"
 #include "PlayerBase.h"
 #include "Math3D.h"
+#include "Camera.h"
+#include "Ball.h"
+#include "Enemy.h"
 
-class Camera;
 class Bullet;
-class Ball;
-class Enemy;
-class HitChecker;
-
 
 /// <summary>
 /// プレイヤークラス
@@ -23,7 +21,7 @@ public:
 	void Initialize();
 	void Finalize();
 	void Activate();
-	void Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy, HitChecker* hitChecker);
+	void Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy);
 	void Draw();
 
 
@@ -36,17 +34,19 @@ public:
 private:
 	Player(const Player&);							//コピーコンストラクタ
 
-	void Move(float deltaTime, Camera* camera, HitChecker* hitChecker);		//移動処理
-	void Shoot(float deltaTime, Ball* ball);		//弾の発射処理
-	void FoundEnemy(Enemy* enemy);					//エネミーに見つかった場合
-	void aa(HitChecker* hitChecker);
+	void Move(float deltaTime, Camera* camera);								//移動処理
+	void Shoot(float deltaTime, Ball* ball);								//弾の発射処理
+	void FoundEnemy(Enemy* enemy);											//エネミーに見つかった場合
+	void BulletReuse(float deltaTime, Ball* ball);							//バレット再使用カウント
+
 
 	Bullet* bullet;
 
+	float bulletCount;				//弾の効果時間
+
+
 	int rightArmHandle;
 	VECTOR rightArmPosition;
-
-	float bulletCount;
 
 	static const VECTOR RIGHT_ARM_POSITION;
 };

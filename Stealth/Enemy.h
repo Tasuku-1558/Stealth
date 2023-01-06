@@ -1,14 +1,14 @@
 #pragma once
 
-#include "DxLib.h"
-#include "EnemyBase.h"
-#include "Math3D.h"
 #include <string>
 #include <vector>
 
+#include "DxLib.h"
+#include "EnemyBase.h"
+#include "Math3D.h"
+#include "Map.h"
+#include "Player.h"
 
-class Map;
-class Player;
 
 /// <summary>
 /// エネミーの状態
@@ -30,7 +30,6 @@ public:
 	~Enemy();				//デストラクタ
 
 	void Initialize();
-	void Activate();
 	void Update(float deltaTime, Player* player);
 	void Draw();
 

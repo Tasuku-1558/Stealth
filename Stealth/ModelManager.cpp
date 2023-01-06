@@ -32,13 +32,13 @@ void ModelManager::LoadAllModel()
 {
     //モデルファイルのパス
     string failePath = MODEL_FOLDER_PATH + PLAYER_BODY_PATH;
-    modelHandle[PLAYER_BODY] = MV1LoadModel(failePath.c_str());
+    modelHandle[PLAYER] = MV1LoadModel(failePath.c_str());
 
     failePath = MODEL_FOLDER_PATH + PLAYER_ARM_PATH;
     modelHandle[PLAYER_ARM] = MV1LoadModel(failePath.c_str());
 
     failePath = MODEL_FOLDER_PATH + ENEMY_BODY_PATH;
-    modelHandle[ENEMY_BODY] = MV1LoadModel(failePath.c_str());
+    modelHandle[ENEMY] = MV1LoadModel(failePath.c_str());
 
     failePath = MODEL_FOLDER_PATH + WALL_PATH;
     modelHandle[WALL] = MV1LoadModel(failePath.c_str());

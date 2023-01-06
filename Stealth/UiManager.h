@@ -1,8 +1,9 @@
 #pragma once
 
+#include <string>
+
 #include "DxLib.h"
 #include "PlayScene.h"
-#include <string>		//•¶š—ñŒ^ƒNƒ‰ƒX
 
 
 /// <summary>

@@ -1,11 +1,7 @@
 #include "Player.h"
 #include "PreCompiledHeader.h"
-#include "Bullet.h"
 #include "ModelManager.h"
-#include "Camera.h"
-#include "Ball.h"
-#include "Enemy.h"
-#include "HitChecker.h"
+#include "Bullet.h"
 
 using namespace Math3d;
 
@@ -21,6 +17,7 @@ Player::Player(Object PLAYER) : PlayerBase()
 	, bullet(nullptr)
 	, bulletCount(0.0f)
 {
+	//処理なし
 }
 
 /// <summary>
@@ -40,7 +37,7 @@ Player::~Player()
 /// </summary>
 void Player::Initialize()
 {
-	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::PLAYER_BODY));
+	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::PLAYER));
 	
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
@@ -59,7 +56,6 @@ void Player::Initialize()
 	//ショットクラス
 	bullet = new Bullet(ObjectBase::BALL);
 	bullet->Initialize();
-
 }
 
 /// <summary>
@@ -85,7 +81,6 @@ void Player::Activate()
 	rightArmPosition = RIGHT_ARM_POSITION;
 
 	dir = DIR;
-
 }
 
 /// <summary>
@@ -94,32 +89,20 @@ void Player::Activate()
 /// <param name="deltaTime"></param>
 /// <param name="camera"></param>
 /// <param name="ball"></param>
-void Player::Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy, HitChecker* hitChecker)
+void Player::Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy)
 {
-	Move(deltaTime, camera, hitChecker);
+	Move(deltaTime, camera);
 
 	Shoot(deltaTime, ball);
 	
 	FoundEnemy(enemy);
+
+	BulletReuse(deltaTime, ball);
 	
 	//プレイヤーの位置をセット
 	MV1SetPosition(modelHandle, position);
 
 	MV1SetPosition(rightArmHandle, rightArmPosition);
-
-	if (bullet->GetAlive())
-	{
-		bulletCount += deltaTime;
-	}
-
-	if (bulletCount > 5.0f)
-	{
-		bulletCount = 0.0f;
-		
-
-		ball->SetDead();
-		bullet->SetDead();
-	}
 }
 
 /// <summary>
@@ -127,13 +110,11 @@ void Player::Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy, H
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="camera"></param>
-void Player::Move(float deltaTime, Camera* camera, HitChecker* hitChecker)
+void Player::Move(float deltaTime, Camera* camera)
 {
 	inputDirection = ZERO_VECTOR;
 
 	inputFlag = false;
-
-	aa(hitChecker);
 
 	//上下
 	if (CheckHitKey(KEY_INPUT_W))
@@ -176,9 +157,6 @@ void Player::Move(float deltaTime, Camera* camera, HitChecker* hitChecker)
 		
 		//十字キーの移動方向に移動
 		position += inputDirection * SPEED * deltaTime;
-
-		
-
 	}
 
 	//z軸が逆を向いているのでdirを180度回転させる
@@ -197,7 +175,7 @@ void Player::Move(float deltaTime, Camera* camera, HitChecker* hitChecker)
 /// <param name="ball"></param>
 void Player::Shoot(float deltaTime, Ball* ball)
 {
-	//マウスカーソルを左クリックして、且つボールとバレットが非アクティブならば
+	//マウスカーソルを左クリックし、且つボールとバレットが非アクティブならば
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && !bullet->GetAlive() && !ball->GetAlive())
 	{
 		bullet->Update(deltaTime, ball);
@@ -223,15 +201,27 @@ void Player::FoundEnemy(Enemy* enemy)
 	}
 }
 
-void Player::aa(HitChecker* hitChecker)
+/// <summary>
+/// バレット再使用カウント
+/// </summary>
+/// <param name="deltaTime"></param>
+/// <param name="ball"></param>
+void Player::BulletReuse(float deltaTime, Ball* ball)
 {
-	if (hitChecker->hita())
+	if (bullet->GetAlive())
 	{
-		
-		//inputDirection.z += 1.0f;
+		bulletCount += deltaTime;
 	}
-	
-	
+
+	//カウントが5秒以上経過したら
+	if (bulletCount > 5.0f)
+	{
+		bulletCount = 0.0f;
+
+
+		ball->SetDead();
+		bullet->SetDead();
+	}
 }
 
 /// <summary>
@@ -242,9 +232,4 @@ void Player::Draw()
 	MV1DrawModel(modelHandle);
 
 	bullet->Draw();
-
-	//デバック用
-	DrawFormatString(100, 500, GetColor(255, 0, 0), "mouseX : %d", bullet->GetMX());
-	DrawFormatString(100, 600, GetColor(255, 0, 0), "mouseY : %d", bullet->GetMY());
-
 }

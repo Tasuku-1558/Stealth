@@ -2,20 +2,26 @@
 #include "ModelManager.h"
 
 
-const VECTOR Bullet::SIZE  = { 2.0f, 2.0f, 2.0f };			//モデルの倍率
-const float  Bullet::SPEED = 800.0f;						//モデルのスピード
-const string Bullet::IMAGE_FOLDER_PATH = "data/image/";     //imageフォルダまでのパス
-const string Bullet::CURSOR_PATH	   = "pointer.png";		//カーソル画像のパス
+const VECTOR Bullet::SIZE			   = { 2.0f, 2.0f, 2.0f };	//モデルの倍率
+const VECTOR Bullet::POSITION		   = { 0.0f, 30.0f, 0.0f }; //モデルの倍率
+const string Bullet::IMAGE_FOLDER_PATH = "data/image/";			//imageフォルダまでのパス
+const string Bullet::CURSOR_PATH	   = "pointer.png";			//カーソル画像のパス
+const float  Bullet::SCALE			   = 0.4f;					//カーソル画像の大きさ
 
 
 using namespace Math3d;
 
+
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="BALL"></param>
 Bullet::Bullet(Object BALL)
 	: cursorImage(0)
 	, mouseX(0)
-	, mouseY(0)
+	, mouseZ(0)
 	, worldMouseX(0.0f)
-	, worldMouseY(0.0f)
+	, worldMouseZ(0.0f)
 	, alive(false)
 {
 	//処理なし
@@ -35,7 +41,7 @@ void Bullet::Initialize()
 	modelHandle = ModelManager::GetInstance().GetModelHandle(ModelManager::BALL);
 	MV1SetScale(modelHandle, SIZE);
 
-	position = VGet(0.0f, 30.0f, 0.0f);
+	position = POSITION;
 
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
@@ -55,10 +61,11 @@ void Bullet::Finalize()
 	DeleteGraph(cursorImage);
 }
 
-void Bullet::Activate()
-{
-}
-
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="deltaTime"></param>
+/// <param name="ball"></param>
 void Bullet::Update(float deltaTime, Ball* ball)
 {
 	if (!ball->GetAlive())
@@ -71,16 +78,19 @@ void Bullet::Update(float deltaTime, Ball* ball)
 /// マウスカーソルの移動
 /// </summary>
 /// <param name="ball"></param>
+/// <param name="pos"></param>
 void Bullet::MouseMove(Ball* ball, VECTOR pos)
 {
-	GetMousePoint(&mouseX, &mouseY);                //マウスの座標取得
+	GetMousePoint(&mouseX, &mouseZ);                //マウスの座標取得
 	mouseX -= 960;
-	mouseY -= 540;
+	mouseZ -= 540;
 
+	//ボールが死んだら
 	if (!ball->GetAlive())
 	{
+		//マウスのXZ座標のワールド座標を計算
 		worldMouseX = (float)mouseX * (3000.0f / 1920.0f) * 2.0f + pos.z;
-		worldMouseY = (float)mouseY * (1900.0f / 1080.0f) * 1.8f + pos.x;
+		worldMouseZ = (float)mouseZ * (1900.0f / 1080.0f) * 1.8f + pos.x;
 	}
 }
 
@@ -106,7 +116,7 @@ void Bullet::SetAlive()
 /// <param name="deltaTime"></param>
 void Bullet::OnShot(float deltaTime)
 {
-	position = VGet(worldMouseY, 30.0f, worldMouseX);
+	position = VGet(worldMouseZ, 30.0f, worldMouseX);
 
 	MV1SetPosition(modelHandle, position);
 }
@@ -118,5 +128,5 @@ void Bullet::Draw()
 		MV1DrawModel(modelHandle);
 	}
 
-	DrawRotaGraph(mouseX + 960, mouseY + 540, 0.04f, 0, cursorImage, TRUE);
+	DrawRotaGraph(mouseX + 960, mouseZ + 540, SCALE, 0, cursorImage, TRUE);
 }

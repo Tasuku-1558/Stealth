@@ -1,8 +1,10 @@
 #pragma once
 
 #include "DxLib.h"
+#include "Math3D.h"
 
 class Player;
+
 
 /// <summary>
 /// ƒJƒƒ‰ƒNƒ‰ƒX

@@ -5,6 +5,7 @@
 
 const VECTOR Map::SIZE	   = { 80.0f, 50.0f, 80.0f };		//モデルの倍率
 const VECTOR Map::POSITION = { -2700.0f, 0.0f, -750.0f };	//モデルの位置
+const VECTOR Map::ROTATE   = { 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f };		//モデルの回転値
 
 using namespace Math3d;
 using namespace std;
@@ -27,7 +28,7 @@ void Map::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE1));
 	MV1SetScale(modelHandle, SIZE);
-	MV1SetRotationXYZ(modelHandle, VGet(0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f));
+	MV1SetRotationXYZ(modelHandle, ROTATE);
 
 	position = POSITION;
 
@@ -54,10 +55,6 @@ void Map::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 	modelHandle = NULL;
-}
-
-void Map::Activate()
-{
 }
 
 void Map::Draw()

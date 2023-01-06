@@ -17,40 +17,37 @@ using namespace std;
 class Bullet final : public ObjectBase
 {
 public:
-	 Bullet(Object BALL);
+	Bullet(Object BALL);
 	~Bullet();
 
 	void Initialize();
 	void Finalize();
-	void Activate();
 	void Update(float deltaTime, Ball* ball);
-	void MouseMove(Ball* ball, VECTOR pos);							//マウスカーソルの移動
-	void SetDead();							//バレットを非アクティブ化
-	void SetAlive();						//バレットをアクティブ化
+	void MouseMove(Ball* ball, VECTOR pos);		//マウスカーソルの移動
+	void SetDead();								//バレットを非アクティブ化
+	void SetAlive();							//バレットをアクティブ化
 
 	bool GetAlive() { return alive; }
 	void Draw();
 
-	//デバック用
-	int GetMX() { return mouseX; }
-	int GetMY() { return mouseY; }
 
 private:
 
+	Bullet(const Bullet&);					//コピーコンストラクタ
 	void OnShot(float deltaTime);			//球が撃たれた時
 
 	int cursorImage;						//照準画像格納用
 	int mouseX;								//マウスX座標
-	int mouseY;								//マウスY座標
+	int mouseZ;								//マウスZ座標
 	float worldMouseX;						//ワールドマウスX座標
-	float worldMouseY;						//ワールドマウスY座標
+	float worldMouseZ;						//ワールドマウスZ座標
 
-	bool alive;
+	bool alive;								//生きてるか死んでるか
 
 	//静的定数
 	static const VECTOR SIZE;				//モデルの倍率
-	static const float  SPEED;				//モデルのスピード
+	static const VECTOR POSITION;			//モデルの位置
 	static const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
 	static const string CURSOR_PATH;		//カーソル画像のパス
-
+	static const float	SCALE;				//カーソル画像の大きさ
 };

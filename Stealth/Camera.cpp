@@ -32,8 +32,6 @@ void Camera::Initialize()
 {
 	//カメラの手前と奥の距離を設定
 	SetCameraNearFar(NEAR_DISTANCE, FAR_DISTANCE);
-	
-	//SetCameraPositionAndTarget_UpVecY(INITIAL_POSITION, UP_VECTOR);
 }
 
 void Camera::Update(Player* player)
@@ -48,6 +46,7 @@ void Camera::Update(Player* player)
 					3000.0f, 
 					radius * sin(yaw) + player->GetPosition().z);
 
+	//カメラの視点、注視点を設定
 	SetCameraPositionAndTarget_UpVecY(position, player->GetPosition());
 	
 	//カメラの正面方向のベクトルを計算

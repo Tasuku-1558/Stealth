@@ -1,6 +1,5 @@
 #include "Ball.h"
 #include "ModelManager.h"
-#include "HitChecker.h"
 
 
 const VECTOR Ball::SIZE		= { 2.0f, 2.0f, 2.0f };		//ƒ‚ƒfƒ‹‚Ì”{—¦
@@ -39,10 +38,6 @@ void Ball::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 	modelHandle = NULL;
-}
-
-void Ball::Activate()
-{
 }
 
 void Ball::Update(HitChecker* hitChecker)

@@ -12,7 +12,6 @@ using namespace Math3d;
 HitChecker::HitChecker()
 	: direction(0.0f)
 	, hit(false)
-	, possessionBoal(false)
 	, hitPolyDim()
 	, a()
 	, aio(false)
@@ -50,7 +49,6 @@ void HitChecker::BallAndPlayer(Player* player, Ball* ball)
 	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
 	
 	//ƒ{[ƒ‹‚ğŠ‚µ‚Ä‚¢‚È‚¢‚È‚ç‚Î
-	//if (!possessionBoal)
 	{
 		if (direction < PLAYER_RADIUS + BALL_RADIUS)
 		{

@@ -35,7 +35,7 @@ private:
 
 	double direction;
 	bool hit;				//Õ“Ë‚µ‚½‚È‚ç‚Î
-	bool possessionBoal;	//Š‚µ‚Ä‚¢‚éƒ{[ƒ‹‚Ì”
+
 
 	MV1_COLL_RESULT_POLY_DIM hitPolyDim;
 	VECTOR a;

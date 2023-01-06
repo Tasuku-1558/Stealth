@@ -13,7 +13,6 @@ public:
 	  virtual~ObjectBase();		//デストラクタ
 
 	  virtual void Initialize() = 0;
-	  //virtual void Activate() = 0;
 	  //virtual void Update(float dltaTime) = 0;				
 	  virtual void Draw() = 0;
 

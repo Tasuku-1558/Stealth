@@ -1,5 +1,4 @@
 #include "Light.h"
-#include "DxLib.h"
 
 
 const VECTOR Light::DIRECTION = { 0.0f,-1.0f,0.0f };	//ƒ‰ƒCƒg‚Ì•ûŒü

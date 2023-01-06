@@ -7,7 +7,7 @@ const VECTOR Wall::POSITION = { -2500.0f,30.0f,0.0f };	//モデルの位置
 
 
 /// <summary>
-/// コンストラク
+/// コンストラクタ
 /// </summary>
 /// <param name="WALL"></param>
 Wall::Wall(Object WALL)

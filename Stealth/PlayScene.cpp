@@ -27,6 +27,7 @@ PlayScene::PlayScene()
 		, hitChecker(nullptr)
 		, map(nullptr)
 		, uiManager(nullptr)
+		, fadeManager(nullptr)
 		, font(0)
 {
 	//ˆ—‚È‚µ
@@ -144,7 +145,7 @@ void PlayScene::UpdateGame(float deltaTime)
 
 	enemy->Update(deltaTime, player);
 
-	player->Update(deltaTime, camera, ball, enemy, hitChecker);
+	player->Update(deltaTime, camera, ball, enemy);
 	
 	hitChecker->Check(player, ball, map);
 
