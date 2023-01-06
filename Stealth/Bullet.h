@@ -1,12 +1,15 @@
 #pragma once
 
+#include <string>
+
 #include "ObjectBase.h"
 #include "Math3D.h"
-#include <string>
+#include "Player.h"
+#include "Ball.h"
+
 
 using namespace std;
 
-class Ball;
 
 /// <summary>
 /// プレイヤーショットクラス
@@ -21,8 +24,11 @@ public:
 	void Finalize();
 	void Activate();
 	void Update(float deltaTime, Ball* ball);
-	void MouseMove(Ball* ball);							//マウスカーソルの移動
+	void MouseMove(Ball* ball, VECTOR pos);							//マウスカーソルの移動
+	void SetDead();							//バレットを非アクティブ化
+	void SetAlive();						//バレットをアクティブ化
 
+	bool GetAlive() { return alive; }
 	void Draw();
 
 	//デバック用
@@ -36,6 +42,10 @@ private:
 	int cursorImage;						//照準画像格納用
 	int mouseX;								//マウスX座標
 	int mouseY;								//マウスY座標
+	float worldMouseX;						//ワールドマウスX座標
+	float worldMouseY;						//ワールドマウスY座標
+
+	bool alive;
 
 	//静的定数
 	static const VECTOR SIZE;				//モデルの倍率

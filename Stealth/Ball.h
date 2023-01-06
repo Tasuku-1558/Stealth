@@ -17,6 +17,7 @@ public:
 	void Finalize();
 	void Activate();
 	void Update(HitChecker* hitChecker);
+	void SetDead();							//ボールを非アクティブ化
 	void Draw();
 
 	bool GetAlive() { return alive; }

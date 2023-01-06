@@ -6,6 +6,8 @@
 class Player;
 class Ball;
 class Map;
+class Wall;
+class Enemy;
 
 
 /// <summary>
@@ -19,7 +21,9 @@ public:
 
 	void Check(Player* player, Ball* ball, Map* map);			//衝突判定
 	bool Hit() { return hit; }
-	bool ai() { return a; }
+
+	VECTOR ai() { return a; }
+	bool hita() { return aio; }
 
 private:
 
@@ -27,12 +31,14 @@ private:
 
 	void BallAndPlayer(Player* player, Ball* ball);			//ボールとプレイヤーの当たり判定
 	void MapAndPlayer(Map* map, Player* player);
+	void WallAndEnemy(Wall* wall, Enemy* enemy);
 
 	double direction;
 	bool hit;				//衝突したならば
 	bool possessionBoal;	//所持しているボールの数
 
-	MV1_COLL_RESULT_POLY_DIM HitPolyDim;
-	bool a;
+	MV1_COLL_RESULT_POLY_DIM hitPolyDim;
+	VECTOR a;
+	bool aio;
 
 };

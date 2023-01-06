@@ -8,6 +8,7 @@ class Enemy;
 class Camera;
 class Light;
 class Ball;
+class Wall;
 class HitChecker;
 class Map;
 class UiManager;
@@ -43,6 +44,7 @@ private:
 	Camera* camera;
 	Light* light;
 	Ball* ball;
+	Wall* wall;
 	HitChecker* hitChecker;
 	Map* map;
 	UiManager* uiManager;

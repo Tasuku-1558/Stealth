@@ -26,6 +26,7 @@ void Ball::Initialize()
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::BALL));
 	MV1SetScale(modelHandle, SIZE);
 
+	position = POSITION;
 
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
@@ -42,7 +43,6 @@ void Ball::Finalize()
 
 void Ball::Activate()
 {
-	position = POSITION;
 }
 
 void Ball::Update(HitChecker* hitChecker)
@@ -50,6 +50,15 @@ void Ball::Update(HitChecker* hitChecker)
 	MV1SetPosition(modelHandle, position);
 
 	IsAlive(hitChecker);
+}
+
+/// <summary>
+/// ボールを非アクティブ化
+/// </summary>
+void Ball::SetDead()
+{
+	alive = true;
+	position = POSITION;
 }
 
 /// <summary>

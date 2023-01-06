@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "Light.h"
 #include "Ball.h"
+#include "Wall.h"
 #include "HitChecker.h"
 #include "Map.h"
 #include "UiManager.h"
@@ -22,6 +23,7 @@ PlayScene::PlayScene()
 		, light(nullptr)
 		, pUpdate(nullptr)
 		, ball(nullptr)
+		, wall(nullptr)
 		, hitChecker(nullptr)
 		, map(nullptr)
 		, uiManager(nullptr)
@@ -52,6 +54,10 @@ void PlayScene::Initialize()
 	//ボールクラス
 	ball = new Ball();
 	ball->Initialize();
+
+	//壁クラス
+	wall = new Wall(ObjectBase::WALL);
+	wall->Initialize();
 
 	//マップクラス
 	map = new Map();
@@ -86,6 +92,8 @@ void PlayScene::Finalize()
 
 	SafeDelete(ball);
 
+	SafeDelete(wall);
+
 	SafeDelete(hitChecker);
 
 	SafeDelete(uiManager);
@@ -105,8 +113,6 @@ void PlayScene::Activate()
 	pUpdate = &PlayScene::UpdateStart;
 
 	player->Activate();
-
-	ball->Activate();
 	
 }
 
@@ -160,6 +166,9 @@ void PlayScene::Draw()
 
 	//エネミー描画
 	enemy->Draw();
+
+	//壁描画
+	wall->Draw();
 
 	if (ball->GetAlive())
 	{

@@ -1,6 +1,5 @@
 #include "Bullet.h"
 #include "ModelManager.h"
-#include "Ball.h"
 
 
 const VECTOR Bullet::SIZE  = { 2.0f, 2.0f, 2.0f };			//モデルの倍率
@@ -13,8 +12,11 @@ using namespace Math3d;
 
 Bullet::Bullet(Object BALL)
 	: cursorImage(0)
-	, mouseX(-50)
+	, mouseX(0)
 	, mouseY(0)
+	, worldMouseX(0.0f)
+	, worldMouseY(0.0f)
+	, alive(false)
 {
 	//処理なし
 }
@@ -33,6 +35,7 @@ void Bullet::Initialize()
 	modelHandle = ModelManager::GetInstance().GetModelHandle(ModelManager::BALL);
 	MV1SetScale(modelHandle, SIZE);
 
+	position = VGet(0.0f, 30.0f, 0.0f);
 
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
@@ -54,8 +57,6 @@ void Bullet::Finalize()
 
 void Bullet::Activate()
 {
-	
-	position = VGet(0.0f, 30.0f, 0.0f);
 }
 
 void Bullet::Update(float deltaTime, Ball* ball)
@@ -63,21 +64,40 @@ void Bullet::Update(float deltaTime, Ball* ball)
 	if (!ball->GetAlive())
 	{
 		OnShot(deltaTime);
-		//MouseMove(ball);
 	}
-	
 }
 
 /// <summary>
 /// マウスカーソルの移動
 /// </summary>
 /// <param name="ball"></param>
-void Bullet::MouseMove(Ball* ball)
+void Bullet::MouseMove(Ball* ball, VECTOR pos)
 {
+	GetMousePoint(&mouseX, &mouseY);                //マウスの座標取得
+	mouseX -= 960;
+	mouseY -= 540;
+
 	if (!ball->GetAlive())
 	{
-		GetMousePoint(&mouseX, &mouseY);                //マウスの座標取得
+		worldMouseX = (float)mouseX * (3000.0f / 1920.0f) * 2.0f + pos.z;
+		worldMouseY = (float)mouseY * (1900.0f / 1080.0f) * 1.8f + pos.x;
 	}
+}
+
+/// <summary>
+/// バレットを非アクティブ化
+/// </summary>
+void Bullet::SetDead()
+{
+	alive = false;
+}
+
+/// <summary>
+/// バレットをアクティブ化
+/// </summary>
+void Bullet::SetAlive()
+{
+	alive = true;
 }
 
 /// <summary>
@@ -86,15 +106,17 @@ void Bullet::MouseMove(Ball* ball)
 /// <param name="deltaTime"></param>
 void Bullet::OnShot(float deltaTime)
 {
-	
-	position += VGet(mouseY-2700, 30.0f, mouseX-500);
+	position = VGet(worldMouseY, 30.0f, worldMouseX);
 
 	MV1SetPosition(modelHandle, position);
 }
 
 void Bullet::Draw()
 {
-	MV1DrawModel(modelHandle);
+	if (alive)
+	{
+		MV1DrawModel(modelHandle);
+	}
 
-	DrawRotaGraph(mouseX, mouseY, 0.04f, 0, cursorImage, TRUE);
+	DrawRotaGraph(mouseX + 960, mouseY + 540, 0.04f, 0, cursorImage, TRUE);
 }

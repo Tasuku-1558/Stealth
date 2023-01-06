@@ -10,14 +10,6 @@ class Ball;
 class Enemy;
 class HitChecker;
 
-/// <summary>
-/// カーソルの状態
-/// </summary>
-enum class Cursor
-{
-	SELECTION,
-	PUSH,
-};
 
 /// <summary>
 /// プレイヤークラス
@@ -41,21 +33,20 @@ public:
 	int GetSpeed() { return SPEED; }
 
 
-	enum class Cursor cursor;
-
 private:
 	Player(const Player&);							//コピーコンストラクタ
 
-	void Move(float deltaTime, Camera* camera);		//移動処理
+	void Move(float deltaTime, Camera* camera, HitChecker* hitChecker);		//移動処理
 	void Shoot(float deltaTime, Ball* ball);		//弾の発射処理
 	void FoundEnemy(Enemy* enemy);					//エネミーに見つかった場合
 	void aa(HitChecker* hitChecker);
-	void cUpdate(Ball* ball);
 
 	Bullet* bullet;
 
 	int rightArmHandle;
 	VECTOR rightArmPosition;
+
+	float bulletCount;
 
 	static const VECTOR RIGHT_ARM_POSITION;
 };

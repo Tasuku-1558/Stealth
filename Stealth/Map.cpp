@@ -10,7 +10,6 @@ using namespace Math3d;
 using namespace std;
 
 Map::Map() : ObjectBase()
-	, collisionModel(0)
 {
 	//処理なし
 }
@@ -40,18 +39,6 @@ void Map::Initialize()
 		printfDx("モデルデータ読み込みに失敗 [STAGE1]\n");
 	}
 
-
-	/*collisionModel = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE1));
-
-	MV1SetScale(collisionModel, SIZE);
-	MV1SetRotationXYZ(collisionModel, VGet(0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f));
-
-	position = POSITION;
-
-	MV1SetPosition(collisionModel, position + VGet(-45, 0, -35));
-
-	MV1SetupCollInfo(collisionModel);*/
-
 	MapList();
 }
 
@@ -76,12 +63,4 @@ void Map::Activate()
 void Map::Draw()
 {
 	MV1DrawModel(modelHandle);
-
-	// コリジョンモデルが存在する場合は半透明描画
-	/*if (collisionModel != -1)
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-		MV1DrawModel(collisionModel);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-	}*/
 }

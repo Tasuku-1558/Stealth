@@ -19,8 +19,8 @@ Player::Player(Object PLAYER) : PlayerBase()
 	, rightArmHandle(0)
 	, rightArmPosition()
 	, bullet(nullptr)
+	, bulletCount(0.0f)
 {
-	cursor = Cursor::SELECTION;
 }
 
 /// <summary>
@@ -96,23 +96,30 @@ void Player::Activate()
 /// <param name="ball"></param>
 void Player::Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy, HitChecker* hitChecker)
 {
-	Move(deltaTime, camera);
+	Move(deltaTime, camera, hitChecker);
 
 	Shoot(deltaTime, ball);
-
+	
 	FoundEnemy(enemy);
-
-	aa(hitChecker);
-
-	cUpdate(ball);
 	
 	//プレイヤーの位置をセット
 	MV1SetPosition(modelHandle, position);
 
 	MV1SetPosition(rightArmHandle, rightArmPosition);
 
-	bullet->Activate();
+	if (bullet->GetAlive())
+	{
+		bulletCount += deltaTime;
+	}
 
+	if (bulletCount > 5.0f)
+	{
+		bulletCount = 0.0f;
+		
+
+		ball->SetDead();
+		bullet->SetDead();
+	}
 }
 
 /// <summary>
@@ -120,12 +127,14 @@ void Player::Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy, H
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="camera"></param>
-void Player::Move(float deltaTime, Camera* camera)
+void Player::Move(float deltaTime, Camera* camera, HitChecker* hitChecker)
 {
 	inputDirection = ZERO_VECTOR;
 
 	inputFlag = false;
-	
+
+	aa(hitChecker);
+
 	//上下
 	if (CheckHitKey(KEY_INPUT_W))
 	{
@@ -164,9 +173,11 @@ void Player::Move(float deltaTime, Camera* camera)
 
 		//十字キーの入力方向をキャラの向きとする
 		dir = inputDirection;
-
+		
 		//十字キーの移動方向に移動
 		position += inputDirection * SPEED * deltaTime;
+
+		
 
 	}
 
@@ -177,8 +188,6 @@ void Player::Move(float deltaTime, Camera* camera)
 	//モデルに回転をセット dirを向く
 	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
 	MV1SetRotationZYAxis(rightArmHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
-	
-	
 }
 
 /// <summary>
@@ -188,16 +197,14 @@ void Player::Move(float deltaTime, Camera* camera)
 /// <param name="ball"></param>
 void Player::Shoot(float deltaTime, Ball* ball)
 {
-	//マウスカーソルを左クリックしたならば
-	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0)
+	//マウスカーソルを左クリックして、且つボールとバレットが非アクティブならば
+	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && !bullet->GetAlive() && !ball->GetAlive())
 	{
 		bullet->Update(deltaTime, ball);
-		cursor = Cursor::PUSH;
-		
-		
+		bullet->SetAlive();
 	}
 
-	bullet->MouseMove(ball);
+	bullet->MouseMove(ball, position);
 }
 
 /// <summary>
@@ -218,22 +225,13 @@ void Player::FoundEnemy(Enemy* enemy)
 
 void Player::aa(HitChecker* hitChecker)
 {
-	if (hitChecker->ai())
+	if (hitChecker->hita())
 	{
 		
+		//inputDirection.z += 1.0f;
 	}
-}
-
-void Player::cUpdate(Ball* ball)
-{
-	switch (cursor)
-	{
-	case Cursor::SELECTION:
-		break;
-
-	case Cursor::PUSH:
-		break;
-	}
+	
+	
 }
 
 /// <summary>

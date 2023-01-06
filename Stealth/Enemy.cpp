@@ -185,6 +185,7 @@ void Enemy::Reaction(Object object)
 		break;
 
 	case ObjectBase::WALL:
+		printfDx("WALL");
 		break;
 	}
 	
