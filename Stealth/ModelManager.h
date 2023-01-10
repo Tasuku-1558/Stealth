@@ -15,12 +15,11 @@ public:
 	//モデルの種類
 	enum ModelType
 	{
-		PLAYER,
-		PLAYER_ARM,
-		ENEMY,
-		WALL,
-		BALL,
-		STAGE1,
+		PLAYER,			//プレイヤーモデル
+		ENEMY,			//エネミーモデル
+		WALL,			//壁モデル
+		BALL,			//ボールモデル
+		STAGE1,			//ステージ１モデル
 		MODEL_AMOUNT	//モデルの個数
 	};
 
@@ -43,11 +42,9 @@ private:
 
 	 //静的定数
 	 static const string MODEL_FOLDER_PATH;		//modelフォルダまでのパス
-	 static const string PLAYER_BODY_PATH;		//player_bodyモデルファイルのパス
-	 static const string PLAYER_ARM_PATH;		//player_armモデルファイルのパス
-	 static const string ENEMY_BODY_PATH;		//enemy_bodyモデルファイルのパス
+	 static const string PLAYER_PATH;			//playerモデルファイルのパス
+	 static const string ENEMY_PATH;			//enemyモデルファイルのパス
 	 static const string WALL_PATH;				//wallモデルファイルのパス
 	 static const string BALL_PATH;				//ballモデルファイルのパス
 	 static const string STAGE1_PATH;			//stage1モデルファイルのパス
-
 };

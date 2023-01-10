@@ -2,12 +2,11 @@
 #include "DxLib.h"
 
 
-const string ModelManager::MODEL_FOLDER_PATH = "data/model/";     //modelフォルダまでのパス
-const string ModelManager::PLAYER_BODY_PATH  = "player_body.mv1"; //player_bodyモデルファイルのパス
-const string ModelManager::PLAYER_ARM_PATH   = "arm.mv1";         //player_armモデルファイルのパス
-const string ModelManager::ENEMY_BODY_PATH   = "enemy_body.mv1";  //enemy_bodyモデルファイルのパス
-const string ModelManager::WALL_PATH         = "wall.mv1";        //wallモデルファイルのパス
-const string ModelManager::BALL_PATH         = "ball.mv1";        //ballモデルファイルのパス
+const string ModelManager::MODEL_FOLDER_PATH = "data/model/";   //modelフォルダまでのパス
+const string ModelManager::PLAYER_PATH       = "player.mv1";    //playerモデルファイルのパス
+const string ModelManager::ENEMY_PATH        = "enemy.mv1";     //enemyモデルファイルのパス
+const string ModelManager::WALL_PATH         = "wall.mv1";      //wallモデルファイルのパス
+const string ModelManager::BALL_PATH         = "ball.mv1";      //ballモデルファイルのパス
 const string ModelManager::STAGE1_PATH       = "s.mv1";      //stage1モデルファイルのパス
 
 
@@ -31,13 +30,10 @@ ModelManager& ModelManager::GetInstance()
 void ModelManager::LoadAllModel()
 {
     //モデルファイルのパス
-    string failePath = MODEL_FOLDER_PATH + PLAYER_BODY_PATH;
+    string failePath = MODEL_FOLDER_PATH + PLAYER_PATH;
     modelHandle[PLAYER] = MV1LoadModel(failePath.c_str());
 
-    failePath = MODEL_FOLDER_PATH + PLAYER_ARM_PATH;
-    modelHandle[PLAYER_ARM] = MV1LoadModel(failePath.c_str());
-
-    failePath = MODEL_FOLDER_PATH + ENEMY_BODY_PATH;
+    failePath = MODEL_FOLDER_PATH + ENEMY_PATH;
     modelHandle[ENEMY] = MV1LoadModel(failePath.c_str());
 
     failePath = MODEL_FOLDER_PATH + WALL_PATH;

@@ -1,4 +1,6 @@
 #include "UiManager.h"
+#include "Enemy.h"
+#include "HitChecker.h"
 
 using std::string;
 
@@ -50,8 +52,11 @@ void UiManager::Finalize()
 	}
 }
 
-void UiManager::Draw(PlayScene::State state)
+void UiManager::Draw(PlayScene::State state, Enemy* enemy, HitChecker* hitChecker)
 {
+	//吹き出し画像描画
+	DrawBillboard3D(VGet(-800.0f, 0.0f, 0.0f), 0.5f, 0.5f, 200.0f, 0.0f, uiHandle[BALLOON], TRUE);
+
 	switch (state)
 	{
 	case PlayScene::START:
@@ -60,6 +65,8 @@ void UiManager::Draw(PlayScene::State state)
 
 	case PlayScene::GAME:
 		StartGameDraw();
+		PlayerHpDraw(enemy);
+		OperationMethodDraw(hitChecker);
 		break;
 	}
 }
@@ -74,5 +81,43 @@ void UiManager::StartGameDraw()
 	if (count < 50)
 	{
 		DrawGraph(0, -50, uiHandle[STARGE1], TRUE);
+	}
+}
+
+/// <summary>
+/// 操作方法説明UI
+/// </summary>
+/// <param name="hitChecker"></param>
+void UiManager::OperationMethodDraw(HitChecker* hitChecker)
+{
+	if (hitChecker->UI())
+	{
+		DrawGraph(0, 20, uiHandle[OPERATION], TRUE);
+	}
+}
+
+/// <summary>
+/// プレイヤーHPUI
+/// </summary>
+/// <param name="enemy"></param>
+void UiManager::PlayerHpDraw(Enemy* enemy)
+{
+	DrawRotaGraph(205, 70, 0.5f, 0, uiHandle[PLAYER_HP_FRAME], TRUE);
+	DrawRotaGraph(310, 70, 0.5f, 0, uiHandle[PLAYER_HP_FRAME], TRUE);
+
+	if (enemy->GetPlayerCount() == 0)
+	{
+		DrawRotaGraph(100, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
+		DrawRotaGraph(205, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
+		DrawRotaGraph(310, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
+	}
+	else if (enemy->GetPlayerCount() == 1)
+	{
+		DrawRotaGraph(100, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
+		DrawRotaGraph(205, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
+	}
+	else if (enemy->GetPlayerCount() == 2)
+	{
+		DrawRotaGraph(100, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
 	}
 }

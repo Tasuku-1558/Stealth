@@ -10,13 +10,13 @@
 using namespace Math3d;
 
 HitChecker::HitChecker()
-	: direction(0.0f)
-	, hit(false)
+	: hit(false)
 	, hitPolyDim()
-	, a()
-	, aio(false)
+	, uiPos()
+	, uiDraw(false)
 {
 	//処理なし
+	uiPos = VGet(-800.0f, 30.0f, 0.0f);
 }
 
 HitChecker::~HitChecker()
@@ -29,10 +29,12 @@ HitChecker::~HitChecker()
 /// </summary>
 /// <param name="player"></param>
 /// <param name="ball"></param>
-void HitChecker::Check(Player* player, Ball* ball, Map* map)
+void HitChecker::Check(Player* player, Ball* ball, Map* map, Enemy* enemy)
 {
 	BallAndPlayer(player, ball);
+	PlayerAndUI(player);
 	MapAndPlayer(map, player);
+	//BulletAndEnemy(player, enemy);
 }
 
 /// <summary>
@@ -45,26 +47,40 @@ void HitChecker::BallAndPlayer(Player* player, Ball* ball)
 	//プレイヤーからボールの座標を引いた値を取得
 	VECTOR sub = player->GetPosition() - ball->GetPosition();
 
-	//プレイヤーとエネミーの2点間の距離を計算
+	//プレイヤーとボールの2点間の距離を計算
 	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
 	
-	//ボールを所持していないならば
+	//衝突しているならば
+	if (direction < PLAYER_RADIUS + BALL_RADIUS)
 	{
-		if (direction < PLAYER_RADIUS + BALL_RADIUS)
-		{
-			hit = true;
-		}
-		else
-		{
-			hit = false;
-		}
+		hit = true;
 	}
-	
+	else
+	{
+		hit = false;
+	}
+}
+
+void HitChecker::PlayerAndUI(Player* player)
+{
+	//プレイヤーからボールの座標を引いた値を取得
+	VECTOR sub = player->GetPosition() - uiPos;
+
+	//プレイヤーとボールの2点間の距離を計算
+	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
+
+	if (direction < PLAYER_RADIUS + 50.0f)
+	{
+		uiDraw = true;
+	}
+	else
+	{
+		uiDraw = false;
+	}
 }
 
 void HitChecker::MapAndPlayer(Map* map, Player* player)
 {
-	
 	// モデル全体のコリジョン情報を構築
 	MV1SetupCollInfo(map->GetModel(), 0, 8, 8, 8);
 
@@ -79,56 +95,54 @@ void HitChecker::MapAndPlayer(Map* map, Player* player)
 
 	VECTOR newCenter = player->GetPosition(); // 移動候補  
 	
-	aio = false;
 
 	// 当たったかどうか
 	if (hitPolyDim.HitNum)
 	{
 		printfDx("hit");
 
-		aio = true;
 
-		// 衝突ポリゴンをすべて回って、球のめり込みを解消
-		for (int i = 0; i < hitPolyDim.HitNum; ++i)
-		{
-			// 衝突ポリゴンの辺 
-			VECTOR edge1 = hitPolyDim.Dim[i].Position[1] - hitPolyDim.Dim[i].Position[0];
-			VECTOR edge2 = hitPolyDim.Dim[i].Position[2] - hitPolyDim.Dim[i].Position[0];
+		//// 衝突ポリゴンをすべて回って、球のめり込みを解消
+		//for (int i = 0; i < hitPolyDim.HitNum; ++i)
+		//{
+		//	// 衝突ポリゴンの辺 
+		//	VECTOR edge1 = hitPolyDim.Dim[i].Position[1] - hitPolyDim.Dim[i].Position[0];
+		//	VECTOR edge2 = hitPolyDim.Dim[i].Position[2] - hitPolyDim.Dim[i].Position[0];
 
-			// 衝突ポリゴンの辺より、ポリゴン面の法線ベクトルを求める
-			planeNormal = VCross(edge1, edge2);
-			planeNormal = VNorm(planeNormal);
+		//	// 衝突ポリゴンの辺より、ポリゴン面の法線ベクトルを求める
+		//	planeNormal = VCross(edge1, edge2);
+		//	planeNormal = VNorm(planeNormal);
 
-			// 球中心に最も近いポリゴン平面の点を求める
-			VECTOR tmp = moveCandidate - hitPolyDim.Dim[i].Position[0];
-			float  dot = VDot(planeNormal, tmp);
+		//	// 球中心に最も近いポリゴン平面の点を求める
+		//	VECTOR tmp = moveCandidate - hitPolyDim.Dim[i].Position[0];
+		//	float  dot = VDot(planeNormal, tmp);
 
-			// 衝突点
-			VECTOR hitPos = moveCandidate - planeNormal * dot;
+		//	// 衝突点
+		//	VECTOR hitPos = moveCandidate - planeNormal * dot;
 
-			// 球がどれくらいめり込んでいるかを算出
-			VECTOR tmp2 = moveCandidate - hitPos;
-			float  len = VSize(tmp2);
+		//	// 球がどれくらいめり込んでいるかを算出
+		//	VECTOR tmp2 = moveCandidate - hitPos;
+		//	float  len = VSize(tmp2);
 
-			// めり込んでいる場合は球の中心を押し戻し
-			if (HitCheck_Sphere_Triangle(moveCandidate, PLAYER_RADIUS,
-				hitPolyDim.Dim[i].Position[0],
-				hitPolyDim.Dim[i].Position[1],
-				hitPolyDim.Dim[i].Position[2]))
-			{
-				// めり込み解消する位置まで移動
-				VECTOR moveVec;
-				len = PLAYER_RADIUS - len;
-				moveVec = planeNormal * len;
-				moveCandidate += moveVec;
-			}
+		//	// めり込んでいる場合は球の中心を押し戻し
+		//	if (HitCheck_Sphere_Triangle(moveCandidate, PLAYER_RADIUS,
+		//		hitPolyDim.Dim[i].Position[0],
+		//		hitPolyDim.Dim[i].Position[1],
+		//		hitPolyDim.Dim[i].Position[2]))
+		//	{
+		//		// めり込み解消する位置まで移動
+		//		VECTOR moveVec;
+		//		len = PLAYER_RADIUS - len;
+		//		moveVec = planeNormal * len;
+		//		moveCandidate += moveVec;
+		//	}
 
-			// 移動候補を移動位置にする
-			newCenter = moveCandidate;
+		//	// 移動候補を移動位置にする
+		//	newCenter = moveCandidate;
 
-			a = newCenter - player->GetPosition();
-
-		}
+		//	a = newCenter - player->GetPosition();
+		//	
+		//}
 
 	}
 	
@@ -136,4 +150,27 @@ void HitChecker::MapAndPlayer(Map* map, Player* player)
 
 void HitChecker::WallAndEnemy(Wall* wall, Enemy* enemy)
 {
+}
+
+/// <summary>
+/// バレットとエネミーの当たり判定
+/// </summary>
+/// <param name="bullet"></param>
+/// <param name="enemy"></param>
+void HitChecker::BulletAndEnemy(Player* player, Enemy* enemy)
+{
+	//エネミーからバレットの座標を引いた値を取得
+	VECTOR sub = enemy->GetPosition() - player->GetBulletPos();
+
+	//エネミーとバレットの2点間の距離を計算
+	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
+
+	//衝突しているならば
+	if (direction < ENEMY_RADIUS + BULLET_RADIUS)
+	{
+		printfDx("a");
+	}
+	else
+	{
+	}
 }

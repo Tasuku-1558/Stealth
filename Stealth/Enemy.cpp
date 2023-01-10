@@ -4,6 +4,7 @@
 
 const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
 const string Enemy::FIND_PATH		  = "find.png";			//見つかった画像のパス
+const string Enemy::VIEW_RANGE_PATH	  = "view_range.png";
 
 
 using namespace Math3d;
@@ -20,6 +21,7 @@ Enemy::Enemy(Map* map) : EnemyBase()
 	, discovery(false)
 	, playerFindCount(0)
 	, findImage(0)
+	, viewRangeImage(0)
 {
 	enemyState = EnemyState::CRAWL;
 	Position(map);
@@ -47,8 +49,13 @@ void Enemy::Initialize()
 		printfDx("モデルデータ読み込みに失敗[ENEMY_BODY]\n");
 	}
 
+	speed = SPEED;
+	
 	string failePath = IMAGE_FOLDER_PATH + FIND_PATH;
 	findImage = LoadGraph(failePath.c_str());
+
+	failePath = IMAGE_FOLDER_PATH + VIEW_RANGE_PATH;
+	viewRangeImage = LoadGraph(failePath.c_str());
 }
 
 /// <summary>
@@ -72,6 +79,11 @@ void Enemy::Finalize()
 	DeleteGraph(findImage);
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="deltaTime"></param>
+/// <param name="player"></param>
 void Enemy::Update(float deltaTime, Player* player)
 {
 	//エネミーの位置をセット
@@ -80,17 +92,17 @@ void Enemy::Update(float deltaTime, Player* player)
 	//ベクトルの正規化
 	dir = VNorm(targetPosition - position);
 	
-	position += dir * SPEED * deltaTime;
+	position += dir * speed * deltaTime;
 
 	VisualAngle(player);
-
+	VisualAngleBall(player);
 	eUpdate(deltaTime);
-
+	
 	//z軸が逆を向いているのでdirを180度回転させる
 	MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
 	VECTOR negativeVec = VTransform(dir, rotYMat);
 
-	//モデルに回転をセット dirを向く
+	//モデルに回転をセット
 	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
 }
 
@@ -144,6 +156,39 @@ void Enemy::VisualAngle(Player* player)
 
 	//発見していない
 	discovery = false;
+	
+	//ベクトルとエネミーの長さの比較
+	if (length > direction)
+	{
+		//プレイヤーがエネミーの視野範囲内にいるか比較
+		if (radian <= dot)
+		{
+			object = PLAYER;
+			
+			//視野範囲内ならば
+			Reaction(object);
+		}
+	}
+}
+
+void Enemy::VisualAngleBall(Player* player)
+{
+	//プレイヤーからエネミーの座標を引いた値を取得
+	VECTOR sub = player->GetBulletPos() - position;
+
+	//プレイヤーとエネミーの2点間の距離を計算
+	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
+
+	//ベクトルの正規化
+	sub = VNorm(sub);
+
+	//内積計算
+	float dot = VDot(sub, dir);
+
+	float range = RANGE_DEGREE * (float)(DX_PI / 180.0f);
+
+	//エネミーの視野をcosにする
+	float radian = cosf(range / 2.0f);
 
 	//ベクトルとエネミーの長さの比較
 	if (length > direction)
@@ -151,6 +196,8 @@ void Enemy::VisualAngle(Player* player)
 		//プレイヤーがエネミーの視野範囲内にいるか比較
 		if (radian <= dot)
 		{
+			object = BALL;
+
 			//視野範囲内ならば
 			Reaction(object);
 		}
@@ -175,6 +222,9 @@ void Enemy::Reaction(Object object)
 
 	case ObjectBase::BALL:
 		printfDx("BALL");
+
+		speed = 0.0f;
+
 		break;
 
 	case ObjectBase::WALL:
@@ -211,4 +261,5 @@ void Enemy::eUpdate(float deltaTime)
 void Enemy::Draw()
 {
 	MV1DrawModel(modelHandle);
+	//DrawBillboard3D(VGet(position.x - 10, 30.0f, position.z + 200), 0.5f, 0.5f, 300.0f, 0.0f, viewRangeImage, TRUE);
 }

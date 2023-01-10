@@ -24,6 +24,7 @@ public:
 	void Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy);
 	void Draw();
 
+	VECTOR GetBulletPos() { return bulletPosition; }
 
 	//デバック用
 	int GetX() { return position.x; }
@@ -32,21 +33,16 @@ public:
 
 
 private:
-	Player(const Player&);							//コピーコンストラクタ
+	Player(const Player&);								//コピーコンストラクタ
 
-	void Move(float deltaTime, Camera* camera);								//移動処理
-	void Shoot(float deltaTime, Ball* ball);								//弾の発射処理
-	void FoundEnemy(Enemy* enemy);											//エネミーに見つかった場合
-	void BulletReuse(float deltaTime, Ball* ball);							//バレット再使用カウント
+	void Move(float deltaTime, Camera* camera);			//移動処理
+	void Shoot(float deltaTime, Ball* ball);			//弾の発射処理
+	void FoundEnemy(Enemy* enemy);						//エネミーに見つかった場合
+	void BulletReuse(float deltaTime, Ball* ball);		//バレット再使用カウント
 
 
 	Bullet* bullet;
 
 	float bulletCount;				//弾の効果時間
-
-
-	int rightArmHandle;
-	VECTOR rightArmPosition;
-
-	static const VECTOR RIGHT_ARM_POSITION;
+	VECTOR bulletPosition;			//弾の位置
 };

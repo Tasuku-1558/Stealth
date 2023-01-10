@@ -48,6 +48,7 @@ private:
 	void eUpdate(float deltaTime);				//状態変化
 	void SetTargetPosition();					//移動処理
 	void VisualAngle(Player* player);			//視野角の計算
+	void VisualAngleBall(Player* player);			//視野角の計算
 	void Reaction(Object object);				//エネミーのオブジェクトごとの反応
 	void Finalize();
 
@@ -64,10 +65,11 @@ private:
 	int playerFindCount;			//プレイヤーを見つけた回数
 
 	int findImage;					//見つかった画像格納用
+	int viewRangeImage;
 
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
 	static const std::string FIND_PATH;			//見つかった画像のパス
-
+	static const std::string VIEW_RANGE_PATH;
 };

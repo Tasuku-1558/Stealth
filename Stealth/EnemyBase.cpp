@@ -6,6 +6,7 @@ const float EnemyBase::RANGE_DEGREE = 45.0f;					//‹–ìŠp“x
 
 
 EnemyBase::EnemyBase()
+	: speed(0.0f)
 {
 	//ˆ—‚È‚µ
 }

@@ -62,7 +62,7 @@ void Ball::SetDead()
 /// <param name="hitChecker"></param>
 void Ball::IsAlive(HitChecker* hitChecker)
 {
-
+	//“–‚½‚Á‚½‚È‚ç‚Î
 	if (hitChecker->Hit())
 	{
 		alive = false;

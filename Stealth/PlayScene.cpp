@@ -147,7 +147,7 @@ void PlayScene::UpdateGame(float deltaTime)
 
 	player->Update(deltaTime, camera, ball, enemy);
 	
-	hitChecker->Check(player, ball, map);
+	hitChecker->Check(player, ball, map, enemy);
 
 	if (ball->GetAlive())
 	{
@@ -178,16 +178,14 @@ void PlayScene::Draw()
 	}
 
 	//UI管理クラス描画
-	uiManager->Draw(state);
+	uiManager->Draw(state, enemy, hitChecker);
 
 	//デバック用
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 270, GetColor(255, 0, 0), font, "Alive : %d \n(1:true 0:false)", ball->GetAlive());
-	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "discovery : %d", enemy->Discovery());
-	DrawFormatStringToHandle(100, 450, GetColor(255, 0, 0), font, "PlayerCount : %d", enemy->GetPlayerCount());
-
+	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "PlayerCount : %d", enemy->GetPlayerCount());
 
 
 	//画面効果クラス描画

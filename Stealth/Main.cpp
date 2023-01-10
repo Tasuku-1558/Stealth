@@ -58,7 +58,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ClearDrawScreen();
 
 		playScene->Draw();
-		
+		SetBackgroundColor(0, 0, 0);
 		//デバック用
 		{
 			int i;

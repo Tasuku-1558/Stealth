@@ -5,17 +5,15 @@
 
 using namespace Math3d;
 
-const VECTOR Player::RIGHT_ARM_POSITION = { 150.0f, 0.0f, 110.0f };
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="PLAYER"></param>
 Player::Player(Object PLAYER) : PlayerBase()
-	, rightArmHandle(0)
-	, rightArmPosition()
 	, bullet(nullptr)
 	, bulletCount(0.0f)
+	, bulletPosition()
 {
 	//処理なし
 }
@@ -26,7 +24,7 @@ Player::Player(Object PLAYER) : PlayerBase()
 Player::~Player()
 {
 	//終了処理が呼ばれていなければ
-	if (modelHandle != NULL || rightArmHandle != NULL)
+	if (modelHandle != NULL)
 	{
 		Finalize();
 	}
@@ -45,14 +43,6 @@ void Player::Initialize()
 		printfDx("モデルデータ読み込みに失敗[PLAYER_BODY]\n");
 	}
 
-	rightArmHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::PLAYER_ARM));
-
-	//読み込み失敗でエラー
-	if (rightArmHandle < 0)
-	{
-		printfDx("モデルデータ読み込みに失敗[PLAYER_ARM]\n");
-	}
-
 	//ショットクラス
 	bullet = new Bullet(ObjectBase::BALL);
 	bullet->Initialize();
@@ -66,9 +56,6 @@ void Player::Finalize()
 	MV1DeleteModel(modelHandle);
 	modelHandle = NULL;
 
-	MV1DeleteModel(rightArmHandle);
-	rightArmHandle = NULL;
-
 	bullet->Finalize();
 }
 
@@ -78,8 +65,6 @@ void Player::Finalize()
 void Player::Activate()
 {
 	position = POSITION;
-	rightArmPosition = RIGHT_ARM_POSITION;
-
 	dir = DIR;
 }
 
@@ -89,6 +74,7 @@ void Player::Activate()
 /// <param name="deltaTime"></param>
 /// <param name="camera"></param>
 /// <param name="ball"></param>
+/// <param name="enemy"></param>
 void Player::Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy)
 {
 	Move(deltaTime, camera);
@@ -101,8 +87,7 @@ void Player::Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy)
 	
 	//プレイヤーの位置をセット
 	MV1SetPosition(modelHandle, position);
-
-	MV1SetPosition(rightArmHandle, rightArmPosition);
+	
 }
 
 /// <summary>
@@ -165,7 +150,6 @@ void Player::Move(float deltaTime, Camera* camera)
 
 	//モデルに回転をセット dirを向く
 	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
-	MV1SetRotationZYAxis(rightArmHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
 }
 
 /// <summary>
@@ -180,8 +164,9 @@ void Player::Shoot(float deltaTime, Ball* ball)
 	{
 		bullet->Update(deltaTime, ball);
 		bullet->SetAlive();
+		bulletPosition = bullet->GetPosition();
 	}
-
+	
 	bullet->MouseMove(ball, position);
 }
 
@@ -196,7 +181,7 @@ void Player::FoundEnemy(Enemy* enemy)
 		WaitTimer(1000);
 
 		//位置と向きを初期化
-		position = ZERO_VECTOR;
+		position = POSITION;
 		dir = DIR;
 	}
 }
@@ -217,7 +202,7 @@ void Player::BulletReuse(float deltaTime, Ball* ball)
 	if (bulletCount > 5.0f)
 	{
 		bulletCount = 0.0f;
-
+		bulletPosition = ZERO_VECTOR;
 
 		ball->SetDead();
 		bullet->SetDead();

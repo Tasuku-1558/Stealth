@@ -28,7 +28,6 @@ public:
 		  WALL,
 	  };
 
-
 protected:
 	VECTOR position;						//現在の座標
 	VECTOR dir;								//向きベクトル

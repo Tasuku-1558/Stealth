@@ -17,7 +17,7 @@ using namespace std;
 class Bullet final : public ObjectBase
 {
 public:
-	Bullet(Object BALL);
+	 Bullet(Object BALL);
 	~Bullet();
 
 	void Initialize();
@@ -29,7 +29,6 @@ public:
 
 	bool GetAlive() { return alive; }
 	void Draw();
-
 
 private:
 
