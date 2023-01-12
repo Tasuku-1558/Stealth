@@ -2,7 +2,6 @@
 
 #include "SceneBase.h"
 
-
 class Player;
 class Enemy;
 class Camera;
@@ -11,18 +10,19 @@ class BackGround;
 class Ball;
 class Wall;
 class HitChecker;
-class Map;
+class Stage2Map;
 class UiManager;
 class FadeManager;
 
+
 /// <summary>
-/// プレイシーンクラス
+/// ステージ２クラス
 /// </summary>
-class PlayScene final : public SceneBase
+class Stage2 final : public SceneBase
 {
 public:
-	 PlayScene(SceneManager* const sceneManager);
-	~PlayScene();
+	 Stage2(SceneManager* const sceneManager);
+	~Stage2();
 
 	void Initialize();
 	void Finalize();
@@ -35,11 +35,10 @@ public:
 	{
 		START,	//開始前
 		GAME,	//ゲーム中
-		GOAL,	//ゴール
 	};
 
 private:
-	PlayScene(const PlayScene&);		//コピーコンストラクタ
+	Stage2(const Stage2&);		//コピーコンストラクタ
 
 	Player* player;
 	Enemy* enemy;
@@ -49,14 +48,13 @@ private:
 	Ball* ball;
 	Wall* wall;
 	HitChecker* hitChecker;
-	Map* map;
+	Stage2Map* stage2Map;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
 
 	void UpdateStart(float deltaTime);				//ゲーム開始前
 	void UpdateGame(float deltaTime);				//ゲーム中
-	void UpdateGoal(float deltaTime);
-	void (PlayScene::* pUpdate)(float deltaTime);	//Update関数ポインタ
+	void (Stage2::* pUpdate)(float deltaTime);		//Update関数ポインタ
 
 	State state;		//ゲーム状態
 	int font;			//ゲームフォント

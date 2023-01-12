@@ -4,6 +4,7 @@
 
 #include "DxLib.h"
 #include "PlayScene.h"
+#include "Stage2.h"
 
 class Enemy;
 class HitChecker;
@@ -21,7 +22,7 @@ public:
 	void Finalize();
 
 	void Draw(PlayScene::State state, Enemy* enemy, HitChecker* hitChecker);
-
+	void Draw(Stage2::State state);
 
 private:
 	UiManager(const UiManager&);		//コピーコンストラクタ
@@ -39,6 +40,9 @@ private:
 		PLAYER_HP_FRAME,	//プレイヤーHP枠画像
 		OPERATION,			//操作方法説明画像
 		BALLOON,			//吹き出し画像
+		CREAR,				//ゲームクリア画像
+		STAGE2,
+		FRAME,				//フレーム画像
 		GRAPHIC_AMOUNT		//画像の数
 	};
 

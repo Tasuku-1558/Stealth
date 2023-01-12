@@ -1,12 +1,14 @@
 #pragma once
 
+class SceneManager;
+
 /// <summary>
 /// シーンベースクラス
 /// </summary>
 class SceneBase
 {
 public:
-	SceneBase() {/*処理なし*/ }			//コンストラクタ
+	SceneBase(SceneManager* const sceneManager) : parent(sceneManager) {/*処理なし*/ }			//コンストラクタ
 	virtual ~SceneBase() {/*処理なし*/}	//デストラクタ
 
 	virtual void Initialize() = 0;
@@ -16,7 +18,7 @@ public:
 	virtual void Draw() = 0;
 
 protected:
-
+	SceneManager* const parent;
 
 private:
 	SceneBase(const SceneBase&);		//コピーコンストラクタ

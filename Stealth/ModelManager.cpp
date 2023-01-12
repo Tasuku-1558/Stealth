@@ -7,7 +7,8 @@ const string ModelManager::PLAYER_PATH       = "player.mv1";    //playerモデルフ
 const string ModelManager::ENEMY_PATH        = "enemy.mv1";     //enemyモデルファイルのパス
 const string ModelManager::WALL_PATH         = "wall.mv1";      //wallモデルファイルのパス
 const string ModelManager::BALL_PATH         = "ball.mv1";      //ballモデルファイルのパス
-const string ModelManager::STAGE1_PATH       = "s.mv1";      //stage1モデルファイルのパス
+const string ModelManager::STAGE1_PATH       = "stage1.mv1";    //stage1モデルファイルのパス
+const string ModelManager::STAGE2_PATH       = "stage2.mv1";    //stage1モデルファイルのパス
 
 
 ModelManager::ModelManager()
@@ -44,6 +45,9 @@ void ModelManager::LoadAllModel()
 
     failePath = MODEL_FOLDER_PATH + STAGE1_PATH;
     modelHandle[STAGE1] = MV1LoadModel(failePath.c_str());
+
+    failePath = MODEL_FOLDER_PATH + STAGE2_PATH;
+    modelHandle[STAGE2] = MV1LoadModel(failePath.c_str());
 
     //読み込み失敗ならエラー
     for (int i = 0; i < MODEL_AMOUNT; ++i)

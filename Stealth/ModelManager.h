@@ -19,7 +19,8 @@ public:
 		ENEMY,			//エネミーモデル
 		WALL,			//壁モデル
 		BALL,			//ボールモデル
-		STAGE1,			//ステージ１モデル
+		STAGE1,			//ステージ1モデル
+		STAGE2,			//ステージ2モデル
 		MODEL_AMOUNT	//モデルの個数
 	};
 
@@ -47,4 +48,5 @@ private:
 	 static const string WALL_PATH;				//wallモデルファイルのパス
 	 static const string BALL_PATH;				//ballモデルファイルのパス
 	 static const string STAGE1_PATH;			//stage1モデルファイルのパス
+	 static const string STAGE2_PATH;			//stage2モデルファイルのパス
 };

@@ -3,8 +3,11 @@
 
 
 const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
+const string Enemy::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
 const string Enemy::FIND_PATH		  = "find.png";			//見つかった画像のパス
 const string Enemy::VIEW_RANGE_PATH	  = "view_range.png";
+const string Enemy::MARK_PATH		  = "mark.png";			//ビックリマーク画像のパス
+const string Enemy::DISCOVERY_SE_PATH = "discovery.mp3";	//プレイヤー発見SE音のパス
 
 
 using namespace Math3d;
@@ -15,16 +18,15 @@ using namespace std;
 /// </summary>
 /// <param name="map"></param>
 Enemy::Enemy(Map* map) : EnemyBase()
-	, object()
-	, targetPosition()
-	, length(400.0f)
-	, discovery(false)
-	, playerFindCount(0)
-	, findImage(0)
-	, viewRangeImage(0)
 {
 	enemyState = EnemyState::CRAWL;
 	Position(map);
+}
+
+Enemy::Enemy(Stage2Map* stage2Map)
+{
+	enemyState = EnemyState::CRAWL;
+	Position(stage2Map);
 }
 
 /// <summary>
@@ -56,6 +58,12 @@ void Enemy::Initialize()
 
 	failePath = IMAGE_FOLDER_PATH + VIEW_RANGE_PATH;
 	viewRangeImage = LoadGraph(failePath.c_str());
+
+	failePath = IMAGE_FOLDER_PATH + MARK_PATH;
+	markImage = LoadGraph(failePath.c_str());
+
+	failePath = SOUND_FOLDER_PATH + DISCOVERY_SE_PATH;
+	discoverySE = LoadSoundMem(failePath.c_str());
 }
 
 /// <summary>
@@ -73,10 +81,25 @@ void Enemy::Position(Map* map)
 	enemyState = EnemyState::ARRIVAL;
 }
 
+void Enemy::Position(Stage2Map* stage2Map)
+{
+	pointList = stage2Map->GetMap(0);		//マップから座標リストを受け取る
+
+	itr = pointList.begin();		//イテレータを先頭に設定
+
+	position = *itr++;				//イテレータから敵座標を設定
+
+	enemyState = EnemyState::ARRIVAL;
+}
+
 void Enemy::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 	DeleteGraph(findImage);
+	DeleteGraph(markImage);
+
+	// サウンドリソースを削除
+	InitSoundMem();
 }
 
 /// <summary>
@@ -95,7 +118,9 @@ void Enemy::Update(float deltaTime, Player* player)
 	position += dir * speed * deltaTime;
 
 	VisualAngle(player);
+
 	VisualAngleBall(player);
+
 	eUpdate(deltaTime);
 	
 	//z軸が逆を向いているのでdirを180度回転させる
@@ -190,6 +215,8 @@ void Enemy::VisualAngleBall(Player* player)
 	//エネミーの視野をcosにする
 	float radian = cosf(range / 2.0f);
 
+	ballFlag = false;
+
 	//ベクトルとエネミーの長さの比較
 	if (length > direction)
 	{
@@ -200,6 +227,8 @@ void Enemy::VisualAngleBall(Player* player)
 
 			//視野範囲内ならば
 			Reaction(object);
+
+			
 		}
 	}
 }
@@ -216,15 +245,37 @@ void Enemy::Reaction(Object object)
 		printfDx("PLAYER");
 		discovery = true;
 
+		// 発見SEを再生
+		PlaySoundMem(discoverySE, DX_PLAYTYPE_BACK);
+
+		//ビックリマークの画像を描画
+		DrawBillboard3D(VGet(position.x - 300, 0.0f, position.z - 100), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
+
 		DrawGraph(200, 0, findImage, TRUE);		//敵に見つかったというUI画像を描画
 		playerFindCount++;
 		break;
 
 	case ObjectBase::BALL:
 		printfDx("BALL");
-
-		speed = 0.0f;
-
+	
+		ballFlag = true;
+		if (ballFlag)
+		{
+			speed = 0.0f;
+			count++;
+			if (count > 200)
+			{
+				speed = SPEED;
+				ballFlag = false;
+				
+			}
+			
+		}
+		else
+		{
+			speed = SPEED;
+		}
+		
 		break;
 
 	case ObjectBase::WALL:

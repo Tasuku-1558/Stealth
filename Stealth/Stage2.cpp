@@ -1,4 +1,4 @@
-#include "PlayScene.h"
+#include "Stage2.h"
 #include "DxLib.h"
 
 #include "SceneManager.h"
@@ -11,37 +11,37 @@
 #include "Ball.h"
 #include "Wall.h"
 #include "HitChecker.h"
-#include "Map.h"
+#include "Stage2Map.h"
 #include "UiManager.h"
 #include "FadeManager.h"
 
 
-PlayScene::PlayScene(SceneManager* const sceneManager)
-		: SceneBase(sceneManager)
-		, state()
-		, player(nullptr)
-		, enemy(nullptr)
-		, camera(nullptr)
-		, light(nullptr)
-		, backGround(nullptr)
-		, pUpdate(nullptr)
-		, ball(nullptr)
-		, wall(nullptr)
-		, hitChecker(nullptr)
-		, map(nullptr)
-		, uiManager(nullptr)
-		, fadeManager(nullptr)
-		, font(0)
+Stage2::Stage2(SceneManager* const sceneManager)
+	: SceneBase(sceneManager)
+	, state()
+	, player(nullptr)
+	, enemy(nullptr)
+	, camera(nullptr)
+	, light(nullptr)
+	, backGround(nullptr)
+	, pUpdate(nullptr)
+	, ball(nullptr)
+	, wall(nullptr)
+	, hitChecker(nullptr)
+	, stage2Map(nullptr)
+	, uiManager(nullptr)
+	, fadeManager(nullptr)
+	, font(0)
 {
 	//処理なし
 }
 
-PlayScene::~PlayScene()
+Stage2::~Stage2()
 {
 	//処理なし
 }
 
-void PlayScene::Initialize()
+void Stage2::Initialize()
 {
 	//カメラクラス
 	camera = new Camera();
@@ -68,11 +68,11 @@ void PlayScene::Initialize()
 	wall->Initialize();
 
 	//マップクラス
-	map = new Map();
-	map->Initialize();
+	stage2Map = new Stage2Map();
+	stage2Map->Initialize();
 
 	//エネミークラス
-	enemy = new Enemy(map);
+	enemy = new Enemy(stage2Map);
 	enemy->Initialize();
 
 	//ヒットチェッカークラス
@@ -86,7 +86,7 @@ void PlayScene::Initialize()
 	fadeManager = new FadeManager();
 }
 
-void PlayScene::Finalize()
+void Stage2::Finalize()
 {
 	SafeDelete(camera);
 
@@ -96,7 +96,7 @@ void PlayScene::Finalize()
 
 	SafeDelete(player);
 
-	SafeDelete(map);
+	SafeDelete(stage2Map);
 
 	SafeDelete(enemy);
 
@@ -114,18 +114,18 @@ void PlayScene::Finalize()
 	DeleteFontToHandle(font);
 }
 
-void PlayScene::Activate()
+void Stage2::Activate()
 {
 	state = START;
 
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
-	pUpdate = &PlayScene::UpdateStart;
+	pUpdate = &Stage2::UpdateStart;
 
 	player->Activate();
 }
 
-void PlayScene::Update(float deltaTime)
+void Stage2::Update(float deltaTime)
 {
 	if (pUpdate != nullptr)
 	{
@@ -137,39 +137,32 @@ void PlayScene::Update(float deltaTime)
 /// ゲーム開始前
 /// </summary>
 /// <param name="deltaTime"></param>
-void PlayScene::UpdateStart(float deltaTime)
+void Stage2::UpdateStart(float deltaTime)
 {
 	state = GAME;
-	pUpdate = &PlayScene::UpdateGame;
+	pUpdate = &Stage2::UpdateGame;
 }
 
 /// <summary>
 /// ゲーム中
 /// </summary>
 /// <param name="deltaTime"></param>
-void PlayScene::UpdateGame(float deltaTime)
+void Stage2::UpdateGame(float deltaTime)
 {
 	camera->Update(player);
 
 	enemy->Update(deltaTime, player);
 
 	player->Update(deltaTime, camera, ball, enemy);
-	
-	hitChecker->Check(player, ball, map, enemy);
+
+	//hitChecker->Check(player, ball, map, enemy);
 
 	if (ball->GetAlive())
 	{
 		ball->Update(hitChecker);
 	}
-	
+
 	//fadeManager->FadeMove();
-	
-	//プレイヤーがゴール地点に辿り着いたら
-	if (player->GetPosition().x < -4000)
-	{
-		state = GOAL;
-		pUpdate = &PlayScene::UpdateGoal;
-	}
 
 	//エネミーに３回見つかったら
 	if (enemy->GetPlayerCount() == 3)
@@ -179,26 +172,14 @@ void PlayScene::UpdateGame(float deltaTime)
 	}
 }
 
-/// <summary>
-/// ゴール
-/// </summary>
-/// <param name="deltaTime"></param>
-void PlayScene::UpdateGoal(float deltaTime)
-{
-	WaitTimer(1000);
-
-	parent->SetNextScene(SceneManager::SELECTION);
-	return;
-}
-
-void PlayScene::Draw()
+void Stage2::Draw()
 {
 	//背景描画
 	backGround->Draw();
 
 	//マップ描画
-	map->Draw();
-	
+	stage2Map->Draw();
+
 	//プレイヤー描画
 	player->Draw();
 
@@ -215,7 +196,7 @@ void PlayScene::Draw()
 	}
 
 	//UI管理クラス描画
-	uiManager->Draw(state, enemy, hitChecker);
+	uiManager->Draw(state);
 
 	//デバック用
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
@@ -223,10 +204,8 @@ void PlayScene::Draw()
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 270, GetColor(255, 0, 0), font, "Alive : %d \n(1:true 0:false)", ball->GetAlive());
 	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "PlayerCount : %d", enemy->GetPlayerCount());
-	
+
 
 	//画面効果クラス描画
 	fadeManager->Draw();
-
-
 }

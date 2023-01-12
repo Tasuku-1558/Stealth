@@ -30,7 +30,7 @@ void UiManager::Initialize()
 	//UI画像読み込み
 	string failePath = FOLDER_PATH + UI_GRAPHIC_PATH; // フォルダパス + ファイル名
 	string fullPath = failePath;
-
+	
 	for (int i = 0; i < GRAPHIC_AMOUNT; ++i)
 	{
 		fullPath = failePath + std::to_string(i) + FILENAME_EXTENSION;
@@ -56,7 +56,7 @@ void UiManager::Draw(PlayScene::State state, Enemy* enemy, HitChecker* hitChecke
 {
 	//吹き出し画像描画
 	DrawBillboard3D(VGet(-800.0f, 0.0f, 0.0f), 0.5f, 0.5f, 200.0f, 0.0f, uiHandle[BALLOON], TRUE);
-
+	
 	switch (state)
 	{
 	case PlayScene::START:
@@ -67,6 +67,36 @@ void UiManager::Draw(PlayScene::State state, Enemy* enemy, HitChecker* hitChecke
 		StartGameDraw();
 		PlayerHpDraw(enemy);
 		OperationMethodDraw(hitChecker);
+		break;
+
+	case PlayScene::GOAL:
+		DrawGraph(0, -300, uiHandle[CREAR], TRUE);
+		count = 0;
+		break;
+	}
+}
+
+void UiManager::Draw(Stage2::State state)
+{
+	switch (state)
+	{
+	case PlayScene::START:
+
+		break;
+
+	case PlayScene::GAME:
+		count++;
+
+		if (count < 50)
+		{
+			DrawGraph(0, -50, uiHandle[STAGE2], TRUE);
+		}
+		
+		break;
+
+	case PlayScene::GOAL:
+		DrawGraph(0, -300, uiHandle[CREAR], TRUE);
+		count = 0;
 		break;
 	}
 }
@@ -102,6 +132,8 @@ void UiManager::OperationMethodDraw(HitChecker* hitChecker)
 /// <param name="enemy"></param>
 void UiManager::PlayerHpDraw(Enemy* enemy)
 {
+	DrawRotaGraph(350, 100, 0.7f, 0, uiHandle[FRAME], TRUE);
+
 	DrawRotaGraph(205, 70, 0.5f, 0, uiHandle[PLAYER_HP_FRAME], TRUE);
 	DrawRotaGraph(310, 70, 0.5f, 0, uiHandle[PLAYER_HP_FRAME], TRUE);
 

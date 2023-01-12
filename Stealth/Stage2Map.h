@@ -7,11 +7,11 @@
 /// <summary>
 /// マップクラス
 /// </summary>
-class Map final : public ObjectBase
+class Stage2Map final : public ObjectBase
 {
 public:
-     Map();
-    ~Map();
+     Stage2Map();
+    ~Stage2Map();
 
     void Initialize();
     void Finalize();
@@ -33,6 +33,4 @@ private:
     //静的定数
     static const VECTOR SIZE;           //モデルの倍率
     static const VECTOR POSITION;       //モデルの位置
-    static const VECTOR ROTATE;         //モデルの回転値
-
 };

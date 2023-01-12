@@ -36,7 +36,7 @@ Player::~Player()
 void Player::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::PLAYER));
-	
+
 	//“Ç‚İ‚İ¸”s‚ÅƒGƒ‰[
 	if (modelHandle < 0)
 	{

@@ -168,7 +168,7 @@ void HitChecker::BulletAndEnemy(Player* player, Enemy* enemy)
 	//Õ“Ë‚µ‚Ä‚¢‚é‚È‚ç‚Î
 	if (direction < ENEMY_RADIUS + BULLET_RADIUS)
 	{
-		printfDx("a");
+		
 	}
 	else
 	{

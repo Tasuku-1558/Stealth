@@ -7,6 +7,7 @@
 #include "EnemyBase.h"
 #include "Math3D.h"
 #include "Map.h"
+#include "Stage2Map.h"
 #include "Player.h"
 
 
@@ -27,6 +28,7 @@ class Enemy final : public EnemyBase
 {
 public:
 	 Enemy(Map* map);		//コンストラクタ
+	 Enemy(Stage2Map* stage2Map);
 	~Enemy();				//デストラクタ
 
 	void Initialize();
@@ -35,7 +37,6 @@ public:
 
 	bool Discovery() { return discovery; }
 
-	//デバック用
 	int GetPlayerCount() { return playerFindCount; }
 	
 	enum class EnemyState enemyState;
@@ -44,6 +45,7 @@ private:
 	Enemy(const Enemy&);						//コピーコンストラクタ
 
 	void Position(Map* map);					//エネミー位置設定
+	void Position(Stage2Map* stage2Map);
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 	void eUpdate(float deltaTime);				//状態変化
 	void SetTargetPosition();					//移動処理
@@ -56,20 +58,14 @@ private:
 	std::vector<VECTOR>::iterator itr;
 	std::vector<VECTOR> pointList;
 
-	VECTOR targetPosition;			//目的地の座標
-	Object object;					//オブジェクトのタグ
-
-	const float length;				//視野角の距離
-	bool discovery;					//発見
-
-	int playerFindCount;			//プレイヤーを見つけた回数
-
-	int findImage;					//見つかった画像格納用
-	int viewRangeImage;
-
+	
+	
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
+	static const std::string SOUND_FOLDER_PATH;	//soundフォルダまでのパス
 	static const std::string FIND_PATH;			//見つかった画像のパス
 	static const std::string VIEW_RANGE_PATH;
+	static const std::string MARK_PATH;			//ビックリマーク画像のパス
+	static const std::string DISCOVERY_SE_PATH;	//プレイヤー発見SE音のパス
 };

@@ -1,20 +1,19 @@
-#include "Map.h"
+#include "Stage2Map.h"
 #include "PreCompiledHeader.h"
 #include "ModelManager.h"
 
 
-const VECTOR Map::SIZE	   = { 80.0f, 50.0f, 80.0f };						//モデルの倍率
-const VECTOR Map::POSITION = { -2700.0f, -100.0f, -750.0f };				//モデルの位置
-const VECTOR Map::ROTATE   = { 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f };		//モデルの回転値
+const VECTOR Stage2Map::SIZE	 = { 80.0f, 50.0f, 80.0f };					//モデルの倍率
+const VECTOR Stage2Map::POSITION = { -200.0f, 50.0f, 1350.0f };				//モデルの位置
 
 using namespace std;
 
-Map::Map() : ObjectBase()
+Stage2Map::Stage2Map() : ObjectBase()
 {
 	//処理なし
 }
 
-Map::~Map()
+Stage2Map::~Stage2Map()
 {
 	//終了処理が呼ばれてなければ
 	if (modelHandle != NULL)
@@ -23,11 +22,10 @@ Map::~Map()
 	}
 }
 
-void Map::Initialize()
+void Stage2Map::Initialize()
 {
-	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE1));
+	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE2));
 	MV1SetScale(modelHandle, SIZE);
-	MV1SetRotationXYZ(modelHandle, ROTATE);
 
 	position = POSITION;
 
@@ -42,7 +40,7 @@ void Map::Initialize()
 	MapList();
 }
 
-void Map::MapList()
+void Stage2Map::MapList()
 {
 	positionList.push_back(VGet(-3200.0f, 100.0f, 1400.0f));
 	positionList.push_back(VGet(-3200.0f, 100.0f, -1300.0f));
@@ -50,13 +48,13 @@ void Map::MapList()
 	itr = positionList.begin();   //  イテレータを先頭に設定
 }
 
-void Map::Finalize()
+void Stage2Map::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 	modelHandle = NULL;
 }
 
-void Map::Draw()
+void Stage2Map::Draw()
 {
 	MV1DrawModel(modelHandle);
 }

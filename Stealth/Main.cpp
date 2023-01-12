@@ -5,10 +5,7 @@
 #include "PreCompiledHeader.h"
 #include "ModelManager.h"
 #include "PlayScene.h"
-
-//デバック用
-#define LINE_AREA_SIZE		10000.0f
-#define LINE_NUM			50
+#include "SceneManager.h"
 
 //-----------------------------------------------------------------------------
 // メイン関数
@@ -37,10 +34,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	
 	ModelManager::GetInstance();	//モデル管理クラスの生成
 
-	PlayScene* playScene = new PlayScene();
+	SceneManager* sceneManager = new SceneManager();
 
-	playScene->Initialize();
-	playScene->Activate();
+	sceneManager->Initialize();
+	
 	// エスケープキーが押されるかウインドウが閉じられるまでループ
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
@@ -52,41 +49,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		prevTime = nowTime;
 
-		playScene->Update(deltaTime);
+		sceneManager->Update(deltaTime);
 
 		// 画面を初期化する
 		ClearDrawScreen();
 
-		playScene->Draw();
+		sceneManager->Draw();
 		SetBackgroundColor(0, 0, 0);
-		//デバック用
-		{
-			int i;
-			VECTOR Pos1;
-			VECTOR Pos2;
-
-			SetUseZBufferFlag(TRUE);
-
-			Pos1 = VGet(-LINE_AREA_SIZE / 2.0f, 0.0f, -LINE_AREA_SIZE / 2.0f);
-			Pos2 = VGet(-LINE_AREA_SIZE / 2.0f, 0.0f, LINE_AREA_SIZE / 2.0f);
-			for (i = 0; i <= LINE_NUM; i++)
-			{
-				DrawLine3D(Pos1, Pos2, GetColor(0, 255, 0));
-				Pos1.x += LINE_AREA_SIZE / LINE_NUM;
-				Pos2.x += LINE_AREA_SIZE / LINE_NUM;
-			}
-
-			Pos1 = VGet(-LINE_AREA_SIZE / 2.0f, 0.0f, -LINE_AREA_SIZE / 2.0f);
-			Pos2 = VGet(LINE_AREA_SIZE / 2.0f, 0.0f, -LINE_AREA_SIZE / 2.0f);
-			for (i = 0; i < LINE_NUM; i++)
-			{
-				DrawLine3D(Pos1, Pos2, GetColor(0, 255, 0));
-				Pos1.z += LINE_AREA_SIZE / LINE_NUM;
-				Pos2.z += LINE_AREA_SIZE / LINE_NUM;
-			}
-
-			SetUseZBufferFlag(FALSE);
-		}
 
 		// 裏画面の内容を表画面に反映させる
 		ScreenFlip();
@@ -96,7 +65,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (RemoveFontResourceEx(fontPath, FR_PRIVATE, NULL)) {}
 	else { MessageBox(NULL, "remove failure", "", MB_OK); }
 
-	SafeDelete(playScene);
+	SafeDelete(sceneManager);
 
 	DxLib_End();			// DXライブラリ使用の終了処理
 
