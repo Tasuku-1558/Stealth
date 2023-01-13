@@ -55,7 +55,7 @@ private:
 
 	void UpdateStart(float deltaTime);				//ゲーム開始前
 	void UpdateGame(float deltaTime);				//ゲーム中
-	void UpdateGoal(float deltaTime);
+	void UpdateGoal(float deltaTime);				//ゴール
 	void (PlayScene::* pUpdate)(float deltaTime);	//Update関数ポインタ
 
 	State state;		//ゲーム状態

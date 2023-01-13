@@ -20,18 +20,22 @@ Stage2::Stage2(SceneManager* const sceneManager)
 	: SceneBase(sceneManager)
 	, state()
 	, player(nullptr)
-	, enemy(nullptr)
+	, enemy()
 	, camera(nullptr)
 	, light(nullptr)
 	, backGround(nullptr)
 	, pUpdate(nullptr)
 	, ball(nullptr)
+	, ball2(nullptr)
 	, wall(nullptr)
+	, wall2(nullptr)
+	, wall3(nullptr)
 	, hitChecker(nullptr)
 	, stage2Map(nullptr)
 	, uiManager(nullptr)
 	, fadeManager(nullptr)
 	, font(0)
+	, pop(false)
 {
 	//処理なし
 }
@@ -60,20 +64,31 @@ void Stage2::Initialize()
 	player->Initialize();
 
 	//ボールクラス
-	ball = new Ball();
+	ball = new Ball({ -600.0f,30.0f,0.0f });
 	ball->Initialize();
 
+	ball2 = new Ball({ -3500.0f,30.0f,0.0f });
+	ball2->Initialize();
+
 	//壁クラス
-	wall = new Wall(ObjectBase::WALL);
+	wall = new Wall(ObjectBase::WALL, { -1100.0f,30.0f,0.0f });
 	wall->Initialize();
+
+	//壁2クラス
+	wall2 = new Wall(ObjectBase::WALL, { -2000.0f,30.0f,0.0f });
+	wall2->Initialize();
+
+	//壁3クラス
+	wall3 = new Wall(ObjectBase::WALL, { -4000.0f,30.0f,0.0f });
+	wall3->Initialize();
 
 	//マップクラス
 	stage2Map = new Stage2Map();
 	stage2Map->Initialize();
 
 	//エネミークラス
-	enemy = new Enemy(stage2Map);
-	enemy->Initialize();
+	/*enemy = new Enemy(stage2Map);
+	enemy->Initialize();*/
 
 	//ヒットチェッカークラス
 	hitChecker = new HitChecker();
@@ -98,11 +113,15 @@ void Stage2::Finalize()
 
 	SafeDelete(stage2Map);
 
-	SafeDelete(enemy);
-
 	SafeDelete(ball);
 
+	SafeDelete(ball2);
+
 	SafeDelete(wall);
+
+	SafeDelete(wall2);
+
+	SafeDelete(wall3);
 
 	SafeDelete(hitChecker);
 
@@ -123,6 +142,12 @@ void Stage2::Activate()
 	pUpdate = &Stage2::UpdateStart;
 
 	player->Activate();
+
+	for (auto ptr : enemy)
+	{
+		SafeDelete(ptr);
+		ptr->Activate();
+	}
 }
 
 void Stage2::Update(float deltaTime)
@@ -131,6 +156,52 @@ void Stage2::Update(float deltaTime)
 	{
 		(this->*pUpdate)(deltaTime);		//状態ごとに更新
 	}
+}
+
+/// <summary>
+/// エネミーを登録
+/// </summary>
+/// <param name="newEnemy"></param>
+void Stage2::EntryEnemy(Enemy* newEnemy)
+{
+	enemy.emplace_back(newEnemy);
+}
+
+/// <summary>
+/// エネミーを削除
+/// </summary>
+/// <param name="deleteEnemy"></param>
+void Stage2::DeleteEnemy(Enemy* deleteEnemy)
+{
+	//エネミーオブジェクトから検索して削除
+	auto iter = std::find(enemy.begin(), enemy.end(), deleteEnemy);
+
+	if (iter != enemy.end())
+	{
+		//隕石オブジェクトを最後尾に移動してデータを消す
+		std::iter_swap(iter, enemy.end() - 1);
+		enemy.pop_back();
+
+		return;
+	}
+}
+
+/// <summary>
+/// エネミーの出現
+/// </summary>
+void Stage2::EnemyPop()
+{
+	if (!pop)
+	{
+		Enemy* newEnemy = new Enemy(stage2Map);
+		EntryEnemy(newEnemy);
+
+		Enemy* newEnemy = new Enemy();
+		EntryEnemy(newEnemy);
+
+		pop = true;
+	}
+	
 }
 
 /// <summary>
@@ -151,25 +222,54 @@ void Stage2::UpdateGame(float deltaTime)
 {
 	camera->Update(player);
 
-	enemy->Update(deltaTime, player);
+	EnemyPop();
 
-	player->Update(deltaTime, camera, ball, enemy);
+	for (auto ptr : enemy)
+	{
+		ptr->Update(deltaTime, player);
 
-	//hitChecker->Check(player, ball, map, enemy);
+		player->Update(deltaTime, camera, ball, ptr);
+
+		//エネミーに3回見つかったら
+		if (ptr->GetPlayerCount() == 3)
+		{
+			parent->SetNextScene(SceneManager::TITLE);
+			return;
+		}
+	}
+
+	hitChecker->Check(player, ball/*, map*/);
 
 	if (ball->GetAlive())
 	{
 		ball->Update(hitChecker);
 	}
 
+	if (ball2->GetAlive())
+	{
+		ball2->Update(hitChecker);
+	}
+
 	//fadeManager->FadeMove();
 
-	//エネミーに３回見つかったら
-	if (enemy->GetPlayerCount() == 3)
+	//プレイヤーがゴール地点に辿り着いたら
+	if (player->GetPosition().x < -5900)
 	{
-		parent->SetNextScene(SceneManager::TITLE);
-		return;
+		state = GOAL;
+		pUpdate = &Stage2::UpdateGoal;
 	}
+}
+
+/// <summary>
+/// ゴール
+/// </summary>
+/// <param name="deltaTime"></param>
+void Stage2::UpdateGoal(float deltaTime)
+{
+	WaitTimer(1000);
+
+	parent->SetNextScene(SceneManager::SELECTION);
+	return;
 }
 
 void Stage2::Draw()
@@ -184,10 +284,19 @@ void Stage2::Draw()
 	player->Draw();
 
 	//エネミー描画
-	enemy->Draw();
+	for (auto ptr : enemy)
+	{
+		ptr->Draw();
+	}
 
 	//壁描画
 	wall->Draw();
+
+	//壁2描画
+	wall2->Draw();
+
+	//壁3描画
+	wall3->Draw();
 
 	if (ball->GetAlive())
 	{
@@ -195,16 +304,28 @@ void Stage2::Draw()
 		ball->Draw();
 	}
 
+	if (ball2->GetAlive())
+	{
+		ball2->Draw();
+	}
+
 	//UI管理クラス描画
-	uiManager->Draw(state);
+	for (auto ptr : enemy)
+	{
+		uiManager->Draw(state, ptr);
+	}
 
 	//デバック用
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 270, GetColor(255, 0, 0), font, "Alive : %d \n(1:true 0:false)", ball->GetAlive());
-	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "PlayerCount : %d", enemy->GetPlayerCount());
 
+	for (auto ptr : enemy)
+	{
+		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "PlayerCount : %d", ptr->GetPlayerCount());
+	}
+	
 
 	//画面効果クラス描画
 	fadeManager->Draw();

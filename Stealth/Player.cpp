@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "PreCompiledHeader.h"
 #include "ModelManager.h"
+#include "Enemy.h"
 #include "Bullet.h"
 
 using namespace Math3d;

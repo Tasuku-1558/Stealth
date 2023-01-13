@@ -76,7 +76,7 @@ void UiManager::Draw(PlayScene::State state, Enemy* enemy, HitChecker* hitChecke
 	}
 }
 
-void UiManager::Draw(Stage2::State state)
+void UiManager::Draw(Stage2::State state, Enemy* enemy)
 {
 	switch (state)
 	{
@@ -91,7 +91,8 @@ void UiManager::Draw(Stage2::State state)
 		{
 			DrawGraph(0, -50, uiHandle[STAGE2], TRUE);
 		}
-		
+		PlayerHpDraw(enemy);
+
 		break;
 
 	case PlayScene::GOAL:

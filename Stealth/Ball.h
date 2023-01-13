@@ -10,7 +10,7 @@
 class Ball final : public ObjectBase
 {
 public:
-	 Ball();
+	 Ball(VECTOR pos);
 	~Ball();
 
 	void Initialize();

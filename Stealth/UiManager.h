@@ -22,7 +22,7 @@ public:
 	void Finalize();
 
 	void Draw(PlayScene::State state, Enemy* enemy, HitChecker* hitChecker);
-	void Draw(Stage2::State state);
+	void Draw(Stage2::State state, Enemy* enemy);
 
 private:
 	UiManager(const UiManager&);		//コピーコンストラクタ

@@ -60,11 +60,11 @@ void PlayScene::Initialize()
 	player->Initialize();
 
 	//ボールクラス
-	ball = new Ball();
+	ball = new Ball({ -1500.0f,30.0f,0.0f });
 	ball->Initialize();
 
 	//壁クラス
-	wall = new Wall(ObjectBase::WALL);
+	wall = new Wall(ObjectBase::WALL, { -2500.0f,30.0f,0.0f });
 	wall->Initialize();
 
 	//マップクラス
@@ -123,6 +123,8 @@ void PlayScene::Activate()
 	pUpdate = &PlayScene::UpdateStart;
 
 	player->Activate();
+
+	enemy->Activate();
 }
 
 void PlayScene::Update(float deltaTime)
@@ -155,7 +157,9 @@ void PlayScene::UpdateGame(float deltaTime)
 
 	player->Update(deltaTime, camera, ball, enemy);
 	
-	hitChecker->Check(player, ball, map, enemy);
+	hitChecker->Check(player, ball/*, map*/);
+
+	hitChecker->MapAndPlayer(map, player);
 
 	if (ball->GetAlive())
 	{

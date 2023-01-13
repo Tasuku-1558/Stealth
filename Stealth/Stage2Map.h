@@ -18,6 +18,7 @@ public:
     void Draw();
 
     std::vector<VECTOR>& GetMap(int number) { return positionList; }
+    std::vector<VECTOR>& GetMap2(int number) { return positionList2; }
 
     int GetModel() { return modelHandle; }
 
@@ -25,9 +26,13 @@ public:
 private:
 
     void MapList();
+    void MapList2();
 
     std::vector<VECTOR> positionList;
     std::vector<VECTOR>::iterator itr;
+
+    std::vector<VECTOR> positionList2;
+    std::vector<VECTOR>::iterator itr2;
 
 
     //Ã“I’è”

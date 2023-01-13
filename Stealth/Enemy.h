@@ -32,6 +32,7 @@ public:
 	~Enemy();				//デストラクタ
 
 	void Initialize();
+	void Activate();
 	void Update(float deltaTime, Player* player);
 	void Draw();
 
@@ -45,7 +46,8 @@ private:
 	Enemy(const Enemy&);						//コピーコンストラクタ
 
 	void Position(Map* map);					//エネミー位置設定
-	void Position(Stage2Map* stage2Map);
+	void FirstPosition(Stage2Map* stage2Map);
+	void SecondPosition(Stage2Map* stage2Map);
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 	void eUpdate(float deltaTime);				//状態変化
 	void SetTargetPosition();					//移動処理

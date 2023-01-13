@@ -41,6 +41,9 @@ void Bullet::Initialize()
 	modelHandle = ModelManager::GetInstance().GetModelHandle(ModelManager::BALL);
 	MV1SetScale(modelHandle, SIZE);
 
+	// マウスカーソルを表示しない
+	SetMouseDispFlag(FALSE);
+
 	position = POSITION;
 
 	//読み込み失敗でエラー
@@ -89,8 +92,8 @@ void Bullet::MouseMove(Ball* ball, VECTOR pos)
 	if (!ball->GetAlive())
 	{
 		//マウスのXZ座標のワールド座標を計算
-		worldMouseX = (float)mouseX * (3000.0f / 1920.0f) * 2.0f + pos.z;
-		worldMouseZ = (float)mouseZ * (1900.0f / 1080.0f) * 1.8f + pos.x;
+		worldMouseX = (float)mouseX * (3000.0f / 1920.0f) * 1.0f + pos.z;
+		worldMouseZ = (float)mouseZ * (1900.0f / 1080.0f) * 0.9f + pos.x;
 	}
 }
 

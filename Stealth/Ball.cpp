@@ -5,10 +5,10 @@
 const VECTOR Ball::SIZE		= { 2.0f, 2.0f, 2.0f };		//モデルの倍率
 const VECTOR Ball::POSITION = { -1500.0f,30.0f,0.0f };	//モデルの位置
 
-Ball::Ball() : ObjectBase()
+Ball::Ball(VECTOR pos) : ObjectBase()
 	, alive(true)
 {
-	//処理なし
+	position = pos;
 }
 
 Ball::~Ball()
@@ -24,8 +24,6 @@ void Ball::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::BALL));
 	MV1SetScale(modelHandle, SIZE);
-
-	position = POSITION;
 
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
@@ -53,7 +51,7 @@ void Ball::Update(HitChecker* hitChecker)
 void Ball::SetDead()
 {
 	alive = true;
-	position = POSITION;
+	position = position;
 }
 
 /// <summary>

@@ -5,8 +5,8 @@
 #include "Math3D.h"
 #include "Camera.h"
 #include "Ball.h"
-#include "Enemy.h"
 
+class Enemy;
 class Bullet;
 
 /// <summary>

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneBase.h"
+#include "SceneManager.h"
 #include <string>
 
 using namespace std;
@@ -23,8 +24,9 @@ public:
 private:
 	StageSelection(const StageSelection&);		//コピーコンストラクタ
 
-	int selectionHandle;						//選択画像ハンドル
 
+	int selectionHandle;						//選択画像ハンドル
+	
 	//静的定数
 	static const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
 	static const string SELECTION_PATH;		//選択画像のパス

@@ -10,9 +10,9 @@ const VECTOR Wall::POSITION = { -2500.0f,30.0f,0.0f };	//モデルの位置
 /// コンストラクタ
 /// </summary>
 /// <param name="WALL"></param>
-Wall::Wall(Object WALL)
+Wall::Wall(Object WALL, VECTOR pos)
 {
-	//処理なし
+	position = pos;
 }
 
 Wall::~Wall()
@@ -29,7 +29,6 @@ void Wall::Initialize()
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::WALL));
 	MV1SetScale(modelHandle, SIZE);
 
-	position = POSITION;
 	MV1SetPosition(modelHandle, position);
 
 	//読み込み失敗でエラー

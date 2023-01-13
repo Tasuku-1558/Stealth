@@ -5,9 +5,9 @@
 using namespace Math3d;
 
 const float  Camera::NEAR_DISTANCE	   = 1.0f;								//カメラに映る手前の範囲
-const float  Camera::FAR_DISTANCE	   = 5000.0f;							//カメラに映る最奥の範囲
+const float  Camera::FAR_DISTANCE	   = 4000.0f;							//カメラに映る最奥の範囲
 const float  Camera::ROTATING_VELOCITY = 0.02f;								//カメラの回転速度
-const VECTOR Camera::INITIAL_POSITION  = { 0.0f, 3000.0f, -100.0f };		//初期位置
+const VECTOR Camera::INITIAL_POSITION  = { 0.0f, 2000.0f, -100.0f };		//初期位置
 const VECTOR Camera::UP_VECTOR		   = { 0.0f, 0.0f, 0.0f };				//カメラの注視点
 
 Camera::Camera()
@@ -43,12 +43,12 @@ void Camera::Update(Player* player)
 	if (CheckHitKey(KEY_INPUT_E)) { yaw -= ROTATING_VELOCITY; }
 
 	position = VGet(radius * cos(yaw) + player->GetPosition().x, 
-					3000.0f, 
+					1600.0f,
 					radius * sin(yaw) + player->GetPosition().z);
 
 	//カメラの視点、注視点を設定
 	SetCameraPositionAndTarget_UpVecY(position, player->GetPosition());
-	
+
 	//カメラの正面方向のベクトルを計算
 	front = player->GetPosition() - position;
 	front.y = 0.0f;

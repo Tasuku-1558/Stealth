@@ -1,6 +1,5 @@
 #include "HitChecker.h"
 #include "Player.h"
-#include "Enemy.h"
 #include "Ball.h"
 #include "Map.h"
 #include "Wall.h"
@@ -29,12 +28,11 @@ HitChecker::~HitChecker()
 /// </summary>
 /// <param name="player"></param>
 /// <param name="ball"></param>
-void HitChecker::Check(Player* player, Ball* ball, Map* map, Enemy* enemy)
+void HitChecker::Check(Player* player, Ball* ball/*, Map* map*/)
 {
 	BallAndPlayer(player, ball);
 	PlayerAndUI(player);
-	MapAndPlayer(map, player);
-	//BulletAndEnemy(player, enemy);
+	//MapAndPlayer(map, player);
 }
 
 /// <summary>
@@ -61,6 +59,10 @@ void HitChecker::BallAndPlayer(Player* player, Ball* ball)
 	}
 }
 
+/// <summary>
+/// プレイヤーとUI画像の当たり判定
+/// </summary>
+/// <param name="player"></param>
 void HitChecker::PlayerAndUI(Player* player)
 {
 	//プレイヤーからボールの座標を引いた値を取得
@@ -146,31 +148,4 @@ void HitChecker::MapAndPlayer(Map* map, Player* player)
 
 	}
 	
-}
-
-void HitChecker::WallAndEnemy(Wall* wall, Enemy* enemy)
-{
-}
-
-/// <summary>
-/// バレットとエネミーの当たり判定
-/// </summary>
-/// <param name="bullet"></param>
-/// <param name="enemy"></param>
-void HitChecker::BulletAndEnemy(Player* player, Enemy* enemy)
-{
-	//エネミーからバレットの座標を引いた値を取得
-	VECTOR sub = enemy->GetPosition() - player->GetBulletPos();
-
-	//エネミーとバレットの2点間の距離を計算
-	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
-
-	//衝突しているならば
-	if (direction < ENEMY_RADIUS + BULLET_RADIUS)
-	{
-		
-	}
-	else
-	{
-	}
 }

@@ -7,7 +7,6 @@ class Player;
 class Ball;
 class Map;
 class Wall;
-class Enemy;
 
 
 /// <summary>
@@ -19,7 +18,10 @@ public:
 	 HitChecker();
 	~HitChecker();
 
-	void Check(Player* player, Ball* ball, Map* map, Enemy* enemy);			//衝突判定
+	void Check(Player* player, Ball* ball/*, Map* map*/);			//衝突判定
+
+	void MapAndPlayer(Map* map, Player* player);
+
 	bool Hit() { return hit; }
 	bool UI() { return uiDraw; }
 
@@ -28,10 +30,7 @@ private:
 	HitChecker(const HitChecker&);		//コピーコンストラクタ
 
 	void BallAndPlayer(Player* player, Ball* ball);			//ボールとプレイヤーの当たり判定
-	void PlayerAndUI(Player* player);
-	void MapAndPlayer(Map* map, Player* player);
-	void WallAndEnemy(Wall* wall, Enemy* enemy);
-	void BulletAndEnemy(Player* player, Enemy* enemy);
+	void PlayerAndUI(Player* player);						//プレイヤーとUI画像の当たり判定
 
 	bool hit;				//衝突したならば
 	VECTOR uiPos;

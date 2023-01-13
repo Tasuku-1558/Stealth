@@ -23,10 +23,13 @@ Enemy::Enemy(Map* map) : EnemyBase()
 	Position(map);
 }
 
-Enemy::Enemy(Stage2Map* stage2Map)
+Enemy::Enemy(Stage2Map* stage2Map) : EnemyBase()
 {
 	enemyState = EnemyState::CRAWL;
-	Position(stage2Map);
+	FirstPosition(stage2Map);
+	Initialize();
+	Activate();
+	//SecondPosition(stage2Map);
 }
 
 /// <summary>
@@ -66,6 +69,11 @@ void Enemy::Initialize()
 	discoverySE = LoadSoundMem(failePath.c_str());
 }
 
+void Enemy::Activate()
+{
+	playerFindCount = 0;
+}
+
 /// <summary>
 /// エネミー位置設定
 /// </summary>
@@ -81,9 +89,20 @@ void Enemy::Position(Map* map)
 	enemyState = EnemyState::ARRIVAL;
 }
 
-void Enemy::Position(Stage2Map* stage2Map)
+void Enemy::FirstPosition(Stage2Map* stage2Map)
 {
 	pointList = stage2Map->GetMap(0);		//マップから座標リストを受け取る
+
+	itr = pointList.begin();		//イテレータを先頭に設定
+
+	position = *itr++;				//イテレータから敵座標を設定
+
+	enemyState = EnemyState::ARRIVAL;
+}
+
+void Enemy::SecondPosition(Stage2Map* stage2Map)
+{
+	pointList = stage2Map->GetMap2(0);		//マップから座標リストを受け取る
 
 	itr = pointList.begin();		//イテレータを先頭に設定
 

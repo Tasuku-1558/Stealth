@@ -10,7 +10,7 @@ class Wall final : public ObjectBase
 {
 public:
 
-	 Wall(Object WALL);
+	 Wall(Object WALL, VECTOR pos);
 	~Wall();
 
 	void Initialize();

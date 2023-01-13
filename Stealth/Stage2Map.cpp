@@ -38,14 +38,26 @@ void Stage2Map::Initialize()
 	}
 
 	MapList();
+	MapList2();
 }
 
 void Stage2Map::MapList()
 {
-	positionList.push_back(VGet(-3200.0f, 100.0f, 1400.0f));
-	positionList.push_back(VGet(-3200.0f, 100.0f, -1300.0f));
+	positionList.push_back(VGet(-2300.0f, 100.0f, 500.0f));
+	positionList.push_back(VGet(-2300.0f, 100.0f, -500.0f));
+	positionList.push_back(VGet(-1800.0f, 100.0f, -500.0f));
+	positionList.push_back(VGet(-1800.0f, 100.0f, 500.0f));
+
 
 	itr = positionList.begin();   //  イテレータを先頭に設定
+}
+
+void Stage2Map::MapList2()
+{
+	positionList2.push_back(VGet(-2300.0f, 100.0f, 500.0f));
+	positionList2.push_back(VGet(-2300.0f, 100.0f, -500.0f));
+
+	itr2 = positionList2.begin();   //  イテレータを先頭に設定
 }
 
 void Stage2Map::Finalize()

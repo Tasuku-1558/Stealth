@@ -1,6 +1,5 @@
 #include "StageSelection.h"
 #include "DxLib.h"
-#include "SceneManager.h"
 
 
 const string StageSelection::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
