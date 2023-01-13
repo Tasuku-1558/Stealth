@@ -88,13 +88,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\takum\OneDrive\デスクトップ\Stealth\Dxlib_h</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\takum\Desktop\Stealth\Dxlib_h</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\takum\OneDrive\デスクトップ\Stealth\Dxlib_h</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\takum\Desktop\Stealth\Dxlib_h</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,13 +122,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\takum\OneDrive\デスクトップ\Stealth\Dxlib_h</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\takum\Desktop\Stealth\Dxlib_h</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\takum\OneDrive\デスクトップ\Stealth\Dxlib_h</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\takum\Desktop\Stealth\Dxlib_h</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -166,11 +166,11 @@
     <ClCompile Include="ObjectBase.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBase.cpp" />
-    <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="FirstStage.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Stage2.cpp" />
-    <ClCompile Include="Stage2Map.cpp" />
+    <ClCompile Include="SecondStage.cpp" />
+    <ClCompile Include="SecondStageMap.cpp" />
     <ClCompile Include="StageSelection.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="UiManager.cpp" />
@@ -192,12 +192,12 @@
     <ClInclude Include="ObjectBase.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBase.h" />
-    <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="FirstStage.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="Stage2.h" />
-    <ClInclude Include="Stage2Map.h" />
+    <ClInclude Include="SecondStage.h" />
+    <ClInclude Include="SecondStageMap.h" />
     <ClInclude Include="StageSelection.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="UiManager.h" />

@@ -7,7 +7,7 @@
 #include "EnemyBase.h"
 #include "Math3D.h"
 #include "Map.h"
-#include "Stage2Map.h"
+#include "SecondStageMap.h"
 #include "Player.h"
 
 
@@ -28,7 +28,7 @@ class Enemy final : public EnemyBase
 {
 public:
 	 Enemy(Map* map);		//コンストラクタ
-	 Enemy(Stage2Map* stage2Map);
+	 Enemy(SecondStageMap* secondStageMap);
 	~Enemy();				//デストラクタ
 
 	void Initialize();
@@ -46,8 +46,8 @@ private:
 	Enemy(const Enemy&);						//コピーコンストラクタ
 
 	void Position(Map* map);					//エネミー位置設定
-	void FirstPosition(Stage2Map* stage2Map);
-	void SecondPosition(Stage2Map* stage2Map);
+	void FirstPosition(SecondStageMap* secondStageMap);
+	void SecondPosition(SecondStageMap* secondStageMap);
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 	void eUpdate(float deltaTime);				//状態変化
 	void SetTargetPosition();					//移動処理
@@ -60,7 +60,6 @@ private:
 	std::vector<VECTOR>::iterator itr;
 	std::vector<VECTOR> pointList;
 
-	
 	
 
 	//静的定数

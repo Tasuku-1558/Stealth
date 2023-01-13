@@ -43,7 +43,7 @@
     <ClCompile Include="Math3D.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
+    <ClCompile Include="FirstStage.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -76,7 +76,7 @@
     <ClCompile Include="Wall.cpp">
       <Filter>ソース ファイル\ObjectBase</Filter>
     </ClCompile>
-    <ClCompile Include="Stage2.cpp">
+    <ClCompile Include="SecondStage.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
@@ -94,7 +94,7 @@
     <ClCompile Include="Map.cpp">
       <Filter>ソース ファイル\Map</Filter>
     </ClCompile>
-    <ClCompile Include="Stage2Map.cpp">
+    <ClCompile Include="SecondStageMap.cpp">
       <Filter>ソース ファイル\Map</Filter>
     </ClCompile>
   </ItemGroup>
@@ -120,7 +120,7 @@
     <ClInclude Include="SceneBase.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="PlayScene.h">
+    <ClInclude Include="FirstStage.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
@@ -153,7 +153,7 @@
     <ClInclude Include="Wall.h">
       <Filter>ソース ファイル\ObjectBase</Filter>
     </ClInclude>
-    <ClInclude Include="Stage2.h">
+    <ClInclude Include="SecondStage.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
@@ -171,7 +171,7 @@
     <ClInclude Include="Map.h">
       <Filter>ソース ファイル\Map</Filter>
     </ClInclude>
-    <ClInclude Include="Stage2Map.h">
+    <ClInclude Include="SecondStageMap.h">
       <Filter>ソース ファイル\Map</Filter>
     </ClInclude>
   </ItemGroup>

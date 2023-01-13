@@ -2,8 +2,8 @@
 #include "PreCompiledHeader.h"
 #include "TitleScene.h"
 #include "StageSelection.h"
-#include "PlayScene.h"
-#include "Stage2.h"
+#include "FirstStage.h"
+#include "SecondStage.h"
 
 SceneManager::SceneManager()
 	: eachScene()
@@ -23,8 +23,8 @@ void SceneManager::Initialize()
 {
 	eachScene[TITLE] = new TitleScene(this);
 	eachScene[SELECTION] = new StageSelection(this);
-	eachScene[STAGE1] = new PlayScene(this);
-	eachScene[STAGE2] = new Stage2(this);
+	eachScene[STAGE1] = new FirstStage(this);
+	eachScene[STAGE2] = new SecondStage(this);
 
 	
 	//‘S‚Ä‚ÌƒV[ƒ“‚Ì‰Šú‰»

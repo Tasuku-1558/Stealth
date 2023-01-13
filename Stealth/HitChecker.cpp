@@ -93,7 +93,7 @@ void HitChecker::MapAndPlayer(Map* map, Player* player)
 
 	VECTOR moveVec = VGet(0, 0, 0);    // 移動ベクトル
 	float  moveLen = 0.0f;           // 移動量
-	VECTOR planeNormal;                    // ポリゴン平面法線
+	VECTOR planeNormal{};                    // ポリゴン平面法線
 
 	VECTOR newCenter = player->GetPosition(); // 移動候補  
 	

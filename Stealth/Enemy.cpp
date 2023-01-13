@@ -23,13 +23,13 @@ Enemy::Enemy(Map* map) : EnemyBase()
 	Position(map);
 }
 
-Enemy::Enemy(Stage2Map* stage2Map) : EnemyBase()
+Enemy::Enemy(SecondStageMap* secondStageMap) : EnemyBase()
 {
 	enemyState = EnemyState::CRAWL;
-	FirstPosition(stage2Map);
+	FirstPosition(secondStageMap);
 	Initialize();
 	Activate();
-	//SecondPosition(stage2Map);
+	//SecondPosition(secondStageMap);
 }
 
 /// <summary>
@@ -89,9 +89,9 @@ void Enemy::Position(Map* map)
 	enemyState = EnemyState::ARRIVAL;
 }
 
-void Enemy::FirstPosition(Stage2Map* stage2Map)
+void Enemy::FirstPosition(SecondStageMap* secondStageMap)
 {
-	pointList = stage2Map->GetMap(0);		//マップから座標リストを受け取る
+	pointList = secondStageMap->GetMap(0);		//マップから座標リストを受け取る
 
 	itr = pointList.begin();		//イテレータを先頭に設定
 
@@ -100,9 +100,9 @@ void Enemy::FirstPosition(Stage2Map* stage2Map)
 	enemyState = EnemyState::ARRIVAL;
 }
 
-void Enemy::SecondPosition(Stage2Map* stage2Map)
+void Enemy::SecondPosition(SecondStageMap* secondStageMap)
 {
-	pointList = stage2Map->GetMap2(0);		//マップから座標リストを受け取る
+	pointList = secondStageMap->GetMap2(0);		//マップから座標リストを受け取る
 
 	itr = pointList.begin();		//イテレータを先頭に設定
 
@@ -261,7 +261,7 @@ void Enemy::Reaction(Object object)
 	switch (object)
 	{
 	case ObjectBase::PLAYER:
-		printfDx("PLAYER");
+		//printfDx("PLAYER");
 		discovery = true;
 
 		// 発見SEを再生
@@ -270,12 +270,12 @@ void Enemy::Reaction(Object object)
 		//ビックリマークの画像を描画
 		DrawBillboard3D(VGet(position.x - 300, 0.0f, position.z - 100), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
 
-		DrawGraph(200, 0, findImage, TRUE);		//敵に見つかったというUI画像を描画
+		DrawGraph(300, 100, findImage, TRUE);		//敵に見つかったというUI画像を描画
 		playerFindCount++;
 		break;
 
 	case ObjectBase::BALL:
-		printfDx("BALL");
+		//printfDx("BALL");
 	
 		ballFlag = true;
 		if (ballFlag)

@@ -9,6 +9,7 @@ Ball::Ball(VECTOR pos) : ObjectBase()
 	, alive(true)
 {
 	position = pos;
+	Initialize();
 }
 
 Ball::~Ball()

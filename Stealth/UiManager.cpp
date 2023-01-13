@@ -52,39 +52,39 @@ void UiManager::Finalize()
 	}
 }
 
-void UiManager::Draw(PlayScene::State state, Enemy* enemy, HitChecker* hitChecker)
+void UiManager::Draw(FirstStage::State state, Enemy* enemy, HitChecker* hitChecker)
 {
 	//êÅÇ´èoÇµâÊëúï`âÊ
 	DrawBillboard3D(VGet(-800.0f, 0.0f, 0.0f), 0.5f, 0.5f, 200.0f, 0.0f, uiHandle[BALLOON], TRUE);
-	
+
 	switch (state)
 	{
-	case PlayScene::START:
+	case FirstStage::START:
 		
 		break;
 
-	case PlayScene::GAME:
+	case FirstStage::GAME:
 		StartGameDraw();
 		PlayerHpDraw(enemy);
 		OperationMethodDraw(hitChecker);
 		break;
 
-	case PlayScene::GOAL:
-		DrawGraph(0, -300, uiHandle[CREAR], TRUE);
+	case FirstStage::GOAL:
+		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
 		count = 0;
 		break;
 	}
 }
 
-void UiManager::Draw(Stage2::State state, Enemy* enemy)
+void UiManager::Draw(SecondStage::State state, Enemy* enemy)
 {
 	switch (state)
 	{
-	case PlayScene::START:
+	case FirstStage::START:
 
 		break;
 
-	case PlayScene::GAME:
+	case FirstStage::GAME:
 		count++;
 
 		if (count < 50)
@@ -95,8 +95,8 @@ void UiManager::Draw(Stage2::State state, Enemy* enemy)
 
 		break;
 
-	case PlayScene::GOAL:
-		DrawGraph(0, -300, uiHandle[CREAR], TRUE);
+	case FirstStage::GOAL:
+		DrawGraph(0, 200, uiHandle[CLEAR], TRUE);
 		count = 0;
 		break;
 	}
@@ -111,7 +111,7 @@ void UiManager::StartGameDraw()
 
 	if (count < 50)
 	{
-		DrawGraph(0, -50, uiHandle[STARGE1], TRUE);
+		DrawGraph(0, -50, uiHandle[STAGE1], TRUE);
 	}
 }
 
@@ -133,7 +133,7 @@ void UiManager::OperationMethodDraw(HitChecker* hitChecker)
 /// <param name="enemy"></param>
 void UiManager::PlayerHpDraw(Enemy* enemy)
 {
-	DrawRotaGraph(350, 100, 0.7f, 0, uiHandle[FRAME], TRUE);
+	DrawRotaGraph(515, 150, 0.7f, 0, uiHandle[FRAME], TRUE);
 
 	DrawRotaGraph(205, 70, 0.5f, 0, uiHandle[PLAYER_HP_FRAME], TRUE);
 	DrawRotaGraph(310, 70, 0.5f, 0, uiHandle[PLAYER_HP_FRAME], TRUE);

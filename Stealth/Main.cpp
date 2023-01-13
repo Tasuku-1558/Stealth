@@ -4,7 +4,6 @@
 #include "DxLib.h"
 #include "PreCompiledHeader.h"
 #include "ModelManager.h"
-#include "PlayScene.h"
 #include "SceneManager.h"
 
 //-----------------------------------------------------------------------------
@@ -55,7 +54,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ClearDrawScreen();
 
 		sceneManager->Draw();
-		SetBackgroundColor(0, 0, 0);
 
 		// — ‰æ–Ê‚Ì“à—e‚ð•\‰æ–Ê‚É”½‰f‚³‚¹‚é
 		ScreenFlip();

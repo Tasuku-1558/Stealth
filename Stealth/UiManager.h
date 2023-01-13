@@ -3,8 +3,8 @@
 #include <string>
 
 #include "DxLib.h"
-#include "PlayScene.h"
-#include "Stage2.h"
+#include "FirstStage.h"
+#include "SecondStage.h"
 
 class Enemy;
 class HitChecker;
@@ -21,8 +21,8 @@ public:
 	void Initialize();
 	void Finalize();
 
-	void Draw(PlayScene::State state, Enemy* enemy, HitChecker* hitChecker);
-	void Draw(Stage2::State state, Enemy* enemy);
+	void Draw(FirstStage::State state, Enemy* enemy, HitChecker* hitChecker);
+	void Draw(SecondStage::State state, Enemy* enemy);
 
 private:
 	UiManager(const UiManager&);		//コピーコンストラクタ
@@ -35,12 +35,12 @@ private:
 	//画像の種類
 	enum Graphic
 	{
-		STARGE1,
+		STAGE1,
 		PLAYER_HP,			//プレイヤーHP画像
 		PLAYER_HP_FRAME,	//プレイヤーHP枠画像
 		OPERATION,			//操作方法説明画像
 		BALLOON,			//吹き出し画像
-		CREAR,				//ゲームクリア画像
+		CLEAR,				//ゲームクリア画像
 		STAGE2,
 		FRAME,				//フレーム画像
 		GRAPHIC_AMOUNT		//画像の数
