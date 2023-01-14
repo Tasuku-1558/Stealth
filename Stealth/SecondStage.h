@@ -75,4 +75,6 @@ private:
 	bool enemyPop2;		//エネミーの出現フラグ
 	bool ballPop;		//ボールの出現フラグ
 	bool ballPop2;		//ボールの出現フラグ
+
+	static int a;
 };

@@ -190,7 +190,7 @@ void SecondStage::EnemyPop()
 {
 	if (!enemyPop)
 	{
-		Enemy* newEnemy = new Enemy(secondStageMap);
+		Enemy* newEnemy = new Enemy(secondStageMap->GetMap(0));
 		EntryEnemy(newEnemy);
 
 		enemyPop = true;
@@ -198,8 +198,8 @@ void SecondStage::EnemyPop()
 
 	if (!enemyPop2)
 	{
-		/*Enemy* newEnemy = new Enemy(secondStageMap);
-		EntryEnemy(newEnemy);*/
+		Enemy* newEnemy = new Enemy(secondStageMap->GetMap2(0));
+		EntryEnemy(newEnemy);
 
 		enemyPop2 = true;
 	}
@@ -248,8 +248,8 @@ void SecondStage::BallPop()
 
 	if (!ballPop2)
 	{
-		/*Ball* newBall = new Ball({ -3500.0f,30.0f,0.0f });
-		EntryBall(newBall);*/
+		Ball* newBall2 = new Ball({ -3500.0f,30.0f,0.0f });
+		EntryBall(newBall2);
 
 		ballPop2 = true;
 	}
@@ -276,7 +276,7 @@ void SecondStage::UpdateGame(float deltaTime)
 	EnemyPop();
 
 	BallPop();
-
+	
 	for (auto ptr : enemy)
 	{
 		ptr->Update(deltaTime, player);
@@ -286,7 +286,7 @@ void SecondStage::UpdateGame(float deltaTime)
 			player->Update(deltaTime, camera, ptrb, ptr);
 
 		}
-
+		
 		//エネミーに3回見つかったら
 		if (ptr->GetPlayerCount() == 3)
 		{
@@ -371,7 +371,7 @@ void SecondStage::Draw()
 	}
 
 	//デバック用
-	/*DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
+	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 
@@ -383,7 +383,7 @@ void SecondStage::Draw()
 	for (auto ptr : enemy)
 	{
 		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "PlayerCount : %d", ptr->GetPlayerCount());
-	}*/
+	}
 	
 
 	//画面効果クラス描画

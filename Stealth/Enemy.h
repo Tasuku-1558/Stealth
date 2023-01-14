@@ -6,10 +6,7 @@
 #include "DxLib.h"
 #include "EnemyBase.h"
 #include "Math3D.h"
-#include "Map.h"
 
-
-class SecondStageMap;
 class Player;
 
 /// <summary>
@@ -28,9 +25,8 @@ enum class EnemyState
 class Enemy final : public EnemyBase
 {
 public:
-	 Enemy(Map* map);		//コンストラクタ
-	 Enemy(SecondStageMap* secondStageMap);
-	~Enemy();				//デストラクタ
+	 Enemy(std::vector<VECTOR>& num);		//コンストラクタ
+	~Enemy();								//デストラクタ
 
 	void Initialize();
 	void Activate();
@@ -46,9 +42,7 @@ public:
 private:
 	Enemy(const Enemy&);						//コピーコンストラクタ
 
-	void Position(Map* map);					//エネミー位置設定
-	void FirstPosition(SecondStageMap* secondStageMap);
-	void SecondPosition(SecondStageMap* secondStageMap,  std::vector<VECTOR> num);
+	void Position(std::vector<VECTOR>& num);	//エネミー位置設定
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 	void eUpdate(float deltaTime);				//状態変化
 	void SetTargetPosition();					//移動処理
@@ -61,10 +55,6 @@ private:
 	std::vector<VECTOR>::iterator itr;
 	std::vector<VECTOR> pointList;
 
-	std::vector<VECTOR>::iterator itr2;
-	std::vector<VECTOR> pointList2;
-
-	
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス

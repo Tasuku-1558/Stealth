@@ -1,6 +1,5 @@
 #include "Enemy.h"
 #include "ModelManager.h"
-#include "SecondStageMap.h"
 #include "Player.h"
 
 
@@ -18,18 +17,12 @@ using namespace std;
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="map"></param>
-Enemy::Enemy(Map* map) : EnemyBase()
+/// <param name="num"></param>
+Enemy::Enemy(std::vector<VECTOR>& num) : EnemyBase()
 {
 	enemyState = EnemyState::CRAWL;
-	Position(map);
-}
+	Position(num);
 
-Enemy::Enemy(SecondStageMap* secondStageMap) : EnemyBase()
-{
-	enemyState = EnemyState::CRAWL;
-	FirstPosition(secondStageMap);
-	SecondPosition(secondStageMap,secondStageMap->GetMap2(0));
 	Initialize();
 	Activate();
 }
@@ -79,37 +72,14 @@ void Enemy::Activate()
 /// <summary>
 /// エネミー位置設定
 /// </summary>
-/// <param name="map"></param>
-void Enemy::Position(Map* map)
+/// <param name="num"></param>
+void Enemy::Position(std::vector<VECTOR>& num)
 {
-	pointList = map->GetMap(0);		//マップから座標リストを受け取る
+	pointList = num;				//マップから座標リストを受け取る
 
 	itr = pointList.begin();		//イテレータを先頭に設定
 
 	position = *itr++;				//イテレータから敵座標を設定
-
-	enemyState = EnemyState::ARRIVAL;
-}
-
-void Enemy::FirstPosition(SecondStageMap* secondStageMap)
-{
-	pointList = secondStageMap->GetMap(0);		//マップから座標リストを受け取る
-
-	itr = pointList.begin();		//イテレータを先頭に設定
-
-	position = *itr++;				//イテレータから敵座標を設定
-
-	enemyState = EnemyState::ARRIVAL;
-}
-
-void Enemy::SecondPosition(SecondStageMap* secondStageMap,std::vector<VECTOR> num)
-{
-	//pointList2 = secondStageMap->GetMap2(0);		//マップから座標リストを受け取る
-	pointList2 = num;
-
-	itr2 = pointList2.begin();		//イテレータを先頭に設定
-
-	position = *itr2++;				//イテレータから敵座標を設定
 
 	enemyState = EnemyState::ARRIVAL;
 }
@@ -262,7 +232,7 @@ void Enemy::Reaction(Object object)
 	switch (object)
 	{
 	case ObjectBase::PLAYER:
-		//printfDx("PLAYER");
+		printfDx("PLAYER");
 		discovery = true;
 
 		//ビックリマークの画像を描画
@@ -277,7 +247,7 @@ void Enemy::Reaction(Object object)
 		break;
 
 	case ObjectBase::BALL:
-		//printfDx("BALL");
+		printfDx("BALL");
 	
 		ballFlag = true;
 		if (ballFlag)

@@ -101,7 +101,7 @@ void HitChecker::MapAndPlayer(Map* map, Player* player)
 	// “–‚½‚Á‚½‚©‚Ç‚¤‚©
 	if (hitPolyDim.HitNum)
 	{
-		//printfDx("hit");
+		printfDx("hit");
 
 
 		//// Õ“Ëƒ|ƒŠƒSƒ“‚ğ‚·‚×‚Ä‰ñ‚Á‚ÄA‹…‚Ì‚ß‚è‚İ‚ğ‰ğÁ
