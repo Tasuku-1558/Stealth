@@ -43,6 +43,7 @@ private:
 		CLEAR,				//ゲームクリア画像
 		STAGE2,
 		FRAME,				//フレーム画像
+		KEY,				//キー画像
 		GRAPHIC_AMOUNT		//画像の数
 	};
 

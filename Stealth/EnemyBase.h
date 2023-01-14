@@ -32,6 +32,7 @@ protected:
 	bool ballFlag;
 	int count;
 
+
 	//Ã“I’è”
 	static const float SPEED;				//ˆÚ“®‘¬“x
 	static const float RANGE_DEGREE;		//‹–ìŠp“x

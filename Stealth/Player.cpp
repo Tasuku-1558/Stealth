@@ -41,7 +41,7 @@ void Player::Initialize()
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
 	{
-		printfDx("モデルデータ読み込みに失敗[PLAYER_BODY]\n");
+		printfDx("モデルデータ読み込みに失敗[PLAYER]\n");
 	}
 
 	//ショットクラス

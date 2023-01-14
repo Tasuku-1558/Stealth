@@ -7,9 +7,10 @@
 #include "EnemyBase.h"
 #include "Math3D.h"
 #include "Map.h"
-#include "SecondStageMap.h"
-#include "Player.h"
 
+
+class SecondStageMap;
+class Player;
 
 /// <summary>
 /// エネミーの状態
@@ -47,7 +48,7 @@ private:
 
 	void Position(Map* map);					//エネミー位置設定
 	void FirstPosition(SecondStageMap* secondStageMap);
-	void SecondPosition(SecondStageMap* secondStageMap);
+	void SecondPosition(SecondStageMap* secondStageMap,  std::vector<VECTOR> num);
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 	void eUpdate(float deltaTime);				//状態変化
 	void SetTargetPosition();					//移動処理
@@ -59,6 +60,9 @@ private:
 
 	std::vector<VECTOR>::iterator itr;
 	std::vector<VECTOR> pointList;
+
+	std::vector<VECTOR>::iterator itr2;
+	std::vector<VECTOR> pointList2;
 
 	
 

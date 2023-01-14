@@ -53,6 +53,7 @@ private:
 	Wall* wall3;
 	HitChecker* hitChecker;
 	SecondStageMap* secondStageMap;
+	SecondStageMap* secondStageMap2;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
 

@@ -9,6 +9,7 @@ const VECTOR SecondStageMap::POSITION = { -200.0f, 50.0f, 1350.0f };				//ƒ‚ƒfƒ‹
 using namespace std;
 
 SecondStageMap::SecondStageMap() : ObjectBase()
+	, count(0)
 {
 	//ˆ—‚È‚µ
 }

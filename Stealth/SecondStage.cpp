@@ -31,6 +31,7 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, wall3(nullptr)
 	, hitChecker(nullptr)
 	, secondStageMap(nullptr)
+	, secondStageMap2(nullptr)
 	, uiManager(nullptr)
 	, fadeManager(nullptr)
 	, font(0)
@@ -103,6 +104,11 @@ void SecondStage::Finalize()
 	SafeDelete(player);
 
 	SafeDelete(secondStageMap);
+
+	for (auto ptr : enemy)
+	{
+		SafeDelete(ptr);
+	}
 
 	for (auto ptrb : ball)
 	{
@@ -192,7 +198,7 @@ void SecondStage::EnemyPop()
 
 	if (!enemyPop2)
 	{
-		/*Enemy* newEnemy = new Enemy();
+		/*Enemy* newEnemy = new Enemy(secondStageMap);
 		EntryEnemy(newEnemy);*/
 
 		enemyPop2 = true;
@@ -242,8 +248,8 @@ void SecondStage::BallPop()
 
 	if (!ballPop2)
 	{
-		Ball* newBall = new Ball({ -3500.0f,30.0f,0.0f });
-		EntryBall(newBall);
+		/*Ball* newBall = new Ball({ -3500.0f,30.0f,0.0f });
+		EntryBall(newBall);*/
 
 		ballPop2 = true;
 	}
@@ -273,18 +279,18 @@ void SecondStage::UpdateGame(float deltaTime)
 
 	for (auto ptr : enemy)
 	{
+		ptr->Update(deltaTime, player);
+
 		for (auto ptrb : ball)
 		{
 			player->Update(deltaTime, camera, ptrb, ptr);
 
 		}
 
-		ptr->Update(deltaTime, player);
-
 		//エネミーに3回見つかったら
 		if (ptr->GetPlayerCount() == 3)
 		{
-			parent->SetNextScene(SceneManager::TITLE);
+			parent->SetNextScene(SceneManager::SELECTION);
 			return;
 		}
 	}
@@ -306,6 +312,8 @@ void SecondStage::UpdateGame(float deltaTime)
 	{
 		state = GOAL;
 		pUpdate = &SecondStage::UpdateGoal;
+
+		
 	}
 }
 
@@ -325,7 +333,7 @@ void SecondStage::Draw()
 {
 	//背景描画
 	backGround->Draw();
-
+	
 	//マップ描画
 	secondStageMap->Draw();
 
@@ -363,7 +371,7 @@ void SecondStage::Draw()
 	}
 
 	//デバック用
-	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
+	/*DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 
@@ -375,7 +383,7 @@ void SecondStage::Draw()
 	for (auto ptr : enemy)
 	{
 		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "PlayerCount : %d", ptr->GetPlayerCount());
-	}
+	}*/
 	
 
 	//画面効果クラス描画

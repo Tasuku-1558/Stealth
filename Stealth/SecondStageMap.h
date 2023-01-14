@@ -33,7 +33,7 @@ private:
 
     std::vector<VECTOR> positionList2;
     std::vector<VECTOR>::iterator itr2;
-
+    int count;
 
     //Ã“I’è”
     static const VECTOR SIZE;           //ƒ‚ƒfƒ‹‚Ì”{—¦

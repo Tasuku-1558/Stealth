@@ -57,6 +57,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		// 裏画面の内容を表画面に反映させる
 		ScreenFlip();
+
+		// 次のシーンがENDなら
+		if (sceneManager->GetNextScene() == SceneManager::END)
+		{
+			break;
+		}
 	}
 
 	//フォントのアンロード

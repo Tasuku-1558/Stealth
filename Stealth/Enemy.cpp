@@ -1,5 +1,7 @@
 #include "Enemy.h"
 #include "ModelManager.h"
+#include "SecondStageMap.h"
+#include "Player.h"
 
 
 const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
@@ -27,9 +29,9 @@ Enemy::Enemy(SecondStageMap* secondStageMap) : EnemyBase()
 {
 	enemyState = EnemyState::CRAWL;
 	FirstPosition(secondStageMap);
+	SecondPosition(secondStageMap,secondStageMap->GetMap2(0));
 	Initialize();
 	Activate();
-	//SecondPosition(secondStageMap);
 }
 
 /// <summary>
@@ -51,7 +53,7 @@ void Enemy::Initialize()
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
 	{
-		printfDx("モデルデータ読み込みに失敗[ENEMY_BODY]\n");
+		printfDx("モデルデータ読み込みに失敗[ENEMY]\n");
 	}
 
 	speed = SPEED;
@@ -100,13 +102,14 @@ void Enemy::FirstPosition(SecondStageMap* secondStageMap)
 	enemyState = EnemyState::ARRIVAL;
 }
 
-void Enemy::SecondPosition(SecondStageMap* secondStageMap)
+void Enemy::SecondPosition(SecondStageMap* secondStageMap,std::vector<VECTOR> num)
 {
-	pointList = secondStageMap->GetMap2(0);		//マップから座標リストを受け取る
+	//pointList2 = secondStageMap->GetMap2(0);		//マップから座標リストを受け取る
+	pointList2 = num;
 
-	itr = pointList.begin();		//イテレータを先頭に設定
+	itr2 = pointList2.begin();		//イテレータを先頭に設定
 
-	position = *itr++;				//イテレータから敵座標を設定
+	position = *itr2++;				//イテレータから敵座標を設定
 
 	enemyState = EnemyState::ARRIVAL;
 }
@@ -246,8 +249,6 @@ void Enemy::VisualAngleBall(Player* player)
 
 			//視野範囲内ならば
 			Reaction(object);
-
-			
 		}
 	}
 }
@@ -264,13 +265,14 @@ void Enemy::Reaction(Object object)
 		//printfDx("PLAYER");
 		discovery = true;
 
-		// 発見SEを再生
-		PlaySoundMem(discoverySE, DX_PLAYTYPE_BACK);
-
 		//ビックリマークの画像を描画
 		DrawBillboard3D(VGet(position.x - 300, 0.0f, position.z - 100), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
 
 		DrawGraph(300, 100, findImage, TRUE);		//敵に見つかったというUI画像を描画
+
+		// 発見SEを再生
+		PlaySoundMem(discoverySE, DX_PLAYTYPE_BACK);
+
 		playerFindCount++;
 		break;
 
