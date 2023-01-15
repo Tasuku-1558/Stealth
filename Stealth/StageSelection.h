@@ -24,7 +24,7 @@ public:
 private:
 	StageSelection(const StageSelection&);		//コピーコンストラクタ
 
-	SceneManager* StageCreator(int stageNum);
+	void StageCreator();
 
 	int StageDecrement(int stageNum);     // 選択ステージを1個前に
 	int StageIncrement(int stageNum);     // 選択ステージを1個先に
@@ -32,6 +32,7 @@ private:
 	int selectionHandle;						//選択画像ハンドル
 	int stageNumMax;
 	SceneManager::Scene scene;
+
 	
 	//静的定数
 	static const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス

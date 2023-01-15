@@ -26,13 +26,14 @@ HitChecker::~HitChecker()
 /// <summary>
 /// 衝突判定
 /// </summary>
+/// <param name="model"></param>
 /// <param name="player"></param>
 /// <param name="ball"></param>
-void HitChecker::Check(Player* player, Ball* ball/*, Map* map*/)
+void HitChecker::Check(int model, Player* player, Ball* ball)
 {
 	BallAndPlayer(player, ball);
 	PlayerAndUI(player);
-	//MapAndPlayer(map, player);
+	MapAndPlayer(model, player);
 }
 
 /// <summary>
@@ -81,13 +82,13 @@ void HitChecker::PlayerAndUI(Player* player)
 	}
 }
 
-void HitChecker::MapAndPlayer(Map* map, Player* player)
+void HitChecker::MapAndPlayer(int model, Player* player)
 {
 	// モデル全体のコリジョン情報を構築
-	MV1SetupCollInfo(map->GetModel(), 0, 8, 8, 8);
+	MV1SetupCollInfo(model, 0, 8, 8, 8);
 
 	// モデルと球との当たり判定
-	hitPolyDim = MV1CollCheck_Sphere(map->GetModel(), -1, player->GetPosition(), 100.0f);
+	hitPolyDim = MV1CollCheck_Sphere(model, -1, player->GetPosition(), 100.0f);
 
 	VECTOR moveCandidate = player->GetPosition(); // 球中心候補 
 

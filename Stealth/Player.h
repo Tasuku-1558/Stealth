@@ -21,7 +21,9 @@ public:
 	void Initialize();
 	void Finalize();
 	void Activate();
-	void Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy);
+	void Update(float deltaTime, Camera* camera/*, Ball* ball, Enemy* enemy*/);
+	void BallUpdate(float deltaTime, Ball* ball);
+	void EnemyUpdate(Enemy* enemy);
 	void Draw();
 
 	VECTOR GetBulletPos() { return bulletPosition; }

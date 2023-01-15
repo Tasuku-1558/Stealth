@@ -72,7 +72,7 @@ void FirstStage::Initialize()
 	map->Initialize();
 
 	//エネミークラス
-	enemy = new Enemy(map->GetMap(0));
+	enemy = new Enemy(map->GetMap());
 	enemy->Initialize();
 
 	//ヒットチェッカークラス
@@ -155,11 +155,15 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	enemy->Update(deltaTime, player);
 
-	player->Update(deltaTime, camera, ball, enemy);
-	
-	hitChecker->Check(player, ball/*, map*/);
+	player->Update(deltaTime, camera/*, ball, enemy*/);
 
-	hitChecker->MapAndPlayer(map, player);
+	player->BallUpdate(deltaTime, ball);
+
+	player->EnemyUpdate(enemy);
+	
+	hitChecker->Check(map->GetModel(), player, ball);
+
+	//hitChecker->MapAndPlayer(map, player);
 
 	if (ball->GetAlive())
 	{

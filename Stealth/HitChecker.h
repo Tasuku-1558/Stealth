@@ -18,9 +18,9 @@ public:
 	 HitChecker();
 	~HitChecker();
 
-	void Check(Player* player, Ball* ball/*, Map* map*/);			//Õ“Ë”»’è
+	void Check(int model, Player* player, Ball* ball);			//Õ“Ë”»’è
 
-	void MapAndPlayer(Map* map, Player* player);
+	void MapAndPlayer(int model, Player* player);
 
 	bool Hit() { return hit; }
 	bool UI() { return uiDraw; }

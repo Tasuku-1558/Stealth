@@ -76,19 +76,25 @@ void Player::Activate()
 /// <param name="camera"></param>
 /// <param name="ball"></param>
 /// <param name="enemy"></param>
-void Player::Update(float deltaTime, Camera* camera, Ball* ball, Enemy* enemy)
+void Player::Update(float deltaTime, Camera* camera/*, Ball* ball, Enemy* enemy*/)
 {
 	Move(deltaTime, camera);
 
-	Shoot(deltaTime, ball);
-	
-	FoundEnemy(enemy);
-
-	BulletReuse(deltaTime, ball);
-	
 	//プレイヤーの位置をセット
 	MV1SetPosition(modelHandle, position);
 	
+}
+
+void Player::BallUpdate(float deltaTime, Ball* ball)
+{
+	Shoot(deltaTime, ball);
+
+	BulletReuse(deltaTime, ball);
+}
+
+void Player::EnemyUpdate(Enemy* enemy)
+{
+	FoundEnemy(enemy);
 }
 
 /// <summary>

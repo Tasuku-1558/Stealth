@@ -36,9 +36,7 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, fadeManager(nullptr)
 	, font(0)
 	, enemyPop(false)
-	, enemyPop2(false)
 	, ballPop(false)
-	, ballPop2(false)
 {
 	//処理なし
 }
@@ -190,18 +188,13 @@ void SecondStage::EnemyPop()
 {
 	if (!enemyPop)
 	{
-		Enemy* newEnemy = new Enemy(secondStageMap->GetMap(0));
+		Enemy* newEnemy = new Enemy(secondStageMap->GetMap());
 		EntryEnemy(newEnemy);
+
+		Enemy* newEnemy2 = new Enemy(secondStageMap->GetMap2());
+		EntryEnemy(newEnemy2);
 
 		enemyPop = true;
-	}
-
-	if (!enemyPop2)
-	{
-		Enemy* newEnemy = new Enemy(secondStageMap->GetMap2(0));
-		EntryEnemy(newEnemy);
-
-		enemyPop2 = true;
 	}
 }
 
@@ -242,16 +235,11 @@ void SecondStage::BallPop()
 	{
 		Ball* newBall = new Ball({ -600.0f,30.0f,0.0f });
 		EntryBall(newBall);
-		
-		ballPop = true;
-	}
 
-	if (!ballPop2)
-	{
 		Ball* newBall2 = new Ball({ -3500.0f,30.0f,0.0f });
 		EntryBall(newBall2);
-
-		ballPop2 = true;
+		
+		ballPop = true;
 	}
 }
 
@@ -273,6 +261,8 @@ void SecondStage::UpdateGame(float deltaTime)
 {
 	camera->Update(player);
 
+	player->Update(deltaTime, camera/*, ptrb, ptr*/);
+
 	EnemyPop();
 
 	BallPop();
@@ -281,11 +271,9 @@ void SecondStage::UpdateGame(float deltaTime)
 	{
 		ptr->Update(deltaTime, player);
 
-		for (auto ptrb : ball)
-		{
-			player->Update(deltaTime, camera, ptrb, ptr);
+		player->EnemyUpdate(ptr);
 
-		}
+		//player->Update(deltaTime, camera, ptrb, ptr);
 		
 		//エネミーに3回見つかったら
 		if (ptr->GetPlayerCount() == 3)
@@ -297,7 +285,9 @@ void SecondStage::UpdateGame(float deltaTime)
 
 	for (auto ptrb : ball)
 	{
-		hitChecker->Check(player, ptrb/*, map*/);
+		player->BallUpdate(deltaTime, ptrb);
+
+		hitChecker->Check(secondStageMap->GetModel(), player, ptrb);
 
 		if (ptrb->GetAlive())
 		{
@@ -313,7 +303,6 @@ void SecondStage::UpdateGame(float deltaTime)
 		state = GOAL;
 		pUpdate = &SecondStage::UpdateGoal;
 
-		
 	}
 }
 

@@ -40,8 +40,8 @@ void StageSelection::Activate()
 
 void StageSelection::Update(float deltaTime)
 {
-	scene = SceneManager::STAGE1;
-
+	scene = SceneManager::STAGE2;
+	//StageCreator();
 	//Ÿ‚ÌƒV[ƒ“‚Ö
 	if (CheckHitKey(KEY_INPUT_1))
 	{
@@ -60,12 +60,8 @@ void StageSelection::Update(float deltaTime)
 	}
 }
 
-SceneManager* StageSelection::StageCreator(int stageNum)
+void StageSelection::StageCreator()
 {
-	if (stageNum < 0)
-	{
-		return NULL;
-	}
 	
 	switch (scene)
 	{
@@ -76,13 +72,17 @@ SceneManager* StageSelection::StageCreator(int stageNum)
 	case SceneManager::STAGE1:
 		break;
 	case SceneManager::STAGE2:
-		parent->SetNextScene(SceneManager::STAGE2);
-		return 0;
+
+		if (CheckHitKey(KEY_INPUT_RETURN))
+		{
+			parent->SetNextScene(SceneManager::STAGE2);
+			return;
+		}
+		
 		break;
 	
 	}
 
-	return NULL;
 }
 
 int StageSelection::StageDecrement(int stageNum)
@@ -92,7 +92,7 @@ int StageSelection::StageDecrement(int stageNum)
 	{
 		return stageNumMax;
 	}
-
+	
 	//‚»‚êˆÈŠO‚Ì‚Æ‚«
 	return stageNum - 1;
 }
@@ -113,4 +113,7 @@ int StageSelection::StageIncrement(int stageNum)
 void StageSelection::Draw()
 {
 	DrawGraph(0, 0, selectionHandle, TRUE);
+
+	//DrawString(0, 0, stageName[0], GetColor(255, 255, 255));
+	
 }

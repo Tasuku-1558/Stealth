@@ -72,9 +72,5 @@ private:
 	State state;		//ゲーム状態
 	int font;			//ゲームフォント
 	bool enemyPop;		//エネミーの出現フラグ
-	bool enemyPop2;		//エネミーの出現フラグ
 	bool ballPop;		//ボールの出現フラグ
-	bool ballPop2;		//ボールの出現フラグ
-
-	static int a;
 };

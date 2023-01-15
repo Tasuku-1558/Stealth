@@ -17,8 +17,8 @@ public:
     void Finalize();
     void Draw();
 
-    std::vector<VECTOR>& GetMap(int number) { return positionList; }
-    std::vector<VECTOR>& GetMap2(int number) { return positionList2; }
+    std::vector<VECTOR>& GetMap() { return positionList; }
+    std::vector<VECTOR>& GetMap2() { return positionList2; }
 
     int GetModel() { return modelHandle; }
 
