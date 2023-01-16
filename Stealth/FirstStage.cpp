@@ -151,7 +151,7 @@ void FirstStage::UpdateStart(float deltaTime)
 /// <param name="deltaTime"></param>
 void FirstStage::UpdateGame(float deltaTime)
 {
-	camera->Update(player);
+	camera->Update(player->GetPosition());
 
 	enemy->Update(deltaTime, player);
 
@@ -162,8 +162,6 @@ void FirstStage::UpdateGame(float deltaTime)
 	player->EnemyUpdate(enemy);
 	
 	hitChecker->Check(map->GetModel(), player, ball);
-
-	//hitChecker->MapAndPlayer(map, player);
 
 	if (ball->GetAlive())
 	{

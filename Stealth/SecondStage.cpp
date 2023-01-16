@@ -259,7 +259,7 @@ void SecondStage::UpdateStart(float deltaTime)
 /// <param name="deltaTime"></param>
 void SecondStage::UpdateGame(float deltaTime)
 {
-	camera->Update(player);
+	camera->Update(player->GetPosition());
 
 	player->Update(deltaTime, camera/*, ptrb, ptr*/);
 
@@ -371,7 +371,7 @@ void SecondStage::Draw()
 
 	for (auto ptr : enemy)
 	{
-		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "PlayerCount : %d", ptr->GetPlayerCount());
+		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "PlayerCount : %d\n", ptr->GetPlayerCount());
 	}
 	
 

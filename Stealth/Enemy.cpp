@@ -19,6 +19,7 @@ using namespace std;
 /// </summary>
 /// <param name="num"></param>
 Enemy::Enemy(std::vector<VECTOR>& num) : EnemyBase()
+	, viewRangePos()
 {
 	enemyState = EnemyState::CRAWL;
 	Position(num);
@@ -108,6 +109,8 @@ void Enemy::Update(float deltaTime, Player* player)
 	dir = VNorm(targetPosition - position);
 	
 	position += dir * speed * deltaTime;
+
+	viewRangePos = position;
 
 	VisualAngle(player);
 
@@ -258,13 +261,11 @@ void Enemy::Reaction(Object object)
 			{
 				speed = SPEED;
 				ballFlag = false;
+				count = 0;
+				
 				
 			}
 			
-		}
-		else
-		{
-			speed = SPEED;
 		}
 		
 		break;
@@ -303,5 +304,5 @@ void Enemy::eUpdate(float deltaTime)
 void Enemy::Draw()
 {
 	MV1DrawModel(modelHandle);
-	//DrawBillboard3D(VGet(position.x - 10, 30.0f, position.z + 200), 0.5f, 0.5f, 300.0f, 0.0f, viewRangeImage, TRUE);
+	//DrawBillboard3D(VGet(viewRangePos.x - 20.0f, 30.0f, viewRangePos.z + 200.0f), 0.5f, 0.5f, 300.0f, 0.0f, viewRangeImage, TRUE);
 }

@@ -9,15 +9,6 @@
 
 class Player;
 
-/// <summary>
-/// エネミーの状態
-/// </summary>
-enum class EnemyState
-{
-	CRAWL,			//巡回中
-	ARRIVAL,		//目的地に到着
-};
-
 
 /// <summary>
 /// エネミークラス
@@ -37,7 +28,13 @@ public:
 
 	int GetPlayerCount() { return playerFindCount; }
 	
-	enum class EnemyState enemyState;
+	//エネミーの状態
+	enum class EnemyState
+	{
+		CRAWL,			//巡回中
+		ARRIVAL,		//目的地に到着
+	};
+	
 
 private:
 	Enemy(const Enemy&);						//コピーコンストラクタ
@@ -51,10 +48,12 @@ private:
 	void Reaction(Object object);				//エネミーのオブジェクトごとの反応
 	void Finalize();
 
+	EnemyState enemyState;
 
 	std::vector<VECTOR>::iterator itr;
 	std::vector<VECTOR> pointList;
 
+	VECTOR viewRangePos;
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス

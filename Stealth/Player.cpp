@@ -173,7 +173,7 @@ void Player::Shoot(float deltaTime, Ball* ball)
 		bullet->SetAlive();
 		bulletPosition = bullet->GetPosition();
 	}
-	
+
 	bullet->MouseMove(ball, position);
 }
 

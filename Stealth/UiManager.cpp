@@ -79,7 +79,7 @@ void UiManager::Draw(FirstStage::State state, Enemy* enemy, HitChecker* hitCheck
 
 void UiManager::Draw(SecondStage::State state, Enemy* enemy)
 {
-	switch (state)
+	/*switch (state)
 	{
 	case FirstStage::START:
 
@@ -100,6 +100,26 @@ void UiManager::Draw(SecondStage::State state, Enemy* enemy)
 		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
 		count = 0;
 		break;
+	}*/
+	if (state == SecondStage::START)
+	{
+	}
+
+	if (state == SecondStage::GAME)
+	{
+		count++;
+
+		if (count < 50)
+		{
+			DrawGraph(0, -50, uiHandle[STAGE2], TRUE);
+		}
+		PlayerHpDraw(enemy);
+		DrawGraph(0, 900, uiHandle[KEY], TRUE);
+	}
+	if (state == SecondStage::GOAL)
+	{
+		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
+		count = 0;
 	}
 }
 
