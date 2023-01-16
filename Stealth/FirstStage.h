@@ -31,7 +31,7 @@ public:
 	void Draw();
 
 	//ゲーム状態
-	enum State
+	enum class State
 	{
 		START,	//開始前
 		GAME,	//ゲーム中
@@ -60,4 +60,5 @@ private:
 
 	State state;		//ゲーム状態
 	int font;			//ゲームフォント
+	
 };

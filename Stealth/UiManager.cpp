@@ -1,13 +1,10 @@
 #include "UiManager.h"
-#include "Enemy.h"
-#include "HitChecker.h"
-
-using std::string;
 
 const string UiManager::FOLDER_PATH		   = "data/image/";		//画像ファイルのパス
 const string UiManager::UI_GRAPHIC_PATH    = "ui";				//UI画像
 const string UiManager::FILENAME_EXTENSION = ".png";			//画像拡張子
 
+using namespace std;
 
 UiManager::UiManager()
 	: uiHandle()
@@ -52,32 +49,32 @@ void UiManager::Finalize()
 	}
 }
 
-void UiManager::Draw(FirstStage::State state, Enemy* enemy, HitChecker* hitChecker)
+void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 {
 	//吹き出し画像描画
 	DrawBillboard3D(VGet(-800.0f, 0.0f, 0.0f), 0.5f, 0.5f, 200.0f, 0.0f, uiHandle[BALLOON], TRUE);
 
 	switch (state)
 	{
-	case FirstStage::START:
+	case FirstStage::State::START:
 		
 		break;
 
-	case FirstStage::GAME:
+	case FirstStage::State::GAME:
 		StartGameDraw();
-		PlayerHpDraw(enemy);
-		OperationMethodDraw(hitChecker);
+		PlayerHpDraw(playerCount);
+		OperationMethodDraw(hitUi);
 		DrawGraph(0, 900, uiHandle[KEY], TRUE);
 		break;
 
-	case FirstStage::GOAL:
+	case FirstStage::State::GOAL:
 		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
 		count = 0;
 		break;
 	}
 }
 
-void UiManager::Draw(SecondStage::State state, Enemy* enemy)
+void UiManager::Draw(SecondStage::State state, int playerCount)
 {
 	/*switch (state)
 	{
@@ -92,7 +89,7 @@ void UiManager::Draw(SecondStage::State state, Enemy* enemy)
 		{
 			DrawGraph(0, -50, uiHandle[STAGE2], TRUE);
 		}
-		PlayerHpDraw(enemy);
+		PlayerHpDraw(playerCount);
 		DrawGraph(0, 900, uiHandle[KEY], TRUE);
 		break;
 
@@ -101,11 +98,11 @@ void UiManager::Draw(SecondStage::State state, Enemy* enemy)
 		count = 0;
 		break;
 	}*/
-	if (state == SecondStage::START)
+	if (state == SecondStage::State::START)
 	{
 	}
 
-	if (state == SecondStage::GAME)
+	if (state == SecondStage::State::GAME)
 	{
 		count++;
 
@@ -113,10 +110,10 @@ void UiManager::Draw(SecondStage::State state, Enemy* enemy)
 		{
 			DrawGraph(0, -50, uiHandle[STAGE2], TRUE);
 		}
-		PlayerHpDraw(enemy);
+		PlayerHpDraw(playerCount);
 		DrawGraph(0, 900, uiHandle[KEY], TRUE);
 	}
-	if (state == SecondStage::GOAL)
+	if (state == SecondStage::State::GOAL)
 	{
 		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
 		count = 0;
@@ -140,9 +137,9 @@ void UiManager::StartGameDraw()
 /// 操作方法説明UI
 /// </summary>
 /// <param name="hitChecker"></param>
-void UiManager::OperationMethodDraw(HitChecker* hitChecker)
+void UiManager::OperationMethodDraw(bool hitUi)
 {
-	if (hitChecker->UI())
+	if (hitUi)
 	{
 		DrawGraph(0, 20, uiHandle[OPERATION], TRUE);
 	}
@@ -152,25 +149,25 @@ void UiManager::OperationMethodDraw(HitChecker* hitChecker)
 /// プレイヤーHPUI
 /// </summary>
 /// <param name="enemy"></param>
-void UiManager::PlayerHpDraw(Enemy* enemy)
+void UiManager::PlayerHpDraw(int playerCount)
 {
 	DrawRotaGraph(515, 150, 0.7f, 0, uiHandle[FRAME], TRUE);
 
 	DrawRotaGraph(205, 70, 0.5f, 0, uiHandle[PLAYER_HP_FRAME], TRUE);
 	DrawRotaGraph(310, 70, 0.5f, 0, uiHandle[PLAYER_HP_FRAME], TRUE);
 
-	if (enemy->GetPlayerCount() == 0)
+	if (playerCount == 0)
 	{
 		DrawRotaGraph(100, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
 		DrawRotaGraph(205, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
 		DrawRotaGraph(310, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
 	}
-	else if (enemy->GetPlayerCount() == 1)
+	else if (playerCount == 1)
 	{
 		DrawRotaGraph(100, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
 		DrawRotaGraph(205, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
 	}
-	else if (enemy->GetPlayerCount() == 2)
+	else if (playerCount == 2)
 	{
 		DrawRotaGraph(100, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
 	}

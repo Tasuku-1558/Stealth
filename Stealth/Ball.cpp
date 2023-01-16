@@ -5,13 +5,20 @@
 const VECTOR Ball::SIZE		= { 2.0f, 2.0f, 2.0f };		//モデルの倍率
 const VECTOR Ball::POSITION = { -1500.0f,30.0f,0.0f };	//モデルの位置
 
-Ball::Ball(VECTOR pos) : ObjectBase()
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="pos"></param>
+Ball::Ball(const VECTOR& pos) : ObjectBase()
 	, alive(true)
 {
 	position = pos;
 	Initialize();
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 Ball::~Ball()
 {
 	// 終了処理が呼ばれていなければ
@@ -39,11 +46,11 @@ void Ball::Finalize()
 	modelHandle = NULL;
 }
 
-void Ball::Update(HitChecker* hitChecker)
+void Ball::Update(bool hit)
 {
 	MV1SetPosition(modelHandle, position);
 
-	IsAlive(hitChecker);
+	IsAlive(hit);
 }
 
 /// <summary>
@@ -58,14 +65,13 @@ void Ball::SetDead()
 /// <summary>
 /// 生きてるか死んでいるか
 /// </summary>
-/// <param name="hitChecker"></param>
-void Ball::IsAlive(HitChecker* hitChecker)
+/// <param name="hit"></param>
+void Ball::IsAlive(bool hit)
 {
 	//当たったならば
-	if (hitChecker->Hit())
+	if (hit)
 	{
 		alive = false;
-
 	}
 	else
 	{

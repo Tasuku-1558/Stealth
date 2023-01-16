@@ -14,7 +14,6 @@ HitChecker::HitChecker()
 	, uiPos()
 	, uiDraw(false)
 {
-	//ˆ—‚È‚µ
 	uiPos = VGet(-800.0f, 30.0f, 0.0f);
 }
 

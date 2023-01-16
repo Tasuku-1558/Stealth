@@ -21,7 +21,7 @@ public:
 
 
 	  //オブジェクトのタグ
-	  enum Object
+	  enum class Object
 	  {
 		  PLAYER,
 		  BALL,
@@ -32,5 +32,5 @@ protected:
 	VECTOR position;						//現在の座標
 	VECTOR dir;								//向きベクトル
 	int modelHandle;						//モデルハンドル
-	//Object object;
+	Object object;
 };

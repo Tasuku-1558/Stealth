@@ -13,7 +13,6 @@ public:
 	~Light();		//デストラクタ
 
 	void Initialize();
-
 private:
 
 	//静的定数

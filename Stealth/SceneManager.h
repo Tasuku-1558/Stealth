@@ -9,9 +9,15 @@ class SceneManager final
 {
 public:
 
-	/// <summary>
-	/// シーンの状態
-	/// </summary>
+	 SceneManager();
+	~SceneManager();
+
+	void Initialize();
+	void Finalize();
+	void Update(float deltaTime);
+	void Draw();
+
+	//シーンの状態
 	enum Scene
 	{
 		TITLE,			//タイトル画面
@@ -21,14 +27,6 @@ public:
 		//OVER,			//ゲームオーバー画面
 		END				//終了とシーン数
 	};
-
-	 SceneManager();
-	~SceneManager();
-
-	void Initialize();
-	void Finalize();
-	void Update(float deltaTime);
-	void Draw();
 
 	void  SetNextScene(Scene next);		//次のシーンをセット
 	Scene GetNowScene();				//今のシーンを取得

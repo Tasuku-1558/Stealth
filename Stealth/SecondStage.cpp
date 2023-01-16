@@ -61,19 +61,19 @@ void SecondStage::Initialize()
 	backGround->Initialize();
 
 	//プレイヤークラス
-	player = new Player(ObjectBase::PLAYER);
+	player = new Player(ObjectBase::Object::PLAYER);
 	player->Initialize();
 
 	//壁クラス
-	wall = new Wall(ObjectBase::WALL, { -1100.0f,30.0f,0.0f });
+	wall = new Wall(ObjectBase::Object::WALL, { -1100.0f,30.0f,0.0f });
 	wall->Initialize();
 
 	//壁2クラス
-	wall2 = new Wall(ObjectBase::WALL, { -2000.0f,30.0f,0.0f });
+	wall2 = new Wall(ObjectBase::Object::WALL, { -2000.0f,30.0f,0.0f });
 	wall2->Initialize();
 
 	//壁3クラス
-	wall3 = new Wall(ObjectBase::WALL, { -4000.0f,30.0f,0.0f });
+	wall3 = new Wall(ObjectBase::Object::WALL, { -4000.0f,30.0f,0.0f });
 	wall3->Initialize();
 
 	//セカンドステージマップクラス
@@ -131,7 +131,7 @@ void SecondStage::Finalize()
 
 void SecondStage::Activate()
 {
-	state = START;
+	state = State::START;
 
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
@@ -249,7 +249,7 @@ void SecondStage::BallPop()
 /// <param name="deltaTime"></param>
 void SecondStage::UpdateStart(float deltaTime)
 {
-	state = GAME;
+	state = State::GAME;
 	pUpdate = &SecondStage::UpdateGame;
 }
 
@@ -291,7 +291,7 @@ void SecondStage::UpdateGame(float deltaTime)
 
 		if (ptrb->GetAlive())
 		{
-			ptrb->Update(hitChecker);
+			ptrb->Update(hitChecker->Hit());
 		}
 	}
 
@@ -300,7 +300,7 @@ void SecondStage::UpdateGame(float deltaTime)
 	//プレイヤーがゴール地点に辿り着いたら
 	if (player->GetPosition().x < -5900)
 	{
-		state = GOAL;
+		state = State::GOAL;
 		pUpdate = &SecondStage::UpdateGoal;
 
 	}
@@ -356,7 +356,7 @@ void SecondStage::Draw()
 	//UI管理クラス描画
 	for (auto ptr : enemy)
 	{
-		uiManager->Draw(state, ptr);
+		uiManager->Draw(state, ptr->GetPlayerCount());
 	}
 
 	//デバック用

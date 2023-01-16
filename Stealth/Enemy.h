@@ -9,7 +9,6 @@
 
 class Player;
 
-
 /// <summary>
 /// エネミークラス
 /// </summary>
@@ -45,7 +44,7 @@ private:
 	void SetTargetPosition();					//移動処理
 	void VisualAngle(Player* player);			//視野角の計算
 	void VisualAngleBall(Player* player);			//視野角の計算
-	void Reaction(Object object);				//エネミーのオブジェクトごとの反応
+	void Reaction();				//エネミーのオブジェクトごとの反応
 	void Finalize();
 
 	EnemyState enemyState;

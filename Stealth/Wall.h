@@ -19,6 +19,8 @@ public:
 
 private:
 
+	Wall(const Wall&);					//コピーコンストラクタ
+
 	//静的定数
 	static const VECTOR SIZE;           //モデルの倍率
 	static const VECTOR POSITION;		//モデルの位置

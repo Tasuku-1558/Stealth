@@ -32,6 +32,7 @@ void BackGround::Finalize()
 
 void BackGround::Activate()
 {
+	//ˆ—‚È‚µ
 }
 
 void BackGround::Draw()

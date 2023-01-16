@@ -1,8 +1,6 @@
 #pragma once
 
 #include "ObjectBase.h"
-#include "HitChecker.h"
-
 
 /// <summary>
 /// ボールクラス
@@ -10,12 +8,12 @@
 class Ball final : public ObjectBase
 {
 public:
-	 Ball(VECTOR pos);
+	 Ball(const VECTOR& pos);
 	~Ball();
 
 	void Initialize();
 	void Finalize();
-	void Update(HitChecker* hitChecker);
+	void Update(bool hit);
 	void SetDead();							//ボールを非アクティブ化
 	void Draw();
 
@@ -24,7 +22,7 @@ public:
 private:
 
 	Ball(const Ball&);								//コピーコンストラクタ
-	void IsAlive(HitChecker* hitChecker);			//生きてるか死んでいるか
+	void IsAlive(bool hit);			//生きてるか死んでいるか
 
 	bool alive;										//ボールが生きてるか死んでいるか
 

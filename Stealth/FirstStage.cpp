@@ -56,7 +56,7 @@ void FirstStage::Initialize()
 	backGround->Initialize();
 
 	//プレイヤークラス
-	player = new Player(ObjectBase::PLAYER);
+	player = new Player(ObjectBase::Object::PLAYER);
 	player->Initialize();
 
 	//ボールクラス
@@ -64,7 +64,7 @@ void FirstStage::Initialize()
 	ball->Initialize();
 
 	//壁クラス
-	wall = new Wall(ObjectBase::WALL, { -2500.0f,30.0f,0.0f });
+	wall = new Wall(ObjectBase::Object::WALL, { -2500.0f,30.0f,0.0f });
 	wall->Initialize();
 
 	//マップクラス
@@ -116,7 +116,7 @@ void FirstStage::Finalize()
 
 void FirstStage::Activate()
 {
-	state = START;
+	state = State::START;
 
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
@@ -141,7 +141,7 @@ void FirstStage::Update(float deltaTime)
 /// <param name="deltaTime"></param>
 void FirstStage::UpdateStart(float deltaTime)
 {
-	state = GAME;
+	state = State::GAME;
 	pUpdate = &FirstStage::UpdateGame;
 }
 
@@ -165,7 +165,7 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	if (ball->GetAlive())
 	{
-		ball->Update(hitChecker);
+		ball->Update(hitChecker->Hit());
 	}
 	
 	//fadeManager->FadeMove();
@@ -173,7 +173,7 @@ void FirstStage::UpdateGame(float deltaTime)
 	//プレイヤーがゴール地点に辿り着いたら
 	if (player->GetPosition().x < -4000)
 	{
-		state = GOAL;
+		state = State::GOAL;
 		pUpdate = &FirstStage::UpdateGoal;
 	}
 
@@ -221,7 +221,7 @@ void FirstStage::Draw()
 	}
 
 	//UI管理クラス描画
-	uiManager->Draw(state, enemy, hitChecker);
+	uiManager->Draw(state, enemy->GetPlayerCount(), hitChecker->UI());
 
 	//デバック用
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());

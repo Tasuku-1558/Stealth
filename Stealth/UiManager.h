@@ -6,8 +6,6 @@
 #include "FirstStage.h"
 #include "SecondStage.h"
 
-class Enemy;
-class HitChecker;
 
 /// <summary>
 /// UI管理クラス
@@ -21,15 +19,16 @@ public:
 	void Initialize();
 	void Finalize();
 
-	void Draw(FirstStage::State state, Enemy* enemy, HitChecker* hitChecker);
-	void Draw(SecondStage::State state, Enemy* enemy);
+	void Draw(FirstStage::State state, int playerCount, bool hitUi);
+	void Draw(SecondStage::State state, int playerCount);
 
+	
 private:
-	UiManager(const UiManager&);		//コピーコンストラクタ
+	UiManager(const UiManager&);			//コピーコンストラクタ
 
-	void StartGameDraw();				//ゲーム開始UI
-	void PlayerHpDraw(Enemy* enemy);	//プレイヤーHPUI
-	void OperationMethodDraw(HitChecker* hitChecker);	//操作方法説明UI
+	void StartGameDraw();					//ゲーム開始UI
+	void PlayerHpDraw(int playerCount);		//プレイヤーHPUI
+	void OperationMethodDraw(bool hitUi);	//操作方法説明UI
 
 
 	//画像の種類
@@ -48,8 +47,9 @@ private:
 	};
 
 	int count;
+	
 	int uiHandle[GRAPHIC_AMOUNT];		//画像ハンドル
-
+	
 
 	//静的定数
 	static const std::string FOLDER_PATH;			//画像格納フォルダ

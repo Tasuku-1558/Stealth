@@ -8,8 +8,6 @@ const string TitleScene::PLAY_VIDEO_PATH   = "PlayVideo.mp4";	//タイトル動画のパ
 const string TitleScene::TITLENAME_PATH	   = "titleName.png";	//タイトル名の画像のパス
 const string TitleScene::TITLE_UI_PATH	   = "titleUi.png";		//プレイシーンへ遷移キーのUIのパス
 
-int TitleScene::alpha = 0;
-int TitleScene::inc = 3;
 
 TitleScene::TitleScene(SceneManager* const sceneManager)
 	: SceneBase(sceneManager)
@@ -67,8 +65,8 @@ void TitleScene::Update(float deltaTime)
 void TitleScene::Blink()
 {
 	// 明滅ルーチン
-	/*alpha = 0;
-	inc = 3;*/
+	static int alpha = 0;
+	static int inc = 3;
 
 	if (alpha > 255 && inc > 0)
 		inc *= -1;

@@ -2,7 +2,6 @@
 #include "ModelManager.h"
 #include "Player.h"
 
-
 const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
 const string Enemy::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
 const string Enemy::FIND_PATH		  = "find.png";			//見つかった画像のパス
@@ -51,7 +50,7 @@ void Enemy::Initialize()
 	}
 
 	speed = SPEED;
-	
+
 	string failePath = IMAGE_FOLDER_PATH + FIND_PATH;
 	findImage = LoadGraph(failePath.c_str());
 
@@ -183,20 +182,20 @@ void Enemy::VisualAngle(Player* player)
 		//プレイヤーがエネミーの視野範囲内にいるか比較
 		if (radian <= dot)
 		{
-			object = PLAYER;
+			object = Object::PLAYER;
 			
 			//視野範囲内ならば
-			Reaction(object);
+			Reaction();
 		}
 	}
 }
 
 void Enemy::VisualAngleBall(Player* player)
 {
-	//プレイヤーからエネミーの座標を引いた値を取得
+	//バレットからエネミーの座標を引いた値を取得
 	VECTOR sub = player->GetBulletPos() - position;
 
-	//プレイヤーとエネミーの2点間の距離を計算
+	//バレットとエネミーの2点間の距離を計算
 	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
 
 	//ベクトルの正規化
@@ -215,13 +214,13 @@ void Enemy::VisualAngleBall(Player* player)
 	//ベクトルとエネミーの長さの比較
 	if (length > direction)
 	{
-		//プレイヤーがエネミーの視野範囲内にいるか比較
+		//バレットがエネミーの視野範囲内にいるか比較
 		if (radian <= dot)
 		{
-			object = BALL;
+			object = Object::BALL;
 
 			//視野範囲内ならば
-			Reaction(object);
+			Reaction();
 		}
 	}
 }
@@ -229,12 +228,11 @@ void Enemy::VisualAngleBall(Player* player)
 /// <summary>
 /// エネミーのオブジェクトごとの反応
 /// </summary>
-/// <param name="object"></param>
-void Enemy::Reaction(Object object)
+void Enemy::Reaction()
 {
 	switch (object)
 	{
-	case ObjectBase::PLAYER:
+	case Object::PLAYER:
 		printfDx("PLAYER");
 		discovery = true;
 
@@ -249,7 +247,7 @@ void Enemy::Reaction(Object object)
 		playerFindCount++;
 		break;
 
-	case ObjectBase::BALL:
+	case Object::BALL:
 		printfDx("BALL");
 	
 		ballFlag = true;
@@ -261,16 +259,14 @@ void Enemy::Reaction(Object object)
 			{
 				speed = SPEED;
 				ballFlag = false;
-				count = 0;
-				
+				//count = 0;
 				
 			}
-			
 		}
 		
 		break;
 
-	case ObjectBase::WALL:
+	case Object::WALL:
 		printfDx("WALL");
 		break;
 	}
@@ -304,5 +300,6 @@ void Enemy::eUpdate(float deltaTime)
 void Enemy::Draw()
 {
 	MV1DrawModel(modelHandle);
-	//DrawBillboard3D(VGet(viewRangePos.x - 20.0f, 30.0f, viewRangePos.z + 200.0f), 0.5f, 0.5f, 300.0f, 0.0f, viewRangeImage, TRUE);
+	DrawBillboard3D(VGet(viewRangePos.x - 20.0f, 30.0f, viewRangePos.z + 200.0f), 0.5f, 0.5f, 300.0f, 0.0f, viewRangeImage, TRUE);
+	
 }

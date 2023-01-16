@@ -8,12 +8,10 @@ const string Bullet::IMAGE_FOLDER_PATH = "data/image/";			//imageƒtƒHƒ‹ƒ_‚Ü‚Å‚Ìƒ
 const string Bullet::CURSOR_PATH	   = "pointer.png";			//ƒJ[ƒ\ƒ‹‰æ‘œ‚ÌƒpƒX
 const float  Bullet::SCALE			   = 0.4f;					//ƒJ[ƒ\ƒ‹‰æ‘œ‚Ì‘å‚«‚³
 
-
 using namespace Math3d;
 
-
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒN
+/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 /// </summary>
 /// <param name="BALL"></param>
 Bullet::Bullet(Object BALL)
@@ -49,7 +47,7 @@ void Bullet::Initialize()
 	//“Ç‚İ‚İ¸”s‚ÅƒGƒ‰[
 	if (modelHandle < 0)
 	{
-		printfDx("ƒ‚ƒfƒ‹ƒf[ƒ^“Ç‚İ‚İ‚É¸”s [BALL]\n");
+		printfDx("ƒ‚ƒfƒ‹ƒf[ƒ^“Ç‚İ‚İ‚É¸”s [BULLET]\n");
 	}
 
 	string failePath = IMAGE_FOLDER_PATH + CURSOR_PATH;

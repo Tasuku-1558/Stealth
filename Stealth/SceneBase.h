@@ -8,7 +8,7 @@ class SceneManager;
 class SceneBase
 {
 public:
-	SceneBase(SceneManager* const sceneManager) : parent(sceneManager) {/*処理なし*/ }			//コンストラクタ
+	SceneBase(SceneManager* const sceneManager) : parent(sceneManager) {/*処理なし*/ }	//コンストラクタ
 	virtual ~SceneBase() {/*処理なし*/}	//デストラクタ
 
 	virtual void Initialize() = 0;

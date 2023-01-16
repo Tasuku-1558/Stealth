@@ -5,6 +5,7 @@ ObjectBase::ObjectBase()
 	: position()
 	, dir()
 	, modelHandle(-1)
+	, object()
 {
 	//ˆ—‚È‚µ
 }

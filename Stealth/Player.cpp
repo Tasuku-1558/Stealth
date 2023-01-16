@@ -45,7 +45,7 @@ void Player::Initialize()
 	}
 
 	//ショットクラス
-	bullet = new Bullet(ObjectBase::BALL);
+	bullet = new Bullet(Object::BALL);
 	bullet->Initialize();
 }
 
