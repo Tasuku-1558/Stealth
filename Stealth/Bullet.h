@@ -29,7 +29,7 @@ public:
 
 	bool GetAlive() { return alive; }
 	void Draw();
-
+	void Activate();
 private:
 
 	Bullet(const Bullet&);					//コピーコンストラクタ

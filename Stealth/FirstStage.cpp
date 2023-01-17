@@ -229,7 +229,7 @@ void FirstStage::Draw()
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 270, GetColor(255, 0, 0), font, "Alive : %d \n(1:true 0:false)", ball->GetAlive());
 	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "PlayerCount : %d", enemy->GetPlayerCount());
-	
+
 
 	//‰æ–ÊŒø‰ÊƒNƒ‰ƒX•`‰æ
 	fadeManager->Draw();

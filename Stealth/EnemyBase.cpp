@@ -16,8 +16,6 @@ EnemyBase::EnemyBase()
 	, viewRangeImage(0)
 	, markImage(0)
 	, discoverySE(0)
-	, ballFlag(false)
-	, count(0)
 {
 	//ˆ—‚È‚µ
 }

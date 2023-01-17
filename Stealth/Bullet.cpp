@@ -54,6 +54,11 @@ void Bullet::Initialize()
 	cursorImage = LoadGraph(failePath.c_str());
 }
 
+void Bullet::Activate()
+{
+	position = POSITION;
+}
+
 void Bullet::Finalize()
 {
 	MV1DeleteModel(modelHandle);

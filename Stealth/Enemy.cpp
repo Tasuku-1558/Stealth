@@ -118,9 +118,10 @@ void Enemy::Update(float deltaTime, Player* player)
 
 	light->Update(dir);
 
-	VisualAngle(player);
+	//VisualAngle(player);
 
-	VisualAngleBall(player);
+	//VisualAngleBall(player);
+	Visual(player);
 
 	eUpdate(deltaTime);
 	
@@ -161,10 +162,10 @@ bool Enemy::IsGoal(float deltaTime)
 /// 視野角の計算
 /// </summary>
 /// <param name="player"></param>
-void Enemy::VisualAngle(Player* player)
+void Enemy::VisualAngle(/*Player* player*/VECTOR pos,Object objectState)
 {
 	//プレイヤーからエネミーの座標を引いた値を取得
-	VECTOR sub = player->GetPosition() - position;
+	VECTOR sub = /*player->GetPosition()*/pos - position;
 
 	//プレイヤーとエネミーの2点間の距離を計算
 	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
@@ -181,7 +182,7 @@ void Enemy::VisualAngle(Player* player)
 	float radian = cosf(range / 2.0f);
 
 	//発見していない
-	discovery = false;
+	//discovery = false;
 	
 	//ベクトルとエネミーの長さの比較
 	if (length > direction)
@@ -189,12 +190,26 @@ void Enemy::VisualAngle(Player* player)
 		//プレイヤーがエネミーの視野範囲内にいるか比較
 		if (radian <= dot)
 		{
-			object = Object::PLAYER;
+			object = objectState;
 			
 			//視野範囲内ならば
 			Reaction();
 		}
 	}
+	else
+	{
+		//エネミーの視野範囲外ならスピードを元のスピードに戻す
+		speed = SPEED;
+		discovery = false;
+	}
+}
+
+void Enemy::Visual(Player* player)
+{
+	VisualAngle(player->GetPosition(), Object::PLAYER);
+
+	VisualAngle(player->GetBulletPos(), Object::BALL);
+
 }
 
 void Enemy::VisualAngleBall(Player* player)
@@ -216,8 +231,6 @@ void Enemy::VisualAngleBall(Player* player)
 	//エネミーの視野をcosにする
 	float radian = cosf(range / 2.0f);
 
-	ballFlag = false;
-
 	//ベクトルとエネミーの長さの比較
 	if (length > direction)
 	{
@@ -229,6 +242,11 @@ void Enemy::VisualAngleBall(Player* player)
 			//視野範囲内ならば
 			Reaction();
 		}
+	}
+	else
+	{
+		//エネミーの視野範囲外ならスピードを元のスピードに戻す
+		speed = SPEED;
 	}
 }
 
@@ -250,26 +268,14 @@ void Enemy::Reaction()
 
 		// 発見SEを再生
 		PlaySoundMem(discoverySE, DX_PLAYTYPE_BACK);
-
+		
 		playerFindCount++;
 		break;
 
 	case Object::BALL:
 		printfDx("BALL");
-	
-		ballFlag = true;
-		if (ballFlag)
-		{
-			speed = 0.0f;
-			count++;
-			if (count > 200)
-			{
-				speed = SPEED;
-				ballFlag = false;
-				//count = 0;
-				
-			}
-		}
+		
+		speed = 0.0f;
 		
 		break;
 
@@ -306,7 +312,6 @@ void Enemy::eUpdate(float deltaTime)
 /// </summary>
 void Enemy::Draw()
 {
-
 	MV1DrawModel(modelHandle);
 
 	/*VECTOR screenPos = ConvWorldPosToScreenPos(position);

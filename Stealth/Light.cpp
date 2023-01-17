@@ -21,6 +21,6 @@ void Light::Initialize()
 
 void Light::Update(VECTOR enemyDir)
 {
-	lightHandle = CreateDirLightHandle(enemyDir);
+	//lightHandle = CreateDirLightHandle(enemyDir);
 
 }

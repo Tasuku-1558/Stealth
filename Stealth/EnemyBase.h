@@ -29,8 +29,6 @@ protected:
 	int viewRangeImage;
 	int markImage;					//ビックリマーク画像格納用
 	int discoverySE;				//プレイヤー発見SE音
-	bool ballFlag;
-	int count;
 
 
 	//静的定数

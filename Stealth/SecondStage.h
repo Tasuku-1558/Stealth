@@ -73,4 +73,5 @@ private:
 	int font;			//ゲームフォント
 	bool enemyPop;		//エネミーの出現フラグ
 	bool ballPop;		//ボールの出現フラグ
+	int count;
 };

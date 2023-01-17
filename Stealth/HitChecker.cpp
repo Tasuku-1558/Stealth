@@ -71,6 +71,7 @@ void HitChecker::PlayerAndUI(Player* player)
 	//プレイヤーとボールの2点間の距離を計算
 	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
 
+	//衝突しているならば
 	if (direction < PLAYER_RADIUS + 50.0f)
 	{
 		uiDraw = true;

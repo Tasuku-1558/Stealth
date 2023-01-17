@@ -25,7 +25,6 @@ public:
 	void Draw();
 
 	bool Discovery() { return discovery; }
-
 	int GetPlayerCount() { return playerFindCount; }
 	
 	//エネミーの状態
@@ -34,7 +33,6 @@ public:
 		CRAWL,			//巡回中
 		ARRIVAL,		//目的地に到着
 	};
-	
 
 private:
 	Enemy(const Enemy&);						//コピーコンストラクタ
@@ -43,7 +41,8 @@ private:
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 	void eUpdate(float deltaTime);				//状態変化
 	void SetTargetPosition();					//移動処理
-	void VisualAngle(Player* player);			//視野角の計算
+	void VisualAngle(/*Player* player*/VECTOR pos, Object objectState);			//視野角の計算
+	void Visual(Player* player);
 	void VisualAngleBall(Player* player);			//視野角の計算
 	void Reaction();				//エネミーのオブジェクトごとの反応
 	void Finalize();

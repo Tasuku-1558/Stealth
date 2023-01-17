@@ -187,6 +187,8 @@ void Player::FoundEnemy(Enemy* enemy)
 	{
 		WaitTimer(1000);
 
+		//bullet->Activate();
+
 		//ˆÊ’u‚ÆŒü‚«‚ğ‰Šú‰»
 		position = POSITION;
 		dir = DIR;

@@ -37,6 +37,7 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, font(0)
 	, enemyPop(false)
 	, ballPop(false)
+	, count(0)
 {
 	//ˆ—‚È‚µ
 }
@@ -314,8 +315,19 @@ void SecondStage::UpdateGoal(float deltaTime)
 {
 	WaitTimer(1000);
 
-	parent->SetNextScene(SceneManager::SELECTION);
-	return;
+	//count += deltaTime;
+
+	//if (count < 10)
+	{
+		//fadeManager->FadeMove();
+		
+
+		//if (count < 50)
+		{
+			parent->SetNextScene(SceneManager::SELECTION);
+			return;
+		}
+	}
 }
 
 void SecondStage::Draw()
