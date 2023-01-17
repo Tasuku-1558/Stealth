@@ -1,10 +1,11 @@
 #include "UiManager.h"
 
-const string UiManager::FOLDER_PATH		   = "data/image/";		//画像ファイルのパス
+using std::string;
+
+const string UiManager::IMAGE_FOLDER_PATH  = "data/image/";		//画像ファイルのパス
 const string UiManager::UI_GRAPHIC_PATH    = "ui";				//UI画像
 const string UiManager::FILENAME_EXTENSION = ".png";			//画像拡張子
 
-using namespace std;
 
 UiManager::UiManager()
 	: uiHandle()
@@ -25,7 +26,7 @@ UiManager::~UiManager()
 void UiManager::Initialize()
 {
 	//UI画像読み込み
-	string failePath = FOLDER_PATH + UI_GRAPHIC_PATH; // フォルダパス + ファイル名
+	string failePath = IMAGE_FOLDER_PATH + UI_GRAPHIC_PATH;		// フォルダパス + ファイル名
 	string fullPath = failePath;
 	
 	for (int i = 0; i < GRAPHIC_AMOUNT; ++i)

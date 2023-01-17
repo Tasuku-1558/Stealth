@@ -1,6 +1,8 @@
 #include "Enemy.h"
 #include "ModelManager.h"
+#include "PreCompiledHeader.h"
 #include "Player.h"
+#include "Light.h"
 
 const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
 const string Enemy::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
@@ -18,7 +20,7 @@ using namespace std;
 /// </summary>
 /// <param name="num"></param>
 Enemy::Enemy(std::vector<VECTOR>& num) : EnemyBase()
-	, viewRangePos()
+	, light(nullptr)
 {
 	enemyState = EnemyState::CRAWL;
 	Position(num);
@@ -51,6 +53,10 @@ void Enemy::Initialize()
 
 	speed = SPEED;
 
+	dir = ZERO_VECTOR;
+
+	light = new Light();
+
 	string failePath = IMAGE_FOLDER_PATH + FIND_PATH;
 	findImage = LoadGraph(failePath.c_str());
 
@@ -67,6 +73,7 @@ void Enemy::Initialize()
 void Enemy::Activate()
 {
 	playerFindCount = 0;
+	dir = ZERO_VECTOR;
 }
 
 /// <summary>
@@ -109,7 +116,7 @@ void Enemy::Update(float deltaTime, Player* player)
 	
 	position += dir * speed * deltaTime;
 
-	viewRangePos = position;
+	light->Update(dir);
 
 	VisualAngle(player);
 
@@ -299,7 +306,10 @@ void Enemy::eUpdate(float deltaTime)
 /// </summary>
 void Enemy::Draw()
 {
+
 	MV1DrawModel(modelHandle);
-	DrawBillboard3D(VGet(viewRangePos.x - 20.0f, 30.0f, viewRangePos.z + 200.0f), 0.5f, 0.5f, 300.0f, 0.0f, viewRangeImage, TRUE);
-	
+
+	/*VECTOR screenPos = ConvWorldPosToScreenPos(position);
+
+	DrawBillboard3D(VGet(screenPos.z,screenPos.y,screenPos.x), 0.5f, 0.5f, 300.0f, DX_PI, viewRangeImage, TRUE);*/
 }

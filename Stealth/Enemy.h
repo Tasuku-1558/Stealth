@@ -8,6 +8,7 @@
 #include "Math3D.h"
 
 class Player;
+class Light;
 
 /// <summary>
 /// エネミークラス
@@ -52,7 +53,7 @@ private:
 	std::vector<VECTOR>::iterator itr;
 	std::vector<VECTOR> pointList;
 
-	VECTOR viewRangePos;
+	Light* light;
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス

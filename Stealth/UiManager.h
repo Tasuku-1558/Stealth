@@ -52,7 +52,7 @@ private:
 	
 
 	//静的定数
-	static const std::string FOLDER_PATH;			//画像格納フォルダ
+	static const std::string IMAGE_FOLDER_PATH;		//画像格納フォルダ
 	static const std::string UI_GRAPHIC_PATH;		//UI画像
 	static const std::string FILENAME_EXTENSION;	//画像拡張子
 };
