@@ -3,13 +3,13 @@
 
 
 const VECTOR Ball::SIZE		= { 2.0f, 2.0f, 2.0f };		//モデルの倍率
-const VECTOR Ball::POSITION = { -1500.0f,30.0f,0.0f };	//モデルの位置
+
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="pos"></param>
-Ball::Ball(const VECTOR& pos) : ObjectBase()
+Ball::Ball(VECTOR pos) : ObjectBase()
 	, alive(true)
 {
 	position = pos;
@@ -46,17 +46,15 @@ void Ball::Finalize()
 	modelHandle = NULL;
 }
 
-void Ball::Update(bool hit)
+void Ball::Update()
 {
 	MV1SetPosition(modelHandle, position);
-
-	IsAlive(hit);
 }
 
 /// <summary>
 /// ボールを非アクティブ化
 /// </summary>
-void Ball::SetDead()
+void Ball::SetAlive()
 {
 	alive = true;
 	position = position;

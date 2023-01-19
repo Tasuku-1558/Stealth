@@ -2,13 +2,12 @@
 
 #include "SceneBase.h"
 
-
 class Player;
 class Enemy;
 class Camera;
 class Light;
 class BackGround;
-class Ball;
+class BallBullet;
 class Wall;
 class HitChecker;
 class Map;
@@ -46,7 +45,7 @@ private:
 	Camera* camera;
 	Light* light;
 	BackGround* backGround;
-	Ball* ball;
+	BallBullet* ballBullet;
 	Wall* wall;
 	HitChecker* hitChecker;
 	Map* map;

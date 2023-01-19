@@ -8,7 +8,7 @@ class FadeManager final
 {
 public:
 	 FadeManager();
-	~FadeManager();
+	 virtual ~FadeManager();
 
 
 	void FadeMove();

@@ -14,6 +14,8 @@ TitleScene::TitleScene(SceneManager* const sceneManager)
 	, backGroundHandle(0)
 	, titleName(0)
 	, titleUi(0)
+	, alpha(0)
+	, inc(3)
 {
 	//処理なし
 }
@@ -53,7 +55,6 @@ void TitleScene::Update(float deltaTime)
 	//次のシーンへ
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
-		
 		parent->SetNextScene(SceneManager::SELECTION);
 		return;
 	}
@@ -64,16 +65,17 @@ void TitleScene::Update(float deltaTime)
 /// </summary>
 void TitleScene::Blink()
 {
-	// 明滅ルーチン
-	static int alpha = 0;
-	static int inc = 3;
-
+	
 	if (alpha > 255 && inc > 0)
+	{
 		inc *= -1;
-
+	}
+		
 	if (alpha < 0 && inc < 0)
+	{
 		inc *= -1;
-
+	}
+		
 	alpha += inc;
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);

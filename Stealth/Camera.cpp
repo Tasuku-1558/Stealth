@@ -10,7 +10,7 @@ const float  Camera::FAR_DISTANCE	   = 4000.0f;							//カメラに映る最奥の範囲
 
 Camera::Camera()
 	: position()
-	, radius(200.0f)
+	, radius(400.0f)
 	, yaw(0.0f)
 	, front()
 	, up()
@@ -36,9 +36,9 @@ void Camera::Initialize()
 void Camera::Update(VECTOR pos)
 {
 	
-	position = VGet(radius * cos(yaw) + pos.x,
+	position = VGet(radius * cosf(yaw) + pos.x,
 					angleY,
-					radius * sin(yaw) + pos.z);
+					radius * sinf(yaw) + pos.z);
 
 	//カメラの視点、注視点を設定
 	SetCameraPositionAndTarget_UpVecY(position, pos);

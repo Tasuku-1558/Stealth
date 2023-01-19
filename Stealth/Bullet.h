@@ -4,12 +4,9 @@
 
 #include "ObjectBase.h"
 #include "Math3D.h"
-#include "Player.h"
 #include "Ball.h"
 
-
 using namespace std;
-
 
 /// <summary>
 /// プレイヤーショットクラス
@@ -17,22 +14,24 @@ using namespace std;
 class Bullet final : public ObjectBase
 {
 public:
-	 Bullet(Object BALL);
-	~Bullet();
+	 Bullet();
+	 virtual ~Bullet();
 
 	void Initialize();
+	void Activate();
 	void Finalize();
 	void Update(float deltaTime, Ball* ball);
-	void MouseMove(Ball* ball, VECTOR pos);		//マウスカーソルの移動
+	void MouseMove(Ball* ball, VECTOR playerPos);		//マウスカーソルの移動
 	void SetDead();								//バレットを非アクティブ化
 	void SetAlive();							//バレットをアクティブ化
 
 	bool GetAlive() { return alive; }
 	void Draw();
-	void Activate();
+	
 private:
 
 	Bullet(const Bullet&);					//コピーコンストラクタ
+
 	void OnShot(float deltaTime);			//球が撃たれた時
 
 	int cursorImage;						//照準画像格納用

@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="BallBullet.cpp" />
     <ClCompile Include="FadeManager.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SecondStage.cpp" />
     <ClCompile Include="SecondStageMap.cpp" />
+    <ClCompile Include="StageBase.cpp" />
     <ClCompile Include="StageSelection.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="UiManager.cpp" />
@@ -178,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="BallBullet.h" />
     <ClInclude Include="FadeManager.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Camera.h" />
@@ -198,6 +201,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SecondStage.h" />
     <ClInclude Include="SecondStageMap.h" />
+    <ClInclude Include="StageBase.h" />
     <ClInclude Include="StageSelection.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="UiManager.h" />

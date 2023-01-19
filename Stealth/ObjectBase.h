@@ -14,11 +14,11 @@ public:
 
 	  virtual void Initialize() = 0;
 	  //virtual void Update(float dltaTime) = 0;				
-	  virtual void Draw() = 0;
+	  //virtual void Draw() = 0;
 
 	  const VECTOR& GetPosition() const; 	//positionのgetter
 	  const VECTOR& GetDir() const;			//dirのgetter
-
+	  const int& GetModelHandle() const; 	//modelHandleのgetter
 
 	  //オブジェクトのタグ
 	  enum class Object

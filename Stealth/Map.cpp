@@ -9,11 +9,17 @@ const VECTOR Map::ROTATE   = { 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f };		//モデル
 
 using namespace std;
 
-Map::Map() : ObjectBase()
+/// <summary>
+/// コンストラクタ
+/// </summary>
+Map::Map() : StageBase()
 {
 	//処理なし
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 Map::~Map()
 {
 	//終了処理が呼ばれてなければ
@@ -42,6 +48,12 @@ void Map::Initialize()
 	MapList();
 }
 
+void Map::Finalize()
+{
+	MV1DeleteModel(modelHandle);
+	modelHandle = NULL;
+}
+
 void Map::MapList()
 {
 	positionList.push_back(VGet(-3200.0f, 100.0f, 1400.0f));
@@ -50,13 +62,20 @@ void Map::MapList()
 	itr = positionList.begin();   //  イテレータを先頭に設定
 }
 
-void Map::Finalize()
+void Map::MiniMap()
 {
-	MV1DeleteModel(modelHandle);
-	modelHandle = NULL;
+	/*pDotX = x + int(pGloX * exRate);
+	pDotY = y + int(pGloY * exRate);*/
+
+	DrawRotaGraph(x, y, exRate, 0, mapGraph, false);
+	DrawBoxAA(mapFlameX, mapFlameY, mapFlameX + miniMapWidth, mapFlameY + miniMapHeight, GetColor(0, 0, 0), false, 3);
+	DrawBoxAA(pDotX - int(SCREEN_WIDTH * exRate / 2), pDotY - int(SCREEN_HEIGHT * exRate / 2), pDotX + int(SCREEN_WIDTH * exRate / 2), pDotY + int(SCREEN_HEIGHT * exRate / 2), GetColor(255, 0, 0), false, 2);
+	DrawCircle(pDotX, pDotY + 12, dotSize, GetColor(0, 0, 0), true);
 }
 
 void Map::Draw()
 {
 	MV1DrawModel(modelHandle);
+
+	MiniMap();
 }

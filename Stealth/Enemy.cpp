@@ -74,6 +74,7 @@ void Enemy::Activate()
 {
 	playerFindCount = 0;
 	dir = ZERO_VECTOR;
+	speed = SPEED;
 }
 
 /// <summary>
@@ -117,12 +118,9 @@ void Enemy::Update(float deltaTime, Player* player)
 	position += dir * speed * deltaTime;
 
 	light->Update(dir);
-
-	//VisualAngle(player);
-
-	//VisualAngleBall(player);
-	Visual(player);
-
+	
+	VisualAngle(player);
+	
 	eUpdate(deltaTime);
 	
 	//z軸が逆を向いているのでdirを180度回転させる
@@ -162,10 +160,10 @@ bool Enemy::IsGoal(float deltaTime)
 /// 視野角の計算
 /// </summary>
 /// <param name="player"></param>
-void Enemy::VisualAngle(/*Player* player*/VECTOR pos,Object objectState)
+void Enemy::VisualAngle(Player* player)
 {
 	//プレイヤーからエネミーの座標を引いた値を取得
-	VECTOR sub = /*player->GetPosition()*/pos - position;
+	VECTOR sub = player->GetPosition() - position;
 
 	//プレイヤーとエネミーの2点間の距離を計算
 	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
@@ -181,41 +179,29 @@ void Enemy::VisualAngle(/*Player* player*/VECTOR pos,Object objectState)
 	//エネミーの視野をcosにする
 	float radian = cosf(range / 2.0f);
 
-	//発見していない
-	//discovery = false;
-	
 	//ベクトルとエネミーの長さの比較
 	if (length > direction)
 	{
 		//プレイヤーがエネミーの視野範囲内にいるか比較
 		if (radian <= dot)
 		{
-			object = objectState;
-			
+			object = Object::PLAYER;
+
 			//視野範囲内ならば
 			Reaction();
 		}
 	}
 	else
 	{
-		//エネミーの視野範囲外ならスピードを元のスピードに戻す
-		speed = SPEED;
+		//発見していない
 		discovery = false;
 	}
 }
 
-void Enemy::Visual(Player* player)
-{
-	VisualAngle(player->GetPosition(), Object::PLAYER);
-
-	VisualAngle(player->GetBulletPos(), Object::BALL);
-
-}
-
-void Enemy::VisualAngleBall(Player* player)
+void Enemy::VisualAngleBall(VECTOR bulletPos)
 {
 	//バレットからエネミーの座標を引いた値を取得
-	VECTOR sub = player->GetBulletPos() - position;
+	VECTOR sub = bulletPos - position;
 
 	//バレットとエネミーの2点間の距離を計算
 	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
@@ -230,7 +216,7 @@ void Enemy::VisualAngleBall(Player* player)
 
 	//エネミーの視野をcosにする
 	float radian = cosf(range / 2.0f);
-
+	
 	//ベクトルとエネミーの長さの比較
 	if (length > direction)
 	{
@@ -260,7 +246,7 @@ void Enemy::Reaction()
 	case Object::PLAYER:
 		printfDx("PLAYER");
 		discovery = true;
-
+		
 		//ビックリマークの画像を描画
 		DrawBillboard3D(VGet(position.x - 300, 0.0f, position.z - 100), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
 
@@ -281,6 +267,7 @@ void Enemy::Reaction()
 
 	case Object::WALL:
 		printfDx("WALL");
+		discovery = false;
 		break;
 	}
 }
@@ -299,6 +286,7 @@ void Enemy::eUpdate(float deltaTime)
 		{
 			enemyState = EnemyState::ARRIVAL;
 		}
+			
 		break;
 
 	case EnemyState::ARRIVAL:
@@ -313,8 +301,4 @@ void Enemy::eUpdate(float deltaTime)
 void Enemy::Draw()
 {
 	MV1DrawModel(modelHandle);
-
-	/*VECTOR screenPos = ConvWorldPosToScreenPos(position);
-
-	DrawBillboard3D(VGet(screenPos.z,screenPos.y,screenPos.x), 0.5f, 0.5f, 300.0f, DX_PI, viewRangeImage, TRUE);*/
 }

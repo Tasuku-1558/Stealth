@@ -17,6 +17,8 @@ Light::~Light()
 void Light::Initialize()
 {
 	SetLightDirection(DIRECTION);
+	//ChangeLightTypeDir(VGet(-1.0f, 0.0f, 0.0f));
+	
 }
 
 void Light::Update(VECTOR enemyDir)

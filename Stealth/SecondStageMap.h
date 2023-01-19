@@ -1,17 +1,17 @@
 #pragma once
 
-#include "ObjectBase.h"
+#include "StageBase.h"
 #include <vector>
 
 
 /// <summary>
 /// セカンドステージマップクラス
 /// </summary>
-class SecondStageMap final : public ObjectBase
+class SecondStageMap final : public StageBase
 {
 public:
      SecondStageMap();
-    ~SecondStageMap();
+     virtual ~SecondStageMap();
 
     void Initialize();
     void Finalize();
@@ -21,7 +21,6 @@ public:
     std::vector<VECTOR>& GetMap2() { return positionList2; }
 
     int GetModel() { return modelHandle; }
-
 
 private:
 

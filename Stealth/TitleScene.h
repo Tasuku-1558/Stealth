@@ -29,7 +29,8 @@ private:
 	int backGroundHandle;				//タイトル動画の格納用
 	int titleName;						//タイトル名の画像格納用
 	int titleUi;						//プレイシーンへ遷移キーのUI格納用
-	
+	int alpha;
+	int inc;
 
 	//静的定数
 	static const string VIDEO_FOLDER_PATH;	//videoフォルダまでのパス

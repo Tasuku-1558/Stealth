@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneBase.h"
+#include "PreCompiledHeader.h"
 #include <vector>
 
 class Player;
@@ -8,7 +9,7 @@ class Enemy;
 class Camera;
 class Light;
 class BackGround;
-class Ball;
+class BallBullet;
 class Wall;
 class HitChecker;
 class SecondStageMap;
@@ -47,7 +48,7 @@ private:
 	Camera* camera;
 	Light* light;
 	BackGround* backGround;
-	std::vector<Ball*> ball;
+	std::vector<BallBullet*> ballBullet;
 	Wall* wall;
 	Wall* wall2;
 	Wall* wall3;
@@ -56,14 +57,16 @@ private:
 	SecondStageMap* secondStageMap2;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
-
+	
 
 	void EntryEnemy(Enemy* newEnemy);				//エネミーを登録
 	void DeleteEnemy(Enemy* deleteEnemy);			//エネミーを削除
 	void EnemyPop();								//エネミーの出現
-	void EntryBall(Ball* newBall);					//ボールを登録
-	void DeleteBall(Ball* deleteBall);				//ボールを削除
-	void BallPop();									//ボールの出現
+
+	void EntryBallBullet(BallBullet* newBallBullet);
+	void DeleteBallBullet(BallBullet* deleteBallBullet);
+	void BallBulletPop();
+
 	void UpdateStart(float deltaTime);				//ゲーム開始前
 	void UpdateGame(float deltaTime);				//ゲーム中
 	void UpdateGoal(float deltaTime);				//ゴール

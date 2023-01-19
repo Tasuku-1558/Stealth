@@ -77,13 +77,13 @@ void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 
 void UiManager::Draw(SecondStage::State state, int playerCount)
 {
-	/*switch (state)
+	switch (state)
 	{
-	case FirstStage::START:
+	case SecondStage::State::START:
 
 		break;
 
-	case FirstStage::GAME:
+	case SecondStage::State::GAME:
 		count++;
 
 		if (count < 50)
@@ -94,12 +94,12 @@ void UiManager::Draw(SecondStage::State state, int playerCount)
 		DrawGraph(0, 900, uiHandle[KEY], TRUE);
 		break;
 
-	case FirstStage::GOAL:
+	case SecondStage::State::GOAL:
 		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
 		count = 0;
 		break;
-	}*/
-	if (state == SecondStage::State::START)
+	}
+	/*if (state == SecondStage::State::START)
 	{
 	}
 
@@ -114,11 +114,12 @@ void UiManager::Draw(SecondStage::State state, int playerCount)
 		PlayerHpDraw(playerCount);
 		DrawGraph(0, 900, uiHandle[KEY], TRUE);
 	}
+
 	if (state == SecondStage::State::GOAL)
 	{
 		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
 		count = 0;
-	}
+	}*/
 }
 
 /// <summary>

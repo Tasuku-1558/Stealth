@@ -12,7 +12,7 @@ class BackGround final
 {
 public:
      BackGround();
-    ~BackGround();
+     virtual ~BackGround();
 
     void Initialize();
     void Finalize();

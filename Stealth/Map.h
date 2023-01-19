@@ -1,34 +1,33 @@
 #pragma once
 
-#include "ObjectBase.h"
+#include "StageBase.h"
 #include <vector>
 
 
 /// <summary>
-/// マップクラス
+/// ファーストステージマップクラス
 /// </summary>
-class Map final : public ObjectBase
+class Map final : public StageBase
 {
 public:
-     Map();
-    ~Map();
+     Map();             //コンストラクタ
+     virtual ~Map();    //デストラクタ
 
     void Initialize();
     void Finalize();
     void Draw();
 
     std::vector<VECTOR>& GetMap() { return positionList; }
-
     int GetModel() { return modelHandle; }
-
 
 private:
 
     void MapList();
+    void MiniMap();
 
     std::vector<VECTOR> positionList;
     std::vector<VECTOR>::iterator itr;
-
+    
 
     //静的定数
     static const VECTOR SIZE;           //モデルの倍率

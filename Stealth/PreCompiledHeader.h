@@ -17,6 +17,7 @@ const float ENEMY_RADIUS  = 100.0f;                 //エネミーの半径
 const float BALL_RADIUS   = 50.0f;                  //ボールの半径
 const float BULLET_RADIUS = 50.0f;                  //バレットの半径
 
+
 // インスタンスをdeleteしてNULLを入れる
 template <typename T>
 inline void SafeDelete(T*& p)

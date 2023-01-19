@@ -17,12 +17,14 @@ class Enemy final : public EnemyBase
 {
 public:
 	 Enemy(std::vector<VECTOR>& num);		//コンストラクタ
-	~Enemy();								//デストラクタ
+	 virtual ~Enemy();								//デストラクタ
 
 	void Initialize();
 	void Activate();
 	void Update(float deltaTime, Player* player);
 	void Draw();
+
+	void VisualAngleBall(VECTOR bulletPos);			//視野角の計算
 
 	bool Discovery() { return discovery; }
 	int GetPlayerCount() { return playerFindCount; }
@@ -41,9 +43,9 @@ private:
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 	void eUpdate(float deltaTime);				//状態変化
 	void SetTargetPosition();					//移動処理
-	void VisualAngle(/*Player* player*/VECTOR pos, Object objectState);			//視野角の計算
-	void Visual(Player* player);
-	void VisualAngleBall(Player* player);			//視野角の計算
+	void VisualAngle(Player* player);			//視野角の計算
+	
+	//void VisualAngleWall();
 	void Reaction();				//エネミーのオブジェクトごとの反応
 	void Finalize();
 

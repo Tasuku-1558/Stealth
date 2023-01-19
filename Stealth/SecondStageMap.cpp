@@ -8,7 +8,7 @@ const VECTOR SecondStageMap::POSITION = { -200.0f, -50.0f, 1350.0f };				//ƒ‚ƒfƒ
 
 using namespace std;
 
-SecondStageMap::SecondStageMap() : ObjectBase()
+SecondStageMap::SecondStageMap() : StageBase()
 	, count(0)
 {
 	//ˆ—‚È‚µ
@@ -42,6 +42,12 @@ void SecondStageMap::Initialize()
 	MapList2();
 }
 
+void SecondStageMap::Finalize()
+{
+	MV1DeleteModel(modelHandle);
+	modelHandle = NULL;
+}
+
 void SecondStageMap::MapList()
 {
 	positionList.push_back(VGet(-2300.0f, 100.0f, 500.0f));
@@ -59,12 +65,6 @@ void SecondStageMap::MapList2()
 	positionList2.push_back(VGet(-4600.0f, 100.0f, 0.0f));
 
 	itr2 = positionList2.begin();   //  ƒCƒeƒŒ[ƒ^‚ğæ“ª‚Éİ’è
-}
-
-void SecondStageMap::Finalize()
-{
-	MV1DeleteModel(modelHandle);
-	modelHandle = NULL;
 }
 
 void SecondStageMap::Draw()

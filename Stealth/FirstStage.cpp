@@ -8,7 +8,7 @@
 #include "Camera.h"
 #include "Light.h"
 #include "BackGround.h"
-#include "Ball.h"
+#include "BallBullet.h"
 #include "Wall.h"
 #include "HitChecker.h"
 #include "Map.h"
@@ -25,7 +25,7 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 		, light(nullptr)
 		, backGround(nullptr)
 		, pUpdate(nullptr)
-		, ball(nullptr)
+		, ballBullet(nullptr)
 		, wall(nullptr)
 		, hitChecker(nullptr)
 		, map(nullptr)
@@ -56,15 +56,14 @@ void FirstStage::Initialize()
 	backGround->Initialize();
 
 	//プレイヤークラス
-	player = new Player(ObjectBase::Object::PLAYER);
+	player = new Player();
 	player->Initialize();
 
-	//ボールクラス
-	ball = new Ball({ -1500.0f,30.0f,0.0f });
-	ball->Initialize();
+	//ボールバレット管理クラス
+	ballBullet = new BallBullet({ -1500.0f,30.0f,0.0f });
 
 	//壁クラス
-	wall = new Wall(ObjectBase::Object::WALL, { -2500.0f,30.0f,0.0f });
+	wall = new Wall({ -2500.0f,30.0f,0.0f });
 	wall->Initialize();
 
 	//マップクラス
@@ -100,7 +99,7 @@ void FirstStage::Finalize()
 
 	SafeDelete(enemy);
 
-	SafeDelete(ball);
+	SafeDelete(ballBullet);
 
 	SafeDelete(wall);
 
@@ -155,20 +154,15 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	enemy->Update(deltaTime, player);
 
-	player->Update(deltaTime, camera/*, ball, enemy*/);
+	enemy->VisualAngleBall(ballBullet->bullet->GetPosition());
 
-	player->BallUpdate(deltaTime, ball);
+	player->Update(deltaTime, camera, hitChecker->MapHit());
 
 	player->EnemyUpdate(enemy);
-	
-	hitChecker->Check(map->GetModel(), player, ball);
 
-	if (ball->GetAlive())
-	{
-		ball->Update(hitChecker->Hit());
-	}
+	ballBullet->Update(deltaTime, hitChecker->Hit(), player->GetPosition());
 	
-	//fadeManager->FadeMove();
+	hitChecker->Check(map->GetModel(), player, ballBullet->ball->GetPosition());
 	
 	//プレイヤーがゴール地点に辿り着いたら
 	if (player->GetPosition().x < -4000)
@@ -214,11 +208,8 @@ void FirstStage::Draw()
 	//壁描画
 	wall->Draw();
 
-	if (ball->GetAlive())
-	{
-		//ボール描画
-		ball->Draw();
-	}
+	//ボールバレット管理クラス描画
+	ballBullet->Draw();
 
 	//UI管理クラス描画
 	uiManager->Draw(state, enemy->GetPlayerCount(), hitChecker->UI());
@@ -227,12 +218,11 @@ void FirstStage::Draw()
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
-	DrawFormatStringToHandle(100, 270, GetColor(255, 0, 0), font, "Alive : %d \n(1:true 0:false)", ball->GetAlive());
-	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "PlayerCount : %d", enemy->GetPlayerCount());
+	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", enemy->GetPlayerCount());
+	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", ballBullet->ball->GetAlive());
 
 
 	//画面効果クラス描画
 	fadeManager->Draw();
-
 
 }

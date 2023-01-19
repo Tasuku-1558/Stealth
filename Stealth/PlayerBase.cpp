@@ -13,6 +13,7 @@ const VECTOR PlayerBase::DIR	  = { -1.0f,0.0f,0.0f };			//ƒ‚ƒfƒ‹‚ÌŒü‚«
 PlayerBase::PlayerBase()
 	: inputDirection()
 	, inputFlag(false)
+	, speed(0.0f)
 {
 	//ˆ—‚È‚µ
 }

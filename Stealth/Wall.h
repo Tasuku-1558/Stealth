@@ -10,8 +10,8 @@ class Wall final : public ObjectBase
 {
 public:
 
-	 Wall(Object WALL, const VECTOR& pos);
-	~Wall();
+	 Wall(VECTOR pos);
+	 virtual ~Wall();
 
 	void Initialize();
 	void Finalize();

@@ -9,8 +9,8 @@ class Light final
 {
 public:
 
-	 Light();		//コンストラクタ
-	~Light();		//デストラクタ
+	 Light();				//コンストラクタ
+	 virtual ~Light();		//デストラクタ
 
 	void Initialize();
 	void Update(VECTOR enemyDir);

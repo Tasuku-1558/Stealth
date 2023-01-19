@@ -18,7 +18,6 @@ ObjectBase::~ObjectBase()
 /// <summary>
 /// ÉQÉbÉ^Å[ä÷êîåQ
 /// </summary>
-/// <returns></returns>
 const VECTOR& ObjectBase::GetPosition() const
 {
 	return position;
@@ -27,4 +26,9 @@ const VECTOR& ObjectBase::GetPosition() const
 const VECTOR& ObjectBase::GetDir() const
 {
 	return dir;
+}
+
+const int& ObjectBase::GetModelHandle() const
+{
+	return modelHandle;
 }

@@ -14,7 +14,7 @@ class UiManager final
 {
 public:
 	 UiManager();
-	~UiManager();
+	 virtual ~UiManager();
 
 	void Initialize();
 	void Finalize();

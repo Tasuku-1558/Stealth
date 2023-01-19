@@ -1,10 +1,8 @@
 #include "HitChecker.h"
 #include "Player.h"
-#include "Ball.h"
 #include "Map.h"
 #include "Wall.h"
 #include "PreCompiledHeader.h"
-
 
 using namespace Math3d;
 
@@ -13,6 +11,7 @@ HitChecker::HitChecker()
 	, hitPolyDim()
 	, uiPos()
 	, uiDraw(false)
+	, mapHit(false)
 {
 	uiPos = VGet(-800.0f, 30.0f, 0.0f);
 }
@@ -28,9 +27,9 @@ HitChecker::~HitChecker()
 /// <param name="model"></param>
 /// <param name="player"></param>
 /// <param name="ball"></param>
-void HitChecker::Check(int model, Player* player, Ball* ball)
+void HitChecker::Check(int model, Player* player, VECTOR ballPos)
 {
-	BallAndPlayer(player, ball);
+	BallAndPlayer(player, ballPos);
 	PlayerAndUI(player);
 	MapAndPlayer(model, player);
 }
@@ -40,10 +39,10 @@ void HitChecker::Check(int model, Player* player, Ball* ball)
 /// </summary>
 /// <param name="player"></param>
 /// <param name="ball"></param>
-void HitChecker::BallAndPlayer(Player* player, Ball* ball)
+void HitChecker::BallAndPlayer(Player* player, VECTOR ballPos)
 {
 	//プレイヤーからボールの座標を引いた値を取得
-	VECTOR sub = player->GetPosition() - ball->GetPosition();
+	VECTOR sub = player->GetPosition() - ballPos;
 
 	//プレイヤーとボールの2点間の距離を計算
 	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
@@ -90,20 +89,22 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 	// モデルと球との当たり判定
 	hitPolyDim = MV1CollCheck_Sphere(model, -1, player->GetPosition(), 100.0f);
 
-	VECTOR moveCandidate = player->GetPosition(); // 球中心候補 
+	//VECTOR moveCandidate = player->GetPosition(); // 球中心候補 
 
-	VECTOR moveVec = VGet(0, 0, 0);    // 移動ベクトル
-	float  moveLen = 0.0f;           // 移動量
-	VECTOR planeNormal{};                    // ポリゴン平面法線
+	//VECTOR moveVec = VGet(0, 0, 0);    // 移動ベクトル
+	//float  moveLen = 0.0f;           // 移動量
+	//VECTOR planeNormal{};                    // ポリゴン平面法線
 
-	VECTOR newCenter = player->GetPosition(); // 移動候補  
+	//VECTOR newCenter = player->GetPosition(); // 移動候補  
 	
 
 	// 当たったかどうか
 	if (hitPolyDim.HitNum)
 	{
 		printfDx("hit");
-
+		
+		//mapHit = true;
+	
 
 		//// 衝突ポリゴンをすべて回って、球のめり込みを解消
 		//for (int i = 0; i < hitPolyDim.HitNum; ++i)
@@ -147,6 +148,10 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 		//	
 		//}
 
+	}
+	else
+	{
+		mapHit = false;
 	}
 	
 }

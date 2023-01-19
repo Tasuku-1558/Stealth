@@ -10,8 +10,8 @@
 class Camera final
 {
 public:
-	 Camera();	//コンストラクタ
-	~Camera();	//デストラクタ
+	 Camera();			//コンストラクタ
+	 virtual ~Camera();	//デストラクタ
 
 	void Initialize();
 	void Update(VECTOR pos);

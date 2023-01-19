@@ -2,10 +2,9 @@
 #include "DxLib.h"
 
 #include "SceneManager.h"
-#include "PreCompiledHeader.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "Ball.h"
+#include "BallBullet.h"
 #include "Camera.h"
 #include "Light.h"
 #include "BackGround.h"
@@ -25,7 +24,7 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, light(nullptr)
 	, backGround(nullptr)
 	, pUpdate(nullptr)
-	, ball()
+	, ballBullet()
 	, wall(nullptr)
 	, wall2(nullptr)
 	, wall3(nullptr)
@@ -62,19 +61,19 @@ void SecondStage::Initialize()
 	backGround->Initialize();
 
 	//プレイヤークラス
-	player = new Player(ObjectBase::Object::PLAYER);
+	player = new Player();
 	player->Initialize();
 
 	//壁クラス
-	wall = new Wall(ObjectBase::Object::WALL, { -1100.0f,30.0f,0.0f });
+	wall = new Wall({ -1100.0f,30.0f,0.0f });
 	wall->Initialize();
 
 	//壁2クラス
-	wall2 = new Wall(ObjectBase::Object::WALL, { -2000.0f,30.0f,0.0f });
+	wall2 = new Wall({ -2000.0f,30.0f,0.0f });
 	wall2->Initialize();
 
 	//壁3クラス
-	wall3 = new Wall(ObjectBase::Object::WALL, { -4000.0f,30.0f,0.0f });
+	wall3 = new Wall({ -4000.0f,30.0f,0.0f });
 	wall3->Initialize();
 
 	//セカンドステージマップクラス
@@ -109,9 +108,9 @@ void SecondStage::Finalize()
 		SafeDelete(ptr);
 	}
 
-	for (auto ptrb : ball)
+	for (auto ptr : ballBullet)
 	{
-		SafeDelete(ptrb);
+		SafeDelete(ptr);
 	}
 
 	SafeDelete(wall);
@@ -200,46 +199,46 @@ void SecondStage::EnemyPop()
 }
 
 /// <summary>
-/// ボールを登録
+/// ボールバレットを登録
 /// </summary>
-/// <param name="newBall"></param>
-void SecondStage::EntryBall(Ball* newBall)
+/// <param name="newBallBullet"></param>
+void SecondStage::EntryBallBullet(BallBullet* newBallBullet)
 {
-	ball.emplace_back(newBall);
+	ballBullet.emplace_back(newBallBullet);
 }
 
 /// <summary>
-/// ボールを削除
+/// ボールバレットを削除
 /// </summary>
-/// <param name="newBall"></param>
-void SecondStage::DeleteBall(Ball* deleteBall)
+/// <param name="deleteBallBullet"></param>
+void SecondStage::DeleteBallBullet(BallBullet* deleteBallBullet)
 {
-	//ボールオブジェクトから検索して削除
-	auto iter = std::find(ball.begin(), ball.end(), deleteBall);
+	//ボールバレットオブジェクトから検索して削除
+	auto iter = std::find(ballBullet.begin(), ballBullet.end(), deleteBallBullet);
 
-	if (iter != ball.end())
+	if (iter != ballBullet.end())
 	{
-		//隕石オブジェクトを最後尾に移動してデータを消す
-		std::iter_swap(iter, ball.end() - 1);
-		ball.pop_back();
+		//ボールバレットオブジェクトを最後尾に移動してデータを消す
+		std::iter_swap(iter, ballBullet.end() - 1);
+		ballBullet.pop_back();
 
 		return;
 	}
 }
 
 /// <summary>
-/// ボールの出現
+/// ボールバレットを出現
 /// </summary>
-void SecondStage::BallPop()
+void SecondStage::BallBulletPop()
 {
 	if (!ballPop)
 	{
-		Ball* newBall = new Ball({ -600.0f,30.0f,0.0f });
-		EntryBall(newBall);
+		BallBullet* newBallBullet = new BallBullet({ -600.0f,30.0f,0.0f });
+		EntryBallBullet(newBallBullet);
 
-		Ball* newBall2 = new Ball({ -3500.0f,30.0f,0.0f });
-		EntryBall(newBall2);
-		
+		/*BallBullet* newBallBullet2 = new BallBullet({ -3500.0f,30.0f,0.0f });
+		EntryBallBullet(newBallBullet2);*/
+
 		ballPop = true;
 	}
 }
@@ -262,11 +261,11 @@ void SecondStage::UpdateGame(float deltaTime)
 {
 	camera->Update(player->GetPosition());
 
-	player->Update(deltaTime, camera/*, ptrb, ptr*/);
+	player->Update(deltaTime, camera, hitChecker->MapHit());
 
 	EnemyPop();
 
-	BallPop();
+	BallBulletPop();
 	
 	for (auto ptr : enemy)
 	{
@@ -274,7 +273,6 @@ void SecondStage::UpdateGame(float deltaTime)
 
 		player->EnemyUpdate(ptr);
 
-		//player->Update(deltaTime, camera, ptrb, ptr);
 		
 		//エネミーに3回見つかったら
 		if (ptr->GetPlayerCount() == 3)
@@ -282,28 +280,25 @@ void SecondStage::UpdateGame(float deltaTime)
 			parent->SetNextScene(SceneManager::SELECTION);
 			return;
 		}
-	}
 
-	for (auto ptrb : ball)
-	{
-		player->BallUpdate(deltaTime, ptrb);
-
-		hitChecker->Check(secondStageMap->GetModel(), player, ptrb);
-
-		if (ptrb->GetAlive())
+		for (auto ptra : ballBullet)
 		{
-			ptrb->Update(hitChecker->Hit());
+			ptr->VisualAngleBall(ptra->bullet->GetPosition());
 		}
 	}
 
-	//fadeManager->FadeMove();
+	for (auto ptr : ballBullet)
+	{
+		ptr->Update(deltaTime, hitChecker->Hit(), player->GetPosition());
+
+		hitChecker->Check(secondStageMap->GetModel(), player, ptr->ball->GetPosition());
+	}
 
 	//プレイヤーがゴール地点に辿り着いたら
 	if (player->GetPosition().x < -5900)
 	{
 		state = State::GOAL;
 		pUpdate = &SecondStage::UpdateGoal;
-
 	}
 }
 
@@ -315,19 +310,8 @@ void SecondStage::UpdateGoal(float deltaTime)
 {
 	WaitTimer(1000);
 
-	//count += deltaTime;
-
-	//if (count < 10)
-	{
-		//fadeManager->FadeMove();
-		
-
-		//if (count < 50)
-		{
-			parent->SetNextScene(SceneManager::SELECTION);
-			return;
-		}
-	}
+	parent->SetNextScene(SceneManager::SELECTION);
+	return;
 }
 
 void SecondStage::Draw()
@@ -356,19 +340,16 @@ void SecondStage::Draw()
 	//壁3描画
 	wall3->Draw();
 
-	for (auto ptrb : ball)
+	//ボールバレット管理クラス描画
+	for (auto ptr : ballBullet)
 	{
-		if (ptrb->GetAlive())
-		{
-			//ボール描画
-			ptrb->Draw();
-		}
+		ptr->Draw();
 	}
 
 	//UI管理クラス描画
 	for (auto ptr : enemy)
 	{
-		uiManager->Draw(state, ptr->GetPlayerCount());
+		uiManager->Draw(state, ptr->GetPlayerCount()); 
 	}
 
 	//デバック用
@@ -376,16 +357,15 @@ void SecondStage::Draw()
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 
-	for (auto ptrb : ball)
-	{
-		DrawFormatStringToHandle(100, 270, GetColor(255, 0, 0), font, "Alive : %d \n(1:true 0:false)", ptrb->GetAlive());
-	}
-
 	for (auto ptr : enemy)
 	{
-		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "PlayerCount : %d\n", ptr->GetPlayerCount());
+		DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d\n", ptr->GetPlayerCount());
 	}
-	
+	for (auto ptr : ballBullet)
+	{
+		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", ptr->ball->GetAlive());
+	}
+
 
 	//画面効果クラス描画
 	fadeManager->Draw();
