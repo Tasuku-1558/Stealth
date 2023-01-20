@@ -4,7 +4,6 @@
 #include "Math3D.h"
 
 class Player;
-class Map;
 class Wall;
 
 
@@ -17,7 +16,9 @@ public:
 	 HitChecker();
 	 virtual ~HitChecker();
 
-	void Check(int model, Player* player, VECTOR ballPos);			//衝突判定
+	void Check(int model, Player* player);							//衝突判定
+	void BallAndPlayer(VECTOR playerPos, VECTOR ballPos);			//ボールとプレイヤーの当たり判定
+
 
 	bool Hit() { return hit; }
 	bool UI() { return uiDraw; }
@@ -28,7 +29,6 @@ private:
 
 	HitChecker(const HitChecker&);		//コピーコンストラクタ
 
-	void BallAndPlayer(Player* player, VECTOR ballPos);		//ボールとプレイヤーの当たり判定
 	void PlayerAndUI(Player* player);						//プレイヤーとUI画像の当たり判定
 	void MapAndPlayer(int model, Player* player);
 

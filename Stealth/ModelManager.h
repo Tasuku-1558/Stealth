@@ -21,6 +21,7 @@ public:
 		BALL,			//ボールモデル
 		STAGE1,			//ステージ1モデル
 		STAGE2,			//ステージ2モデル
+		ENEMY_VISUAL,	//エネミーの視野モデル
 		MODEL_AMOUNT	//モデルの個数
 	};
 
@@ -49,4 +50,6 @@ private:
 	 static const string BALL_PATH;				//ballモデルファイルのパス
 	 static const string STAGE1_PATH;			//stage1モデルファイルのパス
 	 static const string STAGE2_PATH;			//stage2モデルファイルのパス
+	 static const string ENEMY_VISUAL_PAHT;		//enemy_visualモデルファイルのパス
+
 };

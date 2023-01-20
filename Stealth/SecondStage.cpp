@@ -89,6 +89,10 @@ void SecondStage::Initialize()
 
 	//画面効果クラス
 	fadeManager = new FadeManager();
+
+	EnemyPop();
+
+	BallBulletPop();
 }
 
 void SecondStage::Finalize()
@@ -236,8 +240,8 @@ void SecondStage::BallBulletPop()
 		BallBullet* newBallBullet = new BallBullet({ -600.0f,30.0f,0.0f });
 		EntryBallBullet(newBallBullet);
 
-		/*BallBullet* newBallBullet2 = new BallBullet({ -3500.0f,30.0f,0.0f });
-		EntryBallBullet(newBallBullet2);*/
+		BallBullet* newBallBullet2 = new BallBullet({ -3500.0f,30.0f,0.0f });
+		EntryBallBullet(newBallBullet2);
 
 		ballPop = true;
 	}
@@ -262,10 +266,6 @@ void SecondStage::UpdateGame(float deltaTime)
 	camera->Update(player->GetPosition());
 
 	player->Update(deltaTime, camera, hitChecker->MapHit());
-
-	EnemyPop();
-
-	BallBulletPop();
 	
 	for (auto ptr : enemy)
 	{
@@ -274,25 +274,25 @@ void SecondStage::UpdateGame(float deltaTime)
 		player->EnemyUpdate(ptr);
 
 		
+		for (auto ptra : ballBullet)
+		{
+			ptr->VisualAngleBall(ptra->bullet->GetPosition());
+		}
+
 		//エネミーに3回見つかったら
 		if (ptr->GetPlayerCount() == 3)
 		{
 			parent->SetNextScene(SceneManager::SELECTION);
 			return;
 		}
-
-		for (auto ptra : ballBullet)
-		{
-			ptr->VisualAngleBall(ptra->bullet->GetPosition());
-		}
 	}
 
 	for (auto ptr : ballBullet)
 	{
-		ptr->Update(deltaTime, hitChecker->Hit(), player->GetPosition());
-
-		hitChecker->Check(secondStageMap->GetModel(), player, ptr->ball->GetPosition());
+		ptr->Update(deltaTime, hitChecker->Hit(), player->GetPosition(), hitChecker);
 	}
+
+	hitChecker->Check(secondStageMap->GetModel(), player);
 
 	//プレイヤーがゴール地点に辿り着いたら
 	if (player->GetPosition().x < -5900)

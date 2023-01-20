@@ -5,7 +5,6 @@ BallBullet::BallBullet(VECTOR ballPos)
     : ball(nullptr)
     , bullet(nullptr)
     , bulletCount(0)
-    , ballFlag(false)
 {
     ball = new Ball(ballPos);
     bullet = new Bullet();
@@ -30,13 +29,15 @@ void BallBullet::Finalize()
     bullet->Finalize();
 }
 
-void BallBullet::Update(float deltaTime, bool hit, VECTOR playerPos)
+void BallBullet::Update(float deltaTime, bool hit, VECTOR playerPos, HitChecker* hitChecker)
 {
-    if (ball->GetAlive())
+    hitChecker->BallAndPlayer(playerPos, ball->GetPosition());
+
+    if (hit)
     {
-        ball->Update();
         ball->IsAlive(hit);
     }
+
 
     Shoot(deltaTime, playerPos);
     BulletReuse(deltaTime);
@@ -68,7 +69,7 @@ void BallBullet::BulletReuse(float deltaTime)
         //カウントが5秒以上経過したら
         if (bulletCount > 5.0f)
         {
-            bulletCount = 0;
+            bulletCount = 0.0f;
 
             ball->SetAlive();
             bullet->SetDead();

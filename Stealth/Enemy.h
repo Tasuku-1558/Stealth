@@ -8,7 +8,6 @@
 #include "Math3D.h"
 
 class Player;
-class Light;
 
 /// <summary>
 /// エネミークラス
@@ -42,7 +41,7 @@ private:
 	void Position(std::vector<VECTOR>& num);	//エネミー位置設定
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 	void eUpdate(float deltaTime);				//状態変化
-	void SetTargetPosition();					//移動処理
+	void SetTargetPosition();					//目的地まで移動処理
 	void VisualAngle(Player* player);			//視野角の計算
 	
 	//void VisualAngleWall();
@@ -54,13 +53,14 @@ private:
 	std::vector<VECTOR>::iterator itr;
 	std::vector<VECTOR> pointList;
 
-	Light* light;
+	int visualModelHandle;
+	VECTOR visualPosition;
+	VECTOR visualDir;
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
 	static const std::string SOUND_FOLDER_PATH;	//soundフォルダまでのパス
 	static const std::string FIND_PATH;			//見つかった画像のパス
-	static const std::string VIEW_RANGE_PATH;
 	static const std::string MARK_PATH;			//ビックリマーク画像のパス
 	static const std::string DISCOVERY_SE_PATH;	//プレイヤー発見SE音のパス
 };

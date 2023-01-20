@@ -4,6 +4,8 @@
 #include "SceneManager.h"
 #include <string>
 
+class FadeManager;
+
 using namespace std;
 
 /// <summary>
@@ -26,12 +28,13 @@ private:
 
 	void StageCreator();
 
-	int StageDecrement(int stageNum);     // 選択ステージを1個前に
-	int StageIncrement(int stageNum);     // 選択ステージを1個先に
-
 	int selectionHandle;						//選択画像ハンドル
 	int stageNumMax;
+	int i;
+
 	SceneManager::Scene scene;
+
+	FadeManager* fadeManager;
 
 	
 	//静的定数

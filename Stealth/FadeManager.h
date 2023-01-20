@@ -14,6 +14,8 @@ public:
 	void FadeMove();
 	void Draw();
 
+	int Fade() { return fade; }
+
 private:
 
 	int fade;

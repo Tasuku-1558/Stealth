@@ -1,5 +1,7 @@
 #include "StageSelection.h"
 #include "DxLib.h"
+#include "PreCompiledHeader.h"
+#include "FadeManager.h"
 
 
 const string StageSelection::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
@@ -14,6 +16,8 @@ StageSelection::StageSelection(SceneManager* const sceneManager)
 	: SceneBase(sceneManager)
 	, selectionHandle(0)
 	, stageNumMax(2)
+	, fadeManager(nullptr)
+	, i(0)
 {
 	//処理なし
 }
@@ -27,11 +31,15 @@ void StageSelection::Initialize()
 {
 	string failePath = IMAGE_FOLDER_PATH + SELECTION_PATH;
 	selectionHandle = LoadGraph(failePath.c_str());
+
+	fadeManager = new FadeManager();
 }
 
 void StageSelection::Finalize()
 {
 	DeleteGraph(selectionHandle);
+
+	SafeDelete(fadeManager);
 }
 
 void StageSelection::Activate()
@@ -40,23 +48,32 @@ void StageSelection::Activate()
 
 void StageSelection::Update(float deltaTime)
 {
-	scene = SceneManager::STAGE2;
-	//StageCreator();
+	//scene = SceneManager::STAGE2;
+	
+	//fadeManager->FadeMove();
+
+	if (CheckHitKey(KEY_INPUT_UP))
+	{
+		i++;
+		
+	}
+
 	//次のシーンへ
 	if (CheckHitKey(KEY_INPUT_1))
 	{
-		parent->SetNextScene(SceneManager::STAGE1);
-		return;
+		//if (fadeManager->Fade() < 5)
+		{
+			parent->SetNextScene(SceneManager::STAGE1);
+		}
+		
 	}
 	else if (CheckHitKey(KEY_INPUT_2))
 	{
 		parent->SetNextScene(SceneManager::STAGE2);
-		return;
 	}
 	else if (CheckHitKey(KEY_INPUT_BACK))
 	{
 		parent->SetNextScene(SceneManager::TITLE);
-		return;
 	}
 }
 
@@ -76,7 +93,6 @@ void StageSelection::StageCreator()
 		if (CheckHitKey(KEY_INPUT_RETURN))
 		{
 			parent->SetNextScene(SceneManager::STAGE2);
-			return;
 		}
 		
 		break;
@@ -85,35 +101,14 @@ void StageSelection::StageCreator()
 
 }
 
-int StageSelection::StageDecrement(int stageNum)
-{
-	//最初のステージに来た時
-	if (stageNum == 1)
-	{
-		return stageNumMax;
-	}
-	
-	//それ以外のとき
-	return stageNum - 1;
-}
-
-int StageSelection::StageIncrement(int stageNum)
-{
-
-	// ステージセレクトが範囲内の時
-	if (stageNum > 0 && stageNum < stageNumMax)
-	{
-		return stageNum + 1;
-	}
-
-	//最後のステージまで来たとき
-	return 1;
-}
-
 void StageSelection::Draw()
 {
 	DrawGraph(0, 0, selectionHandle, TRUE);
 
-	//DrawString(0, 0, stageName[0], GetColor(255, 255, 255));
+	for (i = 0; i < 2; i++)
+	{
+		DrawString(0, i * 50, stageName[i], GetColor(255, 255, 255));
+	}
 	
+	//fadeManager->Draw();
 }

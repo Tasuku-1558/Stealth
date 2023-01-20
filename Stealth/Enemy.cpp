@@ -2,12 +2,11 @@
 #include "ModelManager.h"
 #include "PreCompiledHeader.h"
 #include "Player.h"
-#include "Light.h"
+
 
 const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
 const string Enemy::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
 const string Enemy::FIND_PATH		  = "find.png";			//見つかった画像のパス
-const string Enemy::VIEW_RANGE_PATH	  = "view_range.png";
 const string Enemy::MARK_PATH		  = "mark.png";			//ビックリマーク画像のパス
 const string Enemy::DISCOVERY_SE_PATH = "discovery.mp3";	//プレイヤー発見SE音のパス
 
@@ -20,7 +19,9 @@ using namespace std;
 /// </summary>
 /// <param name="num"></param>
 Enemy::Enemy(std::vector<VECTOR>& num) : EnemyBase()
-	, light(nullptr)
+	, visualModelHandle(0)
+	, visualPosition()
+	, visualDir()
 {
 	enemyState = EnemyState::CRAWL;
 	Position(num);
@@ -45,8 +46,10 @@ void Enemy::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY));
 
+	visualModelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY_VISUAL));
+
 	//読み込み失敗でエラー
-	if (modelHandle < 0)
+	if (modelHandle < 0 || visualModelHandle < 0)
 	{
 		printfDx("モデルデータ読み込みに失敗[ENEMY]\n");
 	}
@@ -55,13 +58,8 @@ void Enemy::Initialize()
 
 	dir = ZERO_VECTOR;
 
-	light = new Light();
-
 	string failePath = IMAGE_FOLDER_PATH + FIND_PATH;
 	findImage = LoadGraph(failePath.c_str());
-
-	failePath = IMAGE_FOLDER_PATH + VIEW_RANGE_PATH;
-	viewRangeImage = LoadGraph(failePath.c_str());
 
 	failePath = IMAGE_FOLDER_PATH + MARK_PATH;
 	markImage = LoadGraph(failePath.c_str());
@@ -95,6 +93,7 @@ void Enemy::Position(std::vector<VECTOR>& num)
 void Enemy::Finalize()
 {
 	MV1DeleteModel(modelHandle);
+	MV1DeleteModel(visualModelHandle);
 	DeleteGraph(findImage);
 	DeleteGraph(markImage);
 
@@ -111,13 +110,14 @@ void Enemy::Update(float deltaTime, Player* player)
 {
 	//エネミーの位置をセット
 	MV1SetPosition(modelHandle, position);
+
+	//エネミーの視野モデルをセット
+	MV1SetPosition(visualModelHandle, position + VGet(0.0f, 50.0f, 0.0f));
 	
 	//ベクトルの正規化
 	dir = VNorm(targetPosition - position);
 	
 	position += dir * speed * deltaTime;
-
-	light->Update(dir);
 	
 	VisualAngle(player);
 	
@@ -129,10 +129,11 @@ void Enemy::Update(float deltaTime, Player* player)
 
 	//モデルに回転をセット
 	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
+	MV1SetRotationZYAxis(visualModelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
 }
 
 /// <summary>
-/// 移動処理
+/// 目的地まで移動処理
 /// </summary>
 void Enemy::SetTargetPosition()
 {
@@ -248,13 +249,13 @@ void Enemy::Reaction()
 		discovery = true;
 		
 		//ビックリマークの画像を描画
-		DrawBillboard3D(VGet(position.x - 300, 0.0f, position.z - 100), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
+		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
 
-		DrawGraph(300, 100, findImage, TRUE);		//敵に見つかったというUI画像を描画
+		DrawGraph(50, 50, findImage, TRUE);		//敵に見つかったというUI画像を描画
 
 		// 発見SEを再生
 		PlaySoundMem(discoverySE, DX_PLAYTYPE_BACK);
-		
+	
 		playerFindCount++;
 		break;
 
@@ -301,4 +302,6 @@ void Enemy::eUpdate(float deltaTime)
 void Enemy::Draw()
 {
 	MV1DrawModel(modelHandle);
+
+	MV1DrawModel(visualModelHandle);
 }

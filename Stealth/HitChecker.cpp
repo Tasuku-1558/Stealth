@@ -26,10 +26,8 @@ HitChecker::~HitChecker()
 /// </summary>
 /// <param name="model"></param>
 /// <param name="player"></param>
-/// <param name="ball"></param>
-void HitChecker::Check(int model, Player* player, VECTOR ballPos)
+void HitChecker::Check(int model, Player* player)
 {
-	BallAndPlayer(player, ballPos);
 	PlayerAndUI(player);
 	MapAndPlayer(model, player);
 }
@@ -37,12 +35,12 @@ void HitChecker::Check(int model, Player* player, VECTOR ballPos)
 /// <summary>
 /// ボールとプレイヤーの当たり判定
 /// </summary>
-/// <param name="player"></param>
-/// <param name="ball"></param>
-void HitChecker::BallAndPlayer(Player* player, VECTOR ballPos)
+/// <param name="playerPos"></param>
+/// <param name="ballPos"></param>
+void HitChecker::BallAndPlayer(VECTOR playerPos, VECTOR ballPos)
 {
 	//プレイヤーからボールの座標を引いた値を取得
-	VECTOR sub = player->GetPosition() - ballPos;
+	VECTOR sub = playerPos - ballPos;
 
 	//プレイヤーとボールの2点間の距離を計算
 	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
@@ -89,7 +87,7 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 	// モデルと球との当たり判定
 	hitPolyDim = MV1CollCheck_Sphere(model, -1, player->GetPosition(), 100.0f);
 
-	//VECTOR moveCandidate = player->GetPosition(); // 球中心候補 
+	//VECTOR moveCandidate = player->GetPosition(); // 球中心候補
 
 	//VECTOR moveVec = VGet(0, 0, 0);    // 移動ベクトル
 	//float  moveLen = 0.0f;           // 移動量
@@ -103,7 +101,7 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 	{
 		printfDx("hit");
 		
-		//mapHit = true;
+		mapHit = true;
 	
 
 		//// 衝突ポリゴンをすべて回って、球のめり込みを解消

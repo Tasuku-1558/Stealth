@@ -3,6 +3,7 @@
 #include "DxLib.h"
 #include "Ball.h"
 #include "Bullet.h"
+#include "HitChecker.h"
 
 
 /// <summary>
@@ -15,7 +16,7 @@ public:
     BallBullet(VECTOR ballPos);
     virtual ~BallBullet();
 
-    void Update(float deltaTime, bool hit, VECTOR playerPos);
+    void Update(float deltaTime, bool hit, VECTOR playerPos, HitChecker* hitChecker);
     void Activate();
     void Finalize();
 
@@ -30,5 +31,4 @@ private:
     void BulletReuse(float deltaTime);
 
     float bulletCount;          //’e‚ÌŒø‰ÊŽžŠÔ
-    bool ballFlag;
 };

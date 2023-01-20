@@ -23,10 +23,10 @@ void FadeManager::FadeMove()
 		fadeInc *= -1;
 	}
 
-	if (fade < 0 && fadeInc < 0)
+	/*if (fade < 0 && fadeInc < 0)
 	{
 		fadeInc *= -1;
-	}
+	}*/
 
 	fade += fadeInc;
 }

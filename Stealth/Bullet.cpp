@@ -13,7 +13,6 @@ using namespace Math3d;
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="BALL"></param>
 Bullet::Bullet()
 	: cursorImage(0)
 	, mouseX(0)

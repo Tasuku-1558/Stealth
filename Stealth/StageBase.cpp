@@ -1,8 +1,7 @@
 #include "StageBase.h"
 
 
-StageBase::StageBase()
-	: ObjectBase()
+StageBase::StageBase(): ObjectBase()
 {
 	//ˆ—‚È‚µ
 }

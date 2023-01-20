@@ -160,9 +160,9 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	player->EnemyUpdate(enemy);
 
-	ballBullet->Update(deltaTime, hitChecker->Hit(), player->GetPosition());
+	ballBullet->Update(deltaTime, hitChecker->Hit(), player->GetPosition(), hitChecker);
 	
-	hitChecker->Check(map->GetModel(), player, ballBullet->ball->GetPosition());
+	hitChecker->Check(map->GetModel(), player);
 	
 	//プレイヤーがゴール地点に辿り着いたら
 	if (player->GetPosition().x < -4000)

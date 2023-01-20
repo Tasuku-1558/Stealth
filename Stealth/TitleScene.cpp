@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include "SceneManager.h"
 
+
 const string TitleScene::VIDEO_FOLDER_PATH = "data/video/";		//videoフォルダまでのパス
 const string TitleScene::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
 const string TitleScene::PLAY_VIDEO_PATH   = "PlayVideo.mp4";	//タイトル動画のパス
@@ -15,7 +16,10 @@ TitleScene::TitleScene(SceneManager* const sceneManager)
 	, titleName(0)
 	, titleUi(0)
 	, alpha(0)
-	, inc(3)
+	, inc(0)
+	, frame(0)
+	, prevAlpha(0)
+	, state()
 {
 	//処理なし
 }
@@ -38,6 +42,9 @@ void TitleScene::Initialize()
 
 	failePath = IMAGE_FOLDER_PATH + TITLE_UI_PATH;
 	titleUi = LoadGraph(failePath.c_str());
+
+	alpha = 255;
+	inc = -3;
 }
 
 void TitleScene::Finalize()
@@ -55,9 +62,18 @@ void TitleScene::Update(float deltaTime)
 	//次のシーンへ
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
+		/*inc *= 10;
+		frame = 0;*/
 		parent->SetNextScene(SceneManager::SELECTION);
 		return;
+		//state = State::START;
 	}
+
+	/*if (state == State::START && frame >= 90)
+	{
+		
+	}
+	++frame;*/
 }
 
 /// <summary>
@@ -77,6 +93,15 @@ void TitleScene::Blink()
 	}
 		
 	alpha += inc;
+	/*alpha += inc;
+
+	if (alpha <= 0 || alpha >= 255)
+	{
+		inc = -inc;
+		alpha = prevAlpha;
+	}
+
+	prevAlpha = alpha;*/
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 

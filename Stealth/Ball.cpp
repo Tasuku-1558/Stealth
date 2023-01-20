@@ -32,6 +32,7 @@ void Ball::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::BALL));
 	MV1SetScale(modelHandle, SIZE);
+	MV1SetPosition(modelHandle, position);
 
 	//ì«Ç›çûÇ›é∏îsÇ≈ÉGÉâÅ[
 	if (modelHandle < 0)
@@ -48,7 +49,6 @@ void Ball::Finalize()
 
 void Ball::Update()
 {
-	MV1SetPosition(modelHandle, position);
 }
 
 /// <summary>
