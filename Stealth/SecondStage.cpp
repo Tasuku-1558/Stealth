@@ -25,9 +25,10 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, backGround(nullptr)
 	, pUpdate(nullptr)
 	, ballBullet()
-	, wall(nullptr)
+	, wall()
+	/*, wall(nullptr)
 	, wall2(nullptr)
-	, wall3(nullptr)
+	, wall3(nullptr)*/
 	, hitChecker(nullptr)
 	, secondStageMap(nullptr)
 	, secondStageMap2(nullptr)
@@ -36,6 +37,7 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, font(0)
 	, enemyPop(false)
 	, ballPop(false)
+	, wallPop(false)
 	, count(0)
 {
 	//処理なし
@@ -65,16 +67,16 @@ void SecondStage::Initialize()
 	player->Initialize();
 
 	//壁クラス
-	wall = new Wall({ -1100.0f,30.0f,0.0f });
-	wall->Initialize();
+	//wall = new Wall({ -1100.0f,30.0f,0.0f });
+	//wall->Initialize();
 
-	//壁2クラス
-	wall2 = new Wall({ -2000.0f,30.0f,0.0f });
-	wall2->Initialize();
+	////壁2クラス
+	//wall2 = new Wall({ -2000.0f,30.0f,0.0f });
+	//wall2->Initialize();
 
-	//壁3クラス
-	wall3 = new Wall({ -4000.0f,30.0f,0.0f });
-	wall3->Initialize();
+	////壁3クラス
+	//wall3 = new Wall({ -4000.0f,30.0f,0.0f });
+	//wall3->Initialize();
 
 	//セカンドステージマップクラス
 	secondStageMap = new SecondStageMap();
@@ -93,6 +95,8 @@ void SecondStage::Initialize()
 	EnemyPop();
 
 	BallBulletPop();
+
+	WallPop();
 }
 
 void SecondStage::Finalize()
@@ -117,11 +121,16 @@ void SecondStage::Finalize()
 		SafeDelete(ptr);
 	}
 
-	SafeDelete(wall);
+	for (auto ptr : wall)
+	{
+		SafeDelete(ptr);
+	}
+
+	/*SafeDelete(wall);
 
 	SafeDelete(wall2);
 
-	SafeDelete(wall3);
+	SafeDelete(wall3);*/
 
 	SafeDelete(hitChecker);
 
@@ -192,8 +201,8 @@ void SecondStage::EnemyPop()
 {
 	if (!enemyPop)
 	{
-		Enemy* newEnemy = new Enemy(secondStageMap->GetMap());
-		EntryEnemy(newEnemy);
+		/*Enemy* newEnemy = new Enemy(secondStageMap->GetMap());
+		EntryEnemy(newEnemy);*/
 
 		Enemy* newEnemy2 = new Enemy(secondStageMap->GetMap2());
 		EntryEnemy(newEnemy2);
@@ -247,6 +256,43 @@ void SecondStage::BallBulletPop()
 	}
 }
 
+void SecondStage::EntryWall(Wall* newWall)
+{
+	wall.emplace_back(newWall);
+}
+
+void SecondStage::DeleteWall(Wall* deleteWall)
+{
+	//ボールバレットオブジェクトから検索して削除
+	auto iter = std::find(wall.begin(), wall.end(), deleteWall);
+
+	if (iter != wall.end())
+	{
+		//ボールバレットオブジェクトを最後尾に移動してデータを消す
+		std::iter_swap(iter, wall.end() - 1);
+		wall.pop_back();
+
+		return;
+	}
+}
+
+void SecondStage::WallPop()
+{
+	if (!wallPop)
+	{
+		Wall* newWall = new Wall({ -1100.0f,30.0f,0.0f });
+		EntryWall(newWall);
+
+		Wall* newWall2 = new Wall({ -2000.0f,30.0f,0.0f });
+		EntryWall(newWall2);
+
+		Wall* newWall3 = new Wall({ -4000.0f,30.0f,0.0f });
+		EntryWall(newWall3);
+
+		wallPop = true;
+	}
+}
+
 /// <summary>
 /// ゲーム開始前
 /// </summary>
@@ -270,9 +316,13 @@ void SecondStage::UpdateGame(float deltaTime)
 	for (auto ptr : enemy)
 	{
 		ptr->Update(deltaTime, player);
-
+		
 		player->EnemyUpdate(ptr);
 
+		for (auto ptra : wall)
+		{
+			ptr->VisualAngleWall(ptra->GetPosition());
+		}
 		
 		for (auto ptra : ballBullet)
 		{
@@ -331,14 +381,19 @@ void SecondStage::Draw()
 		ptr->Draw();
 	}
 
-	//壁描画
-	wall->Draw();
+	for (auto ptr : wall)
+	{
+		ptr->Draw();
+	}
 
-	//壁2描画
-	wall2->Draw();
+	////壁描画
+	//wall->Draw();
 
-	//壁3描画
-	wall3->Draw();
+	////壁2描画
+	//wall2->Draw();
+
+	////壁3描画
+	//wall3->Draw();
 
 	//ボールバレット管理クラス描画
 	for (auto ptr : ballBullet)

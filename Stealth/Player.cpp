@@ -98,7 +98,7 @@ void Player::Move(float deltaTime, Camera* camera, bool mapHit)
 		inputDirection += camera->GetUp();
 		inputFlag = true;
 
-		if(mapHit)
+		if(mapHit && inputDirection.x)
 		{
 			speed = 0.0f;
 		}
@@ -113,7 +113,9 @@ void Player::Move(float deltaTime, Camera* camera, bool mapHit)
 		inputDirection += camera->GetDown();
 		inputFlag = true;
 
-		if(mapHit)
+		
+
+		if(mapHit && inputDirection.x)
 		{
 			speed = 0.0f;
 		}
@@ -143,11 +145,11 @@ void Player::Move(float deltaTime, Camera* camera, bool mapHit)
 		inputDirection += camera->GetLeft();
 		inputFlag = true;
 
-		if (mapHit && inputDirection.z)
+		/*if (mapHit && inputDirection.z)
 		{
 			speed = 0.0f;
 		}
-		else
+		else*/
 		{
 			speed = SPEED;
 		}

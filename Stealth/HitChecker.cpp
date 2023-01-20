@@ -93,7 +93,7 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 	//float  moveLen = 0.0f;           // 移動量
 	//VECTOR planeNormal{};                    // ポリゴン平面法線
 
-	//VECTOR newCenter = player->GetPosition(); // 移動候補  
+	//VECTOR newCenter = player->GetPosition(); // 移動候補
 	
 
 	// 当たったかどうか
@@ -101,7 +101,7 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 	{
 		printfDx("hit");
 		
-		mapHit = true;
+		//mapHit = true;
 	
 
 		//// 衝突ポリゴンをすべて回って、球のめり込みを解消
@@ -137,12 +137,13 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 		//		len = PLAYER_RADIUS - len;
 		//		moveVec = planeNormal * len;
 		//		moveCandidate += moveVec;
+		//		
 		//	}
 
-		//	// 移動候補を移動位置にする
-		//	newCenter = moveCandidate;
+		//	//// 移動候補を移動位置にする
+		//	//newCenter = moveCandidate;
 
-		//	a = newCenter - player->GetPosition();
+		//	//a = newCenter - player->GetPosition();
 		//	
 		//}
 

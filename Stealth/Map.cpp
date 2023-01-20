@@ -77,5 +77,5 @@ void Map::Draw()
 {
 	MV1DrawModel(modelHandle);
 
-	MiniMap();
+	//MiniMap();
 }

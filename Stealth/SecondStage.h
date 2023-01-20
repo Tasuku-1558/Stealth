@@ -49,9 +49,10 @@ private:
 	Light* light;
 	BackGround* backGround;
 	std::vector<BallBullet*> ballBullet;
-	Wall* wall;
+	std::vector<Wall*> wall;
+	/*Wall* wall;
 	Wall* wall2;
-	Wall* wall3;
+	Wall* wall3;*/
 	HitChecker* hitChecker;
 	SecondStageMap* secondStageMap;
 	SecondStageMap* secondStageMap2;
@@ -67,6 +68,10 @@ private:
 	void DeleteBallBullet(BallBullet* deleteBallBullet);
 	void BallBulletPop();
 
+	void EntryWall(Wall* newWall);
+	void DeleteWall(Wall* deleteWall);
+	void WallPop();
+
 	void UpdateStart(float deltaTime);				//ゲーム開始前
 	void UpdateGame(float deltaTime);				//ゲーム中
 	void UpdateGoal(float deltaTime);				//ゴール
@@ -76,5 +81,6 @@ private:
 	int font;			//ゲームフォント
 	bool enemyPop;		//エネミーの出現フラグ
 	bool ballPop;		//ボールの出現フラグ
+	bool wallPop;
 	int count;
 };

@@ -119,8 +119,6 @@ void Enemy::Update(float deltaTime, Player* player)
 	
 	position += dir * speed * deltaTime;
 	
-	VisualAngle(player);
-	
 	eUpdate(deltaTime);
 	
 	//z軸が逆を向いているのでdirを180度回転させる
@@ -130,6 +128,16 @@ void Enemy::Update(float deltaTime, Player* player)
 	//モデルに回転をセット
 	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
 	MV1SetRotationZYAxis(visualModelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
+
+	if (object == Object::WALL)
+	{
+		return;
+	}
+	else
+	{
+		VisualAngle(player);
+	}
+
 }
 
 /// <summary>
@@ -234,6 +242,39 @@ void Enemy::VisualAngleBall(VECTOR bulletPos)
 	{
 		//エネミーの視野範囲外ならスピードを元のスピードに戻す
 		speed = SPEED;
+	}
+}
+
+void Enemy::VisualAngleWall(VECTOR wallPos)
+{
+	//壁からエネミーの座標を引いた値を取得
+	VECTOR sub = wallPos - position;
+
+	//壁とエネミーの2点間の距離を計算
+	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
+
+	//ベクトルの正規化
+	sub = VNorm(sub);
+
+	//内積計算
+	float dot = VDot(sub, dir);
+
+	float range = RANGE_DEGREE * (float)(DX_PI / 180.0f);
+
+	//エネミーの視野をcosにする
+	float radian = cosf(range / 2.0f);
+
+	//ベクトルとエネミーの長さの比較
+	if (length > direction)
+	{
+		//壁がエネミーの視野範囲内にいるか比較
+		if (radian <= dot)
+		{
+			object = Object::WALL;
+
+			//視野範囲内ならば
+			Reaction();
+		}
 	}
 }
 

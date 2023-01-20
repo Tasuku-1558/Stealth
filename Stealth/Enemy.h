@@ -24,6 +24,7 @@ public:
 	void Draw();
 
 	void VisualAngleBall(VECTOR bulletPos);			//視野角の計算
+	void VisualAngleWall(VECTOR wallPos);
 
 	bool Discovery() { return discovery; }
 	int GetPlayerCount() { return playerFindCount; }
@@ -44,7 +45,7 @@ private:
 	void SetTargetPosition();					//目的地まで移動処理
 	void VisualAngle(Player* player);			//視野角の計算
 	
-	//void VisualAngleWall();
+	
 	void Reaction();				//エネミーのオブジェクトごとの反応
 	void Finalize();
 

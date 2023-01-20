@@ -156,6 +156,8 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	enemy->VisualAngleBall(ballBullet->bullet->GetPosition());
 
+	enemy->VisualAngleWall(wall->GetPosition());
+
 	player->Update(deltaTime, camera, hitChecker->MapHit());
 
 	player->EnemyUpdate(enemy);
