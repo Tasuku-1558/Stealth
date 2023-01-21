@@ -9,7 +9,7 @@ const string ModelManager::WALL_PATH         = "wall.mv1";      //wallモデルファ
 const string ModelManager::BALL_PATH         = "ball.mv1";      //ballモデルファイルのパス
 const string ModelManager::STAGE1_PATH       = "stage1.mv1";    //stage1モデルファイルのパス
 const string ModelManager::STAGE2_PATH       = "stage2.mv1";    //stage1モデルファイルのパス
-const string ModelManager::ENEMY_VISUAL_PAHT = "Angle2.mv1";     //enemy_visualモデルファイルのパス
+const string ModelManager::ENEMY_VISUAL_PAHT = "Angle.mv1";     //enemy_visualモデルファイルのパス
 
 
 

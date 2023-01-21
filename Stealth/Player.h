@@ -19,7 +19,7 @@ public:
 	void Initialize();
 	void Finalize();
 	void Activate();
-	void Update(float deltaTime, Camera* camera, bool mapHit);
+	void Update(float deltaTime, Camera* camera, VECTOR back, bool mapHit);
 	void EnemyUpdate(Enemy* enemy);
 	void Draw();
 
@@ -28,13 +28,15 @@ public:
 	int GetX() { return position.x; }
 	int GetZ() { return position.z; }
 	int GetSpeed() { return SPEED; }
+	VECTOR Prev() { return previewPosition; }
 
 
 private:
 	Player(const Player&);								//コピーコンストラクタ
 
-	void Move(float deltaTime, Camera* camera, bool mapHit);			//移動処理
+	void Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit);			//移動処理
 	void FoundEnemy(Enemy* enemy);						//エネミーに見つかった場合
-	void aio(bool mapHit);
 
+
+	VECTOR previewPosition;
 };

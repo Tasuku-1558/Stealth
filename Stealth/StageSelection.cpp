@@ -10,14 +10,18 @@ const string StageSelection::SELECTION_PATH	   = "selection.png";	//選択画像のパ
 char stageName[][32] = {
 	"STAGE1",
 	"STAGE2",
+	"TITLE",
 };
 
 StageSelection::StageSelection(SceneManager* const sceneManager)
 	: SceneBase(sceneManager)
 	, selectionHandle(0)
-	, stageNumMax(2)
+	, stageNumMax(0)
+	, stageNo(0)
 	, fadeManager(nullptr)
 	, i(0)
+	, state()
+	, frame(0)
 {
 	//処理なし
 }
@@ -33,6 +37,8 @@ void StageSelection::Initialize()
 	selectionHandle = LoadGraph(failePath.c_str());
 
 	fadeManager = new FadeManager();
+
+	stageNumMax = sizeof(stageName) / sizeof(char[32]);
 }
 
 void StageSelection::Finalize()
@@ -48,67 +54,88 @@ void StageSelection::Activate()
 
 void StageSelection::Update(float deltaTime)
 {
-	//scene = SceneManager::STAGE2;
-	
+
 	//fadeManager->FadeMove();
+
 
 	if (CheckHitKey(KEY_INPUT_UP))
 	{
-		i++;
-		
+
 	}
+
+
 
 	//次のシーンへ
 	if (CheckHitKey(KEY_INPUT_1))
 	{
-		//if (fadeManager->Fade() < 5)
-		{
-			parent->SetNextScene(SceneManager::STAGE1);
-		}
-		
+		parent->SetNextScene(SceneManager::STAGE1);
+
 	}
-	else if (CheckHitKey(KEY_INPUT_2))
+	if (CheckHitKey(KEY_INPUT_2))
 	{
 		parent->SetNextScene(SceneManager::STAGE2);
 	}
-	else if (CheckHitKey(KEY_INPUT_BACK))
+	if (CheckHitKey(KEY_INPUT_BACK))
 	{
 		parent->SetNextScene(SceneManager::TITLE);
 	}
+
+	++frame;
 }
 
-void StageSelection::StageCreator()
+int StageSelection::stageIncrement(int stageNum)
 {
-	
-	switch (scene)
+	if (stageNum > 0 && stageNum < stageNumMax)
 	{
-	case SceneManager::TITLE:
-		break;
-	case SceneManager::SELECTION:
-		break;
-	case SceneManager::STAGE1:
-		break;
-	case SceneManager::STAGE2:
-
-		if (CheckHitKey(KEY_INPUT_RETURN))
-		{
-			parent->SetNextScene(SceneManager::STAGE2);
-		}
-		
-		break;
-	
+		return stageNum + 1;
 	}
 
+	return 1;
+}
+
+int StageSelection::stageDecrement(int stageNum)
+{
+	if (stageNum == 1)
+	{
+		return stageNumMax;
+	}
+
+	return stageNum - 1;
+}
+
+int StageSelection::StageCreator(int stageNum)
+{
+	if (stageNum < 0)
+	{
+		return NULL;
+	}
+
+	switch (state)
+	{
+	case StageSelection::State::STAGE1:
+		parent->SetNextScene(SceneManager::STAGE1);
+		break;
+
+	case StageSelection::State::STAGE2:
+		parent->SetNextScene(SceneManager::STAGE2);
+		break;
+
+	case StageSelection::State::TITLE:
+		parent->SetNextScene(SceneManager::TITLE);
+		break;
+	}
+
+	return NULL;
 }
 
 void StageSelection::Draw()
 {
 	DrawGraph(0, 0, selectionHandle, TRUE);
 
-	for (i = 0; i < 2; i++)
+	for (i = 0; i < stageNumMax; i++)
 	{
 		DrawString(0, i * 50, stageName[i], GetColor(255, 255, 255));
 	}
 	
-	//fadeManager->Draw();
+	fadeManager->Draw();
 }

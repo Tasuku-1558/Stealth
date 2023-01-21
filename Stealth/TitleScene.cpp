@@ -62,11 +62,10 @@ void TitleScene::Update(float deltaTime)
 	//ŽŸ‚ÌƒV[ƒ“‚Ö
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
-		/*inc *= 10;
-		frame = 0;*/
+		//inc *= 10;
+		/*frame = 0;
+		state = State::START;*/
 		parent->SetNextScene(SceneManager::SELECTION);
-		return;
-		//state = State::START;
 	}
 
 	/*if (state == State::START && frame >= 90)

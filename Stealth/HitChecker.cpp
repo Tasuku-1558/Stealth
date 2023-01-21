@@ -11,6 +11,7 @@ HitChecker::HitChecker()
 	, hitPolyDim()
 	, uiPos()
 	, uiDraw(false)
+	, pushBack()
 	, mapHit(false)
 {
 	uiPos = VGet(-800.0f, 30.0f, 0.0f);
@@ -87,70 +88,63 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 	// モデルと球との当たり判定
 	hitPolyDim = MV1CollCheck_Sphere(model, -1, player->GetPosition(), 100.0f);
 
-	//VECTOR moveCandidate = player->GetPosition(); // 球中心候補
+	VECTOR moveCandidate = player->GetPosition(); // 球中心候補
 
-	//VECTOR moveVec = VGet(0, 0, 0);    // 移動ベクトル
-	//float  moveLen = 0.0f;           // 移動量
-	//VECTOR planeNormal{};                    // ポリゴン平面法線
+	VECTOR moveVec = VGet(0, 0, 0);    // 移動ベクトル
+	float  moveLengh = 0.0f;           // 移動量
+	VECTOR planeNormal{};                    // ポリゴン平面法線
 
-	//VECTOR newCenter = player->GetPosition(); // 移動候補
+	VECTOR newCenter = player->GetPosition(); // 移動候補
 	
 
 	// 当たったかどうか
 	if (hitPolyDim.HitNum)
-	{
-		printfDx("hit");
-		
-		//mapHit = true;
-	
+	{	
+		mapHit = true;
 
-		//// 衝突ポリゴンをすべて回って、球のめり込みを解消
-		//for (int i = 0; i < hitPolyDim.HitNum; ++i)
-		//{
-		//	// 衝突ポリゴンの辺 
-		//	VECTOR edge1 = hitPolyDim.Dim[i].Position[1] - hitPolyDim.Dim[i].Position[0];
-		//	VECTOR edge2 = hitPolyDim.Dim[i].Position[2] - hitPolyDim.Dim[i].Position[0];
+		// 衝突ポリゴンをすべて回って、球のめり込みを解消
+		for (int i = 0; i < hitPolyDim.HitNum; ++i)
+		{
+			// 衝突ポリゴンの辺 
+			VECTOR edge1 = hitPolyDim.Dim[i].Position[1] - hitPolyDim.Dim[i].Position[0];
+			VECTOR edge2 = hitPolyDim.Dim[i].Position[2] - hitPolyDim.Dim[i].Position[0];
 
-		//	// 衝突ポリゴンの辺より、ポリゴン面の法線ベクトルを求める
-		//	planeNormal = VCross(edge1, edge2);
-		//	planeNormal = VNorm(planeNormal);
+			// 衝突ポリゴンの辺より、ポリゴン面の法線ベクトルを求める
+			planeNormal = VCross(edge1, edge2);
+			planeNormal = VNorm(planeNormal);
 
-		//	// 球中心に最も近いポリゴン平面の点を求める
-		//	VECTOR tmp = moveCandidate - hitPolyDim.Dim[i].Position[0];
-		//	float  dot = VDot(planeNormal, tmp);
+			// 球中心に最も近いポリゴン平面の点を求める
+			VECTOR tmp = moveCandidate - hitPolyDim.Dim[i].Position[0];
+			float  dot = VDot(planeNormal, tmp);
 
-		//	// 衝突点
-		//	VECTOR hitPos = moveCandidate - planeNormal * dot;
+			// 衝突点
+			VECTOR hitPos = moveCandidate - planeNormal * dot;
 
-		//	// 球がどれくらいめり込んでいるかを算出
-		//	VECTOR tmp2 = moveCandidate - hitPos;
-		//	float  len = VSize(tmp2);
+			// 球がどれくらいめり込んでいるかを算出
+			VECTOR tmp2 = moveCandidate - hitPos;
+			float  len = VSize(tmp2);
 
-		//	// めり込んでいる場合は球の中心を押し戻し
-		//	if (HitCheck_Sphere_Triangle(moveCandidate, PLAYER_RADIUS,
-		//		hitPolyDim.Dim[i].Position[0],
-		//		hitPolyDim.Dim[i].Position[1],
-		//		hitPolyDim.Dim[i].Position[2]))
-		//	{
-		//		// めり込み解消する位置まで移動
-		//		VECTOR moveVec;
-		//		len = PLAYER_RADIUS - len;
-		//		moveVec = planeNormal * len;
-		//		moveCandidate += moveVec;
-		//		
-		//	}
+			// めり込んでいる場合は球の中心を押し戻し
+			if (HitCheck_Sphere_Triangle(moveCandidate, PLAYER_RADIUS,
+				hitPolyDim.Dim[i].Position[0],
+				hitPolyDim.Dim[i].Position[1],
+				hitPolyDim.Dim[i].Position[2]))
+			{
+				// めり込み解消する位置まで移動
+				VECTOR moveVec;
+				len = PLAYER_RADIUS - len;
+				moveVec = planeNormal * len;
+				moveCandidate += moveVec;
+			}
 
-		//	//// 移動候補を移動位置にする
-		//	//newCenter = moveCandidate;
+			// 移動候補を移動位置にする
+			newCenter = moveCandidate;
 
-		//	//a = newCenter - player->GetPosition();
-		//	
-		//}
-
+			pushBack = newCenter - player->GetDir() + VScale(player->GetDir(), 15.0f);
+		}
 	}
 	else
 	{
 		mapHit = false;
 	}
-	
 }

@@ -22,7 +22,7 @@ public:
 
 	bool Hit() { return hit; }
 	bool UI() { return uiDraw; }
-
+	VECTOR Back() { return pushBack; }
 	bool MapHit() { return mapHit; }
 
 private:
@@ -38,6 +38,8 @@ private:
 	bool uiDraw;
 
 	bool mapHit;
+	VECTOR pushBack;
+
 	MV1_COLL_RESULT_POLY_DIM hitPolyDim;
 
 };

@@ -201,8 +201,8 @@ void SecondStage::EnemyPop()
 {
 	if (!enemyPop)
 	{
-		/*Enemy* newEnemy = new Enemy(secondStageMap->GetMap());
-		EntryEnemy(newEnemy);*/
+		Enemy* newEnemy = new Enemy(secondStageMap->GetMap());
+		EntryEnemy(newEnemy);
 
 		Enemy* newEnemy2 = new Enemy(secondStageMap->GetMap2());
 		EntryEnemy(newEnemy2);
@@ -311,7 +311,7 @@ void SecondStage::UpdateGame(float deltaTime)
 {
 	camera->Update(player->GetPosition());
 
-	player->Update(deltaTime, camera, hitChecker->MapHit());
+	player->Update(deltaTime, camera, hitChecker->Back(),hitChecker->MapHit());
 	
 	for (auto ptr : enemy)
 	{

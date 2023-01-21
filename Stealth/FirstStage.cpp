@@ -158,7 +158,7 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	enemy->VisualAngleWall(wall->GetPosition());
 
-	player->Update(deltaTime, camera, hitChecker->MapHit());
+	player->Update(deltaTime, camera, hitChecker->Back(),hitChecker->MapHit());
 
 	player->EnemyUpdate(enemy);
 

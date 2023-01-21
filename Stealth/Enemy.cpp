@@ -118,6 +118,8 @@ void Enemy::Update(float deltaTime, Player* player)
 	dir = VNorm(targetPosition - position);
 	
 	position += dir * speed * deltaTime;
+
+	VisualAngle(player);
 	
 	eUpdate(deltaTime);
 	
@@ -128,16 +130,6 @@ void Enemy::Update(float deltaTime, Player* player)
 	//モデルに回転をセット
 	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
 	MV1SetRotationZYAxis(visualModelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
-
-	if (object == Object::WALL)
-	{
-		return;
-	}
-	else
-	{
-		VisualAngle(player);
-	}
-
 }
 
 /// <summary>
@@ -276,6 +268,10 @@ void Enemy::VisualAngleWall(VECTOR wallPos)
 			Reaction();
 		}
 	}
+	else
+	{
+		object != Object::WALL;
+	}
 }
 
 /// <summary>
@@ -309,7 +305,6 @@ void Enemy::Reaction()
 
 	case Object::WALL:
 		printfDx("WALL");
-		discovery = false;
 		break;
 	}
 }

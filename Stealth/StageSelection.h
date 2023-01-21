@@ -23,18 +23,30 @@ public:
 	void Update(float deltaTime);
 	void Draw();
 
+	enum class State
+	{
+		STAGE1,
+		STAGE2,
+		TITLE,
+	};
+
 private:
 	StageSelection(const StageSelection&);		//コピーコンストラクタ
 
-	void StageCreator();
+	int StageCreator(int stageNum);
+	int stageDecrement(int stageNum);     // 選択ステージを1個前に
+	int stageIncrement(int stageNum);     // 選択ステージを1個先に
 
-	int selectionHandle;						//選択画像ハンドル
-	int stageNumMax;
-	int i;
-
-	SceneManager::Scene scene;
 
 	FadeManager* fadeManager;
+
+
+	State state;
+	int selectionHandle;						//選択画像ハンドル
+	int stageNumMax;
+	int stageNo;
+	int i;
+	int frame;
 
 	
 	//静的定数

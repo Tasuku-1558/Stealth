@@ -10,6 +10,7 @@ using namespace Math3d;
 /// コンストラクタ
 /// </summary>
 Player::Player() : PlayerBase()
+	, previewPosition()
 {
 	//処理なし
 }
@@ -55,6 +56,7 @@ void Player::Finalize()
 void Player::Activate()
 {
 	position = POSITION;
+	previewPosition = POSITION;
 	dir = DIR;
 	speed = SPEED;
 }
@@ -65,15 +67,12 @@ void Player::Activate()
 /// <param name="deltaTime"></param>
 /// <param name="camera"></param>
 /// <param name="mapHit"></param>
-void Player::Update(float deltaTime, Camera* camera, bool mapHit)
+void Player::Update(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 {
-	Move(deltaTime, camera, mapHit);
+	Move(deltaTime, camera, back, mapHit);
 
 	//プレイヤーの位置をセット
 	MV1SetPosition(modelHandle, position);
-
-	aio(mapHit);
-	
 }
 
 void Player::EnemyUpdate(Enemy* enemy)
@@ -86,7 +85,7 @@ void Player::EnemyUpdate(Enemy* enemy)
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="camera"></param>
-void Player::Move(float deltaTime, Camera* camera, bool mapHit)
+void Player::Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 {
 	inputDirection = ZERO_VECTOR;
 
@@ -97,62 +96,22 @@ void Player::Move(float deltaTime, Camera* camera, bool mapHit)
 	{
 		inputDirection += camera->GetUp();
 		inputFlag = true;
-
-		if(mapHit && inputDirection.x)
-		{
-			speed = 0.0f;
-		}
-		else
-		{
-			speed = SPEED;
-		}
-		
 	}
 	if (CheckHitKey(KEY_INPUT_S))
 	{
 		inputDirection += camera->GetDown();
 		inputFlag = true;
-
-		
-
-		if(mapHit && inputDirection.x)
-		{
-			speed = 0.0f;
-		}
-		else
-		{
-			speed = SPEED;
-		}
 	}
 	//左右
 	if (CheckHitKey(KEY_INPUT_D))
 	{
 		inputDirection += camera->GetRight();
 		inputFlag = true;
-
-		if (mapHit && inputDirection.z)
-		{
-			speed = 0.0f;
-		}
-		else
-		{
-			speed = SPEED;
-		}
-		
 	}
 	if (CheckHitKey(KEY_INPUT_A))
 	{
 		inputDirection += camera->GetLeft();
 		inputFlag = true;
-
-		/*if (mapHit && inputDirection.z)
-		{
-			speed = 0.0f;
-		}
-		else*/
-		{
-			speed = SPEED;
-		}
 	}
 
 	//十字キーの入力があったら
@@ -172,7 +131,22 @@ void Player::Move(float deltaTime, Camera* camera, bool mapHit)
 		dir = inputDirection;
 		
 		//十字キーの移動方向に移動
-		position += dir * speed * deltaTime;
+		previewPosition += dir * speed * deltaTime;
+
+		//マップにプレイヤーが衝突したならば
+		if (mapHit)
+		{
+			//未来の位置に押し戻しの値を加える
+			previewPosition = back;
+
+			position = previewPosition;
+			previewPosition = position;
+		}
+		else
+		{
+			position = previewPosition;
+			previewPosition = position;
+		}
 	}
 
 	//z軸が逆を向いているのでdirを180度回転させる
@@ -195,13 +169,9 @@ void Player::FoundEnemy(Enemy* enemy)
 
 		//位置と向きを初期化
 		position = POSITION;
+		previewPosition = POSITION;
 		dir = DIR;
 	}
-}
-
-void Player::aio(bool mapHit)
-{
-	
 }
 
 /// <summary>
