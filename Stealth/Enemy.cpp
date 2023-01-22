@@ -112,7 +112,7 @@ void Enemy::Update(float deltaTime, Player* player)
 	MV1SetPosition(modelHandle, position);
 
 	//エネミーの視野モデルをセット
-	MV1SetPosition(visualModelHandle, position + VGet(0.0f, 50.0f, 0.0f));
+	MV1SetPosition(visualModelHandle, position);
 	
 	//ベクトルの正規化
 	dir = VNorm(targetPosition - position);
@@ -268,10 +268,7 @@ void Enemy::VisualAngleWall(VECTOR wallPos)
 			Reaction();
 		}
 	}
-	else
-	{
-		object != Object::WALL;
-	}
+	
 }
 
 /// <summary>
@@ -293,6 +290,7 @@ void Enemy::Reaction()
 		// 発見SEを再生
 		PlaySoundMem(discoverySE, DX_PLAYTYPE_BACK);
 	
+		
 		playerFindCount++;
 		break;
 
@@ -305,6 +303,7 @@ void Enemy::Reaction()
 
 	case Object::WALL:
 		printfDx("WALL");
+
 		break;
 	}
 }

@@ -14,6 +14,7 @@ Ball::Ball(VECTOR pos) : ObjectBase()
 {
 	position = pos;
 	Initialize();
+	Activate();
 }
 
 /// <summary>
@@ -39,6 +40,11 @@ void Ball::Initialize()
 	{
 		printfDx("モデルデータ読み込みに失敗 [BALL]\n");
 	}
+}
+
+void Ball::Activate()
+{
+	position = position;
 }
 
 void Ball::Finalize()

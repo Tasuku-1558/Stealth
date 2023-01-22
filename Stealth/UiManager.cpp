@@ -41,6 +41,11 @@ void UiManager::Initialize()
 	}
 }
 
+void UiManager::Activate()
+{
+	count = 0;
+}
+
 void UiManager::Finalize()
 {
 	for (int i = 0; i < GRAPHIC_AMOUNT; ++i)
@@ -70,7 +75,6 @@ void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 
 	case FirstStage::State::GOAL:
 		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
-		count = 0;
 		break;
 	}
 }
@@ -80,7 +84,7 @@ void UiManager::Draw(SecondStage::State state, int playerCount)
 	switch (state)
 	{
 	case SecondStage::State::START:
-
+		
 		break;
 
 	case SecondStage::State::GAME:
@@ -96,30 +100,8 @@ void UiManager::Draw(SecondStage::State state, int playerCount)
 
 	case SecondStage::State::GOAL:
 		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
-		count = 0;
 		break;
 	}
-	/*if (state == SecondStage::State::START)
-	{
-	}
-
-	if (state == SecondStage::State::GAME)
-	{
-		count++;
-
-		if (count < 50)
-		{
-			DrawGraph(0, -50, uiHandle[STAGE2], TRUE);
-		}
-		PlayerHpDraw(playerCount);
-		DrawGraph(0, 900, uiHandle[KEY], TRUE);
-	}
-
-	if (state == SecondStage::State::GOAL)
-	{
-		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
-		count = 0;
-	}*/
 }
 
 /// <summary>

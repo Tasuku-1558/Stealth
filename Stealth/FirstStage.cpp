@@ -12,6 +12,7 @@
 #include "Wall.h"
 #include "HitChecker.h"
 #include "Map.h"
+#include "Effect.h"
 #include "UiManager.h"
 #include "FadeManager.h"
 
@@ -29,6 +30,7 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 		, wall(nullptr)
 		, hitChecker(nullptr)
 		, map(nullptr)
+		, effect(nullptr)
 		, uiManager(nullptr)
 		, fadeManager(nullptr)
 		, font(0)
@@ -70,6 +72,10 @@ void FirstStage::Initialize()
 	map = new Map();
 	map->Initialize();
 
+	//エフェクトクラス
+	effect = new Effect();
+	effect->Initialize();
+
 	//エネミークラス
 	enemy = new Enemy(map->GetMap());
 	enemy->Initialize();
@@ -96,6 +102,8 @@ void FirstStage::Finalize()
 	SafeDelete(player);
 
 	SafeDelete(map);
+
+	SafeDelete(effect);
 
 	SafeDelete(enemy);
 
@@ -124,6 +132,12 @@ void FirstStage::Activate()
 	player->Activate();
 
 	enemy->Activate();
+
+	ballBullet->Activate();
+
+	effect->Activate();
+
+	uiManager->Activate();
 }
 
 void FirstStage::Update(float deltaTime)
@@ -162,7 +176,7 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	player->EnemyUpdate(enemy);
 
-	ballBullet->Update(deltaTime, hitChecker->Hit(), player->GetPosition(), hitChecker);
+	ballBullet->Update(deltaTime, hitChecker->Hit(), player->GetPosition(), hitChecker, effect);
 	
 	hitChecker->Check(map->GetModel(), player);
 	
@@ -212,6 +226,9 @@ void FirstStage::Draw()
 
 	//ボールバレット管理クラス描画
 	ballBullet->Draw();
+
+	//エフェクト描画
+	effect->Draw();
 
 	//UI管理クラス描画
 	uiManager->Draw(state, enemy->GetPlayerCount(), hitChecker->UI());

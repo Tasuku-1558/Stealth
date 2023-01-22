@@ -11,6 +11,7 @@ class BallBullet;
 class Wall;
 class HitChecker;
 class Map;
+class Effect;
 class UiManager;
 class FadeManager;
 
@@ -49,6 +50,7 @@ private:
 	Wall* wall;
 	HitChecker* hitChecker;
 	Map* map;
+	Effect* effect;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
 

@@ -17,6 +17,7 @@ public:
 	 virtual ~UiManager();
 
 	void Initialize();
+	void Activate();
 	void Finalize();
 
 	void Draw(FirstStage::State state, int playerCount, bool hitUi);

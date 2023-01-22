@@ -1,4 +1,5 @@
 #include "BallBullet.h"
+#include "Effect.h"
 
 
 BallBullet::BallBullet(VECTOR ballPos)
@@ -21,6 +22,7 @@ BallBullet::~BallBullet()
 void BallBullet::Activate()
 {
     bullet->Activate();
+    ball->Activate();
 }
 
 void BallBullet::Finalize()
@@ -29,7 +31,7 @@ void BallBullet::Finalize()
     bullet->Finalize();
 }
 
-void BallBullet::Update(float deltaTime, bool hit, VECTOR playerPos, HitChecker* hitChecker)
+void BallBullet::Update(float deltaTime, bool hit, VECTOR playerPos, HitChecker* hitChecker, Effect* effect)
 {
     hitChecker->BallAndPlayer(playerPos, ball->GetPosition());
 
@@ -40,7 +42,7 @@ void BallBullet::Update(float deltaTime, bool hit, VECTOR playerPos, HitChecker*
 
 
     Shoot(deltaTime, playerPos);
-    BulletReuse(deltaTime);
+    BulletReuse(deltaTime, effect);
 }
 
 void BallBullet::Shoot(float deltaTime, VECTOR playerPos)
@@ -60,11 +62,16 @@ void BallBullet::Shoot(float deltaTime, VECTOR playerPos)
 /// バレット再使用カウント
 /// </summary>
 /// <param name="deltaTime"></param>
-void BallBullet::BulletReuse(float deltaTime)
+void BallBullet::BulletReuse(float deltaTime, Effect* effect)
 {
     if (bullet->GetAlive())
     {
         bulletCount += deltaTime;
+
+        if (bulletCount > 3.0f)
+        {
+            effect->Update(ball->GetPosition().x, ball->GetPosition().y, ball->GetPosition().z);
+        }
 
         //カウントが5秒以上経過したら
         if (bulletCount > 5.0f)

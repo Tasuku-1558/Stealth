@@ -13,6 +13,7 @@ class BallBullet;
 class Wall;
 class HitChecker;
 class SecondStageMap;
+class Effect;
 class UiManager;
 class FadeManager;
 
@@ -50,12 +51,9 @@ private:
 	BackGround* backGround;
 	std::vector<BallBullet*> ballBullet;
 	std::vector<Wall*> wall;
-	/*Wall* wall;
-	Wall* wall2;
-	Wall* wall3;*/
 	HitChecker* hitChecker;
 	SecondStageMap* secondStageMap;
-	SecondStageMap* secondStageMap2;
+	Effect* effect;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
 	

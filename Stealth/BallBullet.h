@@ -4,6 +4,9 @@
 #include "Ball.h"
 #include "Bullet.h"
 #include "HitChecker.h"
+#include "Effect.h"
+
+class Effect;
 
 
 /// <summary>
@@ -16,7 +19,7 @@ public:
     BallBullet(VECTOR ballPos);
     virtual ~BallBullet();
 
-    void Update(float deltaTime, bool hit, VECTOR playerPos, HitChecker* hitChecker);
+    void Update(float deltaTime, bool hit, VECTOR playerPos, HitChecker* hitChecker, Effect* effect);
     void Activate();
     void Finalize();
 
@@ -28,7 +31,7 @@ public:
 private:
 
     void Shoot(float deltaTime, VECTOR playerPos);
-    void BulletReuse(float deltaTime);
+    void BulletReuse(float deltaTime, Effect* effect);
 
     float bulletCount;          //’e‚ÌŒø‰ÊŽžŠÔ
 };

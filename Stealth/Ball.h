@@ -12,6 +12,7 @@ public:
 	 virtual ~Ball();
 
 	void Initialize();
+	void Activate();
 	void Finalize();
 	void Update();
 	void SetAlive();							//ボールをアクティブ化

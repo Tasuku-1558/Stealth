@@ -26,12 +26,9 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, pUpdate(nullptr)
 	, ballBullet()
 	, wall()
-	/*, wall(nullptr)
-	, wall2(nullptr)
-	, wall3(nullptr)*/
 	, hitChecker(nullptr)
 	, secondStageMap(nullptr)
-	, secondStageMap2(nullptr)
+	, effect(nullptr)
 	, uiManager(nullptr)
 	, fadeManager(nullptr)
 	, font(0)
@@ -66,21 +63,13 @@ void SecondStage::Initialize()
 	player = new Player();
 	player->Initialize();
 
-	//壁クラス
-	//wall = new Wall({ -1100.0f,30.0f,0.0f });
-	//wall->Initialize();
-
-	////壁2クラス
-	//wall2 = new Wall({ -2000.0f,30.0f,0.0f });
-	//wall2->Initialize();
-
-	////壁3クラス
-	//wall3 = new Wall({ -4000.0f,30.0f,0.0f });
-	//wall3->Initialize();
-
 	//セカンドステージマップクラス
 	secondStageMap = new SecondStageMap();
 	secondStageMap->Initialize();
+
+	//エフェクトクラス
+	effect = new Effect();
+	effect->Initialize();
 
 	//ヒットチェッカークラス
 	hitChecker = new HitChecker();
@@ -126,13 +115,9 @@ void SecondStage::Finalize()
 		SafeDelete(ptr);
 	}
 
-	/*SafeDelete(wall);
-
-	SafeDelete(wall2);
-
-	SafeDelete(wall3);*/
-
 	SafeDelete(hitChecker);
+
+	SafeDelete(effect);
 
 	SafeDelete(uiManager);
 
@@ -156,6 +141,15 @@ void SecondStage::Activate()
 	{
 		ptr->Activate();
 	}
+
+	for (auto ptr : ballBullet)
+	{
+		ptr->Activate();
+	}
+
+	effect->Activate();
+
+	uiManager->Activate();
 }
 
 void SecondStage::Update(float deltaTime)
@@ -249,8 +243,8 @@ void SecondStage::BallBulletPop()
 		BallBullet* newBallBullet = new BallBullet({ -600.0f,30.0f,0.0f });
 		EntryBallBullet(newBallBullet);
 
-		BallBullet* newBallBullet2 = new BallBullet({ -3500.0f,30.0f,0.0f });
-		EntryBallBullet(newBallBullet2);
+		/*BallBullet* newBallBullet2 = new BallBullet({ -3500.0f,30.0f,0.0f });
+		EntryBallBullet(newBallBullet2);*/
 
 		ballPop = true;
 	}
@@ -339,7 +333,7 @@ void SecondStage::UpdateGame(float deltaTime)
 
 	for (auto ptr : ballBullet)
 	{
-		ptr->Update(deltaTime, hitChecker->Hit(), player->GetPosition(), hitChecker);
+		ptr->Update(deltaTime, hitChecker->Hit(), player->GetPosition(), hitChecker, effect);
 	}
 
 	hitChecker->Check(secondStageMap->GetModel(), player);
@@ -381,19 +375,11 @@ void SecondStage::Draw()
 		ptr->Draw();
 	}
 
+	//壁描画
 	for (auto ptr : wall)
 	{
 		ptr->Draw();
 	}
-
-	////壁描画
-	//wall->Draw();
-
-	////壁2描画
-	//wall2->Draw();
-
-	////壁3描画
-	//wall3->Draw();
 
 	//ボールバレット管理クラス描画
 	for (auto ptr : ballBullet)
@@ -401,11 +387,15 @@ void SecondStage::Draw()
 		ptr->Draw();
 	}
 
+	//エフェクト描画
+	effect->Draw();
+
 	//UI管理クラス描画
 	for (auto ptr : enemy)
 	{
 		uiManager->Draw(state, ptr->GetPlayerCount()); 
 	}
+
 
 	//デバック用
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());

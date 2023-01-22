@@ -7,7 +7,7 @@ const string TitleScene::VIDEO_FOLDER_PATH = "data/video/";		//videoフォルダまで
 const string TitleScene::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
 const string TitleScene::PLAY_VIDEO_PATH   = "PlayVideo.mp4";	//タイトル動画のパス
 const string TitleScene::TITLENAME_PATH	   = "titleName.png";	//タイトル名の画像のパス
-const string TitleScene::TITLE_UI_PATH	   = "titleUi.png";		//プレイシーンへ遷移キーのUIのパス
+const string TitleScene::TITLE_UI_PATH	   = "titleUi.png";		//ステージ選択シーンへ遷移キーのUIのパス
 
 
 TitleScene::TitleScene(SceneManager* const sceneManager)
