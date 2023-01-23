@@ -102,7 +102,7 @@ void Bullet::MouseMove(Ball* ball, VECTOR playerPos)
 /// <summary>
 /// バレットを非アクティブ化
 /// </summary>
-void Bullet::SetDead()
+void Bullet::BulletDead()
 {
 	alive = false;
 	position = POSITION;
@@ -111,7 +111,7 @@ void Bullet::SetDead()
 /// <summary>
 /// バレットをアクティブ化
 /// </summary>
-void Bullet::SetAlive()
+void Bullet::BulletAlive()
 {
 	alive = true;
 }

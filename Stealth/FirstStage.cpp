@@ -176,7 +176,7 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	player->EnemyUpdate(enemy);
 
-	ballBullet->Update(deltaTime, hitChecker->Hit(), player->GetPosition(), hitChecker, effect);
+	ballBullet->Update(deltaTime, player->GetPosition(), hitChecker, effect);
 	
 	hitChecker->Check(map->GetModel(), player);
 	

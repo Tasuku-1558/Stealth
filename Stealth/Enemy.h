@@ -15,7 +15,7 @@ class Player;
 class Enemy final : public EnemyBase
 {
 public:
-	 Enemy(std::vector<VECTOR>& num);		//コンストラクタ
+	 Enemy(std::vector<VECTOR>& id);		//コンストラクタ
 	 virtual ~Enemy();								//デストラクタ
 
 	void Initialize();

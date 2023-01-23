@@ -19,11 +19,11 @@ public:
     BallBullet(VECTOR ballPos);
     virtual ~BallBullet();
 
-    void Update(float deltaTime, bool hit, VECTOR playerPos, HitChecker* hitChecker, Effect* effect);
+    void Update(float deltaTime, VECTOR playerPos, HitChecker* hitChecker, Effect* effect);
     void Activate();
     void Finalize();
 
-    void Draw();
+    void Draw(bool ballHit);
     
     Ball* ball;
     Bullet* bullet;

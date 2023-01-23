@@ -54,6 +54,9 @@ void Map::Finalize()
 	modelHandle = NULL;
 }
 
+/// <summary>
+/// 敵の行動パターンリスト
+/// </summary>
 void Map::MapList()
 {
 	positionList.push_back(VGet(-3200.0f, 100.0f, 1400.0f));

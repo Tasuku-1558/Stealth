@@ -2,12 +2,16 @@
 #include "Player.h"
 #include "Map.h"
 #include "Wall.h"
+#include "Ball.h"
 #include "PreCompiledHeader.h"
 
 using namespace Math3d;
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 HitChecker::HitChecker()
-	: hit(false)
+	: ballHit(false)
 	, hitPolyDim()
 	, uiPos()
 	, uiDraw(false)
@@ -17,6 +21,9 @@ HitChecker::HitChecker()
 	uiPos = VGet(-800.0f, 30.0f, 0.0f);
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 HitChecker::~HitChecker()
 {
 	//処理なし
@@ -37,11 +44,11 @@ void HitChecker::Check(int model, Player* player)
 /// ボールとプレイヤーの当たり判定
 /// </summary>
 /// <param name="playerPos"></param>
-/// <param name="ballPos"></param>
-void HitChecker::BallAndPlayer(VECTOR playerPos, VECTOR ballPos)
+/// <param name="ball"></param>
+void HitChecker::BallAndPlayer(VECTOR playerPos, Ball* ball)
 {
 	//プレイヤーからボールの座標を引いた値を取得
-	VECTOR sub = playerPos - ballPos;
+	VECTOR sub = playerPos - ball->GetPosition();
 
 	//プレイヤーとボールの2点間の距離を計算
 	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
@@ -49,11 +56,13 @@ void HitChecker::BallAndPlayer(VECTOR playerPos, VECTOR ballPos)
 	//衝突しているならば
 	if (direction < PLAYER_RADIUS + BALL_RADIUS)
 	{
-		hit = true;
+		//hit = true;
+		ball->IsAlive(ballHit);
 	}
 	else
 	{
-		hit = false;
+		//hit = false;
+		ball->IsAlive(!ballHit);
 	}
 }
 

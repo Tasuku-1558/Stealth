@@ -22,8 +22,8 @@ public:
 	void Finalize();
 	void Update(float deltaTime, Ball* ball);
 	void MouseMove(Ball* ball, VECTOR playerPos);		//マウスカーソルの移動
-	void SetDead();								//バレットを非アクティブ化
-	void SetAlive();							//バレットをアクティブ化
+	void BulletDead();									//バレットを非アクティブ化
+	void BulletAlive();									//バレットをアクティブ化
 
 	bool GetAlive() { return alive; }
 	void Draw();

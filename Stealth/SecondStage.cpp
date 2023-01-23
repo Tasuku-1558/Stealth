@@ -243,8 +243,8 @@ void SecondStage::BallBulletPop()
 		BallBullet* newBallBullet = new BallBullet({ -600.0f,30.0f,0.0f });
 		EntryBallBullet(newBallBullet);
 
-		/*BallBullet* newBallBullet2 = new BallBullet({ -3500.0f,30.0f,0.0f });
-		EntryBallBullet(newBallBullet2);*/
+		BallBullet* newBallBullet2 = new BallBullet({ -3500.0f,30.0f,0.0f });
+		EntryBallBullet(newBallBullet2);
 
 		ballPop = true;
 	}
@@ -333,7 +333,7 @@ void SecondStage::UpdateGame(float deltaTime)
 
 	for (auto ptr : ballBullet)
 	{
-		ptr->Update(deltaTime, hitChecker->Hit(), player->GetPosition(), hitChecker, effect);
+		ptr->Update(deltaTime, player->GetPosition(), hitChecker, effect);
 	}
 
 	hitChecker->Check(secondStageMap->GetModel(), player);

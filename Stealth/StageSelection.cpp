@@ -7,9 +7,10 @@
 const string StageSelection::IMAGE_FOLDER_PATH = "data/image/";						//imageフォルダまでのパス
 const string StageSelection::SELECTION_PATH	   = "selection.png";					//選択画像のパス
 const string StageSelection::STAGE1_MAP_PATH   = "stage1_map.png";					//ステージ1マップの画像のパス
+const string StageSelection::STAGE2_MAP_PATH   = "stage2_map.png";					//ステージ2マップの画像のパス
 const string StageSelection::STAGE1_DESCRIPTION_PAHT = "stage1_description.png";	//ステージ1の説明画像のパス
-const string StageSelection::STAGE2_MAP_PATH = "stage2_map.png";					//ステージ2マップの画像のパス
 const string StageSelection::STAGE2_DESCRIPTION_PAHT = "stage2_description.png";	//ステージ2の説明画像のパス
+const int	 StageSelection::STAGE_IMAGE_NUMBER = 2;								//ステージ画像数
 
 
 char stageName[][32] = {
@@ -18,14 +19,16 @@ char stageName[][32] = {
 	"TITLE",
 };
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="sceneManager"></param>
 StageSelection::StageSelection(SceneManager* const sceneManager)
 	: SceneBase(sceneManager)
 	, font(0)
 	, selectionHandle(0)
-	, stage1MapHandle(0)
-	, stage1Description(0)
-	, stage2MapHandle(0)
-	, stage2Description(0)
+	, stageMapHandle{}
+	, stageDescription{}
 	, stageMax(0)
 	, stageNo(1)
 	, fadeManager(nullptr)
@@ -36,42 +39,51 @@ StageSelection::StageSelection(SceneManager* const sceneManager)
 	//処理なし
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 StageSelection::~StageSelection()
 {
 	Finalize();
 }
 
+/// <summary>
+/// 初期化処理
+/// </summary>
 void StageSelection::Initialize()
 {
 	string failePath = IMAGE_FOLDER_PATH + SELECTION_PATH;
 	selectionHandle = LoadGraph(failePath.c_str());
 
 	failePath = IMAGE_FOLDER_PATH + STAGE1_MAP_PATH;
-	stage1MapHandle = LoadGraph(failePath.c_str());
+	stageMapHandle[0] = LoadGraph(failePath.c_str());
 
 	failePath = IMAGE_FOLDER_PATH + STAGE1_DESCRIPTION_PAHT;
-	stage1Description = LoadGraph(failePath.c_str());
+	stageDescription[0] = LoadGraph(failePath.c_str());
 
 	failePath = IMAGE_FOLDER_PATH + STAGE2_MAP_PATH;
-	stage2MapHandle = LoadGraph(failePath.c_str());
+	stageMapHandle[1] = LoadGraph(failePath.c_str());
 
 	failePath = IMAGE_FOLDER_PATH + STAGE2_DESCRIPTION_PAHT;
-	stage2Description = LoadGraph(failePath.c_str());
+	stageDescription[1] = LoadGraph(failePath.c_str());
 
 	fadeManager = new FadeManager();
 
 	stageMax = sizeof(stageName) / sizeof(char[32]);
 }
 
+/// <summary>
+/// 終了処理
+/// </summary>
 void StageSelection::Finalize()
 {
 	DeleteGraph(selectionHandle);
 
-	DeleteGraph(stage1MapHandle);
-	DeleteGraph(stage1Description);
-
-	DeleteGraph(stage2MapHandle);
-	DeleteGraph(stage2Description);
+	for (int i = 0; i < STAGE_IMAGE_NUMBER; i++)
+	{
+		DeleteGraph(stageMapHandle[i]);
+		DeleteGraph(stageDescription[i]);
+	}
 
 	SafeDelete(fadeManager);
 
@@ -79,6 +91,9 @@ void StageSelection::Finalize()
 	DeleteFontToHandle(font);
 }
 
+/// <summary>
+/// 活性化処理
+/// </summary>
 void StageSelection::Activate()
 {
 	stageNo = 1;
@@ -89,7 +104,7 @@ void StageSelection::Activate()
 }
 
 /// <summary>
-/// 選択ステージを1個前に
+/// 選択ステージを1個前に持っていく
 /// </summary>
 /// <param name="stageNum"></param>
 /// <returns></returns>
@@ -105,7 +120,7 @@ int StageSelection::stageDecrement(int stageNum)
 }
 
 /// <summary>
-/// 選択ステージを1個先に
+/// 選択ステージを1個先に持っていく
 /// </summary>
 /// <param name="stageNum"></param>
 /// <returns></returns>
@@ -159,6 +174,10 @@ void StageSelection::Update(float deltaTime)
 	{
 		stageNo = stageIncrement(stageNo);
 	}
+	if (CheckHitKey(KEY_INPUT_BACK))
+	{
+		parent->SetNextScene(SceneManager::TITLE);
+	}
 	if (CheckHitKey(KEY_INPUT_RETURN))
 	{
 		changeScene = true;
@@ -174,21 +193,6 @@ void StageSelection::Update(float deltaTime)
 			StageCreator(stageNo);
 		}
 	}
-	
-	//次のシーンへ
-	/*if (CheckHitKey(KEY_INPUT_1))
-	{
-		parent->SetNextScene(SceneManager::STAGE1);
-	}
-	if (CheckHitKey(KEY_INPUT_2))
-	{
-		parent->SetNextScene(SceneManager::STAGE2);
-	}*/
-	if (CheckHitKey(KEY_INPUT_BACK))
-	{
-		parent->SetNextScene(SceneManager::TITLE);
-	}
-
 }
 
 void StageSelection::Draw()
@@ -197,13 +201,13 @@ void StageSelection::Draw()
 
 	if (stageNo == 1)
 	{
-		DrawGraph(1100, 400, stage1MapHandle, TRUE);
-		DrawGraph(100, 400, stage1Description, TRUE);
+		DrawGraph(1100, 400, stageMapHandle[0], TRUE);
+		DrawGraph(100, 400, stageDescription[0], TRUE);
 	}
 	else if (stageNo == 2)
 	{
-		DrawGraph(1100, 400, stage2MapHandle, TRUE);
-		DrawGraph(100, 400, stage2Description, TRUE);
+		DrawGraph(1100, 400, stageMapHandle[1], TRUE);
+		DrawGraph(100, 400, stageDescription[1], TRUE);
 	}
 
 	if (!changeScene || (changeTimeCount / 5) % 2 == 0)

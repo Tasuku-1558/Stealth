@@ -24,8 +24,8 @@ public:
 
 private:
 
-    void MapList();
-    void MapList2();
+    void MapList();                     //敵の行動パターンリスト
+    void MapList2();                    //敵の行動パターンリスト2
 
     std::vector<VECTOR> positionList;
     std::vector<VECTOR>::iterator itr;

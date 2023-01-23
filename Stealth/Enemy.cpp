@@ -18,13 +18,13 @@ using namespace std;
 /// コンストラクタ
 /// </summary>
 /// <param name="num"></param>
-Enemy::Enemy(std::vector<VECTOR>& num) : EnemyBase()
+Enemy::Enemy(std::vector<VECTOR>& id) : EnemyBase()
 	, visualModelHandle(0)
 	, visualPosition()
 	, visualDir()
 {
 	enemyState = EnemyState::CRAWL;
-	Position(num);
+	Position(id);
 
 	Initialize();
 	Activate();
@@ -42,6 +42,9 @@ Enemy::~Enemy()
 	}
 }
 
+/// <summary>
+/// 初期化処理
+/// </summary>
 void Enemy::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY));
@@ -68,6 +71,9 @@ void Enemy::Initialize()
 	discoverySE = LoadSoundMem(failePath.c_str());
 }
 
+/// <summary>
+/// 活性化処理
+/// </summary>
 void Enemy::Activate()
 {
 	playerFindCount = 0;
@@ -90,6 +96,9 @@ void Enemy::Position(std::vector<VECTOR>& num)
 	enemyState = EnemyState::ARRIVAL;
 }
 
+/// <summary>
+/// 終了処理
+/// </summary>
 void Enemy::Finalize()
 {
 	MV1DeleteModel(modelHandle);

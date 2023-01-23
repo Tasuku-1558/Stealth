@@ -19,7 +19,7 @@ public:
 	void Draw();
 
 	bool GetAlive() { return alive; }
-	void IsAlive(bool hit);			//¶‚«‚Ä‚é‚©€‚ñ‚Å‚¢‚é‚©
+	bool IsAlive(bool ballHit);			//¶‚«‚Ä‚é‚©€‚ñ‚Å‚¢‚é‚©
 
 private:
 

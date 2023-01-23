@@ -22,7 +22,7 @@ public:
 
 private:
 
-    void MapList();
+    void MapList();                    //敵の行動パターンリスト
     void MiniMap();
 
     std::vector<VECTOR> positionList;

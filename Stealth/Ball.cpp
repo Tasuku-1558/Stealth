@@ -69,17 +69,18 @@ void Ball::SetAlive()
 /// <summary>
 /// ¶‚«‚Ä‚é‚©€‚ñ‚Å‚¢‚é‚©
 /// </summary>
-/// <param name="hit"></param>
-void Ball::IsAlive(bool hit)
+/// <param name="ballHit"></param>
+/// <returns></returns>
+bool Ball::IsAlive(bool ballHit)
 {
-	//“–‚½‚Á‚½‚È‚ç‚Î
-	if (hit)
+	//ƒ{[ƒ‹‚É“–‚½‚Á‚½‚È‚ç‚Î
+	if (ballHit)
 	{
-		alive = false;
+		return alive = false;
 	}
 	else
 	{
-		alive = true;
+		return alive = true;
 	}
 }
 
