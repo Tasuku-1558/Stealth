@@ -11,8 +11,8 @@ public:
 	 virtual ~FadeManager();
 
 
-	void FadeMove();
-	void Draw();
+	void FadeMove();				//‰æ–ÊŒø‰Êˆ—
+	void Draw();					//•`‰æˆ—
 
 	int Fade() { return fade; }
 

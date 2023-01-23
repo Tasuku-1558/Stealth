@@ -13,30 +13,26 @@ class Enemy;
 class Player final : public PlayerBase
 {
 public:
-	 Player();				//コンストラクタ
-	 virtual ~Player();		//デストラクタ
+	 Player();
+	 virtual ~Player();
 
-	void Initialize();
-	void Finalize();
-	void Activate();
-	void Update(float deltaTime, Camera* camera, VECTOR back, bool mapHit);
-	void EnemyUpdate(Enemy* enemy);
-	void Draw();
+	void Initialize();															//初期化処理
+	void Finalize();															//終了処理
+	void Activate();															//活性化処理
+	void Update(float deltaTime, Camera* camera, VECTOR back, bool mapHit);		//更新処理
+	void FoundEnemy(Enemy* enemy);												//エネミーに見つかった場合
+	void Draw();																//描画処理
 
 
 	//デバック用
 	int GetX() { return position.x; }
 	int GetZ() { return position.z; }
 	int GetSpeed() { return SPEED; }
-	VECTOR Prev() { return previewPosition; }
 
 
 private:
-	Player(const Player&);								//コピーコンストラクタ
+	Player(const Player&);														//コピーコンストラクタ
 
-	void Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit);			//移動処理
-	void FoundEnemy(Enemy* enemy);						//エネミーに見つかった場合
-
-
-	VECTOR previewPosition;
+	void Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit);		//移動処理
+	
 };

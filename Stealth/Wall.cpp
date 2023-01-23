@@ -16,6 +16,9 @@ Wall::Wall(VECTOR pos)
 	Initialize();
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 Wall::~Wall()
 {
 	// 終了処理が呼ばれていなければ
@@ -25,6 +28,9 @@ Wall::~Wall()
 	}
 }
 
+/// <summary>
+/// 初期化処理
+/// </summary>
 void Wall::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::WALL));
@@ -39,12 +45,18 @@ void Wall::Initialize()
 	}
 }
 
+/// <summary>
+/// 終了処理
+/// </summary>
 void Wall::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 	modelHandle = NULL;
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
 void Wall::Draw()
 {
 	MV1DrawModel(modelHandle);

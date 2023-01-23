@@ -56,12 +56,6 @@ void BallBullet::Update(float deltaTime, VECTOR playerPos, HitChecker* hitChecke
 {
     hitChecker->BallAndPlayer(playerPos, ball);
 
-    /*if (hit)
-    {
-        ball->IsAlive(hit);
-    }*/
-
-
     Shoot(deltaTime, playerPos);
     BulletReuse(deltaTime, effect);
 }
@@ -105,7 +99,7 @@ void BallBullet::BulletReuse(float deltaTime, Effect* effect)
             bulletCount = 0.0f;
 
             //ボールをアクティブ状態にし、バレットを非アクティブにする
-            ball->SetAlive();
+            ball->BallAlive();
             bullet->BulletDead();
         }
     }
@@ -114,10 +108,10 @@ void BallBullet::BulletReuse(float deltaTime, Effect* effect)
 /// <summary>
 /// 描画処理
 /// </summary>
-void BallBullet::Draw(bool ballHit)
+void BallBullet::Draw()
 {
     //ボールが生きてるならば
-    if (ball->IsAlive(ballHit))
+    if (ball->GetAlive())
     {
         ball->Draw();
     }

@@ -17,22 +17,22 @@ public:
 	 Bullet();
 	 virtual ~Bullet();
 
-	void Initialize();
-	void Activate();
-	void Finalize();
-	void Update(float deltaTime, Ball* ball);
+	void Initialize();									//初期化処理
+	void Activate();									//活性化処理
+	void Finalize();									//終了処理
+	void Update(float deltaTime, Ball* ball);			//更新処理
 	void MouseMove(Ball* ball, VECTOR playerPos);		//マウスカーソルの移動
 	void BulletDead();									//バレットを非アクティブ化
 	void BulletAlive();									//バレットをアクティブ化
 
 	bool GetAlive() { return alive; }
-	void Draw();
+	void Draw();										//描画処理
 	
 private:
 
 	Bullet(const Bullet&);					//コピーコンストラクタ
 
-	void OnShot(float deltaTime);			//球が撃たれた時
+	void OnShot();							//球が撃たれた時
 
 	int cursorImage;						//照準画像格納用
 	int mouseX;								//マウスX座標

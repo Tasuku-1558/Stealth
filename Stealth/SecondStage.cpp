@@ -15,6 +15,10 @@
 #include "FadeManager.h"
 
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="sceneManager"></param>
 SecondStage::SecondStage(SceneManager* const sceneManager)
 	: SceneBase(sceneManager)
 	, state()
@@ -40,11 +44,17 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	//処理なし
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 SecondStage::~SecondStage()
 {
 	//処理なし
 }
 
+/// <summary>
+/// 初期化処理
+/// </summary>
 void SecondStage::Initialize()
 {
 	//カメラクラス
@@ -88,6 +98,9 @@ void SecondStage::Initialize()
 	WallPop();
 }
 
+/// <summary>
+/// 終了処理
+/// </summary>
 void SecondStage::Finalize()
 {
 	SafeDelete(camera);
@@ -127,6 +140,9 @@ void SecondStage::Finalize()
 	DeleteFontToHandle(font);
 }
 
+/// <summary>
+/// 活性化処理
+/// </summary>
 void SecondStage::Activate()
 {
 	state = State::START;
@@ -152,6 +168,10 @@ void SecondStage::Activate()
 	uiManager->Activate();
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="deltaTime"></param>
 void SecondStage::Update(float deltaTime)
 {
 	if (pUpdate != nullptr)
@@ -234,7 +254,7 @@ void SecondStage::DeleteBallBullet(BallBullet* deleteBallBullet)
 }
 
 /// <summary>
-/// ボールバレットを出現
+/// ボールバレットの出現
 /// </summary>
 void SecondStage::BallBulletPop()
 {
@@ -250,11 +270,19 @@ void SecondStage::BallBulletPop()
 	}
 }
 
+/// <summary>
+/// 壁を登録
+/// </summary>
+/// <param name="newWall"></param>
 void SecondStage::EntryWall(Wall* newWall)
 {
 	wall.emplace_back(newWall);
 }
 
+/// <summary>
+/// 壁を削除
+/// </summary>
+/// <param name="deleteWall"></param>
 void SecondStage::DeleteWall(Wall* deleteWall)
 {
 	//ボールバレットオブジェクトから検索して削除
@@ -270,6 +298,9 @@ void SecondStage::DeleteWall(Wall* deleteWall)
 	}
 }
 
+/// <summary>
+/// 壁の出現
+/// </summary>
 void SecondStage::WallPop()
 {
 	if (!wallPop)
@@ -311,7 +342,7 @@ void SecondStage::UpdateGame(float deltaTime)
 	{
 		ptr->Update(deltaTime, player);
 		
-		player->EnemyUpdate(ptr);
+		player->FoundEnemy(ptr);
 
 		for (auto ptra : wall)
 		{
@@ -358,6 +389,9 @@ void SecondStage::UpdateGoal(float deltaTime)
 	return;
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
 void SecondStage::Draw()
 {
 	//背景描画

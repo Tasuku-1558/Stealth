@@ -4,17 +4,17 @@
 
 
 /// <summary>
-/// オブジェクトベースクラス
+/// ObjectBaseクラス
 /// </summary>
 class ObjectBase
 {
 public:
-			  ObjectBase();		//コンストラクタ
-	  virtual~ObjectBase();		//デストラクタ
+	  ObjectBase();
+	  virtual~ObjectBase();
 
-	  virtual void Initialize() = 0;
-	  //virtual void Update(float dltaTime) = 0;				
-	  //virtual void Draw() = 0;
+	  virtual void Initialize() = 0;					//初期化処理
+	  //virtual void Update(float dltaTime) = 0;		//更新処理
+	  //virtual void Draw() = 0;						//描画処理
 
 	  const VECTOR& GetPosition() const; 	//positionのgetter
 	  const VECTOR& GetDir() const;			//dirのgetter
@@ -23,14 +23,14 @@ public:
 	  //オブジェクトのタグ
 	  enum class Object
 	  {
-		  PLAYER,
-		  BALL,
-		  WALL,
+		  PLAYER,		//プレイヤー
+		  BALL,			//ボール
+		  WALL,			//壁
 	  };
 
 protected:
-	VECTOR position;						//現在の座標
-	VECTOR dir;								//向きベクトル
-	int modelHandle;						//モデルハンドル
-	Object object;
+	VECTOR position;	//現在の座標
+	VECTOR dir;			//向きベクトル
+	int modelHandle;	//モデルハンドル
+	Object object;		//オブジェクトのタグ
 };

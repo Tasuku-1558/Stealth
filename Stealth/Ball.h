@@ -11,21 +11,21 @@ public:
 	 Ball(VECTOR pos);
 	 virtual ~Ball();
 
-	void Initialize();
-	void Activate();
-	void Finalize();
-	void Update();
-	void SetAlive();							//ボールをアクティブ化
-	void Draw();
+	void Initialize();					//初期化処理
+	void Activate();					//活性化処理
+	void Finalize();					//終了処理
+	void Update();						//更新処理
+	void BallAlive();					//ボールをアクティブ化
+	void Draw();						//描画処理
 
 	bool GetAlive() { return alive; }
-	bool IsAlive(bool ballHit);			//生きてるか死んでいるか
+	void IsAlive(bool ballHit);			//ボールが生きてるか死んでいるか
 
 private:
 
-	Ball(const Ball&);								//コピーコンストラクタ
+	Ball(const Ball&);					//コピーコンストラクタ
 
-	bool alive;										//ボールが生きてるか死んでいるか
+	bool alive;							//ボールが生きてるか死んでいるか
 
 	//静的定数
 	static const VECTOR SIZE;           //モデルの倍率

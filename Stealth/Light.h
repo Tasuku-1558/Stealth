@@ -9,14 +9,12 @@ class Light final
 {
 public:
 
-	 Light();				//コンストラクタ
-	 virtual ~Light();		//デストラクタ
+	 Light();
+	 virtual ~Light();
 
-	void Initialize();
-	void Update(VECTOR enemyDir);
+	void Initialize();				//初期化処理
+
 private:
-
-	int lightHandle;
 
 	//静的定数
 	static const VECTOR DIRECTION;	//ライトの方向

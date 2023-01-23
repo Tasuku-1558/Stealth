@@ -10,7 +10,6 @@ using namespace Math3d;
 /// コンストラクタ
 /// </summary>
 Player::Player() : PlayerBase()
-	, previewPosition()
 {
 	//処理なし
 }
@@ -66,6 +65,7 @@ void Player::Activate()
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="camera"></param>
+/// <param name="back"></param>
 /// <param name="mapHit"></param>
 void Player::Update(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 {
@@ -75,16 +75,13 @@ void Player::Update(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 	MV1SetPosition(modelHandle, position);
 }
 
-void Player::EnemyUpdate(Enemy* enemy)
-{
-	FoundEnemy(enemy);
-}
-
 /// <summary>
 /// 移動処理
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="camera"></param>
+/// <param name="back"></param>
+/// <param name="mapHit"></param>
 void Player::Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 {
 	inputDirection = ZERO_VECTOR;
@@ -163,6 +160,7 @@ void Player::Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 /// <param name="enemy"></param>
 void Player::FoundEnemy(Enemy* enemy)
 {
+	//エネミーに見つかったら
 	if (enemy->Discovery())
 	{
 		WaitTimer(1000);

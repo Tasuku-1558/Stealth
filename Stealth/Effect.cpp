@@ -4,7 +4,7 @@
 
 
 const string Effect::EFFECT_FOLDER_PATH = "data/effect/";		//effectフォルダまでのパス
-const string Effect::BALL_PATH			= "ball.efkefc";		//ボール消失エフェクトのパス
+const string Effect::BALL_PATH			= "ball.efkefc";		//ボール再スポーン時エフェクトのパス
 
 /// <summary>
 /// コンストラクタ
@@ -42,7 +42,7 @@ void Effect::Initialize()
 /// </summary>
 void Effect::Finalize()
 {
-	// エフェクトリソースを削除
+	//エフェクトリソースを削除
 	DeleteEffekseerEffect(effectHandle);
 }
 
@@ -51,7 +51,7 @@ void Effect::Finalize()
 /// </summary>
 void Effect::Activate()
 {
-	// エフェクトを停止する
+	//エフェクトを停止する
 	StopEffekseer3DEffect(playingEffectHandle);
 }
 
@@ -63,21 +63,22 @@ void Effect::Activate()
 /// <param name="ballPosZ"></param>
 void Effect::Update(float ballPosX, float ballPosY, float ballPosZ)
 {
+	//エフェクトの位置設定
 	effectPos_X = ballPosX;
 	effectPos_Y = ballPosY;
 	effectPos_Z = ballPosZ;
 
-	// 定期的にエフェクトを再生
+	//定期的にエフェクトを再生
 	if (effectTime % 1 == 0)
 	{
-		// エフェクトを再生
+		//エフェクトを再生
 		playingEffectHandle = PlayEffekseer3DEffect(effectHandle);
 	}
 
-	// 再生中のエフェクトを移動
+	//再生中のエフェクトを移動
 	SetPosPlayingEffekseer3DEffect(playingEffectHandle, effectPos_X, effectPos_Y, effectPos_Z);
 
-	// 時間を経過
+	//時間を経過
 	effectTime++;
 }
 
@@ -86,9 +87,9 @@ void Effect::Update(float ballPosX, float ballPosY, float ballPosZ)
 /// </summary>
 void Effect::Draw()
 {
-	// 再生中のエフェクトを更新
+	//再生中のエフェクトを更新
 	UpdateEffekseer3D();
 
-	// 再生中のエフェクトを描画
+	//再生中のエフェクトを描画
 	DrawEffekseer3D();
 }

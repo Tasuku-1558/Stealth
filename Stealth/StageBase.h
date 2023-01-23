@@ -3,14 +3,13 @@
 #include "ObjectBase.h"
 
 /// <summary>
-/// ステージベースクラス
+/// StageBaseクラス
 /// </summary>
 class StageBase : public ObjectBase
 {
 public:
 	StageBase();
 	virtual ~StageBase();
-
 
 protected:
 

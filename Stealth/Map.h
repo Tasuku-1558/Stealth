@@ -5,20 +5,20 @@
 
 
 /// <summary>
-/// ファーストステージマップクラス
+/// FirstStageMapクラス
 /// </summary>
 class Map final : public StageBase
 {
 public:
-     Map();             //コンストラクタ
-     virtual ~Map();    //デストラクタ
+     Map();
+     virtual ~Map();
 
-    void Initialize();
-    void Finalize();
-    void Draw();
+    void Initialize();      //初期化処理
+    void Finalize();        //終了処理
+    void Draw();            //描画処理
 
-    std::vector<VECTOR>& GetMap() { return positionList; }
-    int GetModel() { return modelHandle; }
+    std::vector<VECTOR>& GetMap() { return positionList; }      //敵の行動パターンリストを返す
+    int GetModel() { return modelHandle; }                      //マップモデルを返す
 
 private:
 

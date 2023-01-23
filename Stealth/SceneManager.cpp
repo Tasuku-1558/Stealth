@@ -5,6 +5,10 @@
 #include "FirstStage.h"
 #include "SecondStage.h"
 
+
+/// <summary>
+/// コンストラクタ
+/// </summary>
 SceneManager::SceneManager()
 	: eachScene()
 	, nowPointer(nullptr)
@@ -14,11 +18,17 @@ SceneManager::SceneManager()
 	//処理なし
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 SceneManager::~SceneManager()
 {
 	//処理なし
 }
 
+/// <summary>
+/// 初期化処理
+/// </summary>
 void SceneManager::Initialize()
 {
 	eachScene[TITLE] = new TitleScene(this);
@@ -40,6 +50,9 @@ void SceneManager::Initialize()
 	nowPointer->Activate();
 }
 
+/// <summary>
+/// 終了処理
+/// </summary>
 void SceneManager::Finalize()
 {
 	for (int i = 0; i < SceneManager::END; ++i)
@@ -49,6 +62,10 @@ void SceneManager::Finalize()
 	}
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="deltaTime"></param>
 void SceneManager::Update(float deltaTime)
 {
 	//次のシーンがセットされていたら次へ
@@ -63,6 +80,9 @@ void SceneManager::Update(float deltaTime)
 	}
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
 void SceneManager::Draw()
 {
 	if (nowPointer != nullptr)
@@ -71,6 +91,10 @@ void SceneManager::Draw()
 	}
 }
 
+/// <summary>
+/// 次のシーンをセット
+/// </summary>
+/// <param name="next"></param>
 void SceneManager::SetNextScene(Scene next)
 {
 	nextScene = next;

@@ -3,6 +3,9 @@
 #include <math.h>
 
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 FadeManager::FadeManager()
 	: fade(0)
 	, fadeInc(2)
@@ -10,11 +13,17 @@ FadeManager::FadeManager()
 	//処理なし
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 FadeManager::~FadeManager()
 {
 	//処理なし
 }
 
+/// <summary>
+/// 画面効果処理
+/// </summary>
 void FadeManager::FadeMove()
 {
 	//画面効果の増分チェック
@@ -31,6 +40,9 @@ void FadeManager::FadeMove()
 	fade += fadeInc;
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
 void FadeManager::Draw()
 {
 	//画面全体フェード用の矩形半透明描画

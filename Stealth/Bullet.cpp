@@ -13,8 +13,8 @@ using namespace Math3d;
 /// <summary>
 /// コンストラクタ
 /// </summary>
-Bullet::Bullet()
-	: cursorImage(0)
+Bullet::Bullet() : ObjectBase()
+	, cursorImage(0)
 	, mouseX(0)
 	, mouseZ(0)
 	, worldMouseX(0.0f)
@@ -24,6 +24,9 @@ Bullet::Bullet()
 	//処理なし
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 Bullet::~Bullet()
 {
 	// 終了処理が呼ばれていなければ
@@ -33,6 +36,9 @@ Bullet::~Bullet()
 	}
 }
 
+/// <summary>
+/// 初期化処理
+/// </summary>
 void Bullet::Initialize()
 {
 	modelHandle = ModelManager::GetInstance().GetModelHandle(ModelManager::BALL);
@@ -53,11 +59,17 @@ void Bullet::Initialize()
 	cursorImage = LoadGraph(failePath.c_str());
 }
 
+/// <summary>
+/// 活性化処理
+/// </summary>
 void Bullet::Activate()
 {
 	position = POSITION;
 }
 
+/// <summary>
+/// 終了処理
+/// </summary>
 void Bullet::Finalize()
 {
 	MV1DeleteModel(modelHandle);
@@ -73,9 +85,10 @@ void Bullet::Finalize()
 /// <param name="ball"></param>
 void Bullet::Update(float deltaTime, Ball* ball)
 {
+	//ボールが死んだら
 	if (!ball->GetAlive())
 	{
-		OnShot(deltaTime);
+		OnShot();
 	}
 }
 
@@ -86,14 +99,14 @@ void Bullet::Update(float deltaTime, Ball* ball)
 /// <param name="pos"></param>
 void Bullet::MouseMove(Ball* ball, VECTOR playerPos)
 {
-	GetMousePoint(&mouseX, &mouseZ);                //マウスの座標取得
+	GetMousePoint(&mouseX, &mouseZ);       //マウスの座標取得
 	mouseX -= 960;
 	mouseZ -= 540;
 
 	//ボールが死んだら
 	if (!ball->GetAlive())
 	{
-		//マウスのXZ座標のワールド座標を計算
+		//マウスのX,Z座標のワールド座標を計算
 		worldMouseX = (float)mouseX * (3000.0f / 1920.0f) * 1.6f + playerPos.z;
 		worldMouseZ = (float)mouseZ * (1900.0f / 1080.0f) * 1.5f + playerPos.x;
 	}
@@ -114,21 +127,25 @@ void Bullet::BulletDead()
 void Bullet::BulletAlive()
 {
 	alive = true;
+	position = POSITION;
 }
 
 /// <summary>
 /// 球が撃たれた時
 /// </summary>
-/// <param name="deltaTime"></param>
-void Bullet::OnShot(float deltaTime)
+void Bullet::OnShot()
 {
 	position = VGet(worldMouseZ, 30.0f, worldMouseX);
 
 	MV1SetPosition(modelHandle, position);
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
 void Bullet::Draw()
 {
+	//ボールが生きているなら
 	if (alive)
 	{
 		MV1DrawModel(modelHandle);

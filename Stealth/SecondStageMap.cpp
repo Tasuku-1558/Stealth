@@ -8,12 +8,17 @@ const VECTOR SecondStageMap::POSITION = { -200.0f, 0.0f, 1350.0f };				//ƒ‚ƒfƒ‹‚
 
 using namespace std;
 
+/// <summary>
+/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// </summary>
 SecondStageMap::SecondStageMap() : StageBase()
-	, count(0)
 {
 	//ˆ—‚È‚µ
 }
 
+/// <summary>
+/// ƒfƒXƒgƒ‰ƒNƒ^
+/// </summary>
 SecondStageMap::~SecondStageMap()
 {
 	//I—¹ˆ—‚ªŒÄ‚Î‚ê‚Ä‚È‚¯‚ê‚Î
@@ -23,6 +28,9 @@ SecondStageMap::~SecondStageMap()
 	}
 }
 
+/// <summary>
+/// ‰Šú‰»ˆ—
+/// </summary>
 void SecondStageMap::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE2));
@@ -42,12 +50,18 @@ void SecondStageMap::Initialize()
 	MapList2();
 }
 
+/// <summary>
+/// I—¹ˆ—
+/// </summary>
 void SecondStageMap::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 	modelHandle = NULL;
 }
 
+/// <summary>
+/// “G‚Ìs“®ƒpƒ^[ƒ“ƒŠƒXƒg
+/// </summary>
 void SecondStageMap::MapList()
 {
 	positionList.push_back(VGet(-2300.0f, 100.0f, 500.0f));
@@ -56,17 +70,23 @@ void SecondStageMap::MapList()
 	positionList.push_back(VGet(-1800.0f, 100.0f, 500.0f));
 
 
-	itr = positionList.begin();   //  ƒCƒeƒŒ[ƒ^‚ğæ“ª‚Éİ’è
+	itr = positionList.begin();   //ƒCƒeƒŒ[ƒ^‚ğæ“ª‚Éİ’è
 }
 
+/// <summary>
+/// “G‚Ìs“®ƒpƒ^[ƒ“ƒŠƒXƒg2
+/// </summary>
 void SecondStageMap::MapList2()
 {
 	positionList2.push_back(VGet(-5400.0f, 100.0f, 0.0f));
 	positionList2.push_back(VGet(-4600.0f, 100.0f, 0.0f));
 
-	itr2 = positionList2.begin();   //  ƒCƒeƒŒ[ƒ^‚ğæ“ª‚Éİ’è
+	itr2 = positionList2.begin();   //ƒCƒeƒŒ[ƒ^‚ğæ“ª‚Éİ’è
 }
 
+/// <summary>
+/// •`‰æˆ—
+/// </summary>
 void SecondStageMap::Draw()
 {
 	MV1DrawModel(modelHandle);

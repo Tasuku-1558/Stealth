@@ -14,10 +14,10 @@ public:
      BackGround();
      virtual ~BackGround();
 
-    void Initialize();
-    void Finalize();
-    void Activate();
-    void Draw();
+    void Initialize();          //‰Šú‰»ˆ—
+    void Finalize();            //I—¹ˆ—
+    void Activate();            //Šˆ«‰»ˆ—
+    void Draw();                //•`‰æˆ—
 
 private:
 

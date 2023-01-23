@@ -16,12 +16,12 @@ public:
 	 UiManager();
 	 virtual ~UiManager();
 
-	void Initialize();
-	void Activate();
-	void Finalize();
+	void Initialize();		//初期化処理
+	void Activate();		//活性化処理
+	void Finalize();		//終了処理
 
-	void Draw(FirstStage::State state, int playerCount, bool hitUi);
-	void Draw(SecondStage::State state, int playerCount);
+	void Draw(FirstStage::State state, int playerCount, bool hitUi);	//FirstStage描画処理
+	void Draw(SecondStage::State state, int playerCount);				//SecondStage描画処理
 
 	
 private:
@@ -35,21 +35,21 @@ private:
 	//画像の種類
 	enum Graphic
 	{
-		STAGE1,
+		STAGE1,				//ステージ１スタート画像
 		PLAYER_HP,			//プレイヤーHP画像
 		PLAYER_HP_FRAME,	//プレイヤーHP枠画像
 		OPERATION,			//操作方法説明画像
 		BALLOON,			//吹き出し画像
 		CLEAR,				//ゲームクリア画像
-		STAGE2,
+		STAGE2,				//ステージ２スタート画像
 		FRAME,				//フレーム画像
-		KEY,				//キー画像
+		KEY,				//プレイヤー移動キー画像
 		GRAPHIC_AMOUNT		//画像の数
 	};
 
 	int count;
 	
-	int uiHandle[GRAPHIC_AMOUNT];		//画像ハンドル
+	int uiHandle[GRAPHIC_AMOUNT];					//画像ハンドル
 	
 
 	//静的定数

@@ -13,9 +13,9 @@ public:
 	 Wall(VECTOR pos);
 	 virtual ~Wall();
 
-	void Initialize();
-	void Finalize();
-	void Draw();
+	void Initialize();					//‰Šú‰»ˆ—
+	void Finalize();					//I—¹ˆ—
+	void Draw();						//•`‰æˆ—
 
 private:
 

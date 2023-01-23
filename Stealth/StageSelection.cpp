@@ -10,7 +10,7 @@ const string StageSelection::STAGE1_MAP_PATH   = "stage1_map.png";					//ƒXƒe[ƒ
 const string StageSelection::STAGE2_MAP_PATH   = "stage2_map.png";					//ƒXƒe[ƒW2ƒ}ƒbƒv‚Ì‰æ‘œ‚ÌƒpƒX
 const string StageSelection::STAGE1_DESCRIPTION_PAHT = "stage1_description.png";	//ƒXƒe[ƒW1‚Ìà–¾‰æ‘œ‚ÌƒpƒX
 const string StageSelection::STAGE2_DESCRIPTION_PAHT = "stage2_description.png";	//ƒXƒe[ƒW2‚Ìà–¾‰æ‘œ‚ÌƒpƒX
-const int	 StageSelection::STAGE_IMAGE_NUMBER = 2;								//ƒXƒe[ƒW‰æ‘œ”
+const int	 StageSelection::STAGE_IMAGE_NUMBER		 = 2;							//ƒXƒe[ƒW‰æ‘œ”
 
 
 char stageName[][32] = {
@@ -27,8 +27,8 @@ StageSelection::StageSelection(SceneManager* const sceneManager)
 	: SceneBase(sceneManager)
 	, font(0)
 	, selectionHandle(0)
-	, stageMapHandle{}
-	, stageDescription{}
+	, stageMapHandle()
+	, stageDescription()
 	, stageMax(0)
 	, stageNo(1)
 	, fadeManager(nullptr)
@@ -108,15 +108,15 @@ void StageSelection::Activate()
 /// </summary>
 /// <param name="stageNum"></param>
 /// <returns></returns>
-int StageSelection::stageDecrement(int stageNum)
+int StageSelection::stageDecrement(int stageNumber)
 {
 	//Å‰‚ÌƒXƒe[ƒW‚É—ˆ‚½
-	if (stageNum == 1)
+	if (stageNumber == 1)
 	{
 		return stageMax;
 	}
 
-	return stageNum - 1;
+	return stageNumber - 1;
 }
 
 /// <summary>
@@ -124,25 +124,25 @@ int StageSelection::stageDecrement(int stageNum)
 /// </summary>
 /// <param name="stageNum"></param>
 /// <returns></returns>
-int StageSelection::stageIncrement(int stageNum)
+int StageSelection::stageIncrement(int stageNumber)
 {
-	if (stageNum > 0 && stageNum < stageMax)
+	if (stageNumber > 0 && stageNumber < stageMax)
 	{
-		return stageNum + 1;
+		return stageNumber + 1;
 	}
 
 	return 1;
 }
 
-int StageSelection::StageCreator(int stageNum)
+int StageSelection::StageCreator(int stageNumber)
 {
-	if (stageNum < 0)
+	if (stageNumber < 0)
 	{
 		return NULL;
 	}
 
 	//ŠeƒV[ƒ“
-	switch (stageNum)
+	switch (stageNumber)
 	{
 	case 1:
 		parent->SetNextScene(SceneManager::STAGE1);
@@ -160,6 +160,10 @@ int StageSelection::StageCreator(int stageNum)
 	return NULL;
 }
 
+/// <summary>
+/// XVˆ—
+/// </summary>
+/// <param name="deltaTime"></param>
 void StageSelection::Update(float deltaTime)
 {
 
@@ -195,6 +199,9 @@ void StageSelection::Update(float deltaTime)
 	}
 }
 
+/// <summary>
+/// •`‰æˆ—
+/// </summary>
 void StageSelection::Draw()
 {
 	DrawGraph(0, 0, selectionHandle, TRUE);

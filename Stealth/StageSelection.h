@@ -17,32 +17,32 @@ public:
 	 StageSelection(SceneManager* const sceneManager);
 	~StageSelection();
 
-	void Initialize();
-	void Finalize();
-	void Activate();
-	void Update(float deltaTime);
-	void Draw();
+	void Initialize();								//初期化処理
+	void Finalize();								//終了処理
+	void Activate();								//活性化処理
+	void Update(float deltaTime);					//更新処理
+	void Draw();									//描画処理
 
 
 private:
-	StageSelection(const StageSelection&);		//コピーコンストラクタ
+	StageSelection(const StageSelection&);			//コピーコンストラクタ
 
-	int StageCreator(int stageNum);
-	int stageDecrement(int stageNum);     //選択ステージを1個前に持っていく
-	int stageIncrement(int stageNum);     //選択ステージを1個先に持っていく
+	int StageCreator(int stageNumber);
+	int stageDecrement(int stageNumber);			//選択ステージを1個前に持っていく
+	int stageIncrement(int stageNumber);			//選択ステージを1個先に持っていく
 
 
 	FadeManager* fadeManager;
 
-	int font;					//ゲームフォント
-	int selectionHandle;		//ステージ選択画像ハンドル
-	int stageMapHandle[2];		//ステージマップの画像ハンドル
-	int stageDescription[2];	//ステージの説明画像ハンドル
-	int stageMax;				//最大ステージ数
-	int stageNo;				//ステージナンバー
-	bool changeScene;			//シーンを遷移させるか
-	int changeTimeCount;		//ステージ遷移カウント
-	int maxTime;				//マックスステージ遷移カウント
+	int font;										//ゲームフォント
+	int selectionHandle;							//ステージ選択画像ハンドル
+	int stageMapHandle[2];							//ステージマップの画像ハンドル
+	int stageDescription[2];						//ステージの説明画像ハンドル
+	int stageMax;									//最大ステージ数
+	int stageNo;									//ステージナンバー
+	bool changeScene;								//シーンを遷移させるか
+	int changeTimeCount;							//ステージ遷移カウント
+	int maxTime;									//マックスステージ遷移カウント
 
 
 	//静的定数

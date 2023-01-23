@@ -1,11 +1,17 @@
 #include "StageBase.h"
 
 
-StageBase::StageBase(): ObjectBase()
+/// <summary>
+/// コンストラクタ
+/// </summary>
+StageBase::StageBase() : ObjectBase()
 {
 	//処理なし
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 StageBase::~StageBase()
 {
 	//処理なし

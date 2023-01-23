@@ -29,6 +29,9 @@ Map::~Map()
 	}
 }
 
+/// <summary>
+/// ‰Šú‰»ˆ—
+/// </summary>
 void Map::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE1));
@@ -48,6 +51,9 @@ void Map::Initialize()
 	MapList();
 }
 
+/// <summary>
+/// I—¹ˆ—
+/// </summary>
 void Map::Finalize()
 {
 	MV1DeleteModel(modelHandle);
@@ -76,6 +82,9 @@ void Map::MiniMap()
 	DrawCircle(pDotX, pDotY + 12, dotSize, GetColor(0, 0, 0), true);
 }
 
+/// <summary>
+/// •`‰æˆ—
+/// </summary>
 void Map::Draw()
 {
 	MV1DrawModel(modelHandle);

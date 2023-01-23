@@ -29,6 +29,9 @@ Ball::~Ball()
 	}
 }
 
+/// <summary>
+/// 初期化処理
+/// </summary>
 void Ball::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::BALL));
@@ -42,17 +45,26 @@ void Ball::Initialize()
 	}
 }
 
+/// <summary>
+/// 活性化処理
+/// </summary>
 void Ball::Activate()
 {
 	position = position;
 }
 
+/// <summary>
+/// 終了処理
+/// </summary>
 void Ball::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 	modelHandle = NULL;
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
 void Ball::Update()
 {
 }
@@ -60,30 +72,33 @@ void Ball::Update()
 /// <summary>
 /// ボールを非アクティブ化
 /// </summary>
-void Ball::SetAlive()
+void Ball::BallAlive()
 {
 	alive = true;
 	position = position;
 }
 
 /// <summary>
-/// 生きてるか死んでいるか
+/// ボールが生きてるか死んでいるか
 /// </summary>
 /// <param name="ballHit"></param>
 /// <returns></returns>
-bool Ball::IsAlive(bool ballHit)
+void Ball::IsAlive(bool ballHit)
 {
 	//ボールに当たったならば
 	if (ballHit)
 	{
-		return alive = false;
+		alive = false;
 	}
 	else
 	{
-		return alive = true;
+		alive = true;
 	}
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
 void Ball::Draw()
 {
 	MV1DrawModel(modelHandle);

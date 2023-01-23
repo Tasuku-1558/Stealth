@@ -12,10 +12,10 @@ public:
 	 SceneManager();
 	~SceneManager();
 
-	void Initialize();
-	void Finalize();
-	void Update(float deltaTime);
-	void Draw();
+	void Initialize();				//初期化処理
+	void Finalize();				//終了処理
+	void Update(float deltaTime);	//更新処理
+	void Draw();					//描画処理
 
 	//シーンの状態
 	enum Scene

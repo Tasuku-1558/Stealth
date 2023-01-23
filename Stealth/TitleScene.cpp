@@ -10,6 +10,10 @@ const string TitleScene::TITLENAME_PATH	   = "titleName.png";	//タイトル名の画像
 const string TitleScene::TITLE_UI_PATH	   = "titleUi.png";		//ステージ選択シーンへ遷移キーのUIのパス
 
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="sceneManager"></param>
 TitleScene::TitleScene(SceneManager* const sceneManager)
 	: SceneBase(sceneManager)
 	, backGroundHandle(0)
@@ -24,6 +28,9 @@ TitleScene::TitleScene(SceneManager* const sceneManager)
 	//処理なし
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 TitleScene::~TitleScene()
 {
 	if (backGroundHandle != NULL)
@@ -32,6 +39,9 @@ TitleScene::~TitleScene()
 	}
 }
 
+/// <summary>
+/// 初期化処理
+/// </summary>
 void TitleScene::Initialize()
 {
 	string failePath = VIDEO_FOLDER_PATH + PLAY_VIDEO_PATH;
@@ -47,16 +57,26 @@ void TitleScene::Initialize()
 	inc = -3;
 }
 
+/// <summary>
+/// 終了処理
+/// </summary>
 void TitleScene::Finalize()
 {
 	DeleteGraph(backGroundHandle);
 	backGroundHandle = NULL;
 }
 
+/// <summary>
+/// 活性化処理
+/// </summary>
 void TitleScene::Activate()
 {
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="deltaTime"></param>
 void TitleScene::Update(float deltaTime)
 {
 	//次のシーンへ
@@ -76,7 +96,7 @@ void TitleScene::Update(float deltaTime)
 }
 
 /// <summary>
-/// 文字の点滅
+/// 文字の点滅処理
 /// </summary>
 void TitleScene::Blink()
 {
@@ -109,6 +129,9 @@ void TitleScene::Blink()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
 void TitleScene::Draw()
 {
 	DrawGraph(0, 0, backGroundHandle, FALSE);

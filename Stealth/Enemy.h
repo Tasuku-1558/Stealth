@@ -10,24 +10,24 @@
 class Player;
 
 /// <summary>
-/// エネミークラス
+/// エネミークラス(赤色)
 /// </summary>
 class Enemy final : public EnemyBase
 {
 public:
-	 Enemy(std::vector<VECTOR>& id);		//コンストラクタ
-	 virtual ~Enemy();								//デストラクタ
+	 Enemy(std::vector<VECTOR>& id);
+	 virtual ~Enemy();
 
-	void Initialize();
-	void Activate();
-	void Update(float deltaTime, Player* player);
-	void Draw();
+	void Initialize();									//初期化処理
+	void Activate();									//活性化処理
+	void Update(float deltaTime, Player* player);		//更新処理
+	void Draw();										//描画処理
 
-	void VisualAngleBall(VECTOR bulletPos);			//視野角の計算
-	void VisualAngleWall(VECTOR wallPos);
+	void VisualAngleBall(VECTOR bulletPos);				//エネミーの視野にボールが入った場合
+	void VisualAngleWall(VECTOR wallPos);				//エネミーの視野に壁が入った場合
 
-	bool Discovery() { return discovery; }
-	int GetPlayerCount() { return playerFindCount; }
+	bool Discovery() { return discovery; }				//プレイヤーを見つけたかどうかを返す
+	int GetPlayerCount() { return playerFindCount; }	//プレイヤーを見つけた回数を返す
 	
 	//エネミーの状態
 	enum class EnemyState
@@ -39,24 +39,21 @@ public:
 private:
 	Enemy(const Enemy&);						//コピーコンストラクタ
 
-	void Position(std::vector<VECTOR>& num);	//エネミー位置設定
+	void Position(std::vector<VECTOR>& id);		//エネミー位置設定
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
-	void eUpdate(float deltaTime);				//状態変化
+	void eUpdate(float deltaTime);				//エネミーの状態変化
 	void SetTargetPosition();					//目的地まで移動処理
-	void VisualAngle(Player* player);			//視野角の計算
+	void VisualAngle(Player* player);			//エネミーの視野にプレイヤーが入った場合
 	
 	
-	void Reaction();				//エネミーのオブジェクトごとの反応
-	void Finalize();
+	void Reaction();							//エネミーのオブジェクトごとの反応
+	void Finalize();							//終了処理
 
-	EnemyState enemyState;
+	EnemyState enemyState;						//エネミーの状態
 
 	std::vector<VECTOR>::iterator itr;
 	std::vector<VECTOR> pointList;
 
-	int visualModelHandle;
-	VECTOR visualPosition;
-	VECTOR visualDir;
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス

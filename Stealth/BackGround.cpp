@@ -4,12 +4,18 @@ const string BackGround::VIDEO_FOLDER_PATH		= "data/video/";		//videoƒtƒHƒ‹ƒ_‚Ü‚
 const string BackGround::BACK_GROUND_VIDEO_PATH = "BackGround.mp4";		//”wŒi“®‰æ‚ÌƒpƒX
 
 
+/// <summary>
+/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// </summary>
 BackGround::BackGround()
 	: backGroundHandle(0)
 {
 	//ˆ—‚È‚µ
 }
 
+/// <summary>
+/// ƒfƒXƒgƒ‰ƒNƒ^
+/// </summary>
 BackGround::~BackGround()
 {
 	if (backGroundHandle != NULL)
@@ -18,23 +24,35 @@ BackGround::~BackGround()
 	}
 }
 
+/// <summary>
+/// ‰Šú‰»ˆ—
+/// </summary>
 void BackGround::Initialize()
 {
 	string failePath = VIDEO_FOLDER_PATH + BACK_GROUND_VIDEO_PATH;
 	backGroundHandle = LoadGraph(failePath.c_str());
 }
 
+/// <summary>
+/// I—¹ˆ—
+/// </summary>
 void BackGround::Finalize()
 {
 	DeleteGraph(backGroundHandle);
 	backGroundHandle = NULL;
 }
 
+/// <summary>
+/// Šˆ«‰»ˆ—
+/// </summary>
 void BackGround::Activate()
 {
 	//ˆ—‚È‚µ
 }
 
+/// <summary>
+/// •`‰æˆ—
+/// </summary>
 void BackGround::Draw()
 {
 	DrawGraph(0, 0, backGroundHandle, FALSE);

@@ -12,24 +12,36 @@ const string ModelManager::STAGE2_PATH       = "stage2.mv1";    //stage1モデルフ
 const string ModelManager::ENEMY_VISUAL_PAHT = "Angle.mv1";     //enemy_visualモデルファイルのパス
 
 
-
+/// <summary>
+/// コンストラクタ
+/// </summary>
 ModelManager::ModelManager()
     : modelHandle()
 {
     LoadAllModel();
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 ModelManager::~ModelManager()
 {
     DeleteAllModel();
 }
 
+/// <summary>
+/// アドレスを返す
+/// </summary>
+/// <returns></returns>
 ModelManager& ModelManager::GetInstance()
 {
     static ModelManager ModelManager;
     return ModelManager;
 }
 
+/// <summary>
+/// 全てのモデルの読み込み
+/// </summary>
 void ModelManager::LoadAllModel()
 {
     //モデルファイルのパス
@@ -64,6 +76,9 @@ void ModelManager::LoadAllModel()
     }
 }
 
+/// <summary>
+/// 全てのモデルの削除
+/// </summary>
 void ModelManager::DeleteAllModel()
 {
     for (int i = 0; i < MODEL_AMOUNT; ++i)
@@ -76,6 +91,11 @@ void ModelManager::DeleteAllModel()
     }
 }
 
+/// <summary>
+/// モデルハンドルの参照を返す
+/// </summary>
+/// <param name="modelType"></param>
+/// <returns></returns>
 const int& ModelManager::GetModelHandle(ModelType modelType) const
 {
     if (modelType == MODEL_AMOUNT)

@@ -7,6 +7,9 @@ const string UiManager::UI_GRAPHIC_PATH    = "ui";				//UI画像
 const string UiManager::FILENAME_EXTENSION = ".png";			//画像拡張子
 
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 UiManager::UiManager()
 	: uiHandle()
 	, count(0)
@@ -14,6 +17,9 @@ UiManager::UiManager()
 	//処理なし
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 UiManager::~UiManager()
 {
 	//終了処理が呼ばれてなければ
@@ -23,6 +29,9 @@ UiManager::~UiManager()
 	}
 }
 
+/// <summary>
+/// 初期化処理
+/// </summary>
 void UiManager::Initialize()
 {
 	//UI画像読み込み
@@ -41,11 +50,17 @@ void UiManager::Initialize()
 	}
 }
 
+/// <summary>
+/// 活性化処理
+/// </summary>
 void UiManager::Activate()
 {
 	count = 0;
 }
 
+/// <summary>
+/// 終了処理
+/// </summary>
 void UiManager::Finalize()
 {
 	for (int i = 0; i < GRAPHIC_AMOUNT; ++i)
@@ -55,6 +70,12 @@ void UiManager::Finalize()
 	}
 }
 
+/// <summary>
+/// FirstStage描画処理
+/// </summary>
+/// <param name="state"></param>
+/// <param name="playerCount"></param>
+/// <param name="hitUi"></param>
 void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 {
 	//吹き出し画像描画
@@ -79,6 +100,11 @@ void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 	}
 }
 
+/// <summary>
+/// SecondStage描画処理
+/// </summary>
+/// <param name="state"></param>
+/// <param name="playerCount"></param>
 void UiManager::Draw(SecondStage::State state, int playerCount)
 {
 	switch (state)

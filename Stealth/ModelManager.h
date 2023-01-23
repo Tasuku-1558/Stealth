@@ -12,6 +12,9 @@ class ModelManager final
 {
 public:
 
+	ModelManager();
+	~ModelManager();
+
 	//モデルの種類
 	enum ModelType
 	{
@@ -25,14 +28,11 @@ public:
 		MODEL_AMOUNT	//モデルの個数
 	};
 
-	static ModelManager& GetInstance();					  // アドレスを返す
+	static ModelManager& GetInstance();					  //アドレスを返す
 
-	const int& GetModelHandle(ModelType modelType) const; // モデルハンドルの参照を返す
+	const int& GetModelHandle(ModelType modelType) const; //モデルハンドルの参照を返す
 
 private:
-
-	 ModelManager();							//コンストラクタ
-	~ModelManager();							//デストラクタ
 
 	 ModelManager(const ModelManager&);			//コピーコンストラクタ
 

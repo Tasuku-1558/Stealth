@@ -17,6 +17,10 @@
 #include "FadeManager.h"
 
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="sceneManager"></param>
 FirstStage::FirstStage(SceneManager* const sceneManager)
 		: SceneBase(sceneManager)
 		, state()
@@ -38,11 +42,17 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 	//処理なし
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 FirstStage::~FirstStage()
 {
 	//処理なし
 }
 
+/// <summary>
+/// 初期化処理
+/// </summary>
 void FirstStage::Initialize()
 {
 	//カメラクラス
@@ -62,9 +72,11 @@ void FirstStage::Initialize()
 	player->Initialize();
 
 	//ボールバレット管理クラス
+	//ボールの初期位置を設定
 	ballBullet = new BallBullet({ -1500.0f,30.0f,0.0f });
 
 	//壁クラス
+	//壁の初期位置を設定
 	wall = new Wall({ -2500.0f,30.0f,0.0f });
 	wall->Initialize();
 
@@ -77,6 +89,7 @@ void FirstStage::Initialize()
 	effect->Initialize();
 
 	//エネミークラス
+	//エネミーに行動パターンのリストを設定
 	enemy = new Enemy(map->GetMap());
 	enemy->Initialize();
 
@@ -91,6 +104,9 @@ void FirstStage::Initialize()
 	fadeManager = new FadeManager();
 }
 
+/// <summary>
+/// 終了処理
+/// </summary>
 void FirstStage::Finalize()
 {
 	SafeDelete(camera);
@@ -121,6 +137,9 @@ void FirstStage::Finalize()
 	DeleteFontToHandle(font);
 }
 
+/// <summary>
+/// 活性化処理
+/// </summary>
 void FirstStage::Activate()
 {
 	state = State::START;
@@ -140,6 +159,10 @@ void FirstStage::Activate()
 	uiManager->Activate();
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="deltaTime"></param>
 void FirstStage::Update(float deltaTime)
 {
 	if (pUpdate != nullptr)
@@ -174,7 +197,7 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	player->Update(deltaTime, camera, hitChecker->Back(),hitChecker->MapHit());
 
-	player->EnemyUpdate(enemy);
+	player->FoundEnemy(enemy);
 
 	ballBullet->Update(deltaTime, player->GetPosition(), hitChecker, effect);
 	
@@ -207,6 +230,9 @@ void FirstStage::UpdateGoal(float deltaTime)
 	return;
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
 void FirstStage::Draw()
 {
 	//背景描画

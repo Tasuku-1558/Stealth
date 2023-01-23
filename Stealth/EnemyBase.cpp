@@ -1,10 +1,12 @@
 #include "EnemyBase.h"
 
 
-const float EnemyBase::SPEED	= 1000.0f;						//移動速度
+const float EnemyBase::SPEED		= 1000.0f;					//移動速度
 const float EnemyBase::RANGE_DEGREE = 45.0f;					//視野角度
 
-
+/// <summary>
+/// コンストラクタ
+/// </summary>
 EnemyBase::EnemyBase()
 	: speed(0.0f)
 	, object()
@@ -13,13 +15,18 @@ EnemyBase::EnemyBase()
 	, discovery(false)
 	, playerFindCount(0)
 	, findImage(0)
-	, viewRangeImage(0)
 	, markImage(0)
 	, discoverySE(0)
+	, visualModelHandle(0)
+	, visualPosition()
+	, visualDir()
 {
 	//処理なし
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 EnemyBase::~EnemyBase()
 {
 	//処理なし

@@ -17,20 +17,21 @@ public:
 	 HitChecker();
 	 virtual ~HitChecker();
 
-	void Check(int model, Player* player);							//衝突判定
-	void BallAndPlayer(VECTOR playerPos, Ball* ball);			//ボールとプレイヤーの当たり判定
+	void Check(int model, Player* player);					//衝突判定
+	void BallAndPlayer(VECTOR playerPos, Ball* ball);		//ボールとプレイヤーの当たり判定
 
 
-	bool UI() { return uiDraw; }
-	VECTOR Back() { return pushBack; }								//マップの壁にプレイヤーが衝突したときの押し戻し値を返す
-	bool MapHit() { return mapHit; }								//マップもプレイヤーが衝突したならば
+	
+	bool UI() { return uiDraw; }							//UI画像に当たったかどうかを返す
+	VECTOR Back() { return pushBack; }						//マップの壁にプレイヤーが衝突したときの押し戻し値を返す
+	bool MapHit() { return mapHit; }						//マップもプレイヤーが衝突したかどうかを返す
 
 private:
 
 	HitChecker(const HitChecker&);							//コピーコンストラクタ
 
 	void PlayerAndUI(Player* player);						//プレイヤーとUI画像の当たり判定
-	void MapAndPlayer(int model, Player* player);
+	void MapAndPlayer(int model, Player* player);			//マップとプレイヤーの当たり判定
 
 
 	bool ballHit;			//ボールに衝突したならば
@@ -38,7 +39,7 @@ private:
 	bool uiDraw;			//UI画像を描画するかどうか
 
 	bool mapHit;			//マップモデルに衝突したならば
-	VECTOR pushBack;
+	VECTOR pushBack;		//マップに衝突した時の押し戻し量
 
 	MV1_COLL_RESULT_POLY_DIM hitPolyDim;
 

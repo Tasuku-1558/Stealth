@@ -19,7 +19,7 @@ class FadeManager;
 
 
 /// <summary>
-/// セカンドステージクラス
+/// SecondStageクラス
 /// </summary>
 class SecondStage final : public SceneBase
 {
@@ -27,13 +27,13 @@ public:
 	 SecondStage(SceneManager* const sceneManager);
 	~SecondStage();
 
-	void Initialize();
-	void Finalize();
-	void Activate();
-	void Update(float deltaTime);
-	void Draw();
+	void Initialize();				//初期化処理
+	void Finalize();				//終了処理
+	void Activate();				//活性化処理
+	void Update(float deltaTime);	//更新処理
+	void Draw();					//描画処理
 
-	//ゲーム状態
+	//ゲームの状態
 	enum class State
 	{
 		START,	//開始前
@@ -58,27 +58,27 @@ private:
 	FadeManager* fadeManager;
 	
 
-	void EntryEnemy(Enemy* newEnemy);				//エネミーを登録
-	void DeleteEnemy(Enemy* deleteEnemy);			//エネミーを削除
-	void EnemyPop();								//エネミーの出現
+	void EntryEnemy(Enemy* newEnemy);						//エネミーを登録
+	void DeleteEnemy(Enemy* deleteEnemy);					//エネミーを削除
+	void EnemyPop();										//エネミーの出現
 
-	void EntryBallBullet(BallBullet* newBallBullet);
-	void DeleteBallBullet(BallBullet* deleteBallBullet);
-	void BallBulletPop();
+	void EntryBallBullet(BallBullet* newBallBullet);		//ボールバレットを登録
+	void DeleteBallBullet(BallBullet* deleteBallBullet);	//ボールバレットを削除
+	void BallBulletPop();									//ボールバレットの出現
 
-	void EntryWall(Wall* newWall);
-	void DeleteWall(Wall* deleteWall);
-	void WallPop();
+	void EntryWall(Wall* newWall);							//壁を登録
+	void DeleteWall(Wall* deleteWall);						//壁を削除
+	void WallPop();											//壁の出現
 
-	void UpdateStart(float deltaTime);				//ゲーム開始前
-	void UpdateGame(float deltaTime);				//ゲーム中
-	void UpdateGoal(float deltaTime);				//ゴール
-	void (SecondStage::* pUpdate)(float deltaTime);		//Update関数ポインタ
+	void UpdateStart(float deltaTime);						//ゲーム開始前
+	void UpdateGame(float deltaTime);						//ゲーム中
+	void UpdateGoal(float deltaTime);						//ゴール
+	void (SecondStage::* pUpdate)(float deltaTime);			//Update関数ポインタ
 
-	State state;		//ゲーム状態
+	State state;		//ゲームの状態
 	int font;			//ゲームフォント
 	bool enemyPop;		//エネミーの出現フラグ
 	bool ballPop;		//ボールの出現フラグ
-	bool wallPop;
+	bool wallPop;		//壁の出現フラグ
 	int count;
 };

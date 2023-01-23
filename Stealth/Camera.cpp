@@ -8,6 +8,9 @@ const float  Camera::FAR_DISTANCE	   = 4000.0f;							//カメラに映る最奥の範囲
 //const VECTOR Camera::INITIAL_POSITION  = { 0.0f, 2000.0f, -100.0f };		//初期位置
 //const VECTOR Camera::UP_VECTOR		 = { 0.0f, 0.0f, 0.0f };			//カメラの注視点
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 Camera::Camera()
 	: position()
 	, radius(400.0f)
@@ -22,20 +25,30 @@ Camera::Camera()
 	//処理なし
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 Camera::~Camera()
 {
 	//処理なし
 }
 
+/// <summary>
+/// 初期化処理
+/// </summary>
 void Camera::Initialize()
 {
 	//カメラの手前と奥の距離を設定
 	SetCameraNearFar(NEAR_DISTANCE, FAR_DISTANCE);
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="pos"></param>
 void Camera::Update(VECTOR pos)
 {
-	
+	//カメラの視点を設定
 	position = VGet(radius * cosf(yaw) + pos.x,
 					angleY,
 					radius * sinf(yaw) + pos.z);

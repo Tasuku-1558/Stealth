@@ -19,9 +19,6 @@ using namespace std;
 /// </summary>
 /// <param name="num"></param>
 Enemy::Enemy(std::vector<VECTOR>& id) : EnemyBase()
-	, visualModelHandle(0)
-	, visualPosition()
-	, visualDir()
 {
 	enemyState = EnemyState::CRAWL;
 	Position(id);
@@ -85,9 +82,9 @@ void Enemy::Activate()
 /// エネミー位置設定
 /// </summary>
 /// <param name="num"></param>
-void Enemy::Position(std::vector<VECTOR>& num)
+void Enemy::Position(std::vector<VECTOR>& id)
 {
-	pointList = num;				//マップから座標リストを受け取る
+	pointList = id;					//マップから座標リストを受け取る
 
 	itr = pointList.begin();		//イテレータを先頭に設定
 
@@ -148,6 +145,7 @@ void Enemy::SetTargetPosition()
 {
 	targetPosition = *itr++;
 
+	//最終目的地に到着したら次の目的地を初期位置にする
 	if (itr == pointList.end())
 	{
 		itr = pointList.begin();
@@ -167,7 +165,7 @@ bool Enemy::IsGoal(float deltaTime)
 }
 
 /// <summary>
-/// 視野角の計算
+/// エネミーの視野にプレイヤーが入った場合
 /// </summary>
 /// <param name="player"></param>
 void Enemy::VisualAngle(Player* player)
@@ -208,6 +206,10 @@ void Enemy::VisualAngle(Player* player)
 	}
 }
 
+/// <summary>
+/// エネミーの視野にボールが入った場合
+/// </summary>
+/// <param name="bulletPos"></param>
 void Enemy::VisualAngleBall(VECTOR bulletPos)
 {
 	//バレットからエネミーの座標を引いた値を取得
@@ -246,6 +248,10 @@ void Enemy::VisualAngleBall(VECTOR bulletPos)
 	}
 }
 
+/// <summary>
+/// エネミーの視野に壁が入った場合
+/// </summary>
+/// <param name="wallPos"></param>
 void Enemy::VisualAngleWall(VECTOR wallPos)
 {
 	//壁からエネミーの座標を引いた値を取得
@@ -277,7 +283,6 @@ void Enemy::VisualAngleWall(VECTOR wallPos)
 			Reaction();
 		}
 	}
-	
 }
 
 /// <summary>
@@ -294,7 +299,8 @@ void Enemy::Reaction()
 		//ビックリマークの画像を描画
 		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
 
-		DrawGraph(50, 50, findImage, TRUE);		//敵に見つかったというUI画像を描画
+		//敵に見つかったというUI画像を描画
+		DrawGraph(50, 50, findImage, TRUE);
 
 		// 発見SEを再生
 		PlaySoundMem(discoverySE, DX_PLAYTYPE_BACK);
