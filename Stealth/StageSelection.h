@@ -35,7 +35,8 @@ private:
 	FadeManager* fadeManager;
 
 	int font;										//ゲームフォント
-	int selectionHandle;							//ステージ選択画像ハンドル
+	int arrowKeyImage;								//矢印キー画像
+	int enterKeyImage;								//エンターキー画像
 	int stageMapHandle[2];							//ステージマップの画像ハンドル
 	int stageDescription[2];						//ステージの説明画像ハンドル
 	int stageMax;									//最大ステージ数
@@ -47,7 +48,8 @@ private:
 
 	//静的定数
 	static const string IMAGE_FOLDER_PATH;			//imageフォルダまでのパス
-	static const string SELECTION_PATH;				//選択画像のパス
+	static const string ARROW_KEY_PATH;				//矢印キー画像のパス
+	static const string ENTER_KEY_PATH;				//エンターキー画像のパス
 	static const string STAGE1_MAP_PATH;			//ステージ1マップの画像のパス
 	static const string STAGE2_MAP_PATH;			//ステージ2マップの画像のパス
 	static const string STAGE1_DESCRIPTION_PAHT;	//ステージ1の説明画像のパス

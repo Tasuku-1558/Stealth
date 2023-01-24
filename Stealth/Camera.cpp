@@ -48,6 +48,11 @@ void Camera::Initialize()
 /// <param name="pos"></param>
 void Camera::Update(VECTOR pos)
 {
+	if (CheckHitKey(KEY_INPUT_V))
+	{
+		angleY += 100.0f;
+	}
+
 	//ƒJƒƒ‰‚Ì‹“_‚ğİ’è
 	position = VGet(radius * cosf(yaw) + pos.x,
 					angleY,

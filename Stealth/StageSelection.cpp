@@ -5,8 +5,9 @@
 
 
 const string StageSelection::IMAGE_FOLDER_PATH = "data/image/";						//imageフォルダまでのパス
-const string StageSelection::SELECTION_PATH	   = "selection.png";					//選択画像のパス
-const string StageSelection::STAGE1_MAP_PATH   = "stage1_map.png";					//ステージ1マップの画像のパス
+const string StageSelection::ARROW_KEY_PATH	   = "arrow_key.png";					//矢印キー画像のパス
+const string StageSelection::ENTER_KEY_PATH	   = "enter_key.png";					//エンターキー画像のパス
+const string StageSelection::STAGE1_MAP_PATH   = "stage1_map2.png";					//ステージ1マップの画像のパス
 const string StageSelection::STAGE2_MAP_PATH   = "stage2_map.png";					//ステージ2マップの画像のパス
 const string StageSelection::STAGE1_DESCRIPTION_PAHT = "stage1_description.png";	//ステージ1の説明画像のパス
 const string StageSelection::STAGE2_DESCRIPTION_PAHT = "stage2_description.png";	//ステージ2の説明画像のパス
@@ -26,7 +27,8 @@ char stageName[][32] = {
 StageSelection::StageSelection(SceneManager* const sceneManager)
 	: SceneBase(sceneManager)
 	, font(0)
-	, selectionHandle(0)
+	, arrowKeyImage(0)
+	, enterKeyImage(0)
 	, stageMapHandle()
 	, stageDescription()
 	, stageMax(0)
@@ -52,10 +54,7 @@ StageSelection::~StageSelection()
 /// </summary>
 void StageSelection::Initialize()
 {
-	string failePath = IMAGE_FOLDER_PATH + SELECTION_PATH;
-	selectionHandle = LoadGraph(failePath.c_str());
-
-	failePath = IMAGE_FOLDER_PATH + STAGE1_MAP_PATH;
+	string failePath = IMAGE_FOLDER_PATH + STAGE1_MAP_PATH;
 	stageMapHandle[0] = LoadGraph(failePath.c_str());
 
 	failePath = IMAGE_FOLDER_PATH + STAGE1_DESCRIPTION_PAHT;
@@ -67,6 +66,13 @@ void StageSelection::Initialize()
 	failePath = IMAGE_FOLDER_PATH + STAGE2_DESCRIPTION_PAHT;
 	stageDescription[1] = LoadGraph(failePath.c_str());
 
+	failePath = IMAGE_FOLDER_PATH + ARROW_KEY_PATH;
+	arrowKeyImage = LoadGraph(failePath.c_str());
+
+	failePath = IMAGE_FOLDER_PATH + ENTER_KEY_PATH;
+	enterKeyImage = LoadGraph(failePath.c_str());
+
+
 	fadeManager = new FadeManager();
 
 	stageMax = sizeof(stageName) / sizeof(char[32]);
@@ -77,13 +83,14 @@ void StageSelection::Initialize()
 /// </summary>
 void StageSelection::Finalize()
 {
-	DeleteGraph(selectionHandle);
-
 	for (int i = 0; i < STAGE_IMAGE_NUMBER; i++)
 	{
 		DeleteGraph(stageMapHandle[i]);
 		DeleteGraph(stageDescription[i]);
 	}
+
+	DeleteGraph(arrowKeyImage);
+	DeleteGraph(enterKeyImage);
 
 	SafeDelete(fadeManager);
 
@@ -204,23 +211,24 @@ void StageSelection::Update(float deltaTime)
 /// </summary>
 void StageSelection::Draw()
 {
-	DrawGraph(0, 0, selectionHandle, TRUE);
-
 	if (stageNo == 1)
 	{
-		DrawGraph(1100, 400, stageMapHandle[0], TRUE);
-		DrawGraph(100, 400, stageDescription[0], TRUE);
+		DrawRotaGraph(1400, 450, 0.7f, 0, stageMapHandle[0], TRUE);
+		DrawGraph(100, 200, stageDescription[0], TRUE);
 	}
 	else if (stageNo == 2)
 	{
 		DrawGraph(1100, 400, stageMapHandle[1], TRUE);
-		DrawGraph(100, 400, stageDescription[1], TRUE);
+		DrawGraph(100, 200, stageDescription[1], TRUE);
 	}
 
 	if (!changeScene || (changeTimeCount / 5) % 2 == 0)
 	{
-		DrawFormatStringToHandle(750, 250, GetColor(0, 255, 0), font, "STAGE : %d", stageNo);
+		DrawFormatStringToHandle(200, 250, GetColor(0, 255, 0), font, "STAGE : %d", stageNo);
 	}
 	
+	DrawGraph(1200, 500, arrowKeyImage, TRUE);
+	DrawGraph(1200, 600, enterKeyImage, TRUE);
+
 	fadeManager->Draw();
 }

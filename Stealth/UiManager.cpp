@@ -89,9 +89,9 @@ void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 
 	case FirstStage::State::GAME:
 		StartGameDraw();
-		PlayerHpDraw(playerCount);
+		//PlayerHpDraw(playerCount);
 		OperationMethodDraw(hitUi);
-		DrawGraph(0, 900, uiHandle[KEY], TRUE);
+		//DrawGraph(0, 900, uiHandle[KEY], TRUE);
 		break;
 
 	case FirstStage::State::GOAL:
