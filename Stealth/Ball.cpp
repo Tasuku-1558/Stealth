@@ -1,8 +1,9 @@
 #include "Ball.h"
 #include "ModelManager.h"
+#include "HitChecker.h"
 
 
-const VECTOR Ball::SIZE		= { 2.0f, 2.0f, 2.0f };		//モデルの倍率
+const VECTOR Ball::SIZE	= { 2.0f, 2.0f, 2.0f };		//モデルの倍率
 
 
 /// <summary>
@@ -81,12 +82,11 @@ void Ball::BallAlive()
 /// <summary>
 /// ボールが生きてるか死んでいるか
 /// </summary>
-/// <param name="ballHit"></param>
-/// <returns></returns>
-void Ball::IsAlive(bool ballHit)
+/// <param name="hitChecker"></param>
+void Ball::IsAlive(HitChecker* hitChecker)
 {
 	//ボールに当たったならば
-	if (ballHit)
+	if (hitChecker->BallHit())
 	{
 		alive = false;
 	}

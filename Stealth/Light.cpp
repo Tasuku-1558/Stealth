@@ -23,7 +23,12 @@ Light::~Light()
 /// <summary>
 /// ‰Šú‰»ˆ—
 /// </summary>
-void Light::Initialize()
+void Light::Initialize(VECTOR direction)
 {
-	SetLightDirection(DIRECTION);	
+	SetLightDirection(direction);
+}
+
+void Light::SelectionLight(VECTOR direction)
+{
+	SetLightDirection(direction);
 }

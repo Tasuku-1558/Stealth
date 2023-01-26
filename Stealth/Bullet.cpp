@@ -83,13 +83,9 @@ void Bullet::Finalize()
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="ball"></param>
-void Bullet::Update(float deltaTime, Ball* ball)
+void Bullet::Update(float deltaTime)
 {
-	//ƒ{[ƒ‹‚ªŽ€‚ñ‚¾‚ç
-	if (!ball->GetAlive())
-	{
-		OnShot();
-	}
+	OnShot();
 }
 
 /// <summary>
@@ -127,7 +123,6 @@ void Bullet::BulletDead()
 void Bullet::BulletAlive()
 {
 	alive = true;
-	position = POSITION;
 }
 
 /// <summary>

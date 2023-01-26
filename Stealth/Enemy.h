@@ -8,6 +8,7 @@
 #include "Math3D.h"
 
 class Player;
+class Bullet;
 
 /// <summary>
 /// エネミークラス(赤色)
@@ -23,7 +24,7 @@ public:
 	void Update(float deltaTime, Player* player);		//更新処理
 	void Draw();										//描画処理
 
-	void VisualAngleBall(VECTOR bulletPos);				//エネミーの視野にボールが入った場合
+	void VisualAngleBall(Bullet* bullet);				//エネミーの視野にボールが入った場合
 	void VisualAngleWall(VECTOR wallPos);				//エネミーの視野に壁が入った場合
 
 	bool Discovery() { return discovery; }				//プレイヤーを見つけたかどうかを返す

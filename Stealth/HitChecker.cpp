@@ -97,7 +97,7 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 	//モデル全体のコリジョン情報を構築
 	MV1SetupCollInfo(model, 0, 8, 8, 8);
 
-	//モデルと球との当たり判定
+	//マップモデルとプレイヤーの当たり判定
 	hitPolyDim = MV1CollCheck_Sphere(model, -1, player->GetPosition(), 100.0f);
 
 	VECTOR moveCandidate = player->GetPosition(); //球中心候補

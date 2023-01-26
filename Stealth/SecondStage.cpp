@@ -63,7 +63,7 @@ void SecondStage::Initialize()
 
 	//ライトクラス
 	light = new Light();
-	light->Initialize();
+	light->Initialize({ 0.0f,-0.5f,0.0f });
 
 	//背景クラス
 	backGround = new BackGround();
@@ -351,7 +351,7 @@ void SecondStage::UpdateGame(float deltaTime)
 		
 		for (auto ptra : ballBullet)
 		{
-			ptr->VisualAngleBall(ptra->bullet->GetPosition());
+			ptr->VisualAngleBall(ptra->bullet);
 		}
 
 		//エネミーに3回見つかったら

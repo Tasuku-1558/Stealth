@@ -2,6 +2,8 @@
 
 #include "ObjectBase.h"
 
+class HitChecker;
+
 /// <summary>
 /// ボールクラス
 /// </summary>
@@ -19,7 +21,7 @@ public:
 	void Draw();						//描画処理
 
 	bool GetAlive() { return alive; }
-	void IsAlive(bool ballHit);			//ボールが生きてるか死んでいるか
+	void IsAlive(HitChecker* hitChecker);			//ボールが生きてるか死んでいるか
 
 private:
 

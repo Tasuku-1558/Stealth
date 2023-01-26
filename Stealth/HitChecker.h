@@ -21,7 +21,7 @@ public:
 	void BallAndPlayer(VECTOR playerPos, Ball* ball);		//ボールとプレイヤーの当たり判定
 
 
-	
+	bool BallHit() { return ballHit; }						//ボールにプレイヤーが当たったかどうかを返す
 	bool UI() { return uiDraw; }							//UI画像に当たったかどうかを返す
 	VECTOR Back() { return pushBack; }						//マップの壁にプレイヤーが衝突したときの押し戻し値を返す
 	bool MapHit() { return mapHit; }						//マップもプレイヤーが衝突したかどうかを返す

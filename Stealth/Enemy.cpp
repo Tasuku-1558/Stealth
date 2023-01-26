@@ -2,7 +2,7 @@
 #include "ModelManager.h"
 #include "PreCompiledHeader.h"
 #include "Player.h"
-
+#include "Bullet.h"
 
 const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
 const string Enemy::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
@@ -209,11 +209,11 @@ void Enemy::VisualAngle(Player* player)
 /// <summary>
 /// エネミーの視野にボールが入った場合
 /// </summary>
-/// <param name="bulletPos"></param>
-void Enemy::VisualAngleBall(VECTOR bulletPos)
+/// <param name="bullet"></param>
+void Enemy::VisualAngleBall(Bullet* bullet)
 {
 	//バレットからエネミーの座標を引いた値を取得
-	VECTOR sub = bulletPos - position;
+	VECTOR sub = bullet->GetPosition() - position;
 
 	//バレットとエネミーの2点間の距離を計算
 	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));

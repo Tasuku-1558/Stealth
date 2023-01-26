@@ -61,8 +61,8 @@ void FirstStage::Initialize()
 
 	//ライトクラス
 	light = new Light();
-	light->Initialize();
-
+	light->Initialize({ 0.0f,-0.5f,0.0f });
+	
 	//背景クラス
 	backGround = new BackGround();
 	backGround->Initialize();
@@ -191,7 +191,7 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	enemy->Update(deltaTime, player);
 
-	enemy->VisualAngleBall(ballBullet->bullet->GetPosition());
+	enemy->VisualAngleBall(ballBullet->bullet);
 
 	enemy->VisualAngleWall(wall->GetPosition());
 
@@ -260,11 +260,11 @@ void FirstStage::Draw()
 	uiManager->Draw(state, enemy->GetPlayerCount(), hitChecker->UI());
 
 	//デバック用
-	/*DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
+	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", enemy->GetPlayerCount());
-	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", ballBullet->ball->GetAlive());*/
+	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", ballBullet->ball->GetAlive());
 
 
 	//画面効果クラス描画

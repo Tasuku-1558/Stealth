@@ -12,10 +12,11 @@ public:
 	 Light();
 	 virtual ~Light();
 
-	void Initialize();				//‰Šú‰»ˆ—
+	void Initialize(VECTOR direction);				//‰Šú‰»ˆ—
+	void SelectionLight(VECTOR direction);
 
 private:
-
+	
 	//Ã“I’è”
 	static const VECTOR DIRECTION;	//ƒ‰ƒCƒg‚Ì•ûŒü
 };

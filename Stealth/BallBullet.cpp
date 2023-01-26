@@ -54,7 +54,12 @@ void BallBullet::Finalize()
 /// <param name="effect"></param>
 void BallBullet::Update(float deltaTime, VECTOR playerPos, HitChecker* hitChecker, Effect* effect)
 {
-    hitChecker->BallAndPlayer(playerPos, ball);
+    if (ball->GetAlive())
+    {
+        hitChecker->BallAndPlayer(playerPos, ball);
+        ball->IsAlive(hitChecker);
+    }
+    
 
     Shoot(deltaTime, playerPos);
     BulletReuse(deltaTime, effect);
@@ -70,7 +75,7 @@ void BallBullet::Shoot(float deltaTime, VECTOR playerPos)
     //マウスカーソルを左クリックし、且つボールとバレットが非アクティブならば
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && !bullet->GetAlive() && !ball->GetAlive())
 	{
-		bullet->Update(deltaTime, ball);
+		bullet->Update(deltaTime);
 		bullet->BulletAlive();
 	}
 
