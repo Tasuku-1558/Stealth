@@ -6,6 +6,7 @@ const string SelectionUi::SELECTION_KEY_PATH	  = "selection_key.png";		//ƒXƒe[ƒ
 const string SelectionUi::STAGE1_DESCRIPTION_PATH = "stage1_description.png";	//ƒXƒe[ƒW1‚Ìà–¾‰æ‘œ‚ÌƒpƒX
 const string SelectionUi::STAGE2_DESCRIPTION_PATH = "stage2_description.png";	//ƒXƒe[ƒW2‚Ìà–¾‰æ‘œ‚ÌƒpƒX
 const int	 SelectionUi::STAGE_NUMBER			  = 2;							//ƒXƒe[ƒW”
+
 const VECTOR SelectionUi::STAGE1_POSITION		  = { 1300.0f, 740.0f, 0.0f };	//ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚ÌˆÊ’u
 const VECTOR SelectionUi::STAGE1_SIZE			  = { 10.0f, 10.0f, 10.0f };	//ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚Ì”{—¦
 const VECTOR SelectionUi::STAGE1_ROTATE = { 80.0f * DX_PI_F / 180.0f, 190.0f * DX_PI_F / 180.0f, 0.0f }; //ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚Ì‰ñ“]’l

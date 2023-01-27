@@ -12,7 +12,7 @@ const string UiManager::FILENAME_EXTENSION = ".png";			//画像拡張子
 /// </summary>
 UiManager::UiManager()
 	: uiHandle()
-	, count(0)
+	, stageCount(0)
 {
 	//処理なし
 }
@@ -55,7 +55,7 @@ void UiManager::Initialize()
 /// </summary>
 void UiManager::Activate()
 {
-	count = 0;
+	stageCount = 0;
 }
 
 /// <summary>
@@ -71,7 +71,7 @@ void UiManager::Finalize()
 }
 
 /// <summary>
-/// FirstStage描画処理
+/// FirstStageのUI描画処理
 /// </summary>
 /// <param name="state"></param>
 /// <param name="playerCount"></param>
@@ -88,10 +88,11 @@ void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 		break;
 
 	case FirstStage::State::GAME:
-		StartGameDraw();
+
+		StartGameDraw(STAGE1);
 		PlayerHpDraw(playerCount);
 		OperationMethodDraw(hitUi);
-		DrawGraph(0, 900, uiHandle[KEY], TRUE);
+		DrawGraph(0, 900, uiHandle[KEY], TRUE);		//WASDキー描画
 		break;
 
 	case FirstStage::State::GOAL:
@@ -101,7 +102,7 @@ void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 }
 
 /// <summary>
-/// SecondStage描画処理
+/// SecondStageのUI描画処理
 /// </summary>
 /// <param name="state"></param>
 /// <param name="playerCount"></param>
@@ -114,14 +115,10 @@ void UiManager::Draw(SecondStage::State state, int playerCount)
 		break;
 
 	case SecondStage::State::GAME:
-		count++;
-
-		if (count < 50)
-		{
-			DrawGraph(0, -50, uiHandle[STAGE2], TRUE);
-		}
+		
+		StartGameDraw(STAGE2);
 		PlayerHpDraw(playerCount);
-		DrawGraph(0, 900, uiHandle[KEY], TRUE);
+		DrawGraph(0, 900, uiHandle[KEY], TRUE);		//WASDキー描画
 		break;
 
 	case SecondStage::State::GOAL:
@@ -133,20 +130,21 @@ void UiManager::Draw(SecondStage::State state, int playerCount)
 /// <summary>
 /// ゲーム開始UI
 /// </summary>
-void UiManager::StartGameDraw()
+/// <param name="graphic"></param>
+void UiManager::StartGameDraw(UiManager::Graphic graphic)
 {
-	count++;
+	stageCount++;
 
-	if (count < 50)
+	if (stageCount < 50)
 	{
-		DrawGraph(0, -50, uiHandle[STAGE1], TRUE);
+		DrawGraph(0, -50, uiHandle[graphic], TRUE);
 	}
 }
 
 /// <summary>
 /// 操作方法説明UI
 /// </summary>
-/// <param name="hitChecker"></param>
+/// <param name="hitUi"></param>
 void UiManager::OperationMethodDraw(bool hitUi)
 {
 	if (hitUi)
@@ -156,9 +154,24 @@ void UiManager::OperationMethodDraw(bool hitUi)
 }
 
 /// <summary>
+/// ボールを持っているかのUI
+/// </summary>
+/// <param name="ballGet"></param>
+void UiManager::BallGetDraw(bool ballGet)
+{
+	DrawGraph(0, 500, uiHandle[BALL_FRAME], TRUE);
+
+	//ボールを持っているなら
+	if (ballGet)
+	{
+		DrawGraph(0, 500, uiHandle[BALL], TRUE);
+	}
+}
+
+/// <summary>
 /// プレイヤーHPUI
 /// </summary>
-/// <param name="enemy"></param>
+/// <param name="playerCount"></param>
 void UiManager::PlayerHpDraw(int playerCount)
 {
 	DrawRotaGraph(515, 150, 0.7f, 0, uiHandle[FRAME], TRUE);

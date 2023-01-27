@@ -20,7 +20,7 @@ public:
     std::vector<VECTOR>& GetMap() { return positionList; }          //敵の行動パターンリストを返す
     std::vector<VECTOR>& GetMap2() { return positionList2; }        //敵の行動パターンリスト2を返す
 
-    int GetModel() { return modelHandle; }                          //マップモデルを返す
+    const int GetModel() { return modelHandle; }                    //マップモデルを返す
 
 private:
 

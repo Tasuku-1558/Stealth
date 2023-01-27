@@ -16,7 +16,7 @@ class StageSelection final : public SceneBase
 {
 public:
 	 StageSelection(SceneManager* const sceneManager);
-	~StageSelection();
+	 virtual ~StageSelection();
 
 	void Initialize();								//初期化処理
 	void Finalize();								//終了処理
@@ -34,8 +34,8 @@ private:
 	FadeManager* fadeManager;
 
 	int StageCreator(int stageNumber);
-	int stageDecrement(int stageNumber);			//選択ステージを1個前に持っていく
-	int stageIncrement(int stageNumber);			//選択ステージを1個先に持っていく
+	int stageDecrement(int stageNumber);			//選択ステージを1つ前に持っていく
+	int stageIncrement(int stageNumber);			//選択ステージを1つ先に持っていく
 	void KeyMove(float deltaTime);					//キー操作
 
 	
@@ -46,7 +46,6 @@ private:
 	int changeTimeCount;							//ステージ遷移カウント
 	int maxTime;									//マックスステージ遷移カウント
 	float pushCount;								//ステージ切り替えカウント
-	int lightHandle;
 
 
 	//静的定数

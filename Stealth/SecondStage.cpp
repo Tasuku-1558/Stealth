@@ -63,7 +63,6 @@ void SecondStage::Initialize()
 
 	//ライトクラス
 	light = new Light();
-	light->Initialize({ 0.0f,-0.5f,0.0f });
 
 	//背景クラス
 	backGround = new BackGround();
@@ -334,6 +333,8 @@ void SecondStage::UpdateStart(float deltaTime)
 /// <param name="deltaTime"></param>
 void SecondStage::UpdateGame(float deltaTime)
 {
+	light->Update({ 0.0f,-0.5f,0.0f });
+
 	camera->Update(player->GetPosition());
 
 	player->Update(deltaTime, camera, hitChecker->Back(),hitChecker->MapHit());
@@ -352,6 +353,12 @@ void SecondStage::UpdateGame(float deltaTime)
 		for (auto ptra : ballBullet)
 		{
 			ptr->VisualAngleBall(ptra->bullet);
+			
+			//エネミーがボールを見つけたならば
+			if (ptr->BallFlag())
+			{
+				break;
+			}
 		}
 
 		//エネミーに3回見つかったら

@@ -27,8 +27,9 @@ public:
 	void VisualAngleBall(Bullet* bullet);				//エネミーの視野にボールが入った場合
 	void VisualAngleWall(VECTOR wallPos);				//エネミーの視野に壁が入った場合
 
-	bool Discovery() { return discovery; }				//プレイヤーを見つけたかどうかを返す
-	int GetPlayerCount() { return playerFindCount; }	//プレイヤーを見つけた回数を返す
+	const bool Spotted() { return playerSpotted; }			//プレイヤーを見つけたかどうかを返す
+	const bool BallFlag() { return ballFlag; }				//ボールを見つけたかどうかを返す
+	const int GetPlayerCount() { return playerFindCount; }	//プレイヤーを見つけた回数を返す
 	
 	//エネミーの状態
 	enum class EnemyState
@@ -54,7 +55,6 @@ private:
 
 	std::vector<VECTOR>::iterator itr;
 	std::vector<VECTOR> pointList;
-
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス

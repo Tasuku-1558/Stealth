@@ -65,7 +65,7 @@ void Enemy::Initialize()
 	markImage = LoadGraph(failePath.c_str());
 
 	failePath = SOUND_FOLDER_PATH + DISCOVERY_SE_PATH;
-	discoverySE = LoadSoundMem(failePath.c_str());
+	spottedSE = LoadSoundMem(failePath.c_str());
 }
 
 /// <summary>
@@ -103,7 +103,7 @@ void Enemy::Finalize()
 	DeleteGraph(findImage);
 	DeleteGraph(markImage);
 
-	// サウンドリソースを削除
+	//サウンドリソースを削除
 	InitSoundMem();
 }
 
@@ -202,7 +202,7 @@ void Enemy::VisualAngle(Player* player)
 	else
 	{
 		//発見していない
-		discovery = false;
+		playerSpotted = false;
 	}
 }
 
@@ -237,6 +237,9 @@ void Enemy::VisualAngleBall(Bullet* bullet)
 		{
 			object = Object::BALL;
 
+			//ボールを見つけた
+			ballFlag = true;
+
 			//視野範囲内ならば
 			Reaction();
 		}
@@ -245,6 +248,8 @@ void Enemy::VisualAngleBall(Bullet* bullet)
 	{
 		//エネミーの視野範囲外ならスピードを元のスピードに戻す
 		speed = SPEED;
+
+		ballFlag = false;
 	}
 }
 
@@ -294,7 +299,7 @@ void Enemy::Reaction()
 	{
 	case Object::PLAYER:
 		printfDx("PLAYER");
-		discovery = true;
+		playerSpotted = true;
 		
 		//ビックリマークの画像を描画
 		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
@@ -303,7 +308,7 @@ void Enemy::Reaction()
 		DrawGraph(50, 50, findImage, TRUE);
 
 		// 発見SEを再生
-		PlaySoundMem(discoverySE, DX_PLAYTYPE_BACK);
+		PlaySoundMem(spottedSE, DX_PLAYTYPE_BACK);
 	
 		
 		playerFindCount++;

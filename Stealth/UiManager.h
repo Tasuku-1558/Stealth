@@ -20,17 +20,13 @@ public:
 	void Activate();		//活性化処理
 	void Finalize();		//終了処理
 
-	void Draw(FirstStage::State state, int playerCount, bool hitUi);	//FirstStage描画処理
-	void Draw(SecondStage::State state, int playerCount);				//SecondStage描画処理
+	void Draw(FirstStage::State state, int playerCount, bool hitUi);	//FirstStageのUI描画処理
+	void Draw(SecondStage::State state, int playerCount);				//SecondStageのUI描画処理
 
-	
+	void BallGetDraw(bool ballGet);			//ボールを持っているかのUI
+
 private:
 	UiManager(const UiManager&);			//コピーコンストラクタ
-
-	void StartGameDraw();					//ゲーム開始UI
-	void PlayerHpDraw(int playerCount);		//プレイヤーHPUI
-	void OperationMethodDraw(bool hitUi);	//操作方法説明UI
-
 
 	//画像の種類
 	enum Graphic
@@ -42,12 +38,19 @@ private:
 		BALLOON,			//吹き出し画像
 		CLEAR,				//ゲームクリア画像
 		STAGE2,				//ステージ２スタート画像
-		FRAME,				//フレーム画像
+		FRAME,				//プレイヤーHPフレーム画像
 		KEY,				//プレイヤー移動キー画像
+		BALL,				//ボール画像
+		BALL_FRAME,			//ボール枠画像
 		GRAPHIC_AMOUNT		//画像の数
 	};
 
-	int count;
+	void StartGameDraw(UiManager::Graphic graphic);	//ゲーム開始UI
+	void PlayerHpDraw(int playerCount);				//プレイヤーHPUI
+	void OperationMethodDraw(bool hitUi);			//操作方法説明UI
+
+
+	int stageCount;									//ステージ名称表示カウント
 	
 	int uiHandle[GRAPHIC_AMOUNT];					//画像ハンドル
 	

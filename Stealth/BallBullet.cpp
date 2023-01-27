@@ -54,13 +54,13 @@ void BallBullet::Finalize()
 /// <param name="effect"></param>
 void BallBullet::Update(float deltaTime, VECTOR playerPos, HitChecker* hitChecker, Effect* effect)
 {
+    //ボールが生きてるならば
     if (ball->GetAlive())
     {
         hitChecker->BallAndPlayer(playerPos, ball);
         ball->IsAlive(hitChecker);
     }
     
-
     Shoot(deltaTime, playerPos);
     BulletReuse(deltaTime, effect);
 }
@@ -86,8 +86,10 @@ void BallBullet::Shoot(float deltaTime, VECTOR playerPos)
 /// バレット再使用カウント
 /// </summary>
 /// <param name="deltaTime"></param>
+/// <param name="effect"></param>
 void BallBullet::BulletReuse(float deltaTime, Effect* effect)
 {
+    //バレットが生きてるならば
     if (bullet->GetAlive())
     {
         bulletCount += deltaTime;

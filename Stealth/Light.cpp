@@ -1,9 +1,6 @@
 #include "Light.h"
 
 
-const VECTOR Light::DIRECTION = { 0.0f,-0.5f,0.0f };	//ライトの方向
-
-
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -21,14 +18,9 @@ Light::~Light()
 }
 
 /// <summary>
-/// 初期化処理
+/// 更新処理
 /// </summary>
-void Light::Initialize(VECTOR direction)
-{
-	SetLightDirection(direction);
-}
-
-void Light::SelectionLight(VECTOR direction)
+void Light::Update(VECTOR direction)
 {
 	SetLightDirection(direction);
 }

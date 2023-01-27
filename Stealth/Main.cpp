@@ -16,7 +16,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ChangeWindowMode(IS_WINDOW_MODE);				// ウィンドウモードにするか
 	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, 16);	// 画面モードのセット
 	SetUseDirect3DVersion(DX_DIRECT3D_11);
-
+	
 	// DXライブラリ初期化処理
 	if (DxLib_Init() == -1)		
 	{

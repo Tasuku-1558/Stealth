@@ -68,6 +68,7 @@ void Ball::Finalize()
 /// </summary>
 void Ball::Update()
 {
+	//処理なし
 }
 
 /// <summary>
@@ -80,7 +81,7 @@ void Ball::BallAlive()
 }
 
 /// <summary>
-/// ボールが生きてるか死んでいるか
+/// ボールが生きてるか死んでいるかを判定
 /// </summary>
 /// <param name="hitChecker"></param>
 void Ball::IsAlive(HitChecker* hitChecker)

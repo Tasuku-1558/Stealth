@@ -22,7 +22,7 @@ class FirstStage final : public SceneBase
 {
 public:
 	 FirstStage(SceneManager* const sceneManager);
-	~FirstStage();
+	 virtual ~FirstStage();
 
 	void Initialize();				//‰Šú‰»ˆ—
 	void Finalize();				//I—¹ˆ—

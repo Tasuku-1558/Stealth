@@ -20,8 +20,8 @@ public:
 	void BallAlive();					//ボールをアクティブ化
 	void Draw();						//描画処理
 
-	bool GetAlive() { return alive; }
-	void IsAlive(HitChecker* hitChecker);			//ボールが生きてるか死んでいるか
+	const bool GetAlive() { return alive; }			//ボールが生きてるか死んでるかを返す
+	void IsAlive(HitChecker* hitChecker);			//ボールが生きてるか死んでいるかを判定
 
 private:
 

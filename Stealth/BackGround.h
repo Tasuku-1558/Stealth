@@ -6,7 +6,7 @@
 using namespace std;
 
 /// <summary>
-/// ”wŒiƒNƒ‰ƒX
+/// ”wŒi“®‰æƒNƒ‰ƒX
 /// </summary>
 class BackGround final
 {

@@ -161,7 +161,7 @@ void Player::Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 void Player::FoundEnemy(Enemy* enemy)
 {
 	//エネミーに見つかったら
-	if (enemy->Discovery())
+	if (enemy->Spotted())
 	{
 		WaitTimer(1000);
 

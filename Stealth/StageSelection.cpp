@@ -31,7 +31,6 @@ StageSelection::StageSelection(SceneManager* const sceneManager)
 	, changeScene(false)
 	, changeTimeCount(0)
 	, maxTime(80)
-	, lightHandle(0)
 	, pushCount(0.0f)
 {
 	//処理なし
@@ -50,10 +49,7 @@ StageSelection::~StageSelection()
 /// </summary>
 void StageSelection::Initialize()
 {
-	
 	light = new Light();
-	light->SelectionLight({ 0.0f, 0.0f, 0.5f });
-	
 	
 	selectionUi = new SelectionUi();
 	selectionUi->Initialize();
@@ -75,7 +71,6 @@ void StageSelection::Finalize()
 	selectionUi->Finalize();
 
 	SafeDelete(fadeManager);
-	DeleteLightHandle(lightHandle);
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
@@ -96,7 +91,7 @@ void StageSelection::Activate()
 }
 
 /// <summary>
-/// 選択ステージを1個前に持っていく
+/// 選択ステージを1つ前に持っていく
 /// </summary>
 /// <param name="stageNum"></param>
 /// <returns></returns>
@@ -112,7 +107,7 @@ int StageSelection::stageDecrement(int stageNumber)
 }
 
 /// <summary>
-/// 選択ステージを1個先に持っていく
+/// 選択ステージを1つ先に持っていく
 /// </summary>
 /// <param name="stageNum"></param>
 /// <returns></returns>
@@ -159,6 +154,7 @@ int StageSelection::StageCreator(int stageNumber)
 void StageSelection::Update(float deltaTime)
 {
 	//fadeManager->FadeMove();
+	light->Update({ 0.0f, 0.0f, 0.5f });
 
 	KeyMove(deltaTime);
 }
@@ -166,6 +162,7 @@ void StageSelection::Update(float deltaTime)
 /// <summary>
 /// キー操作
 /// </summary>
+/// <param name="deltaTime"></param>
 void StageSelection::KeyMove(float deltaTime)
 {
 	pushCount -= deltaTime;

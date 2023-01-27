@@ -25,6 +25,7 @@ public:
 
 private:
 	SelectionUi(const SelectionUi&);				//コピーコンストラクタ
+
 	void MapInput(int number, ModelManager::ModelType modelType, VECTOR mapPos, VECTOR size, VECTOR rotate);	//マップ情報入力
 
 

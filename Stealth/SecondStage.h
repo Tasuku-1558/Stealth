@@ -25,7 +25,7 @@ class SecondStage final : public SceneBase
 {
 public:
 	 SecondStage(SceneManager* const sceneManager);
-	~SecondStage();
+	 virtual ~SecondStage();
 
 	void Initialize();				//‰Šú‰»ˆ—
 	void Finalize();				//I—¹ˆ—

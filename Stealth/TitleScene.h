@@ -13,7 +13,7 @@ class TitleScene final : public SceneBase
 {
 public:
 	 TitleScene(SceneManager* const sceneManager);
-	~TitleScene();
+	 virtual ~TitleScene();
 
 	void Initialize();					//‰Šú‰»ˆ—
 	void Finalize();					//I—¹ˆ—

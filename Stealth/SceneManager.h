@@ -10,7 +10,7 @@ class SceneManager final
 public:
 
 	 SceneManager();
-	~SceneManager();
+	 virtual ~SceneManager();
 
 	void Initialize();				//‰Šú‰»ˆ—
 	void Finalize();				//I—¹ˆ—

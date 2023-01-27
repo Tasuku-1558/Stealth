@@ -61,7 +61,6 @@ void FirstStage::Initialize()
 
 	//ライトクラス
 	light = new Light();
-	light->Initialize({ 0.0f,-0.5f,0.0f });
 	
 	//背景クラス
 	backGround = new BackGround();
@@ -179,6 +178,7 @@ void FirstStage::UpdateStart(float deltaTime)
 {
 	state = State::GAME;
 	pUpdate = &FirstStage::UpdateGame;
+
 }
 
 /// <summary>
@@ -187,6 +187,8 @@ void FirstStage::UpdateStart(float deltaTime)
 /// <param name="deltaTime"></param>
 void FirstStage::UpdateGame(float deltaTime)
 {
+	light->Update({ 0.0f,-0.5f,0.0f });
+
 	camera->Update(player->GetPosition());
 
 	enemy->Update(deltaTime, player);
@@ -226,8 +228,10 @@ void FirstStage::UpdateGoal(float deltaTime)
 {
 	WaitTimer(1000);
 
+	//ステージ選択画面へ遷移
 	parent->SetNextScene(SceneManager::SELECTION);
 	return;
+
 }
 
 /// <summary>
@@ -258,6 +262,9 @@ void FirstStage::Draw()
 
 	//UI管理クラス描画
 	uiManager->Draw(state, enemy->GetPlayerCount(), hitChecker->UI());
+
+	uiManager->BallGetDraw(!ballBullet->ball->GetAlive());
+	
 
 	//デバック用
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());

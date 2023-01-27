@@ -10,7 +10,7 @@
 class EnemyBase : public ObjectBase
 {
 public:
-			 EnemyBase();
+	EnemyBase();
 	virtual ~EnemyBase();
 
 protected:
@@ -22,12 +22,13 @@ protected:
 	float speed;					//エネミーの移動速度
 	const float length;				//視野角の距離
 
-	bool discovery;					//プレイヤーを発見したかどうか
+	bool playerSpotted;				//プレイヤーを発見したかどうか
+	bool ballFlag;					//ボールを発見したかどうか
 	int playerFindCount;			//プレイヤーを見つけた回数
 
 	int findImage;					//見つかった画像格納用
 	int markImage;					//ビックリマーク画像格納用
-	int discoverySE;				//プレイヤー発見SE音
+	int spottedSE;					//プレイヤー発見SE音
 
 	int visualModelHandle;			//視野モデルハンドル
 	VECTOR visualPosition;			//視野モデルの位置
