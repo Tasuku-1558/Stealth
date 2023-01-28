@@ -3,7 +3,7 @@
 #include "HitChecker.h"
 
 
-const VECTOR Ball::SIZE	= { 2.0f, 2.0f, 2.0f };		//モデルの倍率
+const VECTOR Ball::SIZE	= { 20.0f, 20.0f, 20.0f };		//モデルの倍率
 
 
 /// <summary>
@@ -35,14 +35,14 @@ Ball::~Ball()
 /// </summary>
 void Ball::Initialize()
 {
-	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::BALL));
+	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::CAKE));
 	MV1SetScale(modelHandle, SIZE);
 	MV1SetPosition(modelHandle, position);
 
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
 	{
-		printfDx("モデルデータ読み込みに失敗 [BALL]\n");
+		printfDx("モデルデータ読み込みに失敗 [CAKE]\n");
 	}
 }
 

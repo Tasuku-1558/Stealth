@@ -12,7 +12,7 @@
 #include "Wall.h"
 #include "HitChecker.h"
 #include "Map.h"
-#include "Effect.h"
+#include "Cake_Repop_Effect.h"
 #include "UiManager.h"
 #include "FadeManager.h"
 
@@ -34,7 +34,7 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 		, wall(nullptr)
 		, hitChecker(nullptr)
 		, map(nullptr)
-		, effect(nullptr)
+		, cakeEffect(nullptr)
 		, uiManager(nullptr)
 		, fadeManager(nullptr)
 		, font(0)
@@ -84,8 +84,8 @@ void FirstStage::Initialize()
 	map->Initialize();
 
 	//エフェクトクラス
-	effect = new Effect();
-	effect->Initialize();
+	cakeEffect = new Cake_Repop_Effect();
+	cakeEffect->Initialize();
 
 	//エネミークラス
 	//エネミーに行動パターンのリストを設定
@@ -118,7 +118,7 @@ void FirstStage::Finalize()
 
 	SafeDelete(map);
 
-	SafeDelete(effect);
+	SafeDelete(cakeEffect);
 
 	SafeDelete(enemy);
 
@@ -153,7 +153,7 @@ void FirstStage::Activate()
 
 	ballBullet->Activate();
 
-	effect->Activate();
+	cakeEffect->Activate();
 
 	uiManager->Activate();
 }
@@ -201,7 +201,7 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	player->FoundEnemy(enemy);
 
-	ballBullet->Update(deltaTime, player->GetPosition(), hitChecker, effect);
+	ballBullet->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
 	
 	hitChecker->Check(map->GetModel(), player);
 	
@@ -258,12 +258,12 @@ void FirstStage::Draw()
 	ballBullet->Draw();
 
 	//エフェクト描画
-	effect->Draw();
+	cakeEffect->Draw();
 
 	//UI管理クラス描画
 	uiManager->Draw(state, enemy->GetPlayerCount(), hitChecker->UI());
 
-	uiManager->BallGetDraw(!ballBullet->ball->GetAlive());
+	uiManager->CakeGetDraw(!ballBullet->ball->GetAlive());
 	
 
 	//デバック用

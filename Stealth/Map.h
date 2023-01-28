@@ -23,7 +23,6 @@ public:
 private:
 
     void MapList();                    //敵の行動パターンリスト
-    void MiniMap();
 
     std::vector<VECTOR> positionList;
     std::vector<VECTOR>::iterator itr;

@@ -147,6 +147,7 @@ void UiManager::StartGameDraw(UiManager::Graphic graphic)
 /// <param name="hitUi"></param>
 void UiManager::OperationMethodDraw(bool hitUi)
 {
+	//吹き出し画像に当たっているなら
 	if (hitUi)
 	{
 		DrawGraph(0, 20, uiHandle[OPERATION], TRUE);
@@ -154,17 +155,15 @@ void UiManager::OperationMethodDraw(bool hitUi)
 }
 
 /// <summary>
-/// ボールを持っているかのUI
+/// ケーキを持っているかのUI
 /// </summary>
-/// <param name="ballGet"></param>
-void UiManager::BallGetDraw(bool ballGet)
+/// <param name="cakeGet"></param>
+void UiManager::CakeGetDraw(bool cakeGet)
 {
-	DrawGraph(0, 500, uiHandle[BALL_FRAME], TRUE);
-
-	//ボールを持っているなら
-	if (ballGet)
+	//ケーキを持っているなら
+	if (cakeGet)
 	{
-		DrawGraph(0, 500, uiHandle[BALL], TRUE);
+		DrawRotaGraph(110, 220, 0.05f, 0, uiHandle[CAKE], TRUE);
 	}
 }
 

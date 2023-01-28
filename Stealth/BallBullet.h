@@ -4,9 +4,9 @@
 #include "Ball.h"
 #include "Bullet.h"
 #include "HitChecker.h"
-#include "Effect.h"
+#include "Cake_Repop_Effect.h"
 
-class Effect;
+class Cake_Repop_Effect;
 
 
 /// <summary>
@@ -19,7 +19,7 @@ public:
     BallBullet(VECTOR ballPos);
     virtual ~BallBullet();
 
-    void Update(float deltaTime, VECTOR playerPos, HitChecker* hitChecker, Effect* effect);     //更新処理
+    void Update(float deltaTime, VECTOR playerPos, HitChecker* hitChecker, Cake_Repop_Effect* effect);     //更新処理
     void Activate();            //活性化処理
     void Finalize();            //終了処理
 
@@ -31,7 +31,7 @@ public:
 private:
 
     void Shoot(float deltaTime, VECTOR playerPos);          //バレット発射処理
-    void BulletReuse(float deltaTime, Effect* effect);      //バレット再使用カウント
+    void BulletReuse(float deltaTime, Cake_Repop_Effect* effect);      //バレット再使用カウント
 
     float bulletCount;                                      //弾の効果時間
 };

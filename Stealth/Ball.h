@@ -29,6 +29,8 @@ private:
 
 	bool alive;							//ボールが生きてるか死んでいるか
 
+
 	//静的定数
 	static const VECTOR SIZE;           //モデルの倍率
+
 };

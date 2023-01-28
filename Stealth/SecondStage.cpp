@@ -10,6 +10,7 @@
 #include "BackGround.h"
 #include "Wall.h"
 #include "HitChecker.h"
+#include "Cake_Repop_Effect.h"
 #include "SecondStageMap.h"
 #include "UiManager.h"
 #include "FadeManager.h"
@@ -32,7 +33,7 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, wall()
 	, hitChecker(nullptr)
 	, secondStageMap(nullptr)
-	, effect(nullptr)
+	, cakeEffect(nullptr)
 	, uiManager(nullptr)
 	, fadeManager(nullptr)
 	, font(0)
@@ -77,8 +78,8 @@ void SecondStage::Initialize()
 	secondStageMap->Initialize();
 
 	//エフェクトクラス
-	effect = new Effect();
-	effect->Initialize();
+	cakeEffect = new Cake_Repop_Effect();
+	cakeEffect->Initialize();
 
 	//ヒットチェッカークラス
 	hitChecker = new HitChecker();
@@ -129,7 +130,7 @@ void SecondStage::Finalize()
 
 	SafeDelete(hitChecker);
 
-	SafeDelete(effect);
+	SafeDelete(cakeEffect);
 
 	SafeDelete(uiManager);
 
@@ -162,7 +163,7 @@ void SecondStage::Activate()
 		ptr->Activate();
 	}
 
-	effect->Activate();
+	cakeEffect->Activate();
 
 	uiManager->Activate();
 }
@@ -371,7 +372,7 @@ void SecondStage::UpdateGame(float deltaTime)
 
 	for (auto ptr : ballBullet)
 	{
-		ptr->Update(deltaTime, player->GetPosition(), hitChecker, effect);
+		ptr->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
 	}
 
 	hitChecker->Check(secondStageMap->GetModel(), player);
@@ -426,10 +427,11 @@ void SecondStage::Draw()
 	for (auto ptr : ballBullet)
 	{
 		ptr->Draw();
+		uiManager->CakeGetDraw(!ptr->ball->GetAlive());
 	}
 
 	//エフェクト描画
-	effect->Draw();
+	cakeEffect->Draw();
 
 	//UI管理クラス描画
 	for (auto ptr : enemy)

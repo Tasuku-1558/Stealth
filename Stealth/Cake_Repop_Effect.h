@@ -6,14 +6,14 @@
 using namespace std;
 
 /// <summary>
-/// ボールエフェクトクラス
-/// ボール再スポーン時のエフェクト
+/// ケーキエフェクトクラス
+/// ケーキ再スポーン時のエフェクト
 /// </summary>
-class Effect final : public EffectBase
+class Cake_Repop_Effect final : public EffectBase
 {
 public:
-	Effect();
-	virtual ~Effect();
+	Cake_Repop_Effect();
+	virtual ~Cake_Repop_Effect();
 
 	void Initialize();		//初期化処理
 	void Finalize();		//終了処理
@@ -24,10 +24,10 @@ public:
 
 private:
 
-	int effectHandle;				//ボール再スポーン時エフェクト格納用
+	int effectHandle;				//ケーキ再スポーン時エフェクト格納用
 	int effectTime;					//エフェクト時間
 
-	//ボール再スポーン時エフェクトの位置
+	//ケーキ再スポーン時エフェクトの位置
 	float effectPos_X;
 	float effectPos_Y;
 	float effectPos_Z;
@@ -37,6 +37,6 @@ private:
 
 	//静的定数
 	static const string EFFECT_FOLDER_PATH;		//effectフォルダまでのパス
-	static const string BALL_PATH;				//ボール再スポーン時エフェクトのパス
+	static const string CAKE_PATH;				//ケーキ再スポーン時エフェクトのパス
 
 };

@@ -2,7 +2,7 @@
 #include "ModelManager.h"
 
 
-const VECTOR Bullet::SIZE			   = { 2.0f, 2.0f, 2.0f };	//モデルの倍率
+const VECTOR Bullet::SIZE			   = { 20.0f, 20.0f, 20.0f };	//モデルの倍率
 const VECTOR Bullet::POSITION		   = { 0.0f, 30.0f, 0.0f }; //モデルの位置
 const string Bullet::IMAGE_FOLDER_PATH = "data/image/";			//imageフォルダまでのパス
 const string Bullet::CURSOR_PATH	   = "pointer.png";			//カーソル画像のパス
@@ -41,7 +41,7 @@ Bullet::~Bullet()
 /// </summary>
 void Bullet::Initialize()
 {
-	modelHandle = ModelManager::GetInstance().GetModelHandle(ModelManager::BALL);
+	modelHandle = ModelManager::GetInstance().GetModelHandle(ModelManager::CAKE);
 	MV1SetScale(modelHandle, SIZE);
 
 	// マウスカーソルを表示しない
@@ -52,7 +52,7 @@ void Bullet::Initialize()
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
 	{
-		printfDx("モデルデータ読み込みに失敗 [BULLET]\n");
+		printfDx("モデルデータ読み込みに失敗 [CAKE]\n");
 	}
 
 	string failePath = IMAGE_FOLDER_PATH + CURSOR_PATH;

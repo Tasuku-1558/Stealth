@@ -106,7 +106,7 @@
     <ClCompile Include="StageBase.cpp">
       <Filter>ソース ファイル\Map</Filter>
     </ClCompile>
-    <ClCompile Include="Effect.cpp">
+    <ClCompile Include="Cake_Repop_Effect.cpp">
       <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
     <ClCompile Include="StageSelection.cpp">
@@ -198,7 +198,7 @@
     <ClInclude Include="StageBase.h">
       <Filter>ソース ファイル\Map</Filter>
     </ClInclude>
-    <ClInclude Include="Effect.h">
+    <ClInclude Include="Cake_Repop_Effect.h">
       <Filter>ソース ファイル\Effect</Filter>
     </ClInclude>
     <ClInclude Include="EffectBase.h">

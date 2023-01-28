@@ -71,23 +71,10 @@ void Map::MapList()
 	itr = positionList.begin();   //  イテレータを先頭に設定
 }
 
-void Map::MiniMap()
-{
-	/*pDotX = x + int(pGloX * exRate);
-	pDotY = y + int(pGloY * exRate);*/
-
-	DrawRotaGraph(x, y, exRate, 0, mapGraph, false);
-	DrawBoxAA(mapFlameX, mapFlameY, mapFlameX + miniMapWidth, mapFlameY + miniMapHeight, GetColor(0, 0, 0), false, 3);
-	DrawBoxAA(pDotX - int(SCREEN_WIDTH * exRate / 2), pDotY - int(SCREEN_HEIGHT * exRate / 2), pDotX + int(SCREEN_WIDTH * exRate / 2), pDotY + int(SCREEN_HEIGHT * exRate / 2), GetColor(255, 0, 0), false, 2);
-	DrawCircle(pDotX, pDotY + 12, dotSize, GetColor(0, 0, 0), true);
-}
-
 /// <summary>
 /// 描画処理
 /// </summary>
 void Map::Draw()
 {
 	MV1DrawModel(modelHandle);
-
-	//MiniMap();
 }

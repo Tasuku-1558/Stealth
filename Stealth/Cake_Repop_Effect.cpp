@@ -1,15 +1,15 @@
-#include "Effect.h"
+#include "Cake_Repop_Effect.h"
 #include "DxLib.h"
 #include "EffekseerForDXLib.h"
 
 
-const string Effect::EFFECT_FOLDER_PATH = "data/effect/";		//effectフォルダまでのパス
-const string Effect::BALL_PATH			= "ball.efkefc";		//ボール再スポーン時エフェクトのパス
+const string Cake_Repop_Effect::EFFECT_FOLDER_PATH = "data/effect/";		//effectフォルダまでのパス
+const string Cake_Repop_Effect::CAKE_PATH			= "ball.efkefc";		//ケーキ再スポーン時エフェクトのパス
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-Effect::Effect() : EffectBase()
+Cake_Repop_Effect::Cake_Repop_Effect() : EffectBase()
 	, effectHandle(0)
 	, effectPos_X(0.0f)
 	, effectPos_Y(0.0f)
@@ -23,7 +23,7 @@ Effect::Effect() : EffectBase()
 /// <summary>
 /// デストラクタ
 /// </summary>
-Effect::~Effect()
+Cake_Repop_Effect::~Cake_Repop_Effect()
 {
 	//処理なし
 }
@@ -31,16 +31,16 @@ Effect::~Effect()
 /// <summary>
 /// 初期化処理
 /// </summary>
-void Effect::Initialize()
+void Cake_Repop_Effect::Initialize()
 {
-	string failePath = EFFECT_FOLDER_PATH + BALL_PATH;
+	string failePath = EFFECT_FOLDER_PATH + CAKE_PATH;
 	effectHandle = LoadEffekseerEffect(failePath.c_str(), 30.0f);
 }
 
 /// <summary>
 /// 終了処理
 /// </summary>
-void Effect::Finalize()
+void Cake_Repop_Effect::Finalize()
 {
 	//エフェクトリソースを削除
 	DeleteEffekseerEffect(effectHandle);
@@ -49,7 +49,7 @@ void Effect::Finalize()
 /// <summary>
 /// 活性化処理
 /// </summary>
-void Effect::Activate()
+void Cake_Repop_Effect::Activate()
 {
 	//エフェクトを停止する
 	StopEffekseer3DEffect(playingEffectHandle);
@@ -61,7 +61,7 @@ void Effect::Activate()
 /// <param name="ballPosX"></param>
 /// <param name="ballPosY"></param>
 /// <param name="ballPosZ"></param>
-void Effect::Update(float ballPosX, float ballPosY, float ballPosZ)
+void Cake_Repop_Effect::Update(float ballPosX, float ballPosY, float ballPosZ)
 {
 	//エフェクトの位置設定
 	effectPos_X = ballPosX;
@@ -85,7 +85,7 @@ void Effect::Update(float ballPosX, float ballPosY, float ballPosZ)
 /// <summary>
 /// 描画処理
 /// </summary>
-void Effect::Draw()
+void Cake_Repop_Effect::Draw()
 {
 	//再生中のエフェクトを更新
 	UpdateEffekseer3D();

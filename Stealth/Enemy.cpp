@@ -8,7 +8,7 @@ const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageƒtƒHƒ‹ƒ_‚Ü‚Å‚Ìƒpƒ
 const string Enemy::SOUND_FOLDER_PATH = "data/sound/";		//soundƒtƒHƒ‹ƒ_‚Ü‚Å‚ÌƒpƒX
 const string Enemy::FIND_PATH		  = "find.png";			//Œ©‚Â‚©‚Á‚½‰æ‘œ‚ÌƒpƒX
 const string Enemy::MARK_PATH		  = "mark.png";			//ƒrƒbƒNƒŠƒ}[ƒN‰æ‘œ‚ÌƒpƒX
-const string Enemy::DISCOVERY_SE_PATH = "discovery.mp3";	//ƒvƒŒƒCƒ„[”­Œ©SE‰¹‚ÌƒpƒX
+const string Enemy::SPOTTED_SE_PATH	  = "spotted.mp3";		//ƒvƒŒƒCƒ„[”­Œ©SE‰¹‚ÌƒpƒX
 
 
 using namespace Math3d;
@@ -17,7 +17,7 @@ using namespace std;
 /// <summary>
 /// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 /// </summary>
-/// <param name="num"></param>
+/// <param name="id"></param>
 Enemy::Enemy(std::vector<VECTOR>& id) : EnemyBase()
 {
 	enemyState = EnemyState::CRAWL;
@@ -64,7 +64,7 @@ void Enemy::Initialize()
 	failePath = IMAGE_FOLDER_PATH + MARK_PATH;
 	markImage = LoadGraph(failePath.c_str());
 
-	failePath = SOUND_FOLDER_PATH + DISCOVERY_SE_PATH;
+	failePath = SOUND_FOLDER_PATH + SPOTTED_SE_PATH;
 	spottedSE = LoadSoundMem(failePath.c_str());
 }
 
@@ -195,13 +195,15 @@ void Enemy::VisualAngle(Player* player)
 		{
 			object = Object::PLAYER;
 
+			//ƒvƒŒƒCƒ„[‚ğ”­Œ©‚µ‚½
+			playerSpotted = true;
+
 			//‹–ì”ÍˆÍ“à‚È‚ç‚Î
 			Reaction();
 		}
 	}
 	else
 	{
-		//”­Œ©‚µ‚Ä‚¢‚È‚¢
 		playerSpotted = false;
 	}
 }
@@ -239,6 +241,7 @@ void Enemy::VisualAngleBall(Bullet* bullet)
 
 			//ƒ{[ƒ‹‚ğŒ©‚Â‚¯‚½
 			ballFlag = true;
+
 
 			//‹–ì”ÍˆÍ“à‚È‚ç‚Î
 			Reaction();
@@ -298,8 +301,7 @@ void Enemy::Reaction()
 	switch (object)
 	{
 	case Object::PLAYER:
-		printfDx("PLAYER");
-		playerSpotted = true;
+		//printfDx("PLAYER");
 		
 		//ƒrƒbƒNƒŠƒ}[ƒN‚Ì‰æ‘œ‚ğ•`‰æ
 		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
@@ -315,14 +317,14 @@ void Enemy::Reaction()
 		break;
 
 	case Object::BALL:
-		printfDx("BALL");
+		//printfDx("BALL");
 		
 		speed = 0.0f;
 		
 		break;
 
 	case Object::WALL:
-		printfDx("WALL");
+		//printfDx("WALL");
 
 		break;
 	}

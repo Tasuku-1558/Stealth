@@ -13,7 +13,7 @@ class BallBullet;
 class Wall;
 class HitChecker;
 class SecondStageMap;
-class Effect;
+class Cake_Repop_Effect;
 class UiManager;
 class FadeManager;
 
@@ -53,7 +53,7 @@ private:
 	std::vector<Wall*> wall;
 	HitChecker* hitChecker;
 	SecondStageMap* secondStageMap;
-	Effect* effect;
+	Cake_Repop_Effect* cakeEffect;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
 	

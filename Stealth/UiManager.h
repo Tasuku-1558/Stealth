@@ -23,7 +23,7 @@ public:
 	void Draw(FirstStage::State state, int playerCount, bool hitUi);	//FirstStageのUI描画処理
 	void Draw(SecondStage::State state, int playerCount);				//SecondStageのUI描画処理
 
-	void BallGetDraw(bool ballGet);			//ボールを持っているかのUI
+	void CakeGetDraw(bool cakeGet);			//ケーキを持っているかのUI
 
 private:
 	UiManager(const UiManager&);			//コピーコンストラクタ
@@ -31,17 +31,16 @@ private:
 	//画像の種類
 	enum Graphic
 	{
-		STAGE1,				//ステージ１スタート画像
+		STAGE1,				//ステージ1スタート画像
 		PLAYER_HP,			//プレイヤーHP画像
 		PLAYER_HP_FRAME,	//プレイヤーHP枠画像
 		OPERATION,			//操作方法説明画像
 		BALLOON,			//吹き出し画像
 		CLEAR,				//ゲームクリア画像
-		STAGE2,				//ステージ２スタート画像
+		STAGE2,				//ステージ2スタート画像
 		FRAME,				//プレイヤーHPフレーム画像
 		KEY,				//プレイヤー移動キー画像
-		BALL,				//ボール画像
-		BALL_FRAME,			//ボール枠画像
+		CAKE,				//ケーキ画像
 		GRAPHIC_AMOUNT		//画像の数
 	};
 
