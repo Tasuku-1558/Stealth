@@ -51,7 +51,7 @@ void BallBullet::Finalize()
 /// <param name="playerPos"></param>
 /// <param name="hitChecker"></param>
 /// <param name="effect"></param>
-void BallBullet::Update(float deltaTime, VECTOR playerPos, HitChecker* hitChecker, Cake_Repop_Effect* effect)
+void BallBullet::Update(float deltaTime, VECTOR playerPos, HitChecker* hitChecker, CakeRepopEffect* effect)
 {
     //ボールが生きてるならば
     if (ball->GetAlive())
@@ -86,7 +86,7 @@ void BallBullet::Shoot(float deltaTime, VECTOR playerPos)
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="effect"></param>
-void BallBullet::BulletReuse(float deltaTime, Cake_Repop_Effect* effect)
+void BallBullet::BulletReuse(float deltaTime, CakeRepopEffect* effect)
 {
     //バレットが生きてるならば
     if (bullet->GetAlive())

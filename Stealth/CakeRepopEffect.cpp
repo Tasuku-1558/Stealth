@@ -1,15 +1,15 @@
-#include "Cake_Repop_Effect.h"
+#include "CakeRepopEffect.h"
 #include "DxLib.h"
 #include "EffekseerForDXLib.h"
 
 
-const string Cake_Repop_Effect::EFFECT_FOLDER_PATH = "data/effect/";		//effectフォルダまでのパス
-const string Cake_Repop_Effect::CAKE_PATH			= "ball.efkefc";		//ケーキ再スポーン時エフェクトのパス
+const string CakeRepopEffect::EFFECT_FOLDER_PATH = "data/effect/";		//effectフォルダまでのパス
+const string CakeRepopEffect::CAKE_PATH			 = "ball.efkefc";		//ケーキ再スポーン時エフェクトのパス
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-Cake_Repop_Effect::Cake_Repop_Effect() : EffectBase()
+CakeRepopEffect::CakeRepopEffect() : EffectBase()
 	, effectHandle(0)
 	, effectPos_X(0.0f)
 	, effectPos_Y(0.0f)
@@ -23,7 +23,7 @@ Cake_Repop_Effect::Cake_Repop_Effect() : EffectBase()
 /// <summary>
 /// デストラクタ
 /// </summary>
-Cake_Repop_Effect::~Cake_Repop_Effect()
+CakeRepopEffect::~CakeRepopEffect()
 {
 	//処理なし
 }
@@ -31,7 +31,7 @@ Cake_Repop_Effect::~Cake_Repop_Effect()
 /// <summary>
 /// 初期化処理
 /// </summary>
-void Cake_Repop_Effect::Initialize()
+void CakeRepopEffect::Initialize()
 {
 	string failePath = EFFECT_FOLDER_PATH + CAKE_PATH;
 	effectHandle = LoadEffekseerEffect(failePath.c_str(), 30.0f);
@@ -40,7 +40,7 @@ void Cake_Repop_Effect::Initialize()
 /// <summary>
 /// 終了処理
 /// </summary>
-void Cake_Repop_Effect::Finalize()
+void CakeRepopEffect::Finalize()
 {
 	//エフェクトリソースを削除
 	DeleteEffekseerEffect(effectHandle);
@@ -49,7 +49,7 @@ void Cake_Repop_Effect::Finalize()
 /// <summary>
 /// 活性化処理
 /// </summary>
-void Cake_Repop_Effect::Activate()
+void CakeRepopEffect::Activate()
 {
 	//エフェクトを停止する
 	StopEffekseer3DEffect(playingEffectHandle);
@@ -61,7 +61,7 @@ void Cake_Repop_Effect::Activate()
 /// <param name="ballPosX"></param>
 /// <param name="ballPosY"></param>
 /// <param name="ballPosZ"></param>
-void Cake_Repop_Effect::Update(float ballPosX, float ballPosY, float ballPosZ)
+void CakeRepopEffect::Update(float ballPosX, float ballPosY, float ballPosZ)
 {
 	//エフェクトの位置設定
 	effectPos_X = ballPosX;
@@ -85,7 +85,7 @@ void Cake_Repop_Effect::Update(float ballPosX, float ballPosY, float ballPosZ)
 /// <summary>
 /// 描画処理
 /// </summary>
-void Cake_Repop_Effect::Draw()
+void CakeRepopEffect::Draw()
 {
 	//再生中のエフェクトを更新
 	UpdateEffekseer3D();

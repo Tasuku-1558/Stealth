@@ -45,7 +45,7 @@ private:
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 	void eUpdate(float deltaTime);				//エネミーの状態変化
 	void SetTargetPosition();					//目的地まで移動処理
-	void VisualAngle(Player* player);			//エネミーの視野にプレイヤーが入った場合
+	void VisualAnglePlayer(Player* player);		//エネミーの視野にプレイヤーが入った場合
 	
 	void Reaction();							//エネミーのオブジェクトごとの反応
 	void Finalize();							//終了処理
@@ -55,7 +55,7 @@ private:
 	std::vector<VECTOR>::iterator itr;
 	std::vector<VECTOR> pointList;
 
-
+	int count;
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
 	static const std::string SOUND_FOLDER_PATH;	//soundフォルダまでのパス

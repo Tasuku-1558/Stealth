@@ -11,7 +11,7 @@ class BallBullet;
 class Wall;
 class HitChecker;
 class Map;
-class Cake_Repop_Effect;
+class CakeRepopEffect;
 class UiManager;
 class FadeManager;
 
@@ -50,7 +50,7 @@ private:
 	Wall* wall;
 	HitChecker* hitChecker;
 	Map* map;
-	Cake_Repop_Effect* cakeEffect;
+	CakeRepopEffect* cakeEffect;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
 
@@ -61,5 +61,5 @@ private:
 
 	State state;		//ゲーム状態
 	int font;			//ゲームフォント
-	
+	int frame;
 };

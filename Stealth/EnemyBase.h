@@ -20,7 +20,7 @@ protected:
 	VECTOR targetPosition;			//目的地の座標
 
 	float speed;					//エネミーの移動速度
-	const float length;				//視野角の距離
+	float length;					//視野角の距離
 
 	bool playerSpotted;				//プレイヤーを発見したかどうか
 	bool ballFlag;					//ボールを発見したかどうか

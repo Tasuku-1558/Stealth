@@ -9,11 +9,11 @@ using namespace std;
 /// ケーキエフェクトクラス
 /// ケーキ再スポーン時のエフェクト
 /// </summary>
-class Cake_Repop_Effect final : public EffectBase
+class CakeRepopEffect final : public EffectBase
 {
 public:
-	Cake_Repop_Effect();
-	virtual ~Cake_Repop_Effect();
+	CakeRepopEffect();
+	virtual ~CakeRepopEffect();
 
 	void Initialize();		//初期化処理
 	void Finalize();		//終了処理

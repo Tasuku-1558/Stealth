@@ -13,7 +13,7 @@ class BallBullet;
 class Wall;
 class HitChecker;
 class SecondStageMap;
-class Cake_Repop_Effect;
+class CakeRepopEffect;
 class UiManager;
 class FadeManager;
 
@@ -53,7 +53,7 @@ private:
 	std::vector<Wall*> wall;
 	HitChecker* hitChecker;
 	SecondStageMap* secondStageMap;
-	Cake_Repop_Effect* cakeEffect;
+	CakeRepopEffect* cakeEffect;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
 	
@@ -80,5 +80,5 @@ private:
 	bool enemyPop;		//エネミーの出現フラグ
 	bool ballPop;		//ボールの出現フラグ
 	bool wallPop;		//壁の出現フラグ
-	int count;
+
 };

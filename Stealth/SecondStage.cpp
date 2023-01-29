@@ -10,7 +10,7 @@
 #include "BackGround.h"
 #include "Wall.h"
 #include "HitChecker.h"
-#include "Cake_Repop_Effect.h"
+#include "CakeRepopEffect.h"
 #include "SecondStageMap.h"
 #include "UiManager.h"
 #include "FadeManager.h"
@@ -40,7 +40,6 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, enemyPop(false)
 	, ballPop(false)
 	, wallPop(false)
-	, count(0)
 {
 	//処理なし
 }
@@ -78,7 +77,7 @@ void SecondStage::Initialize()
 	secondStageMap->Initialize();
 
 	//エフェクトクラス
-	cakeEffect = new Cake_Repop_Effect();
+	cakeEffect = new CakeRepopEffect();
 	cakeEffect->Initialize();
 
 	//ヒットチェッカークラス

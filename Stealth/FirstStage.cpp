@@ -12,7 +12,7 @@
 #include "Wall.h"
 #include "HitChecker.h"
 #include "Map.h"
-#include "Cake_Repop_Effect.h"
+#include "CakeRepopEffect.h"
 #include "UiManager.h"
 #include "FadeManager.h"
 
@@ -38,6 +38,7 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 		, uiManager(nullptr)
 		, fadeManager(nullptr)
 		, font(0)
+		, frame(0)
 {
 	//処理なし
 }
@@ -84,7 +85,7 @@ void FirstStage::Initialize()
 	map->Initialize();
 
 	//エフェクトクラス
-	cakeEffect = new Cake_Repop_Effect();
+	cakeEffect = new CakeRepopEffect();
 	cakeEffect->Initialize();
 
 	//エネミークラス
@@ -142,6 +143,7 @@ void FirstStage::Finalize()
 void FirstStage::Activate()
 {
 	state = State::START;
+	frame = 0;
 
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
@@ -168,6 +170,8 @@ void FirstStage::Update(float deltaTime)
 	{
 		(this->*pUpdate)(deltaTime);		//状態ごとに更新
 	}
+
+	++frame;
 }
 
 /// <summary>

@@ -19,6 +19,7 @@ using namespace std;
 /// </summary>
 /// <param name="id"></param>
 Enemy::Enemy(std::vector<VECTOR>& id) : EnemyBase()
+	, count(0)
 {
 	enemyState = EnemyState::CRAWL;
 	Position(id);
@@ -125,7 +126,7 @@ void Enemy::Update(float deltaTime, Player* player)
 	
 	position += dir * speed * deltaTime;
 
-	VisualAngle(player);
+	VisualAnglePlayer(player);
 	
 	eUpdate(deltaTime);
 	
@@ -168,7 +169,7 @@ bool Enemy::IsGoal(float deltaTime)
 /// エネミーの視野にプレイヤーが入った場合
 /// </summary>
 /// <param name="player"></param>
-void Enemy::VisualAngle(Player* player)
+void Enemy::VisualAnglePlayer(Player* player)
 {
 	//プレイヤーからエネミーの座標を引いた値を取得
 	VECTOR sub = player->GetPosition() - position;
@@ -194,9 +195,6 @@ void Enemy::VisualAngle(Player* player)
 		if (radian <= dot)
 		{
 			object = Object::PLAYER;
-
-			//プレイヤーを発見した
-			playerSpotted = true;
 
 			//視野範囲内ならば
 			Reaction();
@@ -239,12 +237,21 @@ void Enemy::VisualAngleBall(Bullet* bullet)
 		{
 			object = Object::BALL;
 
-			//ボールを見つけた
-			ballFlag = true;
-
-
 			//視野範囲内ならば
 			Reaction();
+
+			speed = 0.0f;
+
+			if (CheckHitKey(KEY_INPUT_H))
+			{
+				speed = SPEED;
+			}
+
+			if (300.0f > direction)
+			{
+				speed = 0.0f;
+			}
+			
 		}
 	}
 	else
@@ -301,7 +308,10 @@ void Enemy::Reaction()
 	switch (object)
 	{
 	case Object::PLAYER:
-		//printfDx("PLAYER");
+		printfDx("PLAYER");
+
+		//プレイヤーを発見した
+		playerSpotted = true;
 		
 		//ビックリマークの画像を描画
 		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
@@ -318,13 +328,16 @@ void Enemy::Reaction()
 
 	case Object::BALL:
 		//printfDx("BALL");
+
+		//ボールを見つけた
+		ballFlag = true;
 		
-		speed = 0.0f;
+		
 		
 		break;
 
 	case Object::WALL:
-		//printfDx("WALL");
+		printfDx("WALL");
 
 		break;
 	}
