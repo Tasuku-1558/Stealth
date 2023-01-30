@@ -91,7 +91,7 @@
     <ClCompile Include="BackGround.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
+    <ClCompile Include="FirstStageMap.cpp">
       <Filter>ソース ファイル\Map</Filter>
     </ClCompile>
     <ClCompile Include="SecondStageMap.cpp">
@@ -186,7 +186,7 @@
     <ClInclude Include="BackGround.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
+    <ClInclude Include="FirstStageMap.h">
       <Filter>ソース ファイル\Map</Filter>
     </ClInclude>
     <ClInclude Include="SecondStageMap.h">

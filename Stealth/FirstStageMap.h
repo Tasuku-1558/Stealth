@@ -7,11 +7,11 @@
 /// <summary>
 /// FirstStageMapƒNƒ‰ƒX
 /// </summary>
-class Map final : public StageBase
+class FirstStageMap final : public StageBase
 {
 public:
-     Map();
-     virtual ~Map();
+     FirstStageMap();
+     virtual ~FirstStageMap();
 
     void Initialize();      //‰Šú‰»ˆ—
     void Finalize();        //I—¹ˆ—

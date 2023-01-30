@@ -11,7 +11,7 @@
 #include "BallBullet.h"
 #include "Wall.h"
 #include "HitChecker.h"
-#include "Map.h"
+#include "FirstStageMap.h"
 #include "CakeRepopEffect.h"
 #include "UiManager.h"
 #include "FadeManager.h"
@@ -33,7 +33,7 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 		, ballBullet(nullptr)
 		, wall(nullptr)
 		, hitChecker(nullptr)
-		, map(nullptr)
+		, firstStageMap(nullptr)
 		, cakeEffect(nullptr)
 		, uiManager(nullptr)
 		, fadeManager(nullptr)
@@ -81,8 +81,8 @@ void FirstStage::Initialize()
 	wall->Initialize();
 
 	//マップクラス
-	map = new Map();
-	map->Initialize();
+	firstStageMap = new FirstStageMap();
+	firstStageMap->Initialize();
 
 	//エフェクトクラス
 	cakeEffect = new CakeRepopEffect();
@@ -90,7 +90,7 @@ void FirstStage::Initialize()
 
 	//エネミークラス
 	//エネミーに行動パターンのリストを設定
-	enemy = new Enemy(map->GetMap());
+	enemy = new Enemy(firstStageMap->GetMap());
 	enemy->Initialize();
 
 	//ヒットチェッカークラス
@@ -117,7 +117,7 @@ void FirstStage::Finalize()
 
 	SafeDelete(player);
 
-	SafeDelete(map);
+	SafeDelete(firstStageMap);
 
 	SafeDelete(cakeEffect);
 
@@ -207,7 +207,7 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	ballBullet->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
 	
-	hitChecker->Check(map->GetModel(), player);
+	hitChecker->Check(firstStageMap->GetModel(), player);
 	
 	//プレイヤーがゴール地点に辿り着いたら
 	if (player->GetPosition().x < -4000)
@@ -247,7 +247,7 @@ void FirstStage::Draw()
 	backGround->Draw();
 
 	//マップ描画
-	map->Draw();
+	firstStageMap->Draw();
 	
 	//プレイヤー描画
 	player->Draw();

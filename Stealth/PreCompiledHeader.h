@@ -17,6 +17,14 @@ const float ENEMY_RADIUS  = 100.0f;                 //エネミーの半径
 const float BALL_RADIUS   = 50.0f;                  //ボールの半径
 const float BULLET_RADIUS = 50.0f;                  //バレットの半径
 
+////シャドウマップのサイズ
+//const int  SHADOWMAP_SIZE_X = 1920;
+//const int  SHADOWMAP_SIZE_Y = 1080;
+//
+//const VECTOR LIGHT_DIRECTION       = { 0.01f, -0.5f, 0.01f };         //シャドウマップが想定するライトの方向
+//const VECTOR SHADOWMAP_MINPOSITION = { -3000.0f, -1.0f, -3000.0f }; //影を描画する範囲の座標の最小値
+//const VECTOR SHADOUMAP_MAXPOSITION = { 3000.0f, 3000.0f, 3000.0f }; //影を描画する範囲の座標の最大値
+
 
 //インスタンスをdeleteしてNULLを入れる
 template <typename T>

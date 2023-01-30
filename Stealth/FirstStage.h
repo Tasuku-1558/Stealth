@@ -10,7 +10,7 @@ class BackGround;
 class BallBullet;
 class Wall;
 class HitChecker;
-class Map;
+class FirstStageMap;
 class CakeRepopEffect;
 class UiManager;
 class FadeManager;
@@ -49,7 +49,7 @@ private:
 	BallBullet* ballBullet;
 	Wall* wall;
 	HitChecker* hitChecker;
-	Map* map;
+	FirstStageMap* firstStageMap;
 	CakeRepopEffect* cakeEffect;
 	UiManager* uiManager;
 	FadeManager* fadeManager;

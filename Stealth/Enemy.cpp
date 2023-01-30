@@ -19,7 +19,8 @@ using namespace std;
 /// </summary>
 /// <param name="id"></param>
 Enemy::Enemy(std::vector<VECTOR>& id) : EnemyBase()
-	, count(0)
+	, count(0.0f)
+	, a(false)
 {
 	enemyState = EnemyState::CRAWL;
 	Position(id);
@@ -244,7 +245,10 @@ void Enemy::VisualAngleBall(Bullet* bullet, float deltaTime)
 			speed = 0.0f;
 
 			count += deltaTime;
-			if (count < 50)
+
+			
+
+			if (count < 100.0f)
 			{
 				speed = SPEED;
 

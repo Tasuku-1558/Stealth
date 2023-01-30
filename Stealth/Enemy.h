@@ -55,7 +55,8 @@ private:
 	std::vector<VECTOR>::iterator itr;
 	std::vector<VECTOR> pointList;
 
-	int count;
+	float count;
+	bool a;
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス

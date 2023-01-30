@@ -34,5 +34,5 @@ private:
 	Player(const Player&);														//コピーコンストラクタ
 
 	void Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit);		//移動処理
-	
+	int count;
 };

@@ -1,18 +1,18 @@
-#include "Map.h"
+#include "FirstStageMap.h"
 #include "PreCompiledHeader.h"
 #include "ModelManager.h"
 
 
-const VECTOR Map::SIZE	   = { 80.0f, 50.0f, 80.0f };						//モデルの倍率
-const VECTOR Map::POSITION = { -2700.0f, -100.0f, -750.0f };				//モデルの位置
-const VECTOR Map::ROTATE   = { 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f };		//モデルの回転値
+const VECTOR FirstStageMap::SIZE	   = { 80.0f, 50.0f, 80.0f };						//モデルの倍率
+const VECTOR FirstStageMap::POSITION   = { -2700.0f, -100.0f, -750.0f };				//モデルの位置
+const VECTOR FirstStageMap::ROTATE     = { 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f };		//モデルの回転値
 
 using namespace std;
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-Map::Map() : StageBase()
+FirstStageMap::FirstStageMap() : StageBase()
 {
 	//処理なし
 }
@@ -20,7 +20,7 @@ Map::Map() : StageBase()
 /// <summary>
 /// デストラクタ
 /// </summary>
-Map::~Map()
+FirstStageMap::~FirstStageMap()
 {
 	//終了処理が呼ばれてなければ
 	if (modelHandle != NULL)
@@ -32,7 +32,7 @@ Map::~Map()
 /// <summary>
 /// 初期化処理
 /// </summary>
-void Map::Initialize()
+void FirstStageMap::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE1));
 	MV1SetScale(modelHandle, SIZE);
@@ -54,7 +54,7 @@ void Map::Initialize()
 /// <summary>
 /// 終了処理
 /// </summary>
-void Map::Finalize()
+void FirstStageMap::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 	modelHandle = NULL;
@@ -63,7 +63,7 @@ void Map::Finalize()
 /// <summary>
 /// 敵の行動パターンリスト
 /// </summary>
-void Map::MapList()
+void FirstStageMap::MapList()
 {
 	positionList.push_back(VGet(-3200.0f, 100.0f, 1400.0f));
 	positionList.push_back(VGet(-3200.0f, 100.0f, -1300.0f));
@@ -74,7 +74,7 @@ void Map::MapList()
 /// <summary>
 /// 描画処理
 /// </summary>
-void Map::Draw()
+void FirstStageMap::Draw()
 {
 	MV1DrawModel(modelHandle);
 }

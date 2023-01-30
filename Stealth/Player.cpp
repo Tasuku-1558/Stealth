@@ -10,6 +10,7 @@ using namespace Math3d;
 /// コンストラクタ
 /// </summary>
 Player::Player() : PlayerBase()
+	, count(0)
 {
 	//処理なし
 }
@@ -163,12 +164,16 @@ void Player::FoundEnemy(Enemy* enemy)
 	//エネミーに見つかったら
 	if (enemy->Spotted())
 	{
-		WaitTimer(1000);
+		count += 1;
 
-		//位置と向きを初期化
-		position = POSITION;
-		previewPosition = POSITION;
-		dir = DIR;
+		if (count < 200)
+		{
+			//位置と向きを初期化
+			position = POSITION;
+			previewPosition = POSITION;
+			dir = DIR;
+			
+		}
 	}
 }
 

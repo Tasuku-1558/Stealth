@@ -4,7 +4,7 @@
 
 
 const VECTOR SecondStageMap::SIZE	  = { 80.0f, 50.0f, 80.0f };				//モデルの倍率
-const VECTOR SecondStageMap::POSITION = { -200.0f, 0.0f, 1350.0f };				//モデルの位置
+const VECTOR SecondStageMap::POSITION = { -200.0f, -100.0f, 1350.0f };				//モデルの位置
 
 using namespace std;
 

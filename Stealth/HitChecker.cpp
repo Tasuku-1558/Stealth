@@ -1,6 +1,6 @@
 #include "HitChecker.h"
 #include "Player.h"
-#include "Map.h"
+#include "FirstStageMap.h"
 #include "Wall.h"
 #include "Ball.h"
 #include "PreCompiledHeader.h"

@@ -11,7 +11,7 @@ const VECTOR SelectionUi::STAGE1_POSITION		  = { 1300.0f, 740.0f, 0.0f };	//ステ
 const VECTOR SelectionUi::STAGE1_SIZE			  = { 10.0f, 10.0f, 10.0f };	//ステージ1モデルの倍率
 const VECTOR SelectionUi::STAGE1_ROTATE = { 80.0f * DX_PI_F / 180.0f, 190.0f * DX_PI_F / 180.0f, 0.0f }; //ステージ1モデルの回転値
 
-const VECTOR SelectionUi::STAGE2_POSITION		  = { 1400.0f, 300.0f, -100.0f };	//ステージ2モデルの位置
+const VECTOR SelectionUi::STAGE2_POSITION		  = { 1400.0f, 300.0f, -150.0f };	//ステージ2モデルの位置
 const VECTOR SelectionUi::STAGE2_SIZE			  = { 8.0f, 8.0f, 8.0f };			//ステージ2モデルの倍率
 const VECTOR SelectionUi::STAGE2_ROTATE = { 80.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f }; //ステージ2モデルの回転値
 

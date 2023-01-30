@@ -29,6 +29,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		DxLib_End();
 		return -1;
 	}
+
+	SetDrawScreen(DX_SCREEN_BACK);  // 描画先画面を裏画面にセット
 	
 	// フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ
 	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
@@ -40,6 +42,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// Zバッファへの書き込みを有効にする
 	SetWriteZBuffer3D(TRUE);
+
+	//// シャドウマップハンドルの作成
+	//int shadowMapHandle = MakeShadowMap(SHADOWMAP_SIZE_X, SHADOWMAP_SIZE_Y);
+
+	//// シャドウマップが想定するライトの方向をセット
+	//SetShadowMapLightDirection(shadowMapHandle, LIGHT_DIRECTION);
+
+	//// シャドウマップに描画する範囲を設定
+	//SetShadowMapDrawArea(shadowMapHandle, SHADOWMAP_MINPOSITION, SHADOUMAP_MAXPOSITION);
 	
 	// フォント変更
 	LPCSTR fontPath = "data/font/Oranienbaum.ttf";
@@ -76,7 +87,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// 画面を初期化する
 		ClearDrawScreen();
 
+		//// シャドウマップへの描画の準備
+		//ShadowMap_DrawSetup(shadowMapHandle);
+
+		//sceneManager->Draw();
+
+		//// シャドウマップへの描画を終了
+		//ShadowMap_DrawEnd();
+
+
+		//// 描画に使用するシャドウマップを設定
+		//SetUseShadowMap(0, shadowMapHandle);
+
 		sceneManager->Draw();
+
+		//// 描画に使用するシャドウマップの設定を解除
+		//SetUseShadowMap(0, -1);
 
 		// 裏画面の内容を表画面に反映させる
 		ScreenFlip();
@@ -92,11 +118,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (RemoveFontResourceEx(fontPath, FR_PRIVATE, NULL)) {}
 	else { MessageBox(NULL, "remove failure", "", MB_OK); }
 
-	SafeDelete(sceneManager);
+	//DeleteShadowMap(shadowMapHandle);	// シャドウマップの削除
 
-	Effkseer_End();			// Effekseerの終了処理
+	SafeDelete(sceneManager);	// シーンマネージャーの解放
 
-	DxLib_End();			// DXライブラリ使用の終了処理
+	Effkseer_End();				// Effekseerの終了処理
 
-	return 0;				// ソフトの終了 
+	DxLib_End();				// DXライブラリ使用の終了処理
+
+	return 0;					// ソフトの終了 
 }
