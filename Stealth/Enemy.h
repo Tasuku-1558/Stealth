@@ -24,7 +24,7 @@ public:
 	void Update(float deltaTime, Player* player);		//更新処理
 	void Draw();										//描画処理
 
-	void VisualAngleBall(Bullet* bullet);				//エネミーの視野にボールが入った場合
+	void VisualAngleBall(Bullet* bullet, float deltaTime);				//エネミーの視野にボールが入った場合
 	void VisualAngleWall(VECTOR wallPos);				//エネミーの視野に壁が入った場合
 
 	const bool Spotted() { return playerSpotted; }			//プレイヤーを見つけたかどうかを返す
@@ -56,6 +56,7 @@ private:
 	std::vector<VECTOR> pointList;
 
 	int count;
+
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
 	static const std::string SOUND_FOLDER_PATH;	//soundフォルダまでのパス

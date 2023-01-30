@@ -117,6 +117,7 @@ void Enemy::Update(float deltaTime, Player* player)
 {
 	//エネミーの位置をセット
 	MV1SetPosition(modelHandle, position);
+	//MV1SetMaterialEmiColor(modelHandle, 0, GetColorF(1.0f, 0.2f, 0.0f, 1.0f));
 
 	//エネミーの視野モデルをセット
 	MV1SetPosition(visualModelHandle, position);
@@ -210,7 +211,7 @@ void Enemy::VisualAnglePlayer(Player* player)
 /// エネミーの視野にボールが入った場合
 /// </summary>
 /// <param name="bullet"></param>
-void Enemy::VisualAngleBall(Bullet* bullet)
+void Enemy::VisualAngleBall(Bullet* bullet, float deltaTime)
 {
 	//バレットからエネミーの座標を引いた値を取得
 	VECTOR sub = bullet->GetPosition() - position;
@@ -242,9 +243,11 @@ void Enemy::VisualAngleBall(Bullet* bullet)
 
 			speed = 0.0f;
 
-			if (CheckHitKey(KEY_INPUT_H))
+			count += deltaTime;
+			if (count < 50)
 			{
 				speed = SPEED;
+
 			}
 
 			if (300.0f > direction)

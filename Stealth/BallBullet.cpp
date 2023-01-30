@@ -100,7 +100,7 @@ void BallBullet::BulletReuse(float deltaTime, CakeRepopEffect* effect)
         }
 
         //カウントが5秒以上経過したら
-        if (bulletCount > 5.0f)
+        if (bulletCount > 50.0f)
         {
             bulletCount = 0.0f;
 

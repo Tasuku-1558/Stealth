@@ -76,9 +76,9 @@ private:
 	void (SecondStage::* pUpdate)(float deltaTime);			//Update関数ポインタ
 
 	State state;		//ゲームの状態
-	int font;			//ゲームフォント
+	int  font;			//ゲームフォント
 	bool enemyPop;		//エネミーの出現フラグ
 	bool ballPop;		//ボールの出現フラグ
 	bool wallPop;		//壁の出現フラグ
-
+	int frame;
 };

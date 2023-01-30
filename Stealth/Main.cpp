@@ -40,7 +40,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	// Zバッファへの書き込みを有効にする
 	SetWriteZBuffer3D(TRUE);
-
+	
 	// フォント変更
 	LPCSTR fontPath = "data/font/Oranienbaum.ttf";
 

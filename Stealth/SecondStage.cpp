@@ -40,6 +40,7 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, enemyPop(false)
 	, ballPop(false)
 	, wallPop(false)
+	, frame(0)
 {
 	//処理なし
 }
@@ -177,6 +178,8 @@ void SecondStage::Update(float deltaTime)
 	{
 		(this->*pUpdate)(deltaTime);		//状態ごとに更新
 	}
+
+	++frame;
 }
 
 /// <summary>
@@ -352,7 +355,7 @@ void SecondStage::UpdateGame(float deltaTime)
 		
 		for (auto ptra : ballBullet)
 		{
-			ptr->VisualAngleBall(ptra->bullet);
+			ptr->VisualAngleBall(ptra->bullet, deltaTime);
 			
 			//エネミーがボールを見つけたならば
 			if (ptr->BallFlag())
