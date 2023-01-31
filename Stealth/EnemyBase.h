@@ -26,9 +26,12 @@ protected:
 	bool ballFlag;					//ボールを発見したかどうか
 	int playerFindCount;			//プレイヤーを見つけた回数
 
-	int findImage;					//見つかった画像格納用
+	int playerFindImage;			//プレイヤーを見つけた画像格納用
 	int markImage;					//ビックリマーク画像格納用
 	int spottedSE;					//プレイヤー発見SE音
+
+	int cakeFindImage;				//ケーキを見つけた時の画像格納用
+	int cakeEatImage;				//ケーキを食べている時の画像格納用
 
 	int visualModelHandle;			//視野モデルハンドル
 	VECTOR visualPosition;			//視野モデルの位置

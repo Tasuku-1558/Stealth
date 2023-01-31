@@ -336,6 +336,7 @@ void SecondStage::UpdateStart(float deltaTime)
 /// <param name="deltaTime"></param>
 void SecondStage::UpdateGame(float deltaTime)
 {
+	//セカンドステージでのライトの方向の設定
 	light->Update({ 0.0f,-0.5f,0.0f });
 
 	camera->Update(player->GetPosition());
@@ -346,7 +347,7 @@ void SecondStage::UpdateGame(float deltaTime)
 	{
 		ptr->Update(deltaTime, player);
 		
-		player->FoundEnemy(ptr);
+		player->FoundEnemy(deltaTime, ptr);
 
 		for (auto ptra : wall)
 		{

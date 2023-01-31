@@ -191,6 +191,7 @@ void FirstStage::UpdateStart(float deltaTime)
 /// <param name="deltaTime"></param>
 void FirstStage::UpdateGame(float deltaTime)
 {
+	//ファーストステージでのライトの方向の設定
 	light->Update({ 0.0f,-0.5f,0.0f });
 
 	camera->Update(player->GetPosition());
@@ -203,7 +204,7 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	player->Update(deltaTime, camera, hitChecker->Back(),hitChecker->MapHit());
 
-	player->FoundEnemy(enemy);
+	player->FoundEnemy(deltaTime, enemy);
 
 	ballBullet->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
 	

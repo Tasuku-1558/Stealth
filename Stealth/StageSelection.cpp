@@ -32,7 +32,7 @@ StageSelection::StageSelection(SceneManager* const sceneManager)
 	, changeTimeCount(0)
 	, maxTime(80)
 	, pushCount(0.0f)
-	, frame(0)
+	, frame(0.0f)
 {
 	//処理なし
 }
@@ -155,14 +155,10 @@ int StageSelection::StageCreator(int stageNumber)
 /// <param name="deltaTime"></param>
 void StageSelection::Update(float deltaTime)
 {
-	//fadeManager->FadeMove();
-
 	//セレクション画面でのライトの方向の設定
 	light->Update({ 0.0f, 0.0f, 0.5f });
 
 	KeyMove(deltaTime);
-
-	frame++;
 }
 
 /// <summary>
@@ -198,10 +194,17 @@ void StageSelection::KeyMove(float deltaTime)
 	if (changeScene)
 	{
 		changeTimeCount++;
+		frame += deltaTime;
 
 		if (changeTimeCount > maxTime)
 		{
-			StageCreator(stageNo);
+			fadeManager->FadeMove();
+
+			if (frame > 3.0f)
+			{
+				StageCreator(stageNo);
+				frame = 0;
+			}
 		}
 	}
 }

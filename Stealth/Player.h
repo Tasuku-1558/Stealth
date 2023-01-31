@@ -20,7 +20,7 @@ public:
 	void Finalize();															//終了処理
 	void Activate();															//活性化処理
 	void Update(float deltaTime, Camera* camera, VECTOR back, bool mapHit);		//更新処理
-	void FoundEnemy(Enemy* enemy);												//エネミーに見つかった場合
+	void FoundEnemy(float deltaTime, Enemy* enemy);								//エネミーに見つかった場合
 	void Draw();																//描画処理
 
 
@@ -34,5 +34,5 @@ private:
 	Player(const Player&);														//コピーコンストラクタ
 
 	void Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit);		//移動処理
-	int count;
+	float count;
 };

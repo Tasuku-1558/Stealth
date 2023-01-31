@@ -6,8 +6,10 @@
 
 const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
 const string Enemy::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
-const string Enemy::FIND_PATH		  = "find.png";			//見つかった画像のパス
+const string Enemy::PLAYER_FIND_PATH  = "playerFind.png";	//プレイヤーを見つけた画像のパス
 const string Enemy::MARK_PATH		  = "mark.png";			//ビックリマーク画像のパス
+const string Enemy::CAKE_FIND_PATH	  = "cakeFind.png";		//ケーキを見つけた画像のパス
+const string Enemy::CAKE_EAT_PATH	  = "cakeEat.png";		//ケーキを食べている画像のパス
 const string Enemy::SPOTTED_SE_PATH	  = "spotted.mp3";		//プレイヤー発見SE音のパス
 
 
@@ -19,8 +21,9 @@ using namespace std;
 /// </summary>
 /// <param name="id"></param>
 Enemy::Enemy(std::vector<VECTOR>& id) : EnemyBase()
-	, count(0.0f)
-	, a(false)
+	, speedCount(0.0f)
+	, cakeFindFlag(false)
+	, cakeEatFlag(false)
 {
 	enemyState = EnemyState::CRAWL;
 	Position(id);
@@ -60,11 +63,17 @@ void Enemy::Initialize()
 
 	dir = ZERO_VECTOR;
 
-	string failePath = IMAGE_FOLDER_PATH + FIND_PATH;
-	findImage = LoadGraph(failePath.c_str());
+	string failePath = IMAGE_FOLDER_PATH + PLAYER_FIND_PATH;
+	playerFindImage = LoadGraph(failePath.c_str());
 
 	failePath = IMAGE_FOLDER_PATH + MARK_PATH;
 	markImage = LoadGraph(failePath.c_str());
+
+	failePath = IMAGE_FOLDER_PATH + CAKE_FIND_PATH;
+	cakeFindImage = LoadGraph(failePath.c_str());
+
+	failePath = IMAGE_FOLDER_PATH + CAKE_EAT_PATH;
+	cakeEatImage = LoadGraph(failePath.c_str());
 
 	failePath = SOUND_FOLDER_PATH + SPOTTED_SE_PATH;
 	spottedSE = LoadSoundMem(failePath.c_str());
@@ -102,8 +111,10 @@ void Enemy::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 	MV1DeleteModel(visualModelHandle);
-	DeleteGraph(findImage);
+	DeleteGraph(playerFindImage);
 	DeleteGraph(markImage);
+	DeleteGraph(cakeFindImage);
+	DeleteGraph(cakeEatImage);
 
 	//サウンドリソースを削除
 	InitSoundMem();
@@ -212,6 +223,7 @@ void Enemy::VisualAnglePlayer(Player* player)
 /// エネミーの視野にボールが入った場合
 /// </summary>
 /// <param name="bullet"></param>
+/// <param name="deltaTime"></param>
 void Enemy::VisualAngleBall(Bullet* bullet, float deltaTime)
 {
 	//バレットからエネミーの座標を引いた値を取得
@@ -242,22 +254,23 @@ void Enemy::VisualAngleBall(Bullet* bullet, float deltaTime)
 			//視野範囲内ならば
 			Reaction();
 
-			speed = 0.0f;
+			speedCount += deltaTime;
 
-			count += deltaTime;
-
-
-			if (count < 50.0f)
+			cakeFindFlag = true;
+			
+			//カウントが1.5秒経過したら
+			if (speedCount > 1.5f)
 			{
 				speed = SPEED;
-
+				cakeFindFlag = false;
 			}
 
-			/*if (300.0f > direction)
+			
+			if (270.0f > direction)
 			{
 				speed = 0.0f;
-			}*/
-			
+				cakeEatFlag = true;
+			}
 		}
 	}
 	else
@@ -266,6 +279,13 @@ void Enemy::VisualAngleBall(Bullet* bullet, float deltaTime)
 		speed = SPEED;
 
 		ballFlag = false;
+
+		cakeFindFlag = false;
+
+		cakeEatFlag = false;
+
+		//カウントの初期化
+		speedCount = 0;
 	}
 }
 
@@ -323,7 +343,7 @@ void Enemy::Reaction()
 		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
 
 		//敵に見つかったというUI画像を描画
-		DrawGraph(50, 50, findImage, TRUE);
+		DrawGraph(50, 50, playerFindImage, TRUE);
 
 		// 発見SEを再生
 		PlaySoundMem(spottedSE, DX_PLAYTYPE_BACK);
@@ -337,8 +357,9 @@ void Enemy::Reaction()
 
 		//ボールを見つけた
 		ballFlag = true;
-		
-		
+
+		speed = 0.0f;
+
 		
 		break;
 
@@ -377,6 +398,18 @@ void Enemy::eUpdate(float deltaTime)
 /// </summary>
 void Enemy::Draw()
 {
+	//ケーキを見つけたならば
+	if (cakeFindFlag)
+	{
+		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 1200.0f, 0.0f, cakeFindImage, TRUE);
+	}
+
+	//ケーキに近づいたなら
+	if (cakeEatFlag)
+	{
+		DrawBillboard3D(VGet(position.x - 300.0f, 200.0f, position.z - 100.0f), 0.5f, 0.5f, 1200.0f, 0.0f, cakeEatImage, TRUE);
+	}
+
 	MV1DrawModel(modelHandle);
 
 	MV1DrawModel(visualModelHandle);

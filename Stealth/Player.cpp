@@ -158,22 +158,17 @@ void Player::Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 /// <summary>
 /// エネミーに見つかった場合
 /// </summary>
+/// <param name="deltaTime"></param>
 /// <param name="enemy"></param>
-void Player::FoundEnemy(Enemy* enemy)
+void Player::FoundEnemy(float deltaTime, Enemy* enemy)
 {
 	//エネミーに見つかったら
 	if (enemy->Spotted())
 	{
-		count += 1;
-
-		if (count < 200)
-		{
-			//位置と向きを初期化
-			position = POSITION;
-			previewPosition = POSITION;
-			dir = DIR;
-			
-		}
+		//位置と向きを初期化
+		position = POSITION;
+		previewPosition = POSITION;
+		dir = DIR;
 	}
 }
 

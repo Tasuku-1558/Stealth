@@ -93,14 +93,14 @@ void BallBullet::BulletReuse(float deltaTime, CakeRepopEffect* effect)
     {
         bulletCount += deltaTime;
 
-        if (bulletCount > 4.7f)
+        if (bulletCount > 5.7f)
         {
             //ボール復活エフェクトを出す
             effect->Update(ball->GetPosition().x, ball->GetPosition().y, ball->GetPosition().z);
         }
 
-        //カウントが5秒以上経過したら
-        if (bulletCount > 50.0f)
+        //カウントが6秒以上経過したら
+        if (bulletCount > 6.0f)
         {
             bulletCount = 0.0f;
 

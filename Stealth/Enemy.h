@@ -55,13 +55,16 @@ private:
 	std::vector<VECTOR>::iterator itr;
 	std::vector<VECTOR> pointList;
 
-	float count;
-	bool a;
+	float speedCount;		//エネミースピード変化カウント
+	bool cakeFindFlag;		//エネミーがケーキを見つけたかどうか
+	bool cakeEatFlag;		//エネミーがケーキに近づいて食べているかどうか
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
 	static const std::string SOUND_FOLDER_PATH;	//soundフォルダまでのパス
-	static const std::string FIND_PATH;			//見つかった画像のパス
+	static const std::string PLAYER_FIND_PATH;	//プレイヤーを見つけた画像のパス
 	static const std::string MARK_PATH;			//ビックリマーク画像のパス
+	static const std::string CAKE_FIND_PATH;	//ケーキを見つけた画像のパス
+	static const std::string CAKE_EAT_PATH;		//ケーキを食べている画像のパス
 	static const std::string SPOTTED_SE_PATH;	//プレイヤー発見SE音のパス
 };
