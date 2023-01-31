@@ -118,6 +118,9 @@
     <ClCompile Include="SelectionUi.cpp">
       <Filter>ソース ファイル\Scene\StageSelection</Filter>
     </ClCompile>
+    <ClCompile Include="ThirdStageMap.cpp">
+      <Filter>ソース ファイル\Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompiledHeader.h">
@@ -212,6 +215,9 @@
     </ClInclude>
     <ClInclude Include="SelectionUi.h">
       <Filter>ソース ファイル\Scene\StageSelection</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdStageMap.h">
+      <Filter>ソース ファイル\Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

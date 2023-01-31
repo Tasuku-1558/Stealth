@@ -118,7 +118,7 @@ void Enemy::Update(float deltaTime, Player* player)
 {
 	//エネミーの位置をセット
 	MV1SetPosition(modelHandle, position);
-	//MV1SetMaterialEmiColor(modelHandle, 0, GetColorF(1.0f, 0.2f, 0.0f, 1.0f));
+	//MV1SetMaterialEmiColor(modelHandle, 0, GetColorF(0.5f, 0.0f, 0.0f, 1.0f));
 
 	//エネミーの視野モデルをセット
 	MV1SetPosition(visualModelHandle, position);
@@ -193,7 +193,7 @@ void Enemy::VisualAnglePlayer(Player* player)
 	//ベクトルとエネミーの長さの比較
 	if (length > direction)
 	{
-		//プレイヤーがエネミーの視野範囲内にいるか比較
+		//プレイヤーがエネミーの視野範囲内にいるならば
 		if (radian <= dot)
 		{
 			object = Object::PLAYER;
@@ -234,7 +234,7 @@ void Enemy::VisualAngleBall(Bullet* bullet, float deltaTime)
 	//ベクトルとエネミーの長さの比較
 	if (length > direction)
 	{
-		//バレットがエネミーの視野範囲内にいるか比較
+		//バレットがエネミーの視野範囲内にいるならば
 		if (radian <= dot)
 		{
 			object = Object::BALL;
@@ -246,18 +246,17 @@ void Enemy::VisualAngleBall(Bullet* bullet, float deltaTime)
 
 			count += deltaTime;
 
-			
 
-			if (count < 100.0f)
+			if (count < 50.0f)
 			{
 				speed = SPEED;
 
 			}
 
-			if (300.0f > direction)
+			/*if (300.0f > direction)
 			{
 				speed = 0.0f;
-			}
+			}*/
 			
 		}
 	}
@@ -296,7 +295,7 @@ void Enemy::VisualAngleWall(VECTOR wallPos)
 	//ベクトルとエネミーの長さの比較
 	if (length > direction)
 	{
-		//壁がエネミーの視野範囲内にいるか比較
+		//壁がエネミーの視野範囲内にいるならば
 		if (radian <= dot)
 		{
 			object = Object::WALL;

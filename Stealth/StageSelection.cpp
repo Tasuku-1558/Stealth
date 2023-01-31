@@ -32,6 +32,7 @@ StageSelection::StageSelection(SceneManager* const sceneManager)
 	, changeTimeCount(0)
 	, maxTime(80)
 	, pushCount(0.0f)
+	, frame(0)
 {
 	//処理なし
 }
@@ -84,6 +85,7 @@ void StageSelection::Activate()
 	stageNo = 1;
 	changeScene = false;
 	changeTimeCount = 0;
+	frame = 0;
 
 	selectionUi->Activate();
 
@@ -154,9 +156,13 @@ int StageSelection::StageCreator(int stageNumber)
 void StageSelection::Update(float deltaTime)
 {
 	//fadeManager->FadeMove();
+
+	//セレクション画面でのライトの方向の設定
 	light->Update({ 0.0f, 0.0f, 0.5f });
 
 	KeyMove(deltaTime);
+
+	frame++;
 }
 
 /// <summary>
@@ -182,12 +188,13 @@ void StageSelection::KeyMove(float deltaTime)
 	{
 		parent->SetNextScene(SceneManager::TITLE);
 	}
+
+	//リターンキーを押したならば
 	if (CheckHitKey(KEY_INPUT_RETURN))
 	{
 		changeScene = true;
 	}
 
-	//リターンキーを押したならば
 	if (changeScene)
 	{
 		changeTimeCount++;

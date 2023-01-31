@@ -62,6 +62,7 @@ void FirstStageMap::Finalize()
 
 /// <summary>
 /// 敵の行動パターンリスト
+/// 左右移動の敵
 /// </summary>
 void FirstStageMap::MapList()
 {

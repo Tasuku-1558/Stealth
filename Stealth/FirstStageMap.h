@@ -5,7 +5,7 @@
 
 
 /// <summary>
-/// FirstStageMapクラス
+/// ステージ1マップクラス
 /// </summary>
 class FirstStageMap final : public StageBase
 {
@@ -22,7 +22,7 @@ public:
 
 private:
 
-    void MapList();                    //敵の行動パターンリスト
+    void MapList();                    //敵の行動パターンリスト(左右移動の敵)
 
     std::vector<VECTOR> positionList;
     std::vector<VECTOR>::iterator itr;

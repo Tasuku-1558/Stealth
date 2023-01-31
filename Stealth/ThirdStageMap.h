@@ -5,13 +5,13 @@
 
 
 /// <summary>
-/// ステージ2マップクラス
+/// ステージ3マップクラス
 /// </summary>
-class SecondStageMap final : public StageBase
+class ThirdStageMap final : public StageBase
 {
 public:
-     SecondStageMap();
-     virtual ~SecondStageMap();
+	ThirdStageMap();
+	virtual ~ThirdStageMap();
 
     void Initialize();      //初期化処理
     void Finalize();        //終了処理
@@ -22,10 +22,11 @@ public:
 
     const int GetModel() { return modelHandle; }                    //マップモデルを返す
 
+
 private:
 
-    void MapList();                     //敵の行動パターンリスト(壁の周りを回る敵)
-    void MapList2();                    //敵の行動パターンリスト2(上下移動の敵)
+    void MapList();                     //敵の行動パターンリスト
+    void MapList2();                    //敵の行動パターンリスト2
 
     std::vector<VECTOR> positionList;
     std::vector<VECTOR>::iterator itr;
@@ -37,4 +38,5 @@ private:
     //静的定数
     static const VECTOR SIZE;           //モデルの倍率
     static const VECTOR POSITION;       //モデルの位置
+
 };

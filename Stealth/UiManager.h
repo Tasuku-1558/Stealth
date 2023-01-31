@@ -52,7 +52,6 @@ private:
 	int stageCount;									//ステージ名称表示カウント
 	
 	int uiHandle[GRAPHIC_AMOUNT];					//画像ハンドル
-	
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;		//画像格納フォルダ

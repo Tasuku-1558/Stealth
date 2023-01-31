@@ -4,7 +4,7 @@
 
 
 const VECTOR SecondStageMap::SIZE	  = { 80.0f, 50.0f, 80.0f };				//モデルの倍率
-const VECTOR SecondStageMap::POSITION = { -200.0f, -100.0f, 1350.0f };				//モデルの位置
+const VECTOR SecondStageMap::POSITION = { -200.0f, -100.0f, 1350.0f };			//モデルの位置
 
 using namespace std;
 
@@ -61,6 +61,7 @@ void SecondStageMap::Finalize()
 
 /// <summary>
 /// 敵の行動パターンリスト
+/// 壁の周りを回る敵
 /// </summary>
 void SecondStageMap::MapList()
 {
@@ -75,6 +76,7 @@ void SecondStageMap::MapList()
 
 /// <summary>
 /// 敵の行動パターンリスト2
+/// 上下移動の敵
 /// </summary>
 void SecondStageMap::MapList2()
 {
