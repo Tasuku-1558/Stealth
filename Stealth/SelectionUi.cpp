@@ -41,14 +41,12 @@ SelectionUi::~SelectionUi()
 /// </summary>
 void SelectionUi::Initialize()
 {
-	string failePath = IMAGE_FOLDER_PATH + STAGE1_DESCRIPTION_PATH;
-	stageDescription[0] = LoadGraph(failePath.c_str());
+	//画像読み込み
+	stageDescription[0] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE1_DESCRIPTION_PATH).c_str());
 
-	failePath = IMAGE_FOLDER_PATH + STAGE2_DESCRIPTION_PATH;
-	stageDescription[1] = LoadGraph(failePath.c_str());
+	stageDescription[1] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE2_DESCRIPTION_PATH).c_str());
 
-	failePath = IMAGE_FOLDER_PATH + SELECTION_KEY_PATH;
-	selectionKeyImage = LoadGraph(failePath.c_str());
+	selectionKeyImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_KEY_PATH).c_str());
 
 	//ステージ1のマップモデル
 	MapInput(0, ModelManager::STAGE1, STAGE1_POSITION, STAGE1_SIZE, STAGE1_ROTATE);
@@ -74,6 +72,20 @@ void SelectionUi::MapInput(int number, ModelManager::ModelType modelType, VECTOR
 	MV1SetPosition(modelHandle[number], position[number]);
 }
 
+/// <summary>
+/// 画像のパスを入力
+/// </summary>
+/// <param name="folderPath"></param>
+/// <param name="path"></param>
+/// <returns></returns>
+std::string SelectionUi::InputPath(std::string folderPath, std::string path)
+{
+	return std::string(folderPath + path);
+}
+
+/// <summary>
+/// 活性化処理
+/// </summary>
 void SelectionUi::Activate()
 {
 }
@@ -102,19 +114,11 @@ void SelectionUi::Draw()
 }
 
 /// <summary>
-/// ステージ1のUI描画処理
+/// ステージのUI描画処理
 /// </summary>
-void SelectionUi::Stage1_Draw()
+/// <param name="number"></param>
+void SelectionUi::StageUiDraw(const int number)
 {
-	DrawGraph(100, 150, stageDescription[0], TRUE);
-	MV1DrawModel(modelHandle[0]);
-}
-
-/// <summary>
-/// ステージ2のUI描画処理
-/// </summary>
-void SelectionUi::Stage2_Draw()
-{
-	DrawGraph(100, 150, stageDescription[1], TRUE);
-	MV1DrawModel(modelHandle[1]);
+	DrawGraph(100, 150, stageDescription[number], TRUE);
+	MV1DrawModel(modelHandle[number]);
 }

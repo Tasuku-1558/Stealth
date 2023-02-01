@@ -64,7 +64,7 @@
     <ClCompile Include="HitChecker.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Ball.cpp">
+    <ClCompile Include="Cake.cpp">
       <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
@@ -121,6 +121,12 @@
     <ClCompile Include="ThirdStageMap.cpp">
       <Filter>ソース ファイル\Map</Filter>
     </ClCompile>
+    <ClCompile Include="ThirdStage.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MonitoringEnemy.cpp">
+      <Filter>ソース ファイル\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompiledHeader.h">
@@ -162,7 +168,7 @@
     <ClInclude Include="HitChecker.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Ball.h">
+    <ClInclude Include="Cake.h">
       <Filter>ソース ファイル\Player</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
@@ -218,6 +224,12 @@
     </ClInclude>
     <ClInclude Include="ThirdStageMap.h">
       <Filter>ソース ファイル\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdStage.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MonitoringEnemy.h">
+      <Filter>ソース ファイル\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

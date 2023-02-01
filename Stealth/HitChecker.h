@@ -5,7 +5,7 @@
 
 class Player;
 class Wall;
-class Ball;
+class Cake;
 
 
 /// <summary>
@@ -18,10 +18,10 @@ public:
 	 virtual ~HitChecker();
 
 	void Check(int model, Player* player);					//衝突判定
-	void BallAndPlayer(VECTOR playerPos, Ball* ball);		//ボールとプレイヤーの当たり判定
+	void BallAndPlayer(VECTOR playerPos, Cake* cake);		//ケーキとプレイヤーの当たり判定
 
 
-	const bool BallHit() { return ballHit; }				//ボールにプレイヤーが当たったかどうかを返す
+	const bool CakeHit() { return cakeHit; }				//ケーキにプレイヤーが当たったかどうかを返す
 	const bool UI() { return uiDraw; }						//UI画像に当たったかどうかを返す
 	const VECTOR Back() { return pushBack; }				//マップの壁にプレイヤーが衝突したときの押し戻し値を返す
 	const bool MapHit() { return mapHit; }					//マップもプレイヤーが衝突したかどうかを返す
@@ -34,8 +34,8 @@ private:
 	void MapAndPlayer(int model, Player* player);			//マップとプレイヤーの当たり判定
 
 
-	bool ballHit;			//ボールに衝突したならば
-	VECTOR uiPos;			//UI画像の位置
+	bool cakeHit;			//ケーキに衝突したならば
+	VECTOR uiPosition;		//UI画像の位置
 	bool uiDraw;			//UI画像を描画するかどうか
 
 	bool mapHit;			//マップモデルに衝突したならば

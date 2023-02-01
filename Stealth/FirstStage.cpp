@@ -22,23 +22,23 @@
 /// </summary>
 /// <param name="sceneManager"></param>
 FirstStage::FirstStage(SceneManager* const sceneManager)
-		: SceneBase(sceneManager)
-		, state()
-		, player(nullptr)
-		, enemy(nullptr)
-		, camera(nullptr)
-		, light(nullptr)
-		, backGround(nullptr)
-		, pUpdate(nullptr)
-		, ballBullet(nullptr)
-		, wall(nullptr)
-		, hitChecker(nullptr)
-		, firstStageMap(nullptr)
-		, cakeEffect(nullptr)
-		, uiManager(nullptr)
-		, fadeManager(nullptr)
-		, font(0)
-		, frame(0)
+	: SceneBase(sceneManager)
+	, state()
+	, camera(nullptr)
+	, light(nullptr)
+	, backGround(nullptr)
+	, player(nullptr)
+	, enemy(nullptr)
+	, pUpdate(nullptr)
+	, ballBullet(nullptr)
+	, wall(nullptr)
+	, hitChecker(nullptr)
+	, firstStageMap(nullptr)
+	, cakeEffect(nullptr)
+	, uiManager(nullptr)
+	, fadeManager(nullptr)
+	, font(0)
+	, frame(0)
 {
 	//処理なし
 }
@@ -182,7 +182,6 @@ void FirstStage::UpdateStart(float deltaTime)
 {
 	state = State::GAME;
 	pUpdate = &FirstStage::UpdateGame;
-
 }
 
 /// <summary>
@@ -198,7 +197,7 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	enemy->Update(deltaTime, player);
 
-	enemy->VisualAngleBall(ballBullet->bullet, deltaTime);
+	enemy->VisualAngleCake(ballBullet->bullet, deltaTime);
 
 	enemy->VisualAngleWall(wall->GetPosition());
 
@@ -268,7 +267,8 @@ void FirstStage::Draw()
 	//UI管理クラス描画
 	uiManager->Draw(state, enemy->GetPlayerCount(), hitChecker->UI());
 
-	uiManager->CakeGetDraw(!ballBullet->ball->GetAlive());
+	//ケーキを所持しているか描画
+	uiManager->CakeGetDraw(!ballBullet->cake->GetAlive());
 	
 
 	//デバック用
@@ -276,7 +276,7 @@ void FirstStage::Draw()
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", enemy->GetPlayerCount());
-	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", ballBullet->ball->GetAlive());
+	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "CakeAlive : %d\n(1:true 0:false)", ballBullet->cake->GetAlive());
 
 
 	//画面効果クラス描画

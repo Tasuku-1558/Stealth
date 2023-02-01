@@ -11,9 +11,9 @@ const string CakeRepopEffect::CAKE_PATH			 = "ball.efkefc";		//ƒP[ƒLÄƒXƒ|[ƒ“
 /// </summary>
 CakeRepopEffect::CakeRepopEffect() : EffectBase()
 	, effectHandle(0)
-	, effectPos_X(0.0f)
-	, effectPos_Y(0.0f)
-	, effectPos_Z(0.0f)
+	, effectPosX(0.0f)
+	, effectPosY(0.0f)
+	, effectPosZ(0.0f)
 	, effectTime(0)
 	, playingEffectHandle(0)
 {
@@ -64,9 +64,9 @@ void CakeRepopEffect::Activate()
 void CakeRepopEffect::Update(float ballPosX, float ballPosY, float ballPosZ)
 {
 	//ƒGƒtƒFƒNƒg‚ÌˆÊ’uİ’è
-	effectPos_X = ballPosX;
-	effectPos_Y = ballPosY;
-	effectPos_Z = ballPosZ;
+	effectPosX = ballPosX;
+	effectPosY = ballPosY;
+	effectPosZ = ballPosZ;
 
 	//’èŠú“I‚ÉƒGƒtƒFƒNƒg‚ğÄ¶
 	if (effectTime % 1 == 0)
@@ -76,7 +76,7 @@ void CakeRepopEffect::Update(float ballPosX, float ballPosY, float ballPosZ)
 	}
 
 	//Ä¶’†‚ÌƒGƒtƒFƒNƒg‚ğˆÚ“®
-	SetPosPlayingEffekseer3DEffect(playingEffectHandle, effectPos_X, effectPos_Y, effectPos_Z);
+	SetPosPlayingEffekseer3DEffect(playingEffectHandle, effectPosX, effectPosY, effectPosZ);
 
 	//ŠÔ‚ğŒo‰ß
 	effectTime++;

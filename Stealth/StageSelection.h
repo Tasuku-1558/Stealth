@@ -33,13 +33,14 @@ private:
 	SelectionUi* selectionUi;
 	FadeManager* fadeManager;
 
-	int StageCreator(int stageNumber);
-	int stageDecrement(int stageNumber);			//選択ステージを1つ前に持っていく
 	int stageIncrement(int stageNumber);			//選択ステージを1つ先に持っていく
+	int stageDecrement(int stageNumber);			//選択ステージを1つ前に持っていく
+	int StageCreator(int stageNumber);				//各シーンへ遷移
 	void KeyMove(float deltaTime);					//キー操作
 
 	
 	int font;										//ゲームフォント
+	float frame;									//フレーム数
 	int stageMax;									//最大ステージ数
 	int stageNo;									//ステージナンバー
 	bool changeScene;								//シーンを遷移させるか
@@ -47,7 +48,6 @@ private:
 	int maxTime;									//マックスステージ遷移カウント
 	float pushCount;								//ステージ切り替えカウント
 
-	float frame;
 	//静的定数
 	static const float PUSH_INTERVAL;				//切り替えカウントのインターバル
 

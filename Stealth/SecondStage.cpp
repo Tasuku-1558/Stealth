@@ -2,12 +2,13 @@
 #include "DxLib.h"
 
 #include "SceneManager.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "BallBullet.h"
+#include "PreCompiledHeader.h"
 #include "Camera.h"
 #include "Light.h"
 #include "BackGround.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "BallBullet.h"
 #include "Wall.h"
 #include "HitChecker.h"
 #include "CakeRepopEffect.h"
@@ -23,11 +24,11 @@
 SecondStage::SecondStage(SceneManager* const sceneManager)
 	: SceneBase(sceneManager)
 	, state()
-	, player(nullptr)
-	, enemy()
 	, camera(nullptr)
 	, light(nullptr)
 	, backGround(nullptr)
+	, player(nullptr)
+	, enemy()
 	, pUpdate(nullptr)
 	, ballBullet()
 	, wall()
@@ -91,6 +92,7 @@ void SecondStage::Initialize()
 	//画面効果クラス
 	fadeManager = new FadeManager();
 
+	//出現関数
 	EnemyPop();
 
 	BallBulletPop();
@@ -113,19 +115,19 @@ void SecondStage::Finalize()
 
 	SafeDelete(secondStageMap);
 
-	for (auto ptr : enemy)
+	for (auto enemyPtr : enemy)
 	{
-		SafeDelete(ptr);
+		SafeDelete(enemyPtr);
 	}
 
-	for (auto ptr : ballBullet)
+	for (auto ballBulletPtr : ballBullet)
 	{
-		SafeDelete(ptr);
+		SafeDelete(ballBulletPtr);
 	}
 
-	for (auto ptr : wall)
+	for (auto wallPtr : wall)
 	{
-		SafeDelete(ptr);
+		SafeDelete(wallPtr);
 	}
 
 	SafeDelete(hitChecker);
@@ -153,14 +155,14 @@ void SecondStage::Activate()
 
 	player->Activate();
 
-	for (auto ptr : enemy)
+	for (auto enemyPtr : enemy)
 	{
-		ptr->Activate();
+		enemyPtr->Activate();
 	}
 
-	for (auto ptr : ballBullet)
+	for (auto ballBulletPtr : ballBullet)
 	{
-		ptr->Activate();
+		ballBulletPtr->Activate();
 	}
 
 	cakeEffect->Activate();
@@ -215,6 +217,7 @@ void SecondStage::DeleteEnemy(Enemy* deleteEnemy)
 /// </summary>
 void SecondStage::EnemyPop()
 {
+	//エネミーが出現していないならば
 	if (!enemyPop)
 	{
 		Enemy* newEnemy = new Enemy(secondStageMap->GetMap());
@@ -260,6 +263,7 @@ void SecondStage::DeleteBallBullet(BallBullet* deleteBallBullet)
 /// </summary>
 void SecondStage::BallBulletPop()
 {
+	//ボールが出現していないならば
 	if (!ballPop)
 	{
 		BallBullet* newBallBullet = new BallBullet({ -600.0f,30.0f,0.0f });
@@ -305,6 +309,7 @@ void SecondStage::DeleteWall(Wall* deleteWall)
 /// </summary>
 void SecondStage::WallPop()
 {
+	//壁が出現していないならば
 	if (!wallPop)
 	{
 		Wall* newWall = new Wall({ -1100.0f,30.0f,0.0f });
@@ -343,39 +348,39 @@ void SecondStage::UpdateGame(float deltaTime)
 
 	player->Update(deltaTime, camera, hitChecker->Back(),hitChecker->MapHit());
 	
-	for (auto ptr : enemy)
+	for (auto enemyPtr : enemy)
 	{
-		ptr->Update(deltaTime, player);
+		enemyPtr->Update(deltaTime, player);
 		
-		player->FoundEnemy(deltaTime, ptr);
+		player->FoundEnemy(deltaTime, enemyPtr);
 
-		for (auto ptra : wall)
+		for (auto wallPtr : wall)
 		{
-			ptr->VisualAngleWall(ptra->GetPosition());
+			enemyPtr->VisualAngleWall(wallPtr->GetPosition());
 		}
 		
-		for (auto ptra : ballBullet)
+		for (auto ballBulletPtr : ballBullet)
 		{
-			ptr->VisualAngleBall(ptra->bullet, deltaTime);
+			enemyPtr->VisualAngleCake(ballBulletPtr->bullet, deltaTime);
 			
-			//エネミーがボールを見つけたならば
-			if (ptr->BallFlag())
+			//エネミーがケーキを見つけたならば
+			if (enemyPtr->CakeFlag())
 			{
 				break;
 			}
 		}
 
 		//エネミーに3回見つかったら
-		if (ptr->GetPlayerCount() == 3)
+		if (enemyPtr->GetPlayerCount() == 3)
 		{
 			parent->SetNextScene(SceneManager::SELECTION);
 			return;
 		}
 	}
 
-	for (auto ptr : ballBullet)
+	for (auto ballBulletPtr : ballBullet)
 	{
-		ptr->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
+		ballBulletPtr->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
 	}
 
 	hitChecker->Check(secondStageMap->GetModel(), player);
@@ -415,31 +420,31 @@ void SecondStage::Draw()
 	player->Draw();
 
 	//エネミー描画
-	for (auto ptr : enemy)
+	for (auto enemyPtr : enemy)
 	{
-		ptr->Draw();
+		enemyPtr->Draw();
 	}
 
 	//壁描画
-	for (auto ptr : wall)
+	for (auto wallPtr : wall)
 	{
-		ptr->Draw();
+		wallPtr->Draw();
 	}
 
 	//ボールバレット管理クラス描画
-	for (auto ptr : ballBullet)
+	for (auto ballBulletPtr : ballBullet)
 	{
-		ptr->Draw();
-		uiManager->CakeGetDraw(!ptr->ball->GetAlive());
+		ballBulletPtr->Draw();
+		uiManager->CakeGetDraw(!ballBulletPtr->cake->GetAlive());
 	}
 
 	//エフェクト描画
 	cakeEffect->Draw();
 
 	//UI管理クラス描画
-	for (auto ptr : enemy)
+	for (auto enemyPtr : enemy)
 	{
-		uiManager->Draw(state, ptr->GetPlayerCount()); 
+		uiManager->Draw(state, enemyPtr->GetPlayerCount());
 	}
 
 
@@ -448,13 +453,13 @@ void SecondStage::Draw()
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 
-	for (auto ptr : enemy)
+	for (auto enemyPtr : enemy)
 	{
-		DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d\n", ptr->GetPlayerCount());
+		DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d\n", enemyPtr->GetPlayerCount());
 	}
-	for (auto ptr : ballBullet)
+	for (auto ballBulletPtr : ballBullet)
 	{
-		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", ptr->ball->GetAlive());
+		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", ballBulletPtr->cake->GetAlive());
 	}
 
 

@@ -3,10 +3,10 @@
 
 
 const VECTOR Bullet::SIZE			   = { 20.0f, 20.0f, 20.0f };	//モデルの倍率
-const VECTOR Bullet::POSITION		   = { 0.0f, 30.0f, 0.0f }; //モデルの位置
-const string Bullet::IMAGE_FOLDER_PATH = "data/image/";			//imageフォルダまでのパス
-const string Bullet::CURSOR_PATH	   = "pointer.png";			//カーソル画像のパス
-const float  Bullet::SCALE			   = 0.4f;					//カーソル画像の大きさ
+const VECTOR Bullet::POSITION		   = { 0.0f, 30.0f, 0.0f };		//モデルの位置
+const string Bullet::IMAGE_FOLDER_PATH = "data/image/";				//imageフォルダまでのパス
+const string Bullet::CURSOR_PATH	   = "pointer.png";				//カーソル画像のパス
+const float  Bullet::SCALE			   = 0.4f;						//カーソル画像の大きさ
 
 using namespace Math3d;
 
@@ -18,6 +18,7 @@ Bullet::Bullet() : ObjectBase()
 	, mouseX(0)
 	, mouseZ(0)
 	, worldMouseX(0.0f)
+	, worldMouseY(30.0f)
 	, worldMouseZ(0.0f)
 	, alive(false)
 {
@@ -82,7 +83,6 @@ void Bullet::Finalize()
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime"></param>
-/// <param name="ball"></param>
 void Bullet::Update(float deltaTime)
 {
 	OnShot();
@@ -91,16 +91,16 @@ void Bullet::Update(float deltaTime)
 /// <summary>
 /// マウスカーソルの移動
 /// </summary>
-/// <param name="ball"></param>
-/// <param name="pos"></param>
-void Bullet::MouseMove(Ball* ball, VECTOR playerPos)
+/// <param name="cake"></param>
+/// <param name="playerPos"></param>
+void Bullet::MouseMove(Cake* cake, VECTOR playerPos)
 {
 	GetMousePoint(&mouseX, &mouseZ);       //マウスの座標取得
 	mouseX -= 960;
 	mouseZ -= 540;
 
-	//ボールが死んだら
-	if (!ball->GetAlive())
+	//ケーキが死んだら
+	if (!cake->GetAlive())
 	{
 		//マウスのX,Z座標のワールド座標を計算
 		worldMouseX = (float)mouseX * (3000.0f / 1920.0f) * 1.6f + playerPos.z;
@@ -130,7 +130,7 @@ void Bullet::BulletAlive()
 /// </summary>
 void Bullet::OnShot()
 {
-	position = VGet(worldMouseZ, 30.0f, worldMouseX);
+	position = VGet(worldMouseZ, worldMouseY, worldMouseX);
 
 	MV1SetPosition(modelHandle, position);
 }
@@ -140,7 +140,7 @@ void Bullet::OnShot()
 /// </summary>
 void Bullet::Draw()
 {
-	//ボールが生きているなら
+	//ケーキが生きているなら
 	if (alive)
 	{
 		MV1DrawModel(modelHandle);

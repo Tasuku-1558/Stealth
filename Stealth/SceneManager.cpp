@@ -4,6 +4,7 @@
 #include "StageSelection.h"
 #include "FirstStage.h"
 #include "SecondStage.h"
+#include "ThirdStage.h"
 
 
 /// <summary>
@@ -35,6 +36,7 @@ void SceneManager::Initialize()
 	eachScene[SELECTION] = new StageSelection(this);
 	eachScene[STAGE1]	 = new FirstStage(this);
 	eachScene[STAGE2]	 = new SecondStage(this);
+	eachScene[STAGE3]	 = new ThirdStage(this);
 
 	
 	//全てのシーンの初期化
@@ -71,7 +73,7 @@ void SceneManager::Update(float deltaTime)
 	//次のシーンがセットされていたら次へ
 	if (nowScene != nextScene)
 	{
-		ChangeScene();						//次のシーン
+		ChangeScene();						//次のシーンへ
 	}
 
 	if (nowPointer != nullptr)

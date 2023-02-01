@@ -22,7 +22,6 @@ public:
 		ENEMY,			//エネミーモデル
 		ENEMY_VISUAL,	//エネミーの視野モデル
 		WALL,			//壁モデル
-		BALL,			//ボールモデル
 		CAKE,			//ケーキモデル
 		STAGE1,			//ステージ1モデル
 		STAGE2,			//ステージ2モデル
@@ -38,6 +37,9 @@ private:
 
 	 ModelManager(const ModelManager&);			//コピーコンストラクタ
 
+	 string InputPath(string folderPath,	//モデルのパスを入力
+					  string path);
+
 	 void LoadAllModel();						//全てのモデルの読み込み
 	 void DeleteAllModel();						//全てのモデルの削除
 
@@ -50,7 +52,6 @@ private:
 	 static const string ENEMY_PATH;			//enemyモデルファイルのパス
 	 static const string ENEMY_VISUAL_PATH;		//enemy_visualモデルファイルのパス
 	 static const string WALL_PATH;				//wallモデルファイルのパス
-	 static const string BALL_PATH;				//ballモデルファイルのパス
 	 static const string CAKE_PATH;				//cakeモデルファイルのパス
 	 static const string STAGE1_PATH;			//stage1モデルファイルのパス
 	 static const string STAGE2_PATH;			//stage2モデルファイルのパス

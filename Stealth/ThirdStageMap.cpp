@@ -62,7 +62,7 @@ void ThirdStageMap::Finalize()
 }
 
 /// <summary>
-/// 敵の行動パターンリスト
+/// 敵の行動パターンリスト(上下に移動する敵)
 /// </summary>
 void ThirdStageMap::MapList()
 {

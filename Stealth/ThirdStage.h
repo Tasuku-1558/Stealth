@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneBase.h"
+#include <vector>
 
 class Camera;
 class Light;
@@ -8,21 +9,20 @@ class BackGround;
 class Player;
 class Enemy;
 class BallBullet;
-class Wall;
 class HitChecker;
-class FirstStageMap;
+class ThirdStageMap;
 class CakeRepopEffect;
 class UiManager;
-class FadeManager;
+
 
 /// <summary>
-/// FirstStageクラス
+/// ThirdStageクラス
 /// </summary>
-class FirstStage final : public SceneBase
+class ThirdStage final : public SceneBase
 {
 public:
-	 FirstStage(SceneManager* const sceneManager);
-	 virtual ~FirstStage();
+	ThirdStage(SceneManager* const sceneManager);
+	virtual ~ThirdStage();
 
 	void Initialize();				//初期化処理
 	void Finalize();				//終了処理
@@ -39,27 +39,28 @@ public:
 	};
 
 private:
-	FirstStage(const FirstStage&);	//コピーコンストラクタ
+	ThirdStage(const ThirdStage&);	//コピーコンストラクタ
 
+	
 	Camera* camera;
 	Light* light;
 	BackGround* backGround;
 	Player* player;
-	Enemy* enemy;
-	BallBullet* ballBullet;
-	Wall* wall;
+	std::vector<Enemy*> enemy;
+	std::vector<BallBullet*> ballBullet;
 	HitChecker* hitChecker;
-	FirstStageMap* firstStageMap;
+	ThirdStageMap* thirdStageMap;
 	CakeRepopEffect* cakeEffect;
 	UiManager* uiManager;
-	FadeManager* fadeManager;
 
-	void UpdateStart(float deltaTime);				//ゲーム開始前
-	void UpdateGame(float deltaTime);				//ゲーム中
-	void UpdateGoal(float deltaTime);				//ゴール
-	void (FirstStage::* pUpdate)(float deltaTime);	//Update関数ポインタ
 
-	State state;		//ゲーム状態
-	int font;			//ゲームフォント
-	int frame;
+	void UpdateStart(float deltaTime);						//ゲーム開始前
+	void UpdateGame(float deltaTime);						//ゲーム中
+	void UpdateGoal(float deltaTime);						//ゴール
+	void (ThirdStage::* pUpdate)(float deltaTime);			//Update関数ポインタ
+
+
+	State state;		//ゲームの状態
+	int  font;			//ゲームフォント
+
 };

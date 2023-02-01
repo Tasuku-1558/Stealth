@@ -159,12 +159,13 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBase.cpp" />
-    <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Cake.cpp" />
     <ClCompile Include="HitChecker.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math3D.cpp" />
     <ClCompile Include="ModelManager.cpp" />
+    <ClCompile Include="MonitoringEnemy.cpp" />
     <ClCompile Include="ObjectBase.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBase.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="StageBase.cpp" />
     <ClCompile Include="StageSelection.cpp" />
     <ClCompile Include="ThirdStageMap.cpp" />
+    <ClCompile Include="ThirdStage.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="UiManager.cpp" />
     <ClCompile Include="Wall.cpp" />
@@ -190,10 +192,11 @@
     <ClInclude Include="FadeManager.h" />
     <ClInclude Include="FirstStageMap.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="MonitoringEnemy.h" />
     <ClInclude Include="PreCompiledHeader.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBase.h" />
-    <ClInclude Include="Ball.h" />
+    <ClInclude Include="Cake.h" />
     <ClInclude Include="HitChecker.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Math3D.h" />
@@ -212,6 +215,7 @@
     <ClInclude Include="StageBase.h" />
     <ClInclude Include="StageSelection.h" />
     <ClInclude Include="ThirdStageMap.h" />
+    <ClInclude Include="ThirdStage.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="UiManager.h" />
     <ClInclude Include="Wall.h" />

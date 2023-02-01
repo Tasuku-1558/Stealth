@@ -24,11 +24,12 @@ public:
 	void Update(float deltaTime, Player* player);		//更新処理
 	void Draw();										//描画処理
 
-	void VisualAngleBall(Bullet* bullet, float deltaTime);				//エネミーの視野にボールが入った場合
-	void VisualAngleWall(VECTOR wallPos);				//エネミーの視野に壁が入った場合
+	void VisualAngleCake(Bullet* bullet, float deltaTime);	//エネミーの視野にケーキが入った場合
+	void VisualAngleWall(VECTOR wallPos);					//エネミーの視野に壁が入った場合
+
 
 	const bool Spotted() { return playerSpotted; }			//プレイヤーを見つけたかどうかを返す
-	const bool BallFlag() { return ballFlag; }				//ボールを見つけたかどうかを返す
+	const bool CakeFlag() { return cakeFlag; }				//ケーキを見つけたかどうかを返す
 	const int GetPlayerCount() { return playerFindCount; }	//プレイヤーを見つけた回数を返す
 	
 	//エネミーの状態
@@ -48,7 +49,11 @@ private:
 	void VisualAnglePlayer(Player* player);		//エネミーの視野にプレイヤーが入った場合
 	
 	void Reaction();							//エネミーのオブジェクトごとの反応
+	void ReactionDraw();						//リアクション画像の描画処理
 	void Finalize();							//終了処理
+
+	std::string InputPath(std::string folderPath, //画像、SEのパスを入力
+						  std::string path);
 
 	EnemyState enemyState;						//エネミーの状態
 
@@ -64,7 +69,6 @@ private:
 	static const std::string SOUND_FOLDER_PATH;	//soundフォルダまでのパス
 	static const std::string PLAYER_FIND_PATH;	//プレイヤーを見つけた画像のパス
 	static const std::string MARK_PATH;			//ビックリマーク画像のパス
-	static const std::string CAKE_FIND_PATH;	//ケーキを見つけた画像のパス
 	static const std::string CAKE_EAT_PATH;		//ケーキを食べている画像のパス
 	static const std::string SPOTTED_SE_PATH;	//プレイヤー発見SE音のパス
 };

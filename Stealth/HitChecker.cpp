@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "FirstStageMap.h"
 #include "Wall.h"
-#include "Ball.h"
+#include "Cake.h"
 #include "PreCompiledHeader.h"
 
 using namespace Math3d;
@@ -11,14 +11,14 @@ using namespace Math3d;
 /// コンストラクタ
 /// </summary>
 HitChecker::HitChecker()
-	: ballHit(false)
+	: cakeHit(false)
 	, hitPolyDim()
-	, uiPos()
+	, uiPosition()
 	, uiDraw(false)
 	, pushBack()
 	, mapHit(false)
 {
-	uiPos = VGet(-800.0f, 30.0f, 0.0f);
+	uiPosition = VGet(-800.0f, 30.0f, 0.0f);
 }
 
 /// <summary>
@@ -41,26 +41,26 @@ void HitChecker::Check(int model, Player* player)
 }
 
 /// <summary>
-/// ボールとプレイヤーの当たり判定
+/// ケーキとプレイヤーの当たり判定
 /// </summary>
 /// <param name="playerPos"></param>
-/// <param name="ball"></param>
-void HitChecker::BallAndPlayer(VECTOR playerPos, Ball* ball)
+/// <param name="cake"></param>
+void HitChecker::BallAndPlayer(VECTOR playerPos, Cake* cake)
 {
-	//プレイヤーからボールの座標を引いた値を取得
-	VECTOR sub = playerPos - ball->GetPosition();
+	//プレイヤーからケーキの座標を引いた値を取得
+	VECTOR sub = playerPos - cake->GetPosition();
 
-	//プレイヤーとボールの2点間の距離を計算
+	//プレイヤーとケーキの2点間の距離を計算
 	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
 	
 	//衝突しているならば
-	if (direction < PLAYER_RADIUS + BALL_RADIUS)
+	if (direction < PLAYER_RADIUS + CAKE_RADIUS)
 	{
-		ballHit = true;
+		cakeHit = true;
 	}
 	else
 	{
-		ballHit = false;
+		cakeHit = false;
 	}
 }
 
@@ -70,10 +70,10 @@ void HitChecker::BallAndPlayer(VECTOR playerPos, Ball* ball)
 /// <param name="player"></param>
 void HitChecker::PlayerAndUI(Player* player)
 {
-	//プレイヤーからボールの座標を引いた値を取得
-	VECTOR sub = player->GetPosition() - uiPos;
+	//プレイヤーからUI画像の座標を引いた値を取得
+	VECTOR sub = player->GetPosition() - uiPosition;
 
-	//プレイヤーとボールの2点間の距離を計算
+	//プレイヤーとUI画像の2点間の距離を計算
 	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
 
 	//衝突しているならば

@@ -22,6 +22,15 @@ FadeManager::~FadeManager()
 }
 
 /// <summary>
+/// Šˆ«‰»ˆ—
+/// </summary>
+void FadeManager::Activate()
+{
+	fade = 0;
+	fadeInc = 2;
+}
+
+/// <summary>
 /// ‰æ–ÊŒø‰Êˆ—
 /// </summary>
 void FadeManager::FadeMove()

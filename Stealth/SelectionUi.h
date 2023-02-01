@@ -17,22 +17,26 @@ public:
 	virtual ~SelectionUi();
 
 	void Initialize();								//初期化処理
-	void Activate();
+	void Activate();								//活性化処理
 	void Finalize();								//終了処理
 	void Draw();									//描画処理
-	void Stage1_Draw();								//ステージ1のUI描画処理
-	void Stage2_Draw();								//ステージ2のUI描画処理
+	void StageUiDraw(const int number);				//ステージのUI描画処理
+
 
 private:
 	SelectionUi(const SelectionUi&);				//コピーコンストラクタ
 
-	void MapInput(int number, ModelManager::ModelType modelType, VECTOR mapPos, VECTOR size, VECTOR rotate);	//マップ情報入力
+	void MapInput(int number, ModelManager::ModelType modelType, 
+				  VECTOR mapPos, VECTOR size, VECTOR rotate);		//マップ情報入力
+
+	std::string InputPath(std::string folderPath,	//画像のパスを入力
+						  std::string path);
 
 
 	int selectionKeyImage;							//ステージセレクションUI画像
-	int stageDescription[2];						//ステージの説明画像ハンドル
-	int modelHandle[2];								//マップモデルハンドル
-	VECTOR position[2];								//マップモデルの位置
+	int stageDescription[3];						//ステージの説明画像ハンドル
+	int modelHandle[3];								//マップモデルハンドル
+	VECTOR position[3];								//マップモデルの位置
 
 
 	//静的定数

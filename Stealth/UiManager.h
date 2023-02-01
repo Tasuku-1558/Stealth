@@ -20,8 +20,11 @@ public:
 	void Activate();		//Šˆ«‰»ˆ—
 	void Finalize();		//I—¹ˆ—
 
-	void Draw(FirstStage::State state, int playerCount, bool hitUi);	//FirstStage‚ÌUI•`‰æˆ—
-	void Draw(SecondStage::State state, int playerCount);				//SecondStage‚ÌUI•`‰æˆ—
+	void Draw(FirstStage::State state, 
+			  int playerCount, bool hitUi);	//FirstStage‚ÌUI•`‰æˆ—
+
+	void Draw(SecondStage::State state, 
+			  int playerCount);				//SecondStage‚ÌUI•`‰æˆ—
 
 	void CakeGetDraw(bool cakeGet);			//ƒP[ƒL‚ğ‚Á‚Ä‚¢‚é‚©‚ÌUI
 

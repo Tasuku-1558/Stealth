@@ -165,6 +165,8 @@ void Player::FoundEnemy(float deltaTime, Enemy* enemy)
 	//エネミーに見つかったら
 	if (enemy->Spotted())
 	{
+		WaitTimer(1000);
+
 		//位置と向きを初期化
 		position = POSITION;
 		previewPosition = POSITION;

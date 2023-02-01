@@ -7,7 +7,6 @@ const string ModelManager::PLAYER_PATH       = "player.mv1";    //playerモデルフ
 const string ModelManager::ENEMY_PATH        = "enemy.mv1";     //enemyモデルファイルのパス
 const string ModelManager::ENEMY_VISUAL_PATH = "Angle.mv1";     //enemy_visualモデルファイルのパス
 const string ModelManager::WALL_PATH         = "wall.mv1";      //wallモデルファイルのパス
-const string ModelManager::BALL_PATH         = "ball.mv1";      //ballモデルファイルのパス
 const string ModelManager::CAKE_PATH         = "cake.mv1";      //cakeモデルファイルのパス
 const string ModelManager::STAGE1_PATH       = "stage1.mv1";    //stage1モデルファイルのパス
 const string ModelManager::STAGE2_PATH       = "stage2.mv1";    //stage2モデルファイルのパス
@@ -46,33 +45,23 @@ ModelManager& ModelManager::GetInstance()
 /// </summary>
 void ModelManager::LoadAllModel()
 {
-    //モデルファイルのパス
-    string failePath = MODEL_FOLDER_PATH + PLAYER_PATH;
-    modelHandle[PLAYER] = MV1LoadModel(failePath.c_str());
+    //モデルファイルの読み込み
+    modelHandle[PLAYER]       = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, PLAYER_PATH).c_str());
 
-    failePath = MODEL_FOLDER_PATH + ENEMY_PATH;
-    modelHandle[ENEMY] = MV1LoadModel(failePath.c_str());
+    modelHandle[ENEMY]        = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, ENEMY_PATH).c_str());
 
-    failePath = MODEL_FOLDER_PATH + ENEMY_VISUAL_PATH;
-    modelHandle[ENEMY_VISUAL] = MV1LoadModel(failePath.c_str());
+    modelHandle[ENEMY_VISUAL] = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, ENEMY_VISUAL_PATH).c_str());
 
-    failePath = MODEL_FOLDER_PATH + WALL_PATH;
-    modelHandle[WALL] = MV1LoadModel(failePath.c_str());
+    modelHandle[WALL]         = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, WALL_PATH).c_str());
 
-    failePath = MODEL_FOLDER_PATH + BALL_PATH;
-    modelHandle[BALL] = MV1LoadModel(failePath.c_str());
+    modelHandle[CAKE]         = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, CAKE_PATH).c_str());
 
-    failePath = MODEL_FOLDER_PATH + CAKE_PATH;
-    modelHandle[CAKE] = MV1LoadModel(failePath.c_str());
+    modelHandle[STAGE1]       = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, STAGE1_PATH).c_str());
 
-    failePath = MODEL_FOLDER_PATH + STAGE1_PATH;
-    modelHandle[STAGE1] = MV1LoadModel(failePath.c_str());
+    modelHandle[STAGE2]       = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, STAGE2_PATH).c_str());
 
-    failePath = MODEL_FOLDER_PATH + STAGE2_PATH;
-    modelHandle[STAGE2] = MV1LoadModel(failePath.c_str());
+    modelHandle[STAGE3]       = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, STAGE3_PATH).c_str());
 
-    failePath = MODEL_FOLDER_PATH + STAGE3_PATH;
-    modelHandle[STAGE3] = MV1LoadModel(failePath.c_str());
 
     //読み込み失敗ならエラー
     for (int i = 0; i < MODEL_AMOUNT; ++i)
@@ -82,6 +71,17 @@ void ModelManager::LoadAllModel()
             printfDx("モデルデータ読み込み失敗\n", i);
         }
     }
+}
+
+/// <summary>
+/// モデルのパスを入力
+/// </summary>
+/// <param name="folderPath"></param>
+/// <param name="path"></param>
+/// <returns></returns>
+string ModelManager::InputPath(string folderPath, string path)
+{
+    return string(folderPath + path);
 }
 
 /// <summary>

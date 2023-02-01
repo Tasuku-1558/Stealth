@@ -24,7 +24,7 @@ public:
 	  enum class Object
 	  {
 		  PLAYER,		//プレイヤー
-		  BALL,			//ボール
+		  CAKE,			//ケーキ
 		  WALL,			//壁
 	  };
 

@@ -4,7 +4,7 @@
 
 #include "ObjectBase.h"
 #include "Math3D.h"
-#include "Ball.h"
+#include "Cake.h"
 
 using namespace std;
 
@@ -22,7 +22,7 @@ public:
 	void Finalize();									//終了処理
 	void Update(float deltaTime);						//更新処理
 	void Draw();										//描画処理
-	void MouseMove(Ball* ball, VECTOR playerPos);		//マウスカーソルの移動
+	void MouseMove(Cake* cake, VECTOR playerPos);		//マウスカーソルの移動
 	void BulletDead();									//バレットを非アクティブ化
 	void BulletAlive();									//バレットをアクティブ化
 
@@ -38,6 +38,7 @@ private:
 	int mouseX;								//マウスX座標
 	int mouseZ;								//マウスZ座標
 	float worldMouseX;						//ワールドマウスX座標
+	float worldMouseY;						//ワールドマウスY座標
 	float worldMouseZ;						//ワールドマウスZ座標
 
 	bool alive;								//生きてるか死んでるか

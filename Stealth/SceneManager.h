@@ -24,6 +24,7 @@ public:
 		SELECTION,		//ステージ選択画面
 		STAGE1,			//ステージ1画面
 		STAGE2,			//ステージ2画面
+		STAGE3,			//ステージ3画面
 		//OVER,			//ゲームオーバー画面
 		END				//終了とシーン数
 	};

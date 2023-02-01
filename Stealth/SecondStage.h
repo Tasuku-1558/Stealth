@@ -1,14 +1,14 @@
 #pragma once
 
 #include "SceneBase.h"
-#include "PreCompiledHeader.h"
 #include <vector>
 
-class Player;
-class Enemy;
+
 class Camera;
 class Light;
 class BackGround;
+class Player;
+class Enemy;
 class BallBullet;
 class Wall;
 class HitChecker;
@@ -43,12 +43,12 @@ public:
 
 private:
 	SecondStage(const SecondStage&);		//コピーコンストラクタ
-
-	Player* player;
-	std::vector<Enemy*> enemy;
+	
 	Camera* camera;
 	Light* light;
 	BackGround* backGround;
+	Player* player;
+	std::vector<Enemy*> enemy;
 	std::vector<BallBullet*> ballBullet;
 	std::vector<Wall*> wall;
 	HitChecker* hitChecker;

@@ -1,16 +1,16 @@
-#include "Ball.h"
+#include "Cake.h"
 #include "ModelManager.h"
 #include "HitChecker.h"
 
 
-const VECTOR Ball::SIZE	= { 20.0f, 20.0f, 20.0f };		//モデルの倍率
+const VECTOR Cake::SIZE	= { 20.0f, 20.0f, 20.0f };		//モデルの倍率
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="pos"></param>
-Ball::Ball(VECTOR pos) : ObjectBase()
+Cake::Cake(VECTOR pos) : ObjectBase()
 	, alive(true)
 {
 	position = pos;
@@ -21,7 +21,7 @@ Ball::Ball(VECTOR pos) : ObjectBase()
 /// <summary>
 /// デストラクタ
 /// </summary>
-Ball::~Ball()
+Cake::~Cake()
 {
 	// 終了処理が呼ばれていなければ
 	if (modelHandle != NULL)
@@ -33,7 +33,7 @@ Ball::~Ball()
 /// <summary>
 /// 初期化処理
 /// </summary>
-void Ball::Initialize()
+void Cake::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::CAKE));
 	MV1SetScale(modelHandle, SIZE);
@@ -49,7 +49,7 @@ void Ball::Initialize()
 /// <summary>
 /// 活性化処理
 /// </summary>
-void Ball::Activate()
+void Cake::Activate()
 {
 	position = position;
 }
@@ -57,7 +57,7 @@ void Ball::Activate()
 /// <summary>
 /// 終了処理
 /// </summary>
-void Ball::Finalize()
+void Cake::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 	modelHandle = NULL;
@@ -66,28 +66,28 @@ void Ball::Finalize()
 /// <summary>
 /// 更新処理
 /// </summary>
-void Ball::Update()
+void Cake::Update()
 {
 	//処理なし
 }
 
 /// <summary>
-/// ボールを非アクティブ化
+/// ケーキを非アクティブ化
 /// </summary>
-void Ball::BallAlive()
+void Cake::CakeAlive()
 {
 	alive = true;
 	position = position;
 }
 
 /// <summary>
-/// ボールが生きてるか死んでいるかを判定
+/// ケーキが生きてるか死んでいるかを判定
 /// </summary>
 /// <param name="hitChecker"></param>
-void Ball::IsAlive(HitChecker* hitChecker)
+void Cake::IsAlive(HitChecker* hitChecker)
 {
-	//ボールに当たったならば
-	if (hitChecker->BallHit())
+	//ケーキに当たったならば
+	if (hitChecker->CakeHit())
 	{
 		alive = false;
 	}
@@ -100,7 +100,7 @@ void Ball::IsAlive(HitChecker* hitChecker)
 /// <summary>
 /// 描画処理
 /// </summary>
-void Ball::Draw()
+void Cake::Draw()
 {
 	MV1DrawModel(modelHandle);
 }

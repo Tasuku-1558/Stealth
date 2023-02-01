@@ -14,7 +14,7 @@ const VECTOR ZERO_VECTOR  = { 0.0f, 0.0f, 0.0f };	//ゼロベクトル
 
 const float PLAYER_RADIUS = 100.0f;                 //プレイヤーの半径
 const float ENEMY_RADIUS  = 100.0f;                 //エネミーの半径
-const float BALL_RADIUS   = 50.0f;                  //ボールの半径
+const float CAKE_RADIUS   = 50.0f;                  //ケーキの半径
 const float BULLET_RADIUS = 50.0f;                  //バレットの半径
 
 ////シャドウマップのサイズ

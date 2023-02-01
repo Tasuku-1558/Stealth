@@ -10,11 +10,9 @@ public:
 	 FadeManager();
 	 virtual ~FadeManager();
 
-
+	void Activate();				//Šˆ«‰»ˆ—
 	void FadeMove();				//‰æ–ÊŒø‰Êˆ—
 	void Draw();					//•`‰æˆ—
-
-	int Fade() { return fade; }
 
 private:
 

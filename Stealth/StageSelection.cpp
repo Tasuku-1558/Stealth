@@ -12,6 +12,7 @@ char stageName[][32] =
 {
 	"STAGE1",
 	"STAGE2",
+	"STAGE3",
 	"TITLE",
 };
 
@@ -85,11 +86,28 @@ void StageSelection::Activate()
 	stageNo = 1;
 	changeScene = false;
 	changeTimeCount = 0;
-	frame = 0;
+	frame = 0.0f;
 
 	selectionUi->Activate();
 
+	fadeManager->Activate();
+
 	font = CreateFontToHandle("Oranienbaum", 120, 1);
+}
+
+/// <summary>
+/// 選択ステージを1つ先に持っていく
+/// </summary>
+/// <param name="stageNum"></param>
+/// <returns></returns>
+int StageSelection::stageIncrement(int stageNumber)
+{
+	if (stageNumber > 0 && stageNumber < stageMax)
+	{
+		return stageNumber + 1;
+	}
+
+	return 1;
 }
 
 /// <summary>
@@ -109,20 +127,10 @@ int StageSelection::stageDecrement(int stageNumber)
 }
 
 /// <summary>
-/// 選択ステージを1つ先に持っていく
+/// 各シーンへ遷移
 /// </summary>
-/// <param name="stageNum"></param>
+/// <param name="stageNumber"></param>
 /// <returns></returns>
-int StageSelection::stageIncrement(int stageNumber)
-{
-	if (stageNumber > 0 && stageNumber < stageMax)
-	{
-		return stageNumber + 1;
-	}
-
-	return 1;
-}
-
 int StageSelection::StageCreator(int stageNumber)
 {
 	if (stageNumber < 0)
@@ -142,6 +150,10 @@ int StageSelection::StageCreator(int stageNumber)
 		break;
 
 	case 3:
+		parent->SetNextScene(SceneManager::STAGE3);
+		break;
+
+	case 4:
 		parent->SetNextScene(SceneManager::TITLE);
 		break;
 	}
@@ -194,16 +206,18 @@ void StageSelection::KeyMove(float deltaTime)
 	if (changeScene)
 	{
 		changeTimeCount++;
+
 		frame += deltaTime;
 
 		if (changeTimeCount > maxTime)
 		{
 			fadeManager->FadeMove();
 
-			if (frame > 3.0f)
+			//フレームが3.5秒経過したら画面を遷移する
+			if (frame > 3.5f)
 			{
 				StageCreator(stageNo);
-				frame = 0;
+				frame = 0.0f;
 			}
 		}
 	}
@@ -217,11 +231,11 @@ void StageSelection::Draw()
 
 	if (stageNo == 1)
 	{
-		selectionUi->Stage1_Draw();
+		selectionUi->StageUiDraw(0);
 	}
 	else if (stageNo == 2)
 	{
-		selectionUi->Stage2_Draw();
+		selectionUi->StageUiDraw(1);
 	}
 
 	if (!changeScene || (changeTimeCount / 5) % 2 == 0)

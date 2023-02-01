@@ -28,9 +28,9 @@ private:
 	int effectTime;					//エフェクト時間
 
 	//ケーキ再スポーン時エフェクトの位置
-	float effectPos_X;
-	float effectPos_Y;
-	float effectPos_Z;
+	float effectPosX;
+	float effectPosY;
+	float effectPosZ;
 
 	int playingEffectHandle;		// 再生中のエフェクトのハンドルを初期化
 
