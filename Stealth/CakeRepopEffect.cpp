@@ -58,15 +58,15 @@ void CakeRepopEffect::Activate()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="ballPosX"></param>
-/// <param name="ballPosY"></param>
-/// <param name="ballPosZ"></param>
-void CakeRepopEffect::Update(float ballPosX, float ballPosY, float ballPosZ)
+/// <param name="cakePosX"></param>
+/// <param name="cakePosY"></param>
+/// <param name="cakePosZ"></param>
+void CakeRepopEffect::Update(float cakePosX, float cakePosY, float cakePosZ)
 {
 	//エフェクトの位置設定
-	effectPosX = ballPosX;
-	effectPosY = ballPosY;
-	effectPosZ = ballPosZ;
+	effectPosX = cakePosX;
+	effectPosY = cakePosY;
+	effectPosZ = cakePosZ;
 
 	//定期的にエフェクトを再生
 	if (effectTime % 1 == 0)

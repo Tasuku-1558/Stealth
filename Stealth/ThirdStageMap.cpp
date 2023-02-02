@@ -3,8 +3,8 @@
 #include "ModelManager.h"
 
 
-const VECTOR ThirdStageMap::SIZE	 = { 80.0f, 50.0f, 80.0f };						//モデルの倍率
-const VECTOR ThirdStageMap::POSITION = { -200.0f, -100.0f, 1350.0f };				//モデルの位置
+const VECTOR ThirdStageMap::SIZE	 = { 45.0f, 50.0f, 45.0f };						//モデルの倍率
+const VECTOR ThirdStageMap::POSITION = { -1500.0f, -100.0f, 1450.0f };				//モデルの位置
 const VECTOR ThirdStageMap::ROTATE	 = { 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f };	//モデルの回転値
 
 

@@ -19,13 +19,14 @@ protected:
 	VECTOR targetPosition;			//目的地の座標
 	float speed;					//エネミーの移動速度
 	float length;					//視野角の距離
+	float bulletDirection;			//バレットとエネミーの距離
 	bool playerSpotted;				//プレイヤーを発見したかどうか
 	bool cakeFlag;					//ケーキを発見したかどうか
 	int playerFindCount;			//プレイヤーを見つけた回数
 	int playerFindImage;			//プレイヤーを見つけた画像格納用
 	int markImage;					//ビックリマーク画像格納用
 	int spottedSE;					//プレイヤー発見SE音
-	int cakeEatImage;				//ケーキを食べている時の画像格納用
+	int cakeImage[2];				//ケーキの画像格納用
 
 	int visualModelHandle;			//視野モデルハンドル
 	VECTOR visualPosition;			//視野モデルの位置

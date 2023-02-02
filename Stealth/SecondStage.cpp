@@ -41,7 +41,7 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, fadeManager(nullptr)
 	, font(0)
 	, enemyPop(false)
-	, ballPop(false)
+	, cakePop(false)
 	, wallPop(false)
 	, frame(0)
 {
@@ -265,8 +265,8 @@ void SecondStage::DeleteBallBullet(BallBullet* deleteBallBullet)
 /// </summary>
 void SecondStage::BallBulletPop()
 {
-	//ボールが出現していないならば
-	if (!ballPop)
+	//ケーキが出現していないならば
+	if (!cakePop)
 	{
 		BallBullet* newBallBullet = new BallBullet({ -600.0f,30.0f,0.0f });
 		EntryBallBullet(newBallBullet);
@@ -274,7 +274,7 @@ void SecondStage::BallBulletPop()
 		BallBullet* newBallBullet2 = new BallBullet({ -3500.0f,30.0f,0.0f });
 		EntryBallBullet(newBallBullet2);
 
-		ballPop = true;
+		cakePop = true;
 	}
 }
 
@@ -437,6 +437,7 @@ void SecondStage::Draw()
 	for (auto ballBulletPtr : ballBullet)
 	{
 		ballBulletPtr->Draw();
+
 		uiManager->CakeGetDraw(!ballBulletPtr->cake->GetAlive());
 	}
 

@@ -41,6 +41,10 @@ public:
 private:
 	ThirdStage(const ThirdStage&);	//コピーコンストラクタ
 
+
+	void EntryBallBullet(BallBullet* newBallBullet);		//ボールバレットを登録
+	void DeleteBallBullet(BallBullet* deleteBallBullet);	//ボールバレットを削除
+	void BallBulletPop();									//ボールバレットの出現
 	
 	Camera* camera;
 	Light* light;
@@ -62,5 +66,10 @@ private:
 
 	State state;		//ゲームの状態
 	int  font;			//ゲームフォント
+	bool cakePop;		//ケーキの出現フラグ
+
+	//静的定数
+	//static const int GOAL_POSITION_X;					//ゴールの位置
+
 
 };

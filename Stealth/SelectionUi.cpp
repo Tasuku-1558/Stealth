@@ -6,7 +6,7 @@ const string SelectionUi::SELECTION_KEY_PATH	  = "selection_key.png";		//ƒXƒe[ƒ
 const string SelectionUi::STAGE1_DESCRIPTION_PATH = "stage1_description.png";	//ƒXƒe[ƒW1‚Ìà–¾‰æ‘œ‚ÌƒpƒX
 const string SelectionUi::STAGE2_DESCRIPTION_PATH = "stage2_description.png";	//ƒXƒe[ƒW2‚Ìà–¾‰æ‘œ‚ÌƒpƒX
 const string SelectionUi::STAGE3_DESCRIPTION_PATH = "stage3_description.png";	//ƒXƒe[ƒW3‚Ìà–¾‰æ‘œ‚ÌƒpƒX
-const int	 SelectionUi::STAGE_NUMBER			  = 2;							//ƒXƒe[ƒW”
+const int	 SelectionUi::STAGE_NUMBER			  = 3;							//ƒXƒe[ƒW”
 
 const VECTOR SelectionUi::STAGE1_POSITION		  = { 1300.0f, 740.0f, 0.0f };		//ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚ÌˆÊ’u
 const VECTOR SelectionUi::STAGE1_SIZE			  = { 10.0f, 10.0f, 10.0f };		//ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚Ì”{—¦
@@ -16,7 +16,7 @@ const VECTOR SelectionUi::STAGE2_POSITION		  = { 1400.0f, 300.0f, -150.0f };	//ƒ
 const VECTOR SelectionUi::STAGE2_SIZE			  = { 8.0f, 8.0f, 8.0f };			//ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚Ì”{—¦
 const VECTOR SelectionUi::STAGE2_ROTATE = { 80.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f }; //ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
 
-const VECTOR SelectionUi::STAGE3_POSITION		  = { 1200.0f, 700.0f, -150.0f };	//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚ÌˆÊ’u
+const VECTOR SelectionUi::STAGE3_POSITION		  = { 1200.0f, 750.0f, -150.0f };	//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚ÌˆÊ’u
 const VECTOR SelectionUi::STAGE3_SIZE			  = { 8.0f, 8.0f, 8.0f };			//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚Ì”{—¦
 const VECTOR SelectionUi::STAGE3_ROTATE = { 90.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }; //ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
 
@@ -97,6 +97,7 @@ std::string SelectionUi::InputPath(std::string folderPath, std::string path)
 /// </summary>
 void SelectionUi::Activate()
 {
+
 }
 
 /// <summary>
@@ -115,14 +116,6 @@ void SelectionUi::Finalize()
 }
 
 /// <summary>
-/// •`‰æˆ—
-/// </summary>
-void SelectionUi::Draw()
-{
-	DrawRotaGraph(1350, 950, 0.7f, 0, selectionKeyImage, TRUE);
-}
-
-/// <summary>
 /// ƒXƒe[ƒW‚ÌUI•`‰æˆ—
 /// </summary>
 /// <param name="number"></param>
@@ -130,4 +123,12 @@ void SelectionUi::StageUiDraw(const int number)
 {
 	DrawGraph(100, 150, stageDescription[number], TRUE);
 	MV1DrawModel(modelHandle[number]);
+}
+
+/// <summary>
+/// •`‰æˆ—
+/// </summary>
+void SelectionUi::Draw()
+{
+	DrawRotaGraph(1350, 950, 0.7f, 0, selectionKeyImage, TRUE);
 }

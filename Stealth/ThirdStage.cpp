@@ -34,6 +34,7 @@ ThirdStage::ThirdStage(SceneManager* const sceneManager)
 	, thirdStageMap(nullptr)
 	, uiManager(nullptr)
 	, font(0)
+	, cakePop(false)
 {
 	//処理なし
 }
@@ -80,6 +81,9 @@ void ThirdStage::Initialize()
 	//UI管理クラス
 	uiManager = new UiManager();
 	uiManager->Initialize();
+
+	//出現関数
+	BallBulletPop();
 }
 
 /// <summary>
@@ -158,6 +162,55 @@ void ThirdStage::Update(float deltaTime)
 }
 
 /// <summary>
+/// ボールバレットを登録
+/// </summary>
+/// <param name="newBallBullet"></param>
+void ThirdStage::EntryBallBullet(BallBullet* newBallBullet)
+{
+	ballBullet.emplace_back(newBallBullet);
+}
+
+/// <summary>
+/// ボールバレットを削除
+/// </summary>
+/// <param name="deleteBallBullet"></param>
+void ThirdStage::DeleteBallBullet(BallBullet* deleteBallBullet)
+{
+	//ボールバレットオブジェクトから検索して削除
+	auto iter = std::find(ballBullet.begin(), ballBullet.end(), deleteBallBullet);
+
+	if (iter != ballBullet.end())
+	{
+		//ボールバレットオブジェクトを最後尾に移動してデータを消す
+		std::iter_swap(iter, ballBullet.end() - 1);
+		ballBullet.pop_back();
+
+		return;
+	}
+}
+
+/// <summary>
+/// ボールバレットの出現
+/// </summary>
+void ThirdStage::BallBulletPop()
+{
+	//ケーキが出現していないならば
+	if (!cakePop)
+	{
+		BallBullet* newBallBullet = new BallBullet({ -600.0f,30.0f,0.0f });
+		EntryBallBullet(newBallBullet);
+
+		BallBullet* newBallBullet2 = new BallBullet({ -3500.0f,30.0f,0.0f });
+		EntryBallBullet(newBallBullet2);
+
+		BallBullet* newBallBullet3 = new BallBullet({ -4000.0f,30.0f,0.0f });
+		EntryBallBullet(newBallBullet3);
+
+		cakePop = true;
+	}
+}
+
+/// <summary>
 /// ゲーム開始前
 /// </summary>
 /// <param name="deltaTime"></param>
@@ -180,6 +233,45 @@ void ThirdStage::UpdateGame(float deltaTime)
 
 	player->Update(deltaTime, camera, hitChecker->Back(), hitChecker->MapHit());
 
+	for (auto enemyPtr : enemy)
+	{
+		enemyPtr->Update(deltaTime, player);
+
+		player->FoundEnemy(deltaTime, enemyPtr);
+
+		for (auto ballBulletPtr : ballBullet)
+		{
+			enemyPtr->VisualAngleCake(ballBulletPtr->bullet, deltaTime);
+
+			//エネミーがケーキを見つけたならば
+			if (enemyPtr->CakeFlag())
+			{
+				break;
+			}
+		}
+
+		//エネミーに3回見つかったら
+		if (enemyPtr->GetPlayerCount() == 3)
+		{
+			parent->SetNextScene(SceneManager::SELECTION);
+			return;
+		}
+	}
+
+	for (auto ballBulletPtr : ballBullet)
+	{
+		ballBulletPtr->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
+	}
+
+	hitChecker->Check(thirdStageMap->GetModelHandle(), player);
+
+	//プレイヤーがゴール地点に辿り着いたら
+	/*if (player->GetPosition().x < GOAL_POSITION &&
+		player->GetPosition().z)
+	{
+		state = State::GOAL;
+		pUpdate = &ThirdStage::UpdateGoal;
+	}*/
 }
 
 /// <summary>
@@ -218,6 +310,7 @@ void ThirdStage::Draw()
 	for (auto ballBulletPtr : ballBullet)
 	{
 		ballBulletPtr->Draw();
+
 		uiManager->CakeGetDraw(!ballBulletPtr->cake->GetAlive());
 	}
 

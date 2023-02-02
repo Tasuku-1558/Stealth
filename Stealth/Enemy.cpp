@@ -8,7 +8,8 @@ const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageƒtƒHƒ‹ƒ_‚Ü‚Å‚Ìƒpƒ
 const string Enemy::SOUND_FOLDER_PATH = "data/sound/";		//soundƒtƒHƒ‹ƒ_‚Ü‚Å‚ÌƒpƒX
 const string Enemy::PLAYER_FIND_PATH  = "playerFind.png";	//ƒvƒŒƒCƒ„[‚ğŒ©‚Â‚¯‚½‰æ‘œ‚ÌƒpƒX
 const string Enemy::MARK_PATH		  = "mark.png";			//ƒrƒbƒNƒŠƒ}[ƒN‰æ‘œ‚ÌƒpƒX
-const string Enemy::CAKE_EAT_PATH	  = "cakeEat.png";		//ƒP[ƒL‚ğH‚×‚Ä‚¢‚é‰æ‘œ‚ÌƒpƒX
+const string Enemy::CAKE_PATH		  = "ui9.png";			//ƒP[ƒL‰æ‘œ‚ÌƒpƒX
+const string Enemy::CAKE_HALF_PATH	  = "cakeFalf.png";		//ƒP[ƒL‚ª”¼•ª‰æ‘œ‚ÌƒpƒX
 const string Enemy::SPOTTED_SE_PATH	  = "spotted.mp3";		//ƒvƒŒƒCƒ„[”­Œ©SE‰¹‚ÌƒpƒX
 
 
@@ -20,9 +21,10 @@ using namespace std;
 /// </summary>
 /// <param name="id"></param>
 Enemy::Enemy(std::vector<VECTOR>& id) : EnemyBase()
-	, speedCount(0.0f)
+	, cakeCount(0.0f)
 	, cakeFindFlag(false)
 	, cakeEatFlag(false)
+	, cakeHalfFlag(false)
 {
 	enemyState = EnemyState::CRAWL;
 	Position(id);
@@ -68,7 +70,9 @@ void Enemy::Initialize()
 
 	markImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
 
-	cakeEatImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_EAT_PATH).c_str());
+	cakeImage[0] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_PATH).c_str());
+
+	cakeImage[1] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_HALF_PATH).c_str());
 
 	spottedSE = LoadSoundMem(InputPath(SOUND_FOLDER_PATH, SPOTTED_SE_PATH).c_str());
 }
@@ -92,6 +96,12 @@ void Enemy::Activate()
 	playerFindCount = 0;
 	dir = ZERO_VECTOR;
 	speed = SPEED;
+	playerSpotted = false;
+	cakeFlag = false;
+	cakeFindFlag = false;
+	cakeEatFlag = false;
+	cakeHalfFlag = false;
+	cakeCount = 0.0f;
 }
 
 /// <summary>
@@ -119,7 +129,11 @@ void Enemy::Finalize()
 
 	DeleteGraph(playerFindImage);
 	DeleteGraph(markImage);
-	DeleteGraph(cakeEatImage);
+
+	for (int i = 0; i < 2; i++)
+	{
+		DeleteGraph(cakeImage[i]);
+	}
 
 	//ƒTƒEƒ“ƒhƒŠƒ\[ƒX‚ğíœ
 	InitSoundMem();
@@ -143,7 +157,7 @@ void Enemy::Update(float deltaTime, Player* player)
 	
 	position += dir * speed * deltaTime;
 
-	VisualAnglePlayer(player);
+	VisualAnglePlayer(player, deltaTime);
 	
 	eUpdate(deltaTime);
 	
@@ -186,7 +200,7 @@ bool Enemy::IsGoal(float deltaTime)
 /// ƒGƒlƒ~[‚Ì‹–ì‚ÉƒvƒŒƒCƒ„[‚ª“ü‚Á‚½ê‡
 /// </summary>
 /// <param name="player"></param>
-void Enemy::VisualAnglePlayer(Player* player)
+void Enemy::VisualAnglePlayer(Player* player, float deltaTime)
 {
 	//ƒvƒŒƒCƒ„[‚©‚çƒGƒlƒ~[‚ÌÀ•W‚ğˆø‚¢‚½’l‚ğæ“¾
 	VECTOR sub = player->GetPosition() - position;
@@ -234,7 +248,7 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 	VECTOR sub = bullet->GetPosition() - position;
 
 	//ƒoƒŒƒbƒg‚ÆƒGƒlƒ~[‚Ì2“_ŠÔ‚Ì‹——£‚ğŒvZ
-	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
+	bulletDirection = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
 
 	//ƒxƒNƒgƒ‹‚Ì³‹K‰»
 	sub = VNorm(sub);
@@ -248,7 +262,7 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 	float radian = cosf(range / 2.0f);
 	
 	//ƒxƒNƒgƒ‹‚ÆƒGƒlƒ~[‚Ì’·‚³‚Ì”äŠr
-	if (length > direction)
+	if (length > bulletDirection)
 	{
 		//ƒoƒŒƒbƒg‚ªƒGƒlƒ~[‚Ì‹–ì”ÍˆÍ“à‚É‚¢‚é‚È‚ç‚Î
 		if (radian <= dot)
@@ -258,22 +272,7 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 			//‹–ì”ÍˆÍ“à‚È‚ç‚Î
 			Reaction();
 
-			speedCount += deltaTime;
-
-			cakeFindFlag = true;
-			
-			//ƒJƒEƒ“ƒg‚ª1.5•bŒo‰ß‚µ‚½‚ç
-			if (speedCount > 1.5f)
-			{
-				speed = SPEED;
-				cakeFindFlag = false;
-			}
-			
-			if (270.0f > direction)
-			{
-				speed = 0.0f;
-				cakeEatFlag = true;
-			}
+			CakeEatCount(deltaTime);
 		}
 	}
 	else
@@ -283,12 +282,43 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 
 		cakeFlag = false;
 
-		cakeFindFlag = false;
-
-		cakeEatFlag = false;
+		cakeHalfFlag = false;
 
 		//ƒJƒEƒ“ƒg‚Ì‰Šú‰»
-		speedCount = 0;
+		cakeCount = 0.0f;
+	}
+}
+
+/// <summary>
+/// •b”‚É‚æ‚Á‚ÄƒP[ƒL‚Ìó‘Ô•Ï‰»
+/// </summary>
+/// <param name="deltaTime"></param>
+void Enemy::CakeEatCount(float deltaTime)
+{
+	cakeCount += deltaTime;
+
+	//ƒP[ƒL‚ğŒ©‚Â‚¯‚ÄƒJƒEƒ“ƒg‚ª1.5•bŒo‰ß‚µ‚½‚ç
+	if (cakeCount > 1.5f)
+	{
+		speed = SPEED;
+		cakeFindFlag = false;
+	}
+
+	//ƒP[ƒL‚ğŒ©‚Â‚¯‚ÄƒGƒlƒ~[‚ª‚±‚ÌˆÊ’u‚Ü‚ÅˆÚ“®‚µ‚½‚ç
+	//ƒP[ƒL‚Ì‰æ‘œ‚ğ•\¦‚·‚é
+	if (270.0f > bulletDirection)
+	{
+		speed = 0.0f;
+		cakeEatFlag = true;
+
+		//ƒJƒEƒ“ƒg‚ª4•bŒo‰ß‚µ‚½‚ç
+		//”¼•ª‚É‚È‚Á‚½ƒP[ƒL‚Ì‰æ‘œ‚ğ•\¦‚·‚é
+		if (cakeCount > 4.0f)
+		{
+			cakeEatFlag = false;
+
+			cakeHalfFlag = true;
+		}
 	}
 }
 
@@ -348,16 +378,18 @@ void Enemy::Reaction()
 	case Object::CAKE:
 		//printfDx("CAKE");
 
-		//ƒP[ƒL‚ğŒ©‚Â‚¯‚½
 		cakeFlag = true;
 
-		speed = 0.0f;
+		//ƒP[ƒL‚ğŒ©‚Â‚¯‚½
+		cakeFindFlag = true;
 
+		//ƒGƒlƒ~[‚Ì“®‚«‚ğ~‚ß‚é
+		speed = 0.0f;
 		
 		break;
 
 	case Object::WALL:
-		printfDx("WALL");
+		//printfDx("WALL");
 
 		break;
 	}
@@ -410,10 +442,18 @@ void Enemy::ReactionDraw()
 		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
 	}
 
-	//ƒP[ƒL‚É‹ß‚Ã‚¢‚½‚È‚ç
+	//ƒP[ƒL‚ÉƒGƒlƒ~[‚ª‹ß‚Ã‚¢‚½‚È‚ç‚Î
 	if (cakeEatFlag)
 	{
-		DrawBillboard3D(VGet(position.x - 300.0f, 200.0f, position.z - 100.0f), 0.5f, 0.5f, 1200.0f, 0.0f, cakeEatImage, TRUE);
+		//ƒP[ƒL‚Ì‰æ‘œ‚ğ•`‰æ
+		DrawBillboard3D(VGet(position.x + 100.0f, 800.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, cakeImage[0], TRUE);
+	}
+
+	//ƒP[ƒL‚ªƒGƒlƒ~[‚É‹ß‚Ã‚¢‚Ä4•bŒo‰ß‚µ‚½‚ç
+	if (cakeHalfFlag)
+	{
+		//ƒP[ƒL‚ª”¼•ª‚Ì‰æ‘œ‚ğ•`‰æ
+		DrawBillboard3D(VGet(position.x + 100.0f, 800.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, cakeImage[1], TRUE);
 	}
 }
 

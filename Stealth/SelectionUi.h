@@ -18,13 +18,14 @@ public:
 
 	void Initialize();								//初期化処理
 	void Activate();								//活性化処理
-	void Finalize();								//終了処理
 	void Draw();									//描画処理
 	void StageUiDraw(const int number);				//ステージのUI描画処理
 
 
 private:
 	SelectionUi(const SelectionUi&);				//コピーコンストラクタ
+
+	void Finalize();								//終了処理
 
 	void MapInput(int number, ModelManager::ModelType modelType, 
 				  VECTOR mapPos, VECTOR size, VECTOR rotate);		//マップ情報入力

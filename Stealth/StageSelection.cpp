@@ -8,6 +8,7 @@
 
 const float StageSelection::PUSH_INTERVAL = 0.2f;		//切り替えカウントのインターバル
 
+
 char stageName[][32] =
 {
 	"STAGE1",
@@ -15,7 +16,6 @@ char stageName[][32] =
 	"STAGE3",
 	"TITLE",
 };
-
 
 /// <summary>
 /// コンストラクタ
@@ -70,7 +70,6 @@ void StageSelection::Finalize()
 	SafeDelete(light);
 
 	SafeDelete(selectionUi);
-	selectionUi->Finalize();
 
 	SafeDelete(fadeManager);
 
@@ -86,12 +85,14 @@ void StageSelection::Activate()
 	stageNo = 1;
 	changeScene = false;
 	changeTimeCount = 0;
+	pushCount = 0.0f;
 	frame = 0.0f;
 
 	selectionUi->Activate();
 
 	fadeManager->Activate();
 
+	//フォントデータの作成
 	font = CreateFontToHandle("Oranienbaum", 120, 1);
 }
 

@@ -19,7 +19,7 @@ public:
 	void Finalize();		//終了処理
 	void Activate();		//活性化処理
 
-	void Update(float ballPosX, float ballPosY, float ballPosZ);			//更新処理
+	void Update(float cakePosX, float cakePosY, float cakePosZ);			//更新処理
 	void Draw();															//描画処理
 
 private:
