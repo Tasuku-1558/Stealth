@@ -20,9 +20,6 @@ public:
     std::vector<VECTOR>& GetMap() { return positionList; }          //敵の行動パターンリストを返す
     std::vector<VECTOR>& GetMap2() { return positionList2; }        //敵の行動パターンリスト2を返す
 
-    const int GetModel() { return modelHandle; }                    //マップモデルを返す
-
-
 private:
 
     void MapList();                     //敵の行動パターンリスト(上下に移動する敵)
@@ -38,5 +35,7 @@ private:
     //静的定数
     static const VECTOR SIZE;           //モデルの倍率
     static const VECTOR POSITION;       //モデルの位置
+    static const VECTOR ROTATE;         //モデルの回転値
+
 
 };

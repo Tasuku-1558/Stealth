@@ -81,4 +81,7 @@ private:
 	bool ballPop;		//ボールの出現フラグ
 	bool wallPop;		//壁の出現フラグ
 	int frame;
+
+	//静的定数
+	static const int GOAL_POSITION;					//ゴールの位置
 };

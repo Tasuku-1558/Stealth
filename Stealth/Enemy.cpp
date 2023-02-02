@@ -268,7 +268,6 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 				speed = SPEED;
 				cakeFindFlag = false;
 			}
-
 			
 			if (270.0f > direction)
 			{
@@ -343,23 +342,13 @@ void Enemy::Reaction()
 		//プレイヤーを発見した
 		playerSpotted = true;
 
-		//ビックリマークの画像を描画
-		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
-
-		//敵に見つかったというUI画像を描画
-		DrawGraph(50, 50, playerFindImage, TRUE);
-
-		// 発見SEを再生
-		PlaySoundMem(spottedSE, DX_PLAYTYPE_BACK);
-		
-	
 		playerFindCount++;
 		break;
 
 	case Object::CAKE:
-		//printfDx("BALL");
+		//printfDx("CAKE");
 
-		//ボールを見つけた
+		//ケーキを見つけた
 		cakeFlag = true;
 
 		speed = 0.0f;
@@ -402,6 +391,18 @@ void Enemy::eUpdate(float deltaTime)
 /// </summary>
 void Enemy::ReactionDraw()
 {
+	if (playerSpotted)
+	{
+		//ビックリマークの画像を描画
+		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
+
+		//敵に見つかったというUI画像を描画
+		DrawGraph(50, 50, playerFindImage, TRUE);
+
+		// 発見SEを再生
+		PlaySoundMem(spottedSE, DX_PLAYTYPE_BACK);
+	}
+
 	//ケーキを見つけたならば
 	if (cakeFindFlag)
 	{

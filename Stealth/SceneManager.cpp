@@ -32,6 +32,7 @@ SceneManager::~SceneManager()
 /// </summary>
 void SceneManager::Initialize()
 {
+	//ŠeƒV[ƒ“‚ğ“o˜^
 	eachScene[TITLE]	 = new TitleScene(this);
 	eachScene[SELECTION] = new StageSelection(this);
 	eachScene[STAGE1]	 = new FirstStage(this);

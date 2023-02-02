@@ -45,7 +45,6 @@ ModelManager& ModelManager::GetInstance()
 /// </summary>
 void ModelManager::LoadAllModel()
 {
-    //モデルファイルの読み込み
     modelHandle[PLAYER]       = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, PLAYER_PATH).c_str());
 
     modelHandle[ENEMY]        = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, ENEMY_PATH).c_str());

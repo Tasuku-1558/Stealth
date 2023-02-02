@@ -5,6 +5,7 @@
 #include "DxLib.h"
 #include "FirstStage.h"
 #include "SecondStage.h"
+#include "ThirdStage.h"
 
 
 /// <summary>
@@ -26,6 +27,9 @@ public:
 	void Draw(SecondStage::State state, 
 			  int playerCount);				//SecondStageのUI描画処理
 
+	void Draw(ThirdStage::State state,
+			  int playerCount);				//ThirdStageの描画処理
+
 	void CakeGetDraw(bool cakeGet);			//ケーキを持っているかのUI
 
 private:
@@ -44,6 +48,7 @@ private:
 		FRAME,				//プレイヤーHPフレーム画像
 		KEY,				//プレイヤー移動キー画像
 		CAKE,				//ケーキ画像
+		STAGE3,				//ステージ3スタート画像
 		GRAPHIC_AMOUNT		//画像の数
 	};
 

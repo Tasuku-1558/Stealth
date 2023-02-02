@@ -44,6 +44,7 @@ private:
 	static const string SELECTION_KEY_PATH;			//ステージセレクションUI画像のパス
 	static const string STAGE1_DESCRIPTION_PATH;	//ステージ1の説明画像のパス
 	static const string STAGE2_DESCRIPTION_PATH;	//ステージ2の説明画像のパス
+	static const string STAGE3_DESCRIPTION_PATH;	//ステージ3の説明画像のパス
 	static const int	STAGE_NUMBER;				//ステージ数
 
 	static const VECTOR STAGE1_POSITION;			//ステージ1モデルの位置
@@ -53,5 +54,10 @@ private:
 	static const VECTOR STAGE2_POSITION;			//ステージ2モデルの位置
 	static const VECTOR STAGE2_SIZE;				//ステージ2モデルの倍率
 	static const VECTOR STAGE2_ROTATE;				//ステージ2モデルの回転値
+
+	static const VECTOR STAGE3_POSITION;			//ステージ3モデルの位置
+	static const VECTOR STAGE3_SIZE;				//ステージ3モデルの倍率
+	static const VECTOR STAGE3_ROTATE;				//ステージ3モデルの回転値
+
 
 };

@@ -5,15 +5,20 @@ const string SelectionUi::IMAGE_FOLDER_PATH		  = "data/image/";				//imageフォル
 const string SelectionUi::SELECTION_KEY_PATH	  = "selection_key.png";		//ステージセレクションUI画像のパス
 const string SelectionUi::STAGE1_DESCRIPTION_PATH = "stage1_description.png";	//ステージ1の説明画像のパス
 const string SelectionUi::STAGE2_DESCRIPTION_PATH = "stage2_description.png";	//ステージ2の説明画像のパス
+const string SelectionUi::STAGE3_DESCRIPTION_PATH = "stage3_description.png";	//ステージ3の説明画像のパス
 const int	 SelectionUi::STAGE_NUMBER			  = 2;							//ステージ数
 
-const VECTOR SelectionUi::STAGE1_POSITION		  = { 1300.0f, 740.0f, 0.0f };	//ステージ1モデルの位置
-const VECTOR SelectionUi::STAGE1_SIZE			  = { 10.0f, 10.0f, 10.0f };	//ステージ1モデルの倍率
+const VECTOR SelectionUi::STAGE1_POSITION		  = { 1300.0f, 740.0f, 0.0f };		//ステージ1モデルの位置
+const VECTOR SelectionUi::STAGE1_SIZE			  = { 10.0f, 10.0f, 10.0f };		//ステージ1モデルの倍率
 const VECTOR SelectionUi::STAGE1_ROTATE = { 80.0f * DX_PI_F / 180.0f, 190.0f * DX_PI_F / 180.0f, 0.0f }; //ステージ1モデルの回転値
 
 const VECTOR SelectionUi::STAGE2_POSITION		  = { 1400.0f, 300.0f, -150.0f };	//ステージ2モデルの位置
 const VECTOR SelectionUi::STAGE2_SIZE			  = { 8.0f, 8.0f, 8.0f };			//ステージ2モデルの倍率
 const VECTOR SelectionUi::STAGE2_ROTATE = { 80.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f }; //ステージ2モデルの回転値
+
+const VECTOR SelectionUi::STAGE3_POSITION		  = { 1200.0f, 700.0f, -150.0f };	//ステージ3モデルの位置
+const VECTOR SelectionUi::STAGE3_SIZE			  = { 8.0f, 8.0f, 8.0f };			//ステージ3モデルの倍率
+const VECTOR SelectionUi::STAGE3_ROTATE = { 90.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }; //ステージ3モデルの回転値
 
 
 /// <summary>
@@ -46,13 +51,17 @@ void SelectionUi::Initialize()
 
 	stageDescription[1] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE2_DESCRIPTION_PATH).c_str());
 
+	stageDescription[2] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE3_DESCRIPTION_PATH).c_str());
+
 	selectionKeyImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_KEY_PATH).c_str());
 
-	//ステージ1のマップモデル
+	//マップモデル読み込み
 	MapInput(0, ModelManager::STAGE1, STAGE1_POSITION, STAGE1_SIZE, STAGE1_ROTATE);
 
-	//ステージ2のマップモデル
 	MapInput(1, ModelManager::STAGE2, STAGE2_POSITION, STAGE2_SIZE, STAGE2_ROTATE);
+
+	MapInput(2, ModelManager::STAGE3, STAGE3_POSITION, STAGE3_SIZE, STAGE3_ROTATE);
+
 }
 
 /// <summary>

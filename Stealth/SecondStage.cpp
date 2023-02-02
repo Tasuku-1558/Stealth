@@ -17,6 +17,8 @@
 #include "FadeManager.h"
 
 
+const int SecondStage::GOAL_POSITION = -5900;		//ゴールの位置
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -383,10 +385,10 @@ void SecondStage::UpdateGame(float deltaTime)
 		ballBulletPtr->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
 	}
 
-	hitChecker->Check(secondStageMap->GetModel(), player);
+	hitChecker->Check(secondStageMap->GetModelHandle(), player);
 
 	//プレイヤーがゴール地点に辿り着いたら
-	if (player->GetPosition().x < -5900)
+	if (player->GetPosition().x < GOAL_POSITION)
 	{
 		state = State::GOAL;
 		pUpdate = &SecondStage::UpdateGoal;

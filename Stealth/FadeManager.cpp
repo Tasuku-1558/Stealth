@@ -3,12 +3,14 @@
 #include <math.h>
 
 
+const int FadeManager::BLACK = GetColor(0, 0, 0);	//フェードのカラー
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
 FadeManager::FadeManager()
 	: fade(0)
-	, fadeInc(2)
+	, fadeInc(3)
 {
 	//処理なし
 }
@@ -56,6 +58,6 @@ void FadeManager::Draw()
 {
 	//画面全体フェード用の矩形半透明描画
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, fade);
-	DrawBox(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0xffffffff, TRUE);
+	DrawBox(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BLACK, TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, fade);
 }

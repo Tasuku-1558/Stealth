@@ -8,6 +8,7 @@
 #include "BackGround.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "BallBullet.h"
 #include "HitChecker.h"
 #include "CakeRepopEffect.h"
 #include "ThirdStageMap.h"
@@ -64,6 +65,21 @@ void ThirdStage::Initialize()
 	//プレイヤークラス
 	player = new Player();
 	player->Initialize();
+
+	//サードステージマップクラス
+	thirdStageMap = new ThirdStageMap();
+	thirdStageMap->Initialize();
+
+	//エフェクトクラス
+	cakeEffect = new CakeRepopEffect();
+	cakeEffect->Initialize();
+
+	//ヒットチェッカークラス
+	hitChecker = new HitChecker();
+
+	//UI管理クラス
+	uiManager = new UiManager();
+	uiManager->Initialize();
 }
 
 /// <summary>
@@ -78,6 +94,24 @@ void ThirdStage::Finalize()
 	SafeDelete(backGround);
 
 	SafeDelete(player);
+
+	SafeDelete(thirdStageMap);
+
+	for (auto enemyPtr : enemy)
+	{
+		SafeDelete(enemyPtr);
+	}
+
+	for (auto ballBulletPtr : ballBullet)
+	{
+		SafeDelete(ballBulletPtr);
+	}
+
+	SafeDelete(hitChecker);
+
+	SafeDelete(cakeEffect);
+
+	SafeDelete(uiManager);
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
@@ -95,6 +129,20 @@ void ThirdStage::Activate()
 	pUpdate = &ThirdStage::UpdateStart;
 
 	player->Activate();
+
+	for (auto enemyPtr : enemy)
+	{
+		enemyPtr->Activate();
+	}
+
+	for (auto ballBulletPtr : ballBullet)
+	{
+		ballBulletPtr->Activate();
+	}
+
+	cakeEffect->Activate();
+
+	uiManager->Activate();
 }
 
 /// <summary>
@@ -159,4 +207,41 @@ void ThirdStage::Draw()
 
 	//プレイヤー描画
 	player->Draw();
+
+	//エネミー描画
+	for (auto enemyPtr : enemy)
+	{
+		enemyPtr->Draw();
+	}
+
+	//ボールバレット管理クラス描画
+	for (auto ballBulletPtr : ballBullet)
+	{
+		ballBulletPtr->Draw();
+		uiManager->CakeGetDraw(!ballBulletPtr->cake->GetAlive());
+	}
+
+	//エフェクト描画
+	cakeEffect->Draw();
+
+	//UI管理クラス描画
+	for (auto enemyPtr : enemy)
+	{
+		uiManager->Draw(state, enemyPtr->GetPlayerCount());
+	}
+
+
+	//デバック用
+	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
+	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
+	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
+
+	for (auto enemyPtr : enemy)
+	{
+		DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d\n", enemyPtr->GetPlayerCount());
+	}
+	for (auto ballBulletPtr : ballBullet)
+	{
+		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", ballBulletPtr->cake->GetAlive());
+	}
 }

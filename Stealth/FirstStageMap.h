@@ -18,7 +18,6 @@ public:
     void Draw();            //描画処理
 
     std::vector<VECTOR>& GetMap() { return positionList; }      //敵の行動パターンリストを返す
-    const int GetModel() { return modelHandle; }                //マップモデルを返す
 
 private:
 

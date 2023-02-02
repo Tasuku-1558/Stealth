@@ -35,8 +35,8 @@ UiManager::~UiManager()
 void UiManager::Initialize()
 {
 	//UI画像読み込み
-	string failePath = IMAGE_FOLDER_PATH + UI_GRAPHIC_PATH;		// フォルダパス + ファイル名
-	string fullPath = failePath;
+	string failePath;
+	string fullPath = failePath = IMAGE_FOLDER_PATH + UI_GRAPHIC_PATH;		// フォルダパス + ファイル名
 	
 	for (int i = 0; i < GRAPHIC_AMOUNT; ++i)
 	{
@@ -122,6 +122,32 @@ void UiManager::Draw(SecondStage::State state, int playerCount)
 		break;
 
 	case SecondStage::State::GOAL:
+		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
+		break;
+	}
+}
+
+/// <summary>
+/// ThirdStageのUI描画処理
+/// </summary>
+/// <param name="state"></param>
+/// <param name="playerCount"></param>
+void UiManager::Draw(ThirdStage::State state, int playerCount)
+{
+	switch (state)
+	{
+	case ThirdStage::State::START:
+
+		break;
+
+	case ThirdStage::State::GAME:
+
+		StartGameDraw(STAGE3);
+		PlayerHpDraw(playerCount);
+		DrawGraph(0, 900, uiHandle[KEY], TRUE);		//WASDキー描画
+		break;
+
+	case ThirdStage::State::GOAL:
 		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
 		break;
 	}

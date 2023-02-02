@@ -3,12 +3,12 @@
 #include "ModelManager.h"
 
 
-const VECTOR ThirdStageMap::SIZE = { 80.0f, 50.0f, 80.0f };				//モデルの倍率
+const VECTOR ThirdStageMap::SIZE	 = { 80.0f, 50.0f, 80.0f };						//モデルの倍率
 const VECTOR ThirdStageMap::POSITION = { -200.0f, -100.0f, 1350.0f };				//モデルの位置
+const VECTOR ThirdStageMap::ROTATE	 = { 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f };	//モデルの回転値
+
 
 using namespace std;
-
-
 
 /// <summary>
 /// コンストラクタ
@@ -37,6 +37,7 @@ void ThirdStageMap::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE3));
 	MV1SetScale(modelHandle, SIZE);
+	MV1SetRotationXYZ(modelHandle, ROTATE);
 
 	position = POSITION;
 
@@ -45,7 +46,7 @@ void ThirdStageMap::Initialize()
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
 	{
-		printfDx("モデルデータ読み込みに失敗 [STAGE1]\n");
+		printfDx("モデルデータ読み込みに失敗 [STAGE3]\n");
 	}
 
 	MapList();

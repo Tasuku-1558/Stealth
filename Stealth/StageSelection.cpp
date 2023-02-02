@@ -228,7 +228,7 @@ void StageSelection::KeyMove(float deltaTime)
 /// </summary>
 void StageSelection::Draw()
 {
-
+	//それぞれのステージごとのUI描画処理
 	if (stageNo == 1)
 	{
 		selectionUi->StageUiDraw(0);
@@ -236,6 +236,10 @@ void StageSelection::Draw()
 	else if (stageNo == 2)
 	{
 		selectionUi->StageUiDraw(1);
+	}
+	else if (stageNo == 3)
+	{
+		selectionUi->StageUiDraw(2);
 	}
 
 	if (!changeScene || (changeTimeCount / 5) % 2 == 0)

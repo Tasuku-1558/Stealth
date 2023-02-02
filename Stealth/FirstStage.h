@@ -62,4 +62,7 @@ private:
 	State state;		//ゲーム状態
 	int font;			//ゲームフォント
 	int frame;
+
+	//静的定数
+	static const int GOAL_POSITION;					//ゴールの位置
 };

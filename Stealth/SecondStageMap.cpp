@@ -43,7 +43,7 @@ void SecondStageMap::Initialize()
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
 	{
-		printfDx("モデルデータ読み込みに失敗 [STAGE1]\n");
+		printfDx("モデルデータ読み込みに失敗 [STAGE2]\n");
 	}
 
 	MapList();
