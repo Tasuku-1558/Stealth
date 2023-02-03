@@ -19,7 +19,7 @@ public:
 	void Initialize();								//初期化処理
 	void Activate();								//活性化処理
 	void Draw();									//描画処理
-	void StageUiDraw(const int number);				//ステージのUI描画処理
+	void StageUiDraw(int number);					//ステージのUI描画処理
 
 
 private:

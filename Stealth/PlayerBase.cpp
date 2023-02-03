@@ -18,6 +18,7 @@ PlayerBase::PlayerBase()
 	, inputFlag(false)
 	, speed(0.0f)
 	, previewPosition()
+	, playerFindCount(0)
 {
 	//ˆ—‚È‚µ
 }

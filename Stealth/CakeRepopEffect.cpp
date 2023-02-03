@@ -4,7 +4,7 @@
 
 
 const string CakeRepopEffect::EFFECT_FOLDER_PATH = "data/effect/";		//effectフォルダまでのパス
-const string CakeRepopEffect::CAKE_PATH			 = "ball.efkefc";		//ケーキ再スポーン時エフェクトのパス
+const string CakeRepopEffect::CAKE_PATH			 = "cake.efkefc";		//ケーキ再スポーン時エフェクトのパス
 
 /// <summary>
 /// コンストラクタ

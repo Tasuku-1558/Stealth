@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneBase.h"
+#include <vector>
 
 class Camera;
 class Light;
@@ -12,6 +13,7 @@ class Wall;
 class HitChecker;
 class FirstStageMap;
 class CakeRepopEffect;
+class CakeParticle;
 class UiManager;
 class FadeManager;
 
@@ -51,8 +53,13 @@ private:
 	HitChecker* hitChecker;
 	FirstStageMap* firstStageMap;
 	CakeRepopEffect* cakeEffect;
+	CakeParticle* cakeParticle;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
+
+	void EntryCakeParticle(Enemy* newCakeParticle);			//ケーキのパーティクルを登録
+	void DeleteCakeParticle(Enemy* deleteCakeParticle);		//ケーキのパーティクルを削除
+	void CakeParticlePop();									//ケーキのパーティクルの出現
 
 	void UpdateStart(float deltaTime);				//ゲーム開始前
 	void UpdateGame(float deltaTime);				//ゲーム中

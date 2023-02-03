@@ -59,6 +59,7 @@ void Player::Activate()
 	previewPosition = POSITION;
 	dir = DIR;
 	speed = SPEED;
+	playerFindCount = 0;
 }
 
 /// <summary>
@@ -166,13 +167,22 @@ void Player::FoundEnemy(float deltaTime, Enemy* enemy)
 	if (enemy->Spotted())
 	{
 		count += deltaTime;
+
+		//プレイヤーの動きを止める
+		speed = 0.0f;
 	}
-	if (count > 2.0f)
+
+	//カウントが0.6秒経過したら
+	if (count > 0.6f)
 	{
-		//位置と向きを初期化
+		//位置と向きを初期位置に
+		//スピードを元に戻す
 		position = POSITION;
 		previewPosition = POSITION;
 		dir = DIR;
+		speed = SPEED;
+
+		playerFindCount++;
 		count = 0.0f;
 	}
 }

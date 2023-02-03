@@ -97,7 +97,6 @@ std::string SelectionUi::InputPath(std::string folderPath, std::string path)
 /// </summary>
 void SelectionUi::Activate()
 {
-
 }
 
 /// <summary>
@@ -119,7 +118,7 @@ void SelectionUi::Finalize()
 /// ステージのUI描画処理
 /// </summary>
 /// <param name="number"></param>
-void SelectionUi::StageUiDraw(const int number)
+void SelectionUi::StageUiDraw(int number)
 {
 	DrawGraph(100, 150, stageDescription[number], TRUE);
 	MV1DrawModel(modelHandle[number]);

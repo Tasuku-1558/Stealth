@@ -204,6 +204,7 @@ void StageSelection::KeyMove(float deltaTime)
 		changeScene = true;
 	}
 
+	//リターンキーを押したならば
 	if (changeScene)
 	{
 		changeTimeCount++;
@@ -212,13 +213,13 @@ void StageSelection::KeyMove(float deltaTime)
 
 		if (changeTimeCount > maxTime)
 		{
+			//画面効果処理を行う
 			fadeManager->FadeMove();
 
 			//フレームが3.5秒経過したら画面を遷移する
 			if (frame > 3.5f)
 			{
 				StageCreator(stageNo);
-				frame = 0.0f;
 			}
 		}
 	}

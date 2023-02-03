@@ -249,13 +249,13 @@ void ThirdStage::UpdateGame(float deltaTime)
 				break;
 			}
 		}
+	}
 
-		//エネミーに3回見つかったら
-		if (enemyPtr->GetPlayerCount() == 3)
-		{
-			parent->SetNextScene(SceneManager::SELECTION);
-			return;
-		}
+	//エネミーに3回見つかったら
+	if (player->GetPlayerCount() == 3)
+	{
+		parent->SetNextScene(SceneManager::SELECTION);
+		return;
 	}
 
 	for (auto ballBulletPtr : ballBullet)
@@ -318,21 +318,14 @@ void ThirdStage::Draw()
 	cakeEffect->Draw();
 
 	//UI管理クラス描画
-	for (auto enemyPtr : enemy)
-	{
-		uiManager->Draw(state, enemyPtr->GetPlayerCount());
-	}
-
+	uiManager->Draw(state, player->GetPlayerCount());
 
 	//デバック用
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
+	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d\n", player->GetPlayerCount());
 
-	for (auto enemyPtr : enemy)
-	{
-		DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d\n", enemyPtr->GetPlayerCount());
-	}
 	for (auto ballBulletPtr : ballBullet)
 	{
 		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", ballBulletPtr->cake->GetAlive());

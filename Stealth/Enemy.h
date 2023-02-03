@@ -30,7 +30,6 @@ public:
 
 	const bool Spotted() { return playerSpotted; }			//プレイヤーを見つけたかどうかを返す
 	const bool CakeFlag() { return cakeFlag; }				//ケーキを見つけたかどうかを返す
-	const int GetPlayerCount() { return playerFindCount; }	//プレイヤーを見つけた回数を返す
 
 	//エネミーの状態
 	enum class EnemyState
@@ -46,7 +45,7 @@ private:
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 	void eUpdate(float deltaTime);				//エネミーの状態変化
 	void SetTargetPosition();					//目的地まで移動処理
-	void VisualAnglePlayer(Player* player, float deltaTime);		//エネミーの視野にプレイヤーが入った場合
+	void VisualAnglePlayer(Player* player);		//エネミーの視野にプレイヤーが入った場合
 	
 	void Reaction();							//エネミーのオブジェクトごとの反応
 	void CakeEatCount(float deltaTime);			//秒数によってケーキの状態変化

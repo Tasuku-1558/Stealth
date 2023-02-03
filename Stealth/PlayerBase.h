@@ -19,6 +19,8 @@ protected:
 	bool   inputFlag;				//キー入力フラグ
 	float  speed;					//移動速度
 	VECTOR previewPosition;			//未来のプレイヤーの位置
+	int	   playerFindCount;			//エネミーに見つかった回数を数える
+
 
 	//静的定数
 	static const float  SPEED;		//移動速度

@@ -9,7 +9,7 @@ const string Enemy::SOUND_FOLDER_PATH = "data/sound/";		//soundƒtƒHƒ‹ƒ_‚Ü‚Å‚Ìƒpƒ
 const string Enemy::PLAYER_FIND_PATH  = "playerFind.png";	//ƒvƒŒƒCƒ„[‚ğŒ©‚Â‚¯‚½‰æ‘œ‚ÌƒpƒX
 const string Enemy::MARK_PATH		  = "mark.png";			//ƒrƒbƒNƒŠƒ}[ƒN‰æ‘œ‚ÌƒpƒX
 const string Enemy::CAKE_PATH		  = "ui9.png";			//ƒP[ƒL‰æ‘œ‚ÌƒpƒX
-const string Enemy::CAKE_HALF_PATH	  = "cakeFalf.png";		//ƒP[ƒL‚ª”¼•ª‰æ‘œ‚ÌƒpƒX
+const string Enemy::CAKE_HALF_PATH	  = "cakeHalf.png";		//ƒP[ƒL‚ª”¼•ª‰æ‘œ‚ÌƒpƒX
 const string Enemy::SPOTTED_SE_PATH	  = "spotted.mp3";		//ƒvƒŒƒCƒ„[”­Œ©SE‰¹‚ÌƒpƒX
 
 
@@ -61,8 +61,6 @@ void Enemy::Initialize()
 		printfDx("ƒ‚ƒfƒ‹ƒf[ƒ^“Ç‚İ‚İ‚É¸”s\n");
 	}
 
-	speed = SPEED;
-
 	dir = ZERO_VECTOR;
 
 	//‰æ‘œ“Ç‚İ‚İ
@@ -93,7 +91,6 @@ std::string Enemy::InputPath(string folderPath, string path)
 /// </summary>
 void Enemy::Activate()
 {
-	playerFindCount = 0;
 	dir = ZERO_VECTOR;
 	speed = SPEED;
 	playerSpotted = false;
@@ -130,7 +127,7 @@ void Enemy::Finalize()
 	DeleteGraph(playerFindImage);
 	DeleteGraph(markImage);
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < CAKE_IMAGE_NUMBER; i++)
 	{
 		DeleteGraph(cakeImage[i]);
 	}
@@ -157,7 +154,7 @@ void Enemy::Update(float deltaTime, Player* player)
 	
 	position += dir * speed * deltaTime;
 
-	VisualAnglePlayer(player, deltaTime);
+	VisualAnglePlayer(player);
 	
 	eUpdate(deltaTime);
 	
@@ -193,14 +190,14 @@ void Enemy::SetTargetPosition()
 /// <returns></returns>
 bool Enemy::IsGoal(float deltaTime)
 {
-	return VSize(targetPosition - position) < SPEED * deltaTime;
+	return VSize(targetPosition - position) < speed * deltaTime;
 }
 
 /// <summary>
 /// ƒGƒlƒ~[‚Ì‹–ì‚ÉƒvƒŒƒCƒ„[‚ª“ü‚Á‚½ê‡
 /// </summary>
 /// <param name="player"></param>
-void Enemy::VisualAnglePlayer(Player* player, float deltaTime)
+void Enemy::VisualAnglePlayer(Player* player)
 {
 	//ƒvƒŒƒCƒ„[‚©‚çƒGƒlƒ~[‚ÌÀ•W‚ğˆø‚¢‚½’l‚ğæ“¾
 	VECTOR sub = player->GetPosition() - position;
@@ -301,6 +298,8 @@ void Enemy::CakeEatCount(float deltaTime)
 	if (cakeCount > 1.5f)
 	{
 		speed = SPEED;
+
+		//ƒrƒbƒNƒŠƒ}[ƒN‰æ‘œ‚ğ”ñ•\¦‚É‚·‚é
 		cakeFindFlag = false;
 	}
 
@@ -367,17 +366,13 @@ void Enemy::Reaction()
 	switch (object)
 	{
 	case Object::PLAYER:
-		printfDx("PLAYER");
 
 		//ƒvƒŒƒCƒ„[‚ğ”­Œ©‚µ‚½
 		playerSpotted = true;
 
-		
-		playerFindCount++;
 		break;
 
 	case Object::CAKE:
-		//printfDx("CAKE");
 
 		cakeFlag = true;
 
@@ -390,8 +385,6 @@ void Enemy::Reaction()
 		break;
 
 	case Object::WALL:
-		//printfDx("WALL");
-
 		break;
 	}
 }
@@ -424,13 +417,17 @@ void Enemy::eUpdate(float deltaTime)
 /// </summary>
 void Enemy::ReactionDraw()
 {
+	//ƒGƒlƒ~[‚ÉŒ©‚Â‚©‚Á‚½‚ç
 	if (playerSpotted)
 	{
+		//ƒGƒlƒ~[‚Ì“®‚«‚ğ~‚ß‚é
+		speed = 0.0f;
+
 		//ƒrƒbƒNƒŠƒ}[ƒN‚Ì‰æ‘œ‚ğ•`‰æ
 		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
 
 		//“G‚ÉŒ©‚Â‚©‚Á‚½‚Æ‚¢‚¤UI‰æ‘œ‚ğ•`‰æ
-		DrawGraph(50, 50, playerFindImage, TRUE);
+		DrawGraph(50, -100, playerFindImage, TRUE);
 
 		// ”­Œ©SE‚ğÄ¶
 		//PlaySoundMem(spottedSE, DX_PLAYTYPE_BACK);

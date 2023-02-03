@@ -2,15 +2,15 @@
 #include "DxLib.h"
 
 
-const string ModelManager::MODEL_FOLDER_PATH = "data/model/";   //modelフォルダまでのパス
-const string ModelManager::PLAYER_PATH       = "player.mv1";    //playerモデルファイルのパス
-const string ModelManager::ENEMY_PATH        = "enemy.mv1";     //enemyモデルファイルのパス
-const string ModelManager::ENEMY_VISUAL_PATH = "Angle.mv1";     //enemy_visualモデルファイルのパス
-const string ModelManager::WALL_PATH         = "wall.mv1";      //wallモデルファイルのパス
-const string ModelManager::CAKE_PATH         = "cake.mv1";      //cakeモデルファイルのパス
-const string ModelManager::STAGE1_PATH       = "stage1.mv1";    //stage1モデルファイルのパス
-const string ModelManager::STAGE2_PATH       = "stage2.mv1";    //stage2モデルファイルのパス
-const string ModelManager::STAGE3_PATH       = "stage3.mv1";    //stage3モデルファイルのパス
+const string ModelManager::MODEL_FOLDER_PATH = "data/model/";    //modelフォルダまでのパス
+const string ModelManager::PLAYER_PATH       = "player.mv1";     //playerモデルファイルのパス
+const string ModelManager::ENEMY_PATH        = "enemy.mv1";      //enemyモデルファイルのパス
+const string ModelManager::ENEMY_VISUAL_PATH = "enemyAngle.mv1"; //enemy_visualモデルファイルのパス
+const string ModelManager::WALL_PATH         = "wall.mv1";       //wallモデルファイルのパス
+const string ModelManager::CAKE_PATH         = "cake.mv1";       //cakeモデルファイルのパス
+const string ModelManager::STAGE1_PATH       = "stage1.mv1";     //stage1モデルファイルのパス
+const string ModelManager::STAGE2_PATH       = "stage2.mv1";     //stage2モデルファイルのパス
+const string ModelManager::STAGE3_PATH       = "stage3.mv1";     //stage3モデルファイルのパス
 
 
 /// <summary>

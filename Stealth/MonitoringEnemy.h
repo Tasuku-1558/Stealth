@@ -27,9 +27,7 @@ public:
 	void VisualAngleCake(Bullet* bullet, float deltaTime);	//エネミーの視野にケーキが入った場合
 	void VisualAngleWall(VECTOR wallPos);					//エネミーの視野に壁が入った場合
 
-
 	const bool Spotted() { return playerSpotted; }			//プレイヤーを見つけたかどうかを返す
-	const int GetPlayerCount() { return playerFindCount; }	//プレイヤーを見つけた回数を返す
 
 	//エネミーの状態
 	enum class EnemyState

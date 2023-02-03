@@ -13,6 +13,7 @@
 #include "HitChecker.h"
 #include "FirstStageMap.h"
 #include "CakeRepopEffect.h"
+#include "CakeParticle.h"
 #include "UiManager.h"
 #include "FadeManager.h"
 
@@ -37,6 +38,7 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 	, hitChecker(nullptr)
 	, firstStageMap(nullptr)
 	, cakeEffect(nullptr)
+	, cakeParticle()
 	, uiManager(nullptr)
 	, fadeManager(nullptr)
 	, font(0)
@@ -104,6 +106,9 @@ void FirstStage::Initialize()
 
 	//画面効果クラス
 	fadeManager = new FadeManager();
+
+	//ケーキのパーティクル出現関数
+	CakeParticlePop();
 }
 
 /// <summary>
@@ -134,6 +139,11 @@ void FirstStage::Finalize()
 	SafeDelete(uiManager);
 
 	SafeDelete(fadeManager);
+
+	/*for (auto particlePtr : cakeParticle)
+	{
+		SafeDelete(particlePtr);
+	}*/
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
@@ -174,6 +184,18 @@ void FirstStage::Update(float deltaTime)
 	}
 
 	++frame;
+}
+
+void FirstStage::EntryCakeParticle(Enemy* newCakeParticle)
+{
+}
+
+void FirstStage::DeleteCakeParticle(Enemy* deleteCakeParticle)
+{
+}
+
+void FirstStage::CakeParticlePop()
+{
 }
 
 /// <summary>
@@ -219,7 +241,7 @@ void FirstStage::UpdateGame(float deltaTime)
 	}
 
 	//エネミーに3回見つかったら
-	if (enemy->GetPlayerCount() == 3)
+	if (player->GetPlayerCount() == 3)
 	{
 		parent->SetNextScene(SceneManager::SELECTION);
 		return;
@@ -267,7 +289,7 @@ void FirstStage::Draw()
 	cakeEffect->Draw();
 
 	//UI管理クラス描画
-	uiManager->Draw(state, enemy->GetPlayerCount(), hitChecker->UI());
+	uiManager->Draw(state, player->GetPlayerCount(), hitChecker->UI());
 
 	//ケーキを所持しているか描画
 	uiManager->CakeGetDraw(!ballBullet->cake->GetAlive());
@@ -277,7 +299,7 @@ void FirstStage::Draw()
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
-	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", enemy->GetPlayerCount());
+	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->GetPlayerCount());
 	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "CakeAlive : %d\n(1:true 0:false)", ballBullet->cake->GetAlive());
 
 
