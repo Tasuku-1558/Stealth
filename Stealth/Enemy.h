@@ -31,7 +31,7 @@ public:
 	const bool Spotted() { return playerSpotted; }			//プレイヤーを見つけたかどうかを返す
 	const bool CakeFlag() { return cakeFlag; }				//ケーキを見つけたかどうかを返す
 	const int GetPlayerCount() { return playerFindCount; }	//プレイヤーを見つけた回数を返す
-	
+
 	//エネミーの状態
 	enum class EnemyState
 	{
@@ -61,10 +61,11 @@ private:
 	std::vector<VECTOR>::iterator itr;
 	std::vector<VECTOR> pointList;
 
-	float cakeCount;		//エネミーケーキの反応カウント
+	float cakeCount;		//エネミーのケーキの反応カウント
 	bool cakeFindFlag;		//エネミーがケーキを見つけたかどうか
 	bool cakeEatFlag;		//エネミーがケーキに近づいて食べているかどうか
 	bool cakeHalfFlag;		//ケーキが半分になっているかどうか
+
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス

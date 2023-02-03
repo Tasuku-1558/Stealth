@@ -77,9 +77,6 @@ private:
 
 	State state;		//ゲームの状態
 	int  font;			//ゲームフォント
-	bool enemyPop;		//エネミーの出現フラグ
-	bool cakePop;		//ケーキの出現フラグ
-	bool wallPop;		//壁の出現フラグ
 	int frame;
 
 	//静的定数

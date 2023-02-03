@@ -372,6 +372,7 @@ void Enemy::Reaction()
 		//プレイヤーを発見した
 		playerSpotted = true;
 
+		
 		playerFindCount++;
 		break;
 
@@ -432,7 +433,7 @@ void Enemy::ReactionDraw()
 		DrawGraph(50, 50, playerFindImage, TRUE);
 
 		// 発見SEを再生
-		PlaySoundMem(spottedSE, DX_PLAYTYPE_BACK);
+		//PlaySoundMem(spottedSE, DX_PLAYTYPE_BACK);
 	}
 
 	//ケーキを見つけたならば

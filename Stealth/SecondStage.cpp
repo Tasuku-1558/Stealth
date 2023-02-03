@@ -40,9 +40,6 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, uiManager(nullptr)
 	, fadeManager(nullptr)
 	, font(0)
-	, enemyPop(false)
-	, cakePop(false)
-	, wallPop(false)
 	, frame(0)
 {
 	//処理なし
@@ -120,11 +117,13 @@ void SecondStage::Finalize()
 	for (auto enemyPtr : enemy)
 	{
 		SafeDelete(enemyPtr);
+		DeleteEnemy(enemyPtr);
 	}
 
 	for (auto ballBulletPtr : ballBullet)
 	{
 		SafeDelete(ballBulletPtr);
+		DeleteBallBullet(ballBulletPtr);
 	}
 
 	for (auto wallPtr : wall)
@@ -219,17 +218,11 @@ void SecondStage::DeleteEnemy(Enemy* deleteEnemy)
 /// </summary>
 void SecondStage::EnemyPop()
 {
-	//エネミーが出現していないならば
-	if (!enemyPop)
-	{
-		Enemy* newEnemy = new Enemy(secondStageMap->GetMap());
-		EntryEnemy(newEnemy);
+	Enemy* newEnemy = new Enemy(secondStageMap->GetMap());
+	EntryEnemy(newEnemy);
 
-		Enemy* newEnemy2 = new Enemy(secondStageMap->GetMap2());
-		EntryEnemy(newEnemy2);
-
-		enemyPop = true;
-	}
+	Enemy* newEnemy2 = new Enemy(secondStageMap->GetMap2());
+	EntryEnemy(newEnemy2);
 }
 
 /// <summary>
@@ -265,17 +258,11 @@ void SecondStage::DeleteBallBullet(BallBullet* deleteBallBullet)
 /// </summary>
 void SecondStage::BallBulletPop()
 {
-	//ケーキが出現していないならば
-	if (!cakePop)
-	{
-		BallBullet* newBallBullet = new BallBullet({ -600.0f,30.0f,0.0f });
-		EntryBallBullet(newBallBullet);
+	BallBullet* newBallBullet = new BallBullet({ -600.0f,30.0f,0.0f });
+	EntryBallBullet(newBallBullet);
 
-		BallBullet* newBallBullet2 = new BallBullet({ -3500.0f,30.0f,0.0f });
-		EntryBallBullet(newBallBullet2);
-
-		cakePop = true;
-	}
+	BallBullet* newBallBullet2 = new BallBullet({ -3500.0f,30.0f,0.0f });
+	EntryBallBullet(newBallBullet2);
 }
 
 /// <summary>
@@ -311,20 +298,14 @@ void SecondStage::DeleteWall(Wall* deleteWall)
 /// </summary>
 void SecondStage::WallPop()
 {
-	//壁が出現していないならば
-	if (!wallPop)
-	{
-		Wall* newWall = new Wall({ -1100.0f,30.0f,0.0f });
-		EntryWall(newWall);
+	Wall* newWall = new Wall({ -1100.0f,30.0f,0.0f });
+	EntryWall(newWall);
 
-		Wall* newWall2 = new Wall({ -2000.0f,30.0f,0.0f });
-		EntryWall(newWall2);
+	Wall* newWall2 = new Wall({ -2000.0f,30.0f,0.0f });
+	EntryWall(newWall2);
 
-		Wall* newWall3 = new Wall({ -4000.0f,30.0f,0.0f });
-		EntryWall(newWall3);
-
-		wallPop = true;
-	}
+	Wall* newWall3 = new Wall({ -4000.0f,30.0f,0.0f });
+	EntryWall(newWall3);
 }
 
 /// <summary>
