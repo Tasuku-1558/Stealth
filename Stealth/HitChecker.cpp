@@ -152,7 +152,7 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 			//ˆÚ“®Œó•â‚ðˆÚ“®ˆÊ’u‚É‚·‚é
 			newCenter = moveCandidate;
 
-			pushBack = newCenter - player->GetDir() + VScale(player->GetDir(), 15.0f);
+			pushBack = newCenter - player->GetDir() + VScale(player->GetDir(), 10.0f);
 		}
 	}
 	else

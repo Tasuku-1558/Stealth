@@ -40,7 +40,7 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, uiManager(nullptr)
 	, fadeManager(nullptr)
 	, font(0)
-	, frame(0)
+	, frame(0.0f)
 {
 	//処理なし
 }
@@ -77,7 +77,7 @@ void SecondStage::Initialize()
 	secondStageMap = new SecondStageMap();
 	secondStageMap->Initialize();
 
-	//エフェクトクラス
+	//ケーキの再出現エフェクトクラス
 	cakeEffect = new CakeRepopEffect();
 	cakeEffect->Initialize();
 
@@ -150,6 +150,8 @@ void SecondStage::Activate()
 {
 	state = State::START;
 
+	frame = 0.0f;
+
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
 	pUpdate = &SecondStage::UpdateStart;
@@ -182,7 +184,7 @@ void SecondStage::Update(float deltaTime)
 		(this->*pUpdate)(deltaTime);		//状態ごとに更新
 	}
 
-	++frame;
+	//++frame;
 }
 
 /// <summary>
@@ -205,7 +207,7 @@ void SecondStage::DeleteEnemy(Enemy* deleteEnemy)
 
 	if (iter != enemy.end())
 	{
-		//隕石オブジェクトを最後尾に移動してデータを消す
+		//エネミーオブジェクトを最後尾に移動してデータを消す
 		std::iter_swap(iter, enemy.end() - 1);
 		enemy.pop_back();
 
@@ -280,12 +282,12 @@ void SecondStage::EntryWall(Wall* newWall)
 /// <param name="deleteWall"></param>
 void SecondStage::DeleteWall(Wall* deleteWall)
 {
-	//ボールバレットオブジェクトから検索して削除
+	//壁オブジェクトから検索して削除
 	auto iter = std::find(wall.begin(), wall.end(), deleteWall);
 
 	if (iter != wall.end())
 	{
-		//ボールバレットオブジェクトを最後尾に移動してデータを消す
+		//壁オブジェクトを最後尾に移動してデータを消す
 		std::iter_swap(iter, wall.end() - 1);
 		wall.pop_back();
 
@@ -314,8 +316,21 @@ void SecondStage::WallPop()
 /// <param name="deltaTime"></param>
 void SecondStage::UpdateStart(float deltaTime)
 {
-	state = State::GAME;
-	pUpdate = &SecondStage::UpdateGame;
+	camera->Update(player->GetPosition());
+
+	//ファーストステージでのライトの方向の設定
+	light->Update({ 0.0f,-0.5f,0.0f });
+
+	frame += deltaTime;
+
+	if (frame > 1.0f)
+	{
+		state = State::GAME;
+		pUpdate = &SecondStage::UpdateGame;
+	}
+
+	cakeEffect->Update(player->GetPosition().x, player->GetPosition().y, player->GetPosition().z);
+
 }
 
 /// <summary>
@@ -422,7 +437,7 @@ void SecondStage::Draw()
 		uiManager->CakeGetDraw(!ballBulletPtr->cake->GetAlive());
 	}
 
-	//エフェクト描画
+	//ケーキの再出現エフェクト描画
 	cakeEffect->Draw();
 
 	//UI管理クラス描画
@@ -430,10 +445,10 @@ void SecondStage::Draw()
 
 
 	//デバック用
-	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
-	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
+	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
+	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %.0f", player->GetPosition().z);
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
-	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d\n", player->GetPlayerCount());
+	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->GetPlayerCount());
 
 	for (auto ballBulletPtr : ballBullet)
 	{

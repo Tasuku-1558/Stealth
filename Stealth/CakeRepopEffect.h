@@ -34,9 +34,7 @@ private:
 
 	int playingEffectHandle;		// 再生中のエフェクトのハンドルを初期化
 
-
 	//静的定数
 	static const string EFFECT_FOLDER_PATH;		//effectフォルダまでのパス
 	static const string CAKE_PATH;				//ケーキ再スポーン時エフェクトのパス
-
 };

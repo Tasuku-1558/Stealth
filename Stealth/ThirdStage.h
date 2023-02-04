@@ -8,6 +8,7 @@ class Light;
 class BackGround;
 class Player;
 class Enemy;
+class MonitoringEnemy;
 class BallBullet;
 class HitChecker;
 class ThirdStageMap;
@@ -51,6 +52,7 @@ private:
 	BackGround* backGround;
 	Player* player;
 	std::vector<Enemy*> enemy;
+	MonitoringEnemy* monitoringEnemy;
 	std::vector<BallBullet*> ballBullet;
 	HitChecker* hitChecker;
 	ThirdStageMap* thirdStageMap;
@@ -66,7 +68,6 @@ private:
 
 	State state;		//ゲームの状態
 	int  font;			//ゲームフォント
-	bool cakePop;		//ケーキの出現フラグ
 
 	//静的定数
 	//static const int GOAL_POSITION_X;					//ゴールの位置

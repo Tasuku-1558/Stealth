@@ -29,5 +29,4 @@ private:
 	bool endFlag;			//パーティクルを消す
 	float xPower;			//横方向の力
 	float yPower;			//縦方向の力
-
 };

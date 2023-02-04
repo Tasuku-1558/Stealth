@@ -60,7 +60,7 @@ void Enemy::Initialize()
 	{
 		printfDx("モデルデータ読み込みに失敗\n");
 	}
-
+	
 	dir = ZERO_VECTOR;
 
 	//画像読み込み
@@ -76,14 +76,14 @@ void Enemy::Initialize()
 }
 
 /// <summary>
-/// 画像、SEのパスを入力
+/// 画像のパスを入力
 /// </summary>
 /// <param name="folderPath"></param>
 /// <param name="path"></param>
 /// <returns></returns>
-std::string Enemy::InputPath(string folderPath, string path)
+std::string Enemy::InputPath(string folderPath, string imagePath)
 {
-	return std::string(folderPath + path);
+	return std::string(folderPath + imagePath);
 }
 
 /// <summary>
@@ -104,7 +104,7 @@ void Enemy::Activate()
 /// <summary>
 /// エネミー位置設定
 /// </summary>
-/// <param name="num"></param>
+/// <param name="id"></param>
 void Enemy::Position(std::vector<VECTOR>& id)
 {
 	pointList = id;					//マップから座標リストを受け取る
@@ -143,16 +143,16 @@ void Enemy::Finalize()
 /// <param name="player"></param>
 void Enemy::Update(float deltaTime, Player* player)
 {
+	//ベクトルの正規化
+	dir = VNorm(targetPosition - position);
+	
+	position += dir * speed * deltaTime;
+
 	//エネミーの位置をセット
 	MV1SetPosition(modelHandle, position);
 
 	//エネミーの視野モデルをセット
 	MV1SetPosition(visualModelHandle, position);
-	
-	//ベクトルの正規化
-	dir = VNorm(targetPosition - position);
-	
-	position += dir * speed * deltaTime;
 
 	VisualAnglePlayer(player);
 	

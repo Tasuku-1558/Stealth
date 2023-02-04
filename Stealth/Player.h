@@ -29,9 +29,7 @@ public:
 
 
 	//デバック用
-	int GetX() { return position.x; }
-	int GetZ() { return position.z; }
-	int GetSpeed() { return SPEED; }
+	float GetSpeed() { return SPEED; }
 
 
 private:

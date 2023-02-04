@@ -53,13 +53,13 @@ private:
 	HitChecker* hitChecker;
 	FirstStageMap* firstStageMap;
 	CakeRepopEffect* cakeEffect;
-	CakeParticle* cakeParticle;
+	std::vector<CakeParticle*> cakeParticle;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
 
-	void EntryCakeParticle(Enemy* newCakeParticle);			//ケーキのパーティクルを登録
-	void DeleteCakeParticle(Enemy* deleteCakeParticle);		//ケーキのパーティクルを削除
-	void CakeParticlePop();									//ケーキのパーティクルの出現
+	void EntryCakeParticle(CakeParticle* newCakeParticle);			//ケーキのパーティクルを登録
+	void DeleteCakeParticle(CakeParticle* deleteCakeParticle);		//ケーキのパーティクルを削除
+	void CakeParticlePop();											//ケーキのパーティクルの出現
 
 	void UpdateStart(float deltaTime);				//ゲーム開始前
 	void UpdateGame(float deltaTime);				//ゲーム中
@@ -68,8 +68,9 @@ private:
 
 	State state;		//ゲーム状態
 	int font;			//ゲームフォント
-	int frame;
+	float frame;
 
 	//静的定数
 	static const int GOAL_POSITION;					//ゴールの位置
+	static const int PARTICLE_NUMBER;				//パーティクルの数
 };

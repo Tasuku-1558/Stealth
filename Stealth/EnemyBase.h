@@ -36,6 +36,6 @@ protected:
 	//静的定数
 	static const float SPEED;				//移動速度
 	static const float RANGE_DEGREE;		//視野角度
-	static const int CAKE_IMAGE_NUMBER;		//ケーキ画像数
+	static const int   CAKE_IMAGE_NUMBER;	//ケーキ画像数
 	
 };

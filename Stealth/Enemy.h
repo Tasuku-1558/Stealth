@@ -52,8 +52,8 @@ private:
 	void ReactionDraw();						//リアクション画像の描画処理
 	void Finalize();							//終了処理
 
-	std::string InputPath(std::string folderPath, //画像、SEのパスを入力
-						  std::string path);
+	std::string InputPath(std::string folderPath, //画像のパスを入力
+						  std::string imagePath);
 
 	EnemyState enemyState;						//エネミーの状態
 

@@ -161,9 +161,9 @@ void UiManager::StartGameDraw(UiManager::Graphic graphic)
 {
 	stageCount++;
 
-	if (stageCount < 50)
+	if (stageCount < 80)
 	{
-		DrawGraph(0, -50, uiHandle[graphic], TRUE);
+		DrawGraph(0, -100, uiHandle[graphic], TRUE);
 	}
 }
 

@@ -45,7 +45,7 @@ void Bullet::Initialize()
 	modelHandle = ModelManager::GetInstance().GetModelHandle(ModelManager::CAKE);
 	MV1SetScale(modelHandle, SIZE);
 
-	// マウスカーソルを表示しない
+	//マウスカーソルを表示しない
 	SetMouseDispFlag(FALSE);
 
 	position = POSITION;

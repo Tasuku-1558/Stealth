@@ -73,7 +73,6 @@ void Player::Update(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 {
 	Move(deltaTime, camera, back, mapHit);
 
-	//プレイヤーの位置をセット
 	MV1SetPosition(modelHandle, position);
 }
 

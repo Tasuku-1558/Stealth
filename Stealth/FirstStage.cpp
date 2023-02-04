@@ -18,7 +18,8 @@
 #include "FadeManager.h"
 
 
-const int FirstStage::GOAL_POSITION = -4000;	//ゴールの位置
+const int FirstStage::GOAL_POSITION	  = -4000;	//ゴールの位置
+const int FirstStage::PARTICLE_NUMBER = 30;		//パーティクルの数
 
 /// <summary>
 /// コンストラクタ
@@ -88,7 +89,7 @@ void FirstStage::Initialize()
 	firstStageMap = new FirstStageMap();
 	firstStageMap->Initialize();
 
-	//エフェクトクラス
+	//ケーキの再出現エフェクトクラス
 	cakeEffect = new CakeRepopEffect();
 	cakeEffect->Initialize();
 
@@ -106,9 +107,6 @@ void FirstStage::Initialize()
 
 	//画面効果クラス
 	fadeManager = new FadeManager();
-
-	//ケーキのパーティクル出現関数
-	CakeParticlePop();
 }
 
 /// <summary>
@@ -140,10 +138,10 @@ void FirstStage::Finalize()
 
 	SafeDelete(fadeManager);
 
-	/*for (auto particlePtr : cakeParticle)
+	for (auto particlePtr : cakeParticle)
 	{
 		SafeDelete(particlePtr);
-	}*/
+	}
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
@@ -155,7 +153,7 @@ void FirstStage::Finalize()
 void FirstStage::Activate()
 {
 	state = State::START;
-	frame = 0;
+	frame = 0.0f;
 
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
@@ -168,6 +166,11 @@ void FirstStage::Activate()
 	ballBullet->Activate();
 
 	cakeEffect->Activate();
+
+	for (auto particlePtr : cakeParticle)
+	{
+		particlePtr->Activate();
+	}
 
 	uiManager->Activate();
 }
@@ -183,19 +186,51 @@ void FirstStage::Update(float deltaTime)
 		(this->*pUpdate)(deltaTime);		//状態ごとに更新
 	}
 
-	++frame;
+	//++frame;
 }
 
-void FirstStage::EntryCakeParticle(Enemy* newCakeParticle)
+/// <summary>
+/// ケーキのパーティクルを登録
+/// </summary>
+/// <param name="newCakeParticle"></param>
+void FirstStage::EntryCakeParticle(CakeParticle* newCakeParticle)
 {
+	cakeParticle.emplace_back(newCakeParticle);
 }
 
-void FirstStage::DeleteCakeParticle(Enemy* deleteCakeParticle)
+/// <summary>
+/// ケーキのパーティクルを削除
+/// </summary>
+/// <param name="deleteCakeParticle"></param>
+void FirstStage::DeleteCakeParticle(CakeParticle* deleteCakeParticle)
 {
+	//ケーキのパーティクルオブジェクトから検索して削除
+	auto iter = std::find(cakeParticle.begin(), cakeParticle.end(), deleteCakeParticle);
+
+	if (iter != cakeParticle.end())
+	{
+		//ケーキのパーティクルオブジェクトを最後尾に移動してデータを消す
+		std::iter_swap(iter, cakeParticle.end() - 1);
+		cakeParticle.pop_back();
+
+		return;
+	}
 }
 
+/// <summary>
+/// ケーキのパーティクルの出現
+/// </summary>
 void FirstStage::CakeParticlePop()
 {
+	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && !ballBullet->bullet->GetAlive() && !ballBullet->cake->GetAlive())
+	{
+		//パーティクルの個数分エントリーする
+		for (int i = 0; i < PARTICLE_NUMBER; i++)
+		{
+			CakeParticle* newCakeParticle = new CakeParticle(ballBullet->bullet->GetPosition());
+			EntryCakeParticle(newCakeParticle);
+		}
+	}
 }
 
 /// <summary>
@@ -204,8 +239,20 @@ void FirstStage::CakeParticlePop()
 /// <param name="deltaTime"></param>
 void FirstStage::UpdateStart(float deltaTime)
 {
-	state = State::GAME;
-	pUpdate = &FirstStage::UpdateGame;
+	camera->Update(player->GetPosition());
+
+	//ファーストステージでのライトの方向の設定
+	light->Update({ 0.0f,-0.5f,0.0f });
+
+	frame += deltaTime;
+
+	if (frame > 1.0f)
+	{
+		state = State::GAME;
+		pUpdate = &FirstStage::UpdateGame;
+	}
+
+	cakeEffect->Update(player->GetPosition().x, player->GetPosition().y, player->GetPosition().z);
 }
 
 /// <summary>
@@ -214,6 +261,9 @@ void FirstStage::UpdateStart(float deltaTime)
 /// <param name="deltaTime"></param>
 void FirstStage::UpdateGame(float deltaTime)
 {
+	//ケーキのパーティクル出現
+	CakeParticlePop();
+
 	//ファーストステージでのライトの方向の設定
 	light->Update({ 0.0f,-0.5f,0.0f });
 
@@ -232,6 +282,11 @@ void FirstStage::UpdateGame(float deltaTime)
 	ballBullet->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
 	
 	hitChecker->Check(firstStageMap->GetModelHandle(), player);
+
+	for (auto particlePtr : cakeParticle)
+	{
+		particlePtr->Update(deltaTime);
+	}
 	
 	//プレイヤーがゴール地点に辿り着いたら
 	if (player->GetPosition().x < GOAL_POSITION)
@@ -246,6 +301,14 @@ void FirstStage::UpdateGame(float deltaTime)
 		parent->SetNextScene(SceneManager::SELECTION);
 		return;
 	}
+
+	for (auto particlePtr : cakeParticle)
+	{
+		if (particlePtr->IsParticleEnd())
+		{
+			DeleteCakeParticle(particlePtr);
+		}
+	}
 }
 
 /// <summary>
@@ -259,7 +322,6 @@ void FirstStage::UpdateGoal(float deltaTime)
 	//ステージ選択画面へ遷移
 	parent->SetNextScene(SceneManager::SELECTION);
 	return;
-
 }
 
 /// <summary>
@@ -272,7 +334,7 @@ void FirstStage::Draw()
 
 	//マップ描画
 	firstStageMap->Draw();
-	
+
 	//プレイヤー描画
 	player->Draw();
 
@@ -285,7 +347,7 @@ void FirstStage::Draw()
 	//ボールバレット管理クラス描画
 	ballBullet->Draw();
 
-	//エフェクト描画
+	//ケーキの再出現エフェクト描画
 	cakeEffect->Draw();
 
 	//UI管理クラス描画
@@ -294,13 +356,21 @@ void FirstStage::Draw()
 	//ケーキを所持しているか描画
 	uiManager->CakeGetDraw(!ballBullet->cake->GetAlive());
 	
+	//ケーキのパーティクルの描画
+	for (auto particlePtr : cakeParticle)
+	{
+		particlePtr->Draw();		
+	}
 
 	//デバック用
-	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
-	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
+	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
+	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %.0f", player->GetPosition().z);
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->GetPlayerCount());
 	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "CakeAlive : %d\n(1:true 0:false)", ballBullet->cake->GetAlive());
+	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());
+	DrawFormatStringToHandle(100, 620, GetColor(255, 0, 0), font, "BulletPos_X : %.0f", ballBullet->bullet->GetPosition().x);
+	DrawFormatStringToHandle(100, 720, GetColor(255, 0, 0), font, "BulletPos_Z : %.0f", ballBullet->bullet->GetPosition().z);
 
 
 	//画面効果クラス描画

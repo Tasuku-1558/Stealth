@@ -8,6 +8,7 @@
 #include "BackGround.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "MonitoringEnemy.h"
 #include "BallBullet.h"
 #include "HitChecker.h"
 #include "CakeRepopEffect.h"
@@ -27,6 +28,7 @@ ThirdStage::ThirdStage(SceneManager* const sceneManager)
 	, backGround(nullptr)
 	, player(nullptr)
 	, enemy()
+	, monitoringEnemy(nullptr)
 	, pUpdate(nullptr)
 	, ballBullet()
 	, hitChecker(nullptr)
@@ -34,7 +36,6 @@ ThirdStage::ThirdStage(SceneManager* const sceneManager)
 	, thirdStageMap(nullptr)
 	, uiManager(nullptr)
 	, font(0)
-	, cakePop(false)
 {
 	//処理なし
 }
@@ -71,7 +72,10 @@ void ThirdStage::Initialize()
 	thirdStageMap = new ThirdStageMap();
 	thirdStageMap->Initialize();
 
-	//エフェクトクラス
+	monitoringEnemy = new MonitoringEnemy(thirdStageMap->GetMap());
+	monitoringEnemy->Initialize();
+
+	//ケーキの再出現エフェクトクラス
 	cakeEffect = new CakeRepopEffect();
 	cakeEffect->Initialize();
 
@@ -194,20 +198,14 @@ void ThirdStage::DeleteBallBullet(BallBullet* deleteBallBullet)
 /// </summary>
 void ThirdStage::BallBulletPop()
 {
-	//ケーキが出現していないならば
-	if (!cakePop)
-	{
-		BallBullet* newBallBullet = new BallBullet({ -600.0f,30.0f,0.0f });
-		EntryBallBullet(newBallBullet);
+	BallBullet* newBallBullet = new BallBullet({ -600.0f,30.0f,0.0f });
+	EntryBallBullet(newBallBullet);
 
-		BallBullet* newBallBullet2 = new BallBullet({ -3500.0f,30.0f,0.0f });
-		EntryBallBullet(newBallBullet2);
+	BallBullet* newBallBullet2 = new BallBullet({ -3500.0f,30.0f,0.0f });
+	EntryBallBullet(newBallBullet2);
 
-		BallBullet* newBallBullet3 = new BallBullet({ -4000.0f,30.0f,0.0f });
-		EntryBallBullet(newBallBullet3);
-
-		cakePop = true;
-	}
+	BallBullet* newBallBullet3 = new BallBullet({ -4000.0f,30.0f,0.0f });
+	EntryBallBullet(newBallBullet3);
 }
 
 /// <summary>
@@ -232,6 +230,8 @@ void ThirdStage::UpdateGame(float deltaTime)
 	camera->Update(player->GetPosition());
 
 	player->Update(deltaTime, camera, hitChecker->Back(), hitChecker->MapHit());
+
+	monitoringEnemy->Update(deltaTime, player);
 
 	for (auto enemyPtr : enemy)
 	{
@@ -300,6 +300,8 @@ void ThirdStage::Draw()
 	//プレイヤー描画
 	player->Draw();
 
+	monitoringEnemy->Draw();
+
 	//エネミー描画
 	for (auto enemyPtr : enemy)
 	{
@@ -314,17 +316,17 @@ void ThirdStage::Draw()
 		uiManager->CakeGetDraw(!ballBulletPtr->cake->GetAlive());
 	}
 
-	//エフェクト描画
+	//ケーキの再出現エフェクト描画
 	cakeEffect->Draw();
 
 	//UI管理クラス描画
 	uiManager->Draw(state, player->GetPlayerCount());
 
 	//デバック用
-	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %d", player->GetX());
-	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %d", player->GetZ());
+	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
+	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %.0f", player->GetPosition().z);
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
-	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d\n", player->GetPlayerCount());
+	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->GetPlayerCount());
 
 	for (auto ballBulletPtr : ballBullet)
 	{

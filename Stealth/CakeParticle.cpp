@@ -7,9 +7,9 @@
 /// <param name="pos"></param>
 CakeParticle::CakeParticle(VECTOR pos)
 	: position()
-	, radius(0.5f)
+	, radius(200.0f)
 	, particleCount(0.0f)
-	, particlePopTime(5.0f)
+	, particlePopTime(2.0f)
 	, endFlag(false)
 	, xPower(0.0f)
 	, yPower(0.0f)
@@ -55,6 +55,7 @@ void CakeParticle::Update(float deltaTime)
 	radius = ((particlePopTime - particleCount) / particlePopTime) * radius;
 	position.x += xPower;
 	position.y += yPower;
+	position.z = 0.0f;
 	
 	particleCount += deltaTime;
 
@@ -70,6 +71,6 @@ void CakeParticle::Update(float deltaTime)
 void CakeParticle::Draw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-	DrawSphere3D(position, radius, 8, GetColor(255, 0, 0), GetColor(255, 0, 0), FALSE);
+	DrawSphere3D(position, radius, 8, GetColor(139, 69, 19), GetColor(139, 69, 19), TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }

@@ -61,7 +61,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// 時間計測
 	int nowTime;
 	int prevTime = nowTime = GetNowCount();
-	
+	float deltaTime = 0.0f;
 	ModelManager::GetInstance();	//モデル管理クラスの生成
 
 	SceneManager* sceneManager = new SceneManager();
@@ -72,7 +72,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
 		// フレーム時間を算出
-		float deltaTime = 0.0f;
 		nowTime = GetNowCount();
 
 		deltaTime = (nowTime - prevTime) / 1000.0f;
