@@ -9,7 +9,7 @@ const string ModelManager::ENEMY_VISUAL_PATH = "enemyAngle.mv1"; //enemy_visualƒ
 const string ModelManager::WALL_PATH         = "wall.mv1";       //wallƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::CAKE_PATH         = "cake.mv1";       //cakeƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::STAGE1_PATH       = "stage1.mv1";     //stage1ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
-const string ModelManager::STAGE2_PATH       = "stage2.mv1";     //stage2ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
+const string ModelManager::STAGE2_PATH       = "stage2_.mv1";     //stage2ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::STAGE3_PATH       = "stage3.mv1";     //stage3ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 
 

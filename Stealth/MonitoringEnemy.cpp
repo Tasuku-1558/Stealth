@@ -5,12 +5,10 @@
 #include "Bullet.h"
 
 const string MonitoringEnemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
-const string MonitoringEnemy::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
 const string MonitoringEnemy::PLAYER_FIND_PATH = "playerFind.png";	//プレイヤーを見つけた画像のパス
 const string MonitoringEnemy::MARK_PATH = "mark.png";			//ビックリマーク画像のパス
 const string MonitoringEnemy::CAKE_PATH = "ui9.png";			//ケーキ画像のパス
 const string MonitoringEnemy::CAKE_HALF_PATH = "cakeHalf.png";		//ケーキが半分画像のパス
-const string MonitoringEnemy::SPOTTED_SE_PATH = "spotted.mp3";		//プレイヤー発見SE音のパス
 
 
 using namespace Math3d;
@@ -25,6 +23,7 @@ MonitoringEnemy::MonitoringEnemy(std::vector<VECTOR>& id) : EnemyBase()
 	, cakeFindFlag(false)
 	, cakeEatFlag(false)
 	, cakeHalfFlag(false)
+	, a()
 {
 	enemyState = EnemyState::CRAWL;
 	Position(id);
@@ -38,11 +37,7 @@ MonitoringEnemy::MonitoringEnemy(std::vector<VECTOR>& id) : EnemyBase()
 /// </summary>
 MonitoringEnemy::~MonitoringEnemy()
 {
-	//終了処理が呼ばれてなければ
-	if (modelHandle != NULL)
-	{
-		Finalize();
-	}
+	Finalize();
 }
 
 /// <summary>
@@ -61,9 +56,10 @@ void MonitoringEnemy::Initialize()
 		printfDx("モデルデータ読み込みに失敗\n");
 	}
 
-	dir = ZERO_VECTOR;
+	targetPosition = ZERO_VECTOR;
+	a = ZERO_VECTOR;
 
-	//画像読み込み
+	//画像の読み込み
 	playerFindImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
 
 	markImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
@@ -71,15 +67,13 @@ void MonitoringEnemy::Initialize()
 	cakeImage[0] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_PATH).c_str());
 
 	cakeImage[1] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_HALF_PATH).c_str());
-
-	spottedSE = LoadSoundMem(InputPath(SOUND_FOLDER_PATH, SPOTTED_SE_PATH).c_str());
 }
 
 /// <summary>
 /// 画像のパスを入力
 /// </summary>
 /// <param name="folderPath"></param>
-/// <param name="path"></param>
+/// <param name="imagePath"></param>
 /// <returns></returns>
 std::string MonitoringEnemy::InputPath(string folderPath, string imagePath)
 {
@@ -130,9 +124,6 @@ void MonitoringEnemy::Finalize()
 	{
 		DeleteGraph(cakeImage[i]);
 	}
-
-	//サウンドリソースを削除
-	InitSoundMem();
 }
 
 /// <summary>
@@ -143,9 +134,9 @@ void MonitoringEnemy::Finalize()
 void MonitoringEnemy::Update(float deltaTime, Player* player)
 {
 	//ベクトルの正規化
-	dir = VNorm(targetPosition - dir);
+	a = VNorm(targetPosition - dir);
 
-	position += dir * speed * deltaTime;
+	position += a * speed * deltaTime;
 
 	//エネミーの位置をセット
 	MV1SetPosition(modelHandle, position);
@@ -159,7 +150,7 @@ void MonitoringEnemy::Update(float deltaTime, Player* player)
 
 	//z軸が逆を向いているのでdirを180度回転させる
 	MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
-	VECTOR negativeVec = VTransform(dir, rotYMat);
+	VECTOR negativeVec = VTransform(a, rotYMat);
 
 	//モデルに回転をセット
 	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
@@ -189,7 +180,7 @@ void MonitoringEnemy::SetTargetPosition()
 /// <returns></returns>
 bool MonitoringEnemy::IsGoal(float deltaTime)
 {
-	return VSize(targetPosition - dir) < speed * deltaTime;
+	return VSize(targetPosition - dir) /*< speed * deltaTime*/;
 }
 
 /// <summary>
@@ -427,9 +418,6 @@ void MonitoringEnemy::ReactionDraw()
 
 		//敵に見つかったというUI画像を描画
 		DrawGraph(50, -100, playerFindImage, TRUE);
-
-		// 発見SEを再生
-		//PlaySoundMem(spottedSE, DX_PLAYTYPE_BACK);
 	}
 
 	//ケーキを見つけたならば

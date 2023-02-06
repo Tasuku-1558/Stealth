@@ -323,13 +323,13 @@ void SecondStage::UpdateStart(float deltaTime)
 
 	frame += deltaTime;
 
-	if (frame > 1.0f)
+	if (frame > 1.3f)
 	{
 		state = State::GAME;
 		pUpdate = &SecondStage::UpdateGame;
 	}
 
-	cakeEffect->Update(player->GetPosition().x, player->GetPosition().y, player->GetPosition().z);
+	cakeEffect->Update(player->GetPosition().x, player->GetPosition().y - 100.0f, player->GetPosition().z);
 
 }
 
@@ -414,27 +414,31 @@ void SecondStage::Draw()
 	//マップ描画
 	secondStageMap->Draw();
 
-	//プレイヤー描画
-	player->Draw();
-
-	//エネミー描画
-	for (auto enemyPtr : enemy)
+	//ゲーム状態がゲームとゴールの時だけ描画する
+	if (state == State::GAME || state == State::GOAL)
 	{
-		enemyPtr->Draw();
+		//プレイヤー描画
+		player->Draw();
+
+		//エネミー描画
+		for (auto enemyPtr : enemy)
+		{
+			enemyPtr->Draw();
+		}
+
+		//ボールバレット管理クラス描画
+		for (auto ballBulletPtr : ballBullet)
+		{
+			ballBulletPtr->Draw();
+
+			uiManager->CakeGetDraw(!ballBulletPtr->cake->GetAlive());
+		}
 	}
 
 	//壁描画
 	for (auto wallPtr : wall)
 	{
 		wallPtr->Draw();
-	}
-
-	//ボールバレット管理クラス描画
-	for (auto ballBulletPtr : ballBullet)
-	{
-		ballBulletPtr->Draw();
-
-		uiManager->CakeGetDraw(!ballBulletPtr->cake->GetAlive());
 	}
 
 	//ケーキの再出現エフェクト描画

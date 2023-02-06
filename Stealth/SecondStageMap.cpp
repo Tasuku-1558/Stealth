@@ -65,10 +65,10 @@ void SecondStageMap::Finalize()
 /// </summary>
 void SecondStageMap::MapList()
 {
-	positionList.push_back(VGet(-2300.0f, 100.0f, 500.0f));
-	positionList.push_back(VGet(-2300.0f, 100.0f, -500.0f));
-	positionList.push_back(VGet(-1800.0f, 100.0f, -500.0f));
-	positionList.push_back(VGet(-1800.0f, 100.0f, 500.0f));
+	positionList.push_back({ -2300.0f, 100.0f, 500.0f });
+	positionList.push_back({ -2300.0f, 100.0f, -500.0f });
+	positionList.push_back({ -1800.0f, 100.0f, -500.0f });
+	positionList.push_back({ -1800.0f, 100.0f, 500.0f });
 
 
 	itr = positionList.begin();   //イテレータを先頭に設定
@@ -80,8 +80,8 @@ void SecondStageMap::MapList()
 /// </summary>
 void SecondStageMap::MapList2()
 {
-	positionList2.push_back(VGet(-5400.0f, 100.0f, 0.0f));
-	positionList2.push_back(VGet(-4600.0f, 100.0f, 0.0f));
+	positionList2.push_back({ -5400.0f, 100.0f, 0.0f });
+	positionList2.push_back({ -4600.0f, 100.0f, 0.0f });
 
 	itr2 = positionList2.begin();   //イテレータを先頭に設定
 }

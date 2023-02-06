@@ -3,7 +3,11 @@
 #include "ModelManager.h"
 #include "Enemy.h"
 
+const string Player::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
+const string Player::SPOTTED_SE_PATH   = "spotted.mp3";		//エネミーに見つかった時のSE音のパス
+
 using namespace Math3d;
+using namespace std;
 
 
 /// <summary>
@@ -39,6 +43,10 @@ void Player::Initialize()
 	{
 		printfDx("モデルデータ読み込みに失敗[PLAYER]\n");
 	}
+
+	//SE音の読み込み
+	string failePath = SOUND_FOLDER_PATH + SPOTTED_SE_PATH;
+	spottedSe = LoadSoundMem(failePath.c_str());
 }
 
 /// <summary>
@@ -48,6 +56,9 @@ void Player::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 	modelHandle = NULL;
+
+	//サウンドリソースを削除
+	InitSoundMem();
 }
 
 /// <summary>
@@ -169,6 +180,15 @@ void Player::FoundEnemy(float deltaTime, Enemy* enemy)
 
 		//プレイヤーの動きを止める
 		speed = 0.0f;
+
+		//一度だけサウンドを流す
+		if (!spottedSeFlag)
+		{
+			//エネミーに見つかった時のSE音を再生
+			PlaySoundMem(spottedSe, DX_PLAYTYPE_BACK);
+
+			spottedSeFlag = true;
+		}
 	}
 
 	//カウントが0.6秒経過したら
@@ -183,6 +203,7 @@ void Player::FoundEnemy(float deltaTime, Enemy* enemy)
 
 		playerFindCount++;
 		count = 0.0f;
+		spottedSeFlag = false;
 	}
 }
 

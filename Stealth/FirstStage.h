@@ -66,9 +66,12 @@ private:
 	void UpdateGoal(float deltaTime);				//ゴール
 	void (FirstStage::* pUpdate)(float deltaTime);	//Update関数ポインタ
 
-	State state;		//ゲーム状態
-	int font;			//ゲームフォント
-	float frame;
+	State state;			//ゲーム状態
+	int	  font;				//ゲームフォント
+	float frame;			//フレーム数
+	float particleInterval;	//パーティクル出現のインターバル
+	bool  pushFlag;			//パーティクルを出したら
+
 
 	//静的定数
 	static const int GOAL_POSITION;					//ゴールの位置

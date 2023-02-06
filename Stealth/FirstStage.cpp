@@ -19,7 +19,7 @@
 
 
 const int FirstStage::GOAL_POSITION	  = -4000;	//ゴールの位置
-const int FirstStage::PARTICLE_NUMBER = 30;		//パーティクルの数
+const int FirstStage::PARTICLE_NUMBER = 500;	//パーティクルの数
 
 /// <summary>
 /// コンストラクタ
@@ -43,7 +43,9 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 	, uiManager(nullptr)
 	, fadeManager(nullptr)
 	, font(0)
-	, frame(0)
+	, frame(0.0f)
+	, pushFlag(false)
+	, particleInterval(0.0f)
 {
 	//処理なし
 }
@@ -72,31 +74,31 @@ void FirstStage::Initialize()
 	backGround = new BackGround();
 	backGround->Initialize();
 
+	//マップクラス
+	firstStageMap = new FirstStageMap();
+	firstStageMap->Initialize();
+
+	//エネミークラス
+	//エネミーに行動パターンのリストを設定
+	enemy = new Enemy(firstStageMap->GetMap());
+	enemy->Initialize();
+
 	//プレイヤークラス
 	player = new Player();
 	player->Initialize();
 
 	//ボールバレット管理クラス
-	//ボールの初期位置を設定
+	//ケーキの初期位置を設定
 	ballBullet = new BallBullet({ -1500.0f,30.0f,0.0f });
 
 	//壁クラス
 	//壁の初期位置を設定
 	wall = new Wall({ -2500.0f,30.0f,0.0f });
 	wall->Initialize();
-
-	//マップクラス
-	firstStageMap = new FirstStageMap();
-	firstStageMap->Initialize();
-
+	
 	//ケーキの再出現エフェクトクラス
 	cakeEffect = new CakeRepopEffect();
 	cakeEffect->Initialize();
-
-	//エネミークラス
-	//エネミーに行動パターンのリストを設定
-	enemy = new Enemy(firstStageMap->GetMap());
-	enemy->Initialize();
 
 	//ヒットチェッカークラス
 	hitChecker = new HitChecker();
@@ -222,7 +224,8 @@ void FirstStage::DeleteCakeParticle(CakeParticle* deleteCakeParticle)
 /// </summary>
 void FirstStage::CakeParticlePop()
 {
-	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && !ballBullet->bullet->GetAlive() && !ballBullet->cake->GetAlive())
+	//マウスカーソルを左クリックし、且つケーキとバレットが非アクティブ且つパーティクルが出ていないならば
+	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && ballBullet->bullet->GetAlive() && !ballBullet->cake->GetAlive() && !pushFlag)
 	{
 		//パーティクルの個数分エントリーする
 		for (int i = 0; i < PARTICLE_NUMBER; i++)
@@ -230,6 +233,8 @@ void FirstStage::CakeParticlePop()
 			CakeParticle* newCakeParticle = new CakeParticle(ballBullet->bullet->GetPosition());
 			EntryCakeParticle(newCakeParticle);
 		}
+
+		pushFlag = true;
 	}
 }
 
@@ -246,13 +251,14 @@ void FirstStage::UpdateStart(float deltaTime)
 
 	frame += deltaTime;
 
-	if (frame > 1.0f)
+	//1.3秒経過したらゲーム画面へ移行
+	if (frame > 1.3f)
 	{
 		state = State::GAME;
 		pUpdate = &FirstStage::UpdateGame;
 	}
 
-	cakeEffect->Update(player->GetPosition().x, player->GetPosition().y, player->GetPosition().z);
+	cakeEffect->Update(player->GetPosition().x, player->GetPosition().y - 100.0f, player->GetPosition().z);
 }
 
 /// <summary>
@@ -261,9 +267,6 @@ void FirstStage::UpdateStart(float deltaTime)
 /// <param name="deltaTime"></param>
 void FirstStage::UpdateGame(float deltaTime)
 {
-	//ケーキのパーティクル出現
-	CakeParticlePop();
-
 	//ファーストステージでのライトの方向の設定
 	light->Update({ 0.0f,-0.5f,0.0f });
 
@@ -280,6 +283,23 @@ void FirstStage::UpdateGame(float deltaTime)
 	player->FoundEnemy(deltaTime, enemy);
 
 	ballBullet->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
+
+	//ケーキのパーティクル出現
+	CakeParticlePop();
+
+	//パーティクルを出したら
+	if (pushFlag)
+	{
+		particleInterval += deltaTime;
+
+		//５秒経過したら
+		//パーティクルを再度出せるようにする
+		if (particleInterval > 5.0f)
+		{
+			pushFlag = false;
+			particleInterval = 0.0f;
+		}
+	}
 	
 	hitChecker->Check(firstStageMap->GetModelHandle(), player);
 
@@ -304,6 +324,7 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	for (auto particlePtr : cakeParticle)
 	{
+		//パーティクルを出し終わったら
 		if (particlePtr->IsParticleEnd())
 		{
 			DeleteCakeParticle(particlePtr);
@@ -335,17 +356,21 @@ void FirstStage::Draw()
 	//マップ描画
 	firstStageMap->Draw();
 
-	//プレイヤー描画
-	player->Draw();
+	//ゲーム状態がゲームとゴールの時だけ描画する
+	if (state == State::GAME || state == State::GOAL)
+	{
+		//エネミー描画
+		enemy->Draw();
 
-	//エネミー描画
-	enemy->Draw();
+		//プレイヤー描画
+		player->Draw();
+
+		//ボールバレット管理クラス描画
+		ballBullet->Draw();
+	}
 
 	//壁描画
-	wall->Draw();
-
-	//ボールバレット管理クラス描画
-	ballBullet->Draw();
+	//wall->Draw();
 
 	//ケーキの再出現エフェクト描画
 	cakeEffect->Draw();
@@ -369,8 +394,6 @@ void FirstStage::Draw()
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->GetPlayerCount());
 	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "CakeAlive : %d\n(1:true 0:false)", ballBullet->cake->GetAlive());
 	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());
-	DrawFormatStringToHandle(100, 620, GetColor(255, 0, 0), font, "BulletPos_X : %.0f", ballBullet->bullet->GetPosition().x);
-	DrawFormatStringToHandle(100, 720, GetColor(255, 0, 0), font, "BulletPos_Z : %.0f", ballBullet->bullet->GetPosition().z);
 
 
 	//画面効果クラス描画

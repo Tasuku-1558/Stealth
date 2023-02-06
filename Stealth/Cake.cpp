@@ -51,7 +51,7 @@ void Cake::Initialize()
 /// </summary>
 void Cake::Activate()
 {
-	position = position;
+	CakeAlive();
 }
 
 /// <summary>

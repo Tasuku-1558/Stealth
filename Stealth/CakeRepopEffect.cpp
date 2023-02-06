@@ -26,7 +26,7 @@ CakeRepopEffect::CakeRepopEffect() : EffectBase()
 /// </summary>
 CakeRepopEffect::~CakeRepopEffect()
 {
-	//ˆ—‚È‚µ
+	Finalize();
 }
 
 /// <summary>

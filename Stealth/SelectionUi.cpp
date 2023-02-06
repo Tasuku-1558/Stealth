@@ -12,9 +12,9 @@ const VECTOR SelectionUi::STAGE1_POSITION		  = { 1300.0f, 740.0f, 0.0f };		//ƒXƒ
 const VECTOR SelectionUi::STAGE1_SIZE			  = { 10.0f, 10.0f, 10.0f };		//ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚Ì”{—¦
 const VECTOR SelectionUi::STAGE1_ROTATE = { 80.0f * DX_PI_F / 180.0f, 190.0f * DX_PI_F / 180.0f, 0.0f }; //ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
 
-const VECTOR SelectionUi::STAGE2_POSITION		  = { 1400.0f, 300.0f, -150.0f };	//ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚ÌˆÊ’u
+const VECTOR SelectionUi::STAGE2_POSITION		  = { 1700.0f, 100.0f, -300.0f };	//ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚ÌˆÊ’u
 const VECTOR SelectionUi::STAGE2_SIZE			  = { 8.0f, 8.0f, 8.0f };			//ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚Ì”{—¦
-const VECTOR SelectionUi::STAGE2_ROTATE = { 80.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f }; //ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
+const VECTOR SelectionUi::STAGE2_ROTATE = { 90.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f }; //ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
 
 const VECTOR SelectionUi::STAGE3_POSITION		  = { 1200.0f, 750.0f, -150.0f };	//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚ÌˆÊ’u
 const VECTOR SelectionUi::STAGE3_SIZE			  = { 8.0f, 8.0f, 8.0f };			//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚Ì”{—¦
@@ -53,7 +53,7 @@ void SelectionUi::Initialize()
 
 	stageDescription[2] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE3_DESCRIPTION_PATH).c_str());
 
-	selectionKeyImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_KEY_PATH).c_str());
+	selectionKeyImage   = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_KEY_PATH).c_str());
 
 	//ƒ}ƒbƒvƒ‚ƒfƒ‹“Ç‚Ýž‚Ý
 	MapInput(0, ModelManager::STAGE1, STAGE1_POSITION, STAGE1_SIZE, STAGE1_ROTATE);

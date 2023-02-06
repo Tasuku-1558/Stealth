@@ -42,6 +42,7 @@ private:
 	float worldMouseZ;						//ワールドマウスZ座標
 
 	bool alive;								//生きてるか死んでるか
+	float cursorRotate;
 
 	//静的定数
 	static const VECTOR SIZE;				//モデルの倍率

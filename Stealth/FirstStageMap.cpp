@@ -66,8 +66,8 @@ void FirstStageMap::Finalize()
 /// </summary>
 void FirstStageMap::MapList()
 {
-	positionList.push_back(VGet(-3200.0f, 100.0f, 1000.0f));
-	positionList.push_back(VGet(-3200.0f, 100.0f, -1000.0f));
+	positionList.push_back({ -3200.0f, 100.0f, 1000.0f });
+	positionList.push_back({ -3200.0f, 100.0f, -1000.0f });
 
 	itr = positionList.begin();   //  イテレータを先頭に設定
 }

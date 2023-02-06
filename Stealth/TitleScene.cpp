@@ -9,6 +9,7 @@ const string TitleScene::PLAY_VIDEO_PATH   = "PlayVideo.mp4";	//タイトル動画のパ
 const string TitleScene::TITLENAME_PATH	   = "titleName.png";	//タイトル名の画像のパス
 const string TitleScene::TITLE_UI_PATH	   = "titleUi.png";		//ステージ選択シーンへ遷移キーのUIのパス
 
+using namespace std;
 
 /// <summary>
 /// コンストラクタ
@@ -21,7 +22,7 @@ TitleScene::TitleScene(SceneManager* const sceneManager)
 	, titleUi(0)
 	, alpha(0)
 	, inc(0)
-	, frame(0)
+	, frame(0.0f)
 	, prevAlpha(0)
 	, state()
 {
@@ -33,10 +34,7 @@ TitleScene::TitleScene(SceneManager* const sceneManager)
 /// </summary>
 TitleScene::~TitleScene()
 {
-	if (backGroundHandle != NULL)
-	{
-		Finalize();
-	}
+	Finalize();
 }
 
 /// <summary>
@@ -44,17 +42,27 @@ TitleScene::~TitleScene()
 /// </summary>
 void TitleScene::Initialize()
 {
-	string failePath = VIDEO_FOLDER_PATH + PLAY_VIDEO_PATH;
-	backGroundHandle = LoadGraph(failePath.c_str());
+	//動画データの読み込み
+	backGroundHandle = LoadGraph(InputPath(VIDEO_FOLDER_PATH, PLAY_VIDEO_PATH).c_str());
 
-	failePath = IMAGE_FOLDER_PATH + TITLENAME_PATH;
-	titleName = LoadGraph(failePath.c_str());
+	//画像UIの読み込み
+	titleName = LoadGraph(InputPath(IMAGE_FOLDER_PATH, TITLENAME_PATH).c_str());
 
-	failePath = IMAGE_FOLDER_PATH + TITLE_UI_PATH;
-	titleUi = LoadGraph(failePath.c_str());
+	titleUi = LoadGraph(InputPath(IMAGE_FOLDER_PATH, TITLE_UI_PATH).c_str());
 
 	alpha = 255;
 	inc = -3;
+}
+
+/// <summary>
+/// 画像のパスを入力
+/// </summary>
+/// <param name="folderPath"></param>
+/// <param name="path"></param>
+/// <returns></returns>
+std::string TitleScene::InputPath(string folderPath, string path)
+{
+	return std::string(folderPath + path);
 }
 
 /// <summary>
@@ -63,7 +71,6 @@ void TitleScene::Initialize()
 void TitleScene::Finalize()
 {
 	DeleteGraph(backGroundHandle);
-	backGroundHandle = NULL;
 }
 
 /// <summary>
@@ -71,6 +78,7 @@ void TitleScene::Finalize()
 /// </summary>
 void TitleScene::Activate()
 {
+	//処理なし
 }
 
 /// <summary>
@@ -82,17 +90,8 @@ void TitleScene::Update(float deltaTime)
 	//次のシーンへ
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
-		//inc *= 10;
-		/*frame = 0;
-		state = State::START;*/
 		parent->SetNextScene(SceneManager::SELECTION);
 	}
-
-	/*if (state == State::START && frame >= 90)
-	{
-		
-	}
-	++frame;*/
 }
 
 /// <summary>

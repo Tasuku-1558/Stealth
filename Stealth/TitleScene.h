@@ -31,6 +31,9 @@ private:
 
 	TitleScene(const TitleScene&);		//コピーコンストラクタ
 
+	std::string InputPath(std::string folderPath,	//画像のパスを入力
+						  std::string path);
+
 	void Blink();						//文字の点滅処理
 
 	State state;						//ゲームの状態
@@ -40,7 +43,7 @@ private:
 	int alpha;
 	int inc;
 	int prevAlpha;
-	int frame;
+	float frame;
 
 	//静的定数
 	static const string VIDEO_FOLDER_PATH;	//videoフォルダまでのパス

@@ -5,12 +5,10 @@
 #include "Bullet.h"
 
 const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
-const string Enemy::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
 const string Enemy::PLAYER_FIND_PATH  = "playerFind.png";	//プレイヤーを見つけた画像のパス
 const string Enemy::MARK_PATH		  = "mark.png";			//ビックリマーク画像のパス
 const string Enemy::CAKE_PATH		  = "ui9.png";			//ケーキ画像のパス
 const string Enemy::CAKE_HALF_PATH	  = "cakeHalf.png";		//ケーキが半分画像のパス
-const string Enemy::SPOTTED_SE_PATH	  = "spotted.mp3";		//プレイヤー発見SE音のパス
 
 
 using namespace Math3d;
@@ -38,11 +36,7 @@ Enemy::Enemy(std::vector<VECTOR>& id) : EnemyBase()
 /// </summary>
 Enemy::~Enemy()
 {
-	//終了処理が呼ばれてなければ
-	if (modelHandle != NULL)
-	{
-		Finalize();
-	}
+	Finalize();
 }
 
 /// <summary>
@@ -61,8 +55,6 @@ void Enemy::Initialize()
 		printfDx("モデルデータ読み込みに失敗\n");
 	}
 	
-	dir = ZERO_VECTOR;
-
 	//画像読み込み
 	playerFindImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
 
@@ -71,8 +63,6 @@ void Enemy::Initialize()
 	cakeImage[0] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_PATH).c_str());
 
 	cakeImage[1] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_HALF_PATH).c_str());
-
-	spottedSE = LoadSoundMem(InputPath(SOUND_FOLDER_PATH, SPOTTED_SE_PATH).c_str());
 }
 
 /// <summary>
@@ -131,9 +121,6 @@ void Enemy::Finalize()
 	{
 		DeleteGraph(cakeImage[i]);
 	}
-
-	//サウンドリソースを削除
-	InitSoundMem();
 }
 
 /// <summary>
@@ -385,6 +372,7 @@ void Enemy::Reaction()
 		break;
 
 	case Object::WALL:
+		printfDx("WALL");
 		break;
 	}
 }
@@ -428,9 +416,6 @@ void Enemy::ReactionDraw()
 
 		//敵に見つかったというUI画像を描画
 		DrawGraph(50, -100, playerFindImage, TRUE);
-
-		// 発見SEを再生
-		//PlaySoundMem(spottedSE, DX_PLAYTYPE_BACK);
 	}
 
 	//ケーキを見つけたならば
@@ -440,14 +425,14 @@ void Enemy::ReactionDraw()
 		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
 	}
 
-	//ケーキにエネミーが近づいたならば
+	//ケーキがエネミーの視野角に入ったならば
 	if (cakeEatFlag)
 	{
 		//ケーキの画像を描画
 		DrawBillboard3D(VGet(position.x + 100.0f, 800.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, cakeImage[0], TRUE);
 	}
 
-	//ケーキがエネミーに近づいて4秒経過したら
+	//ケーキがエネミーの視野角に入って4秒経過したら
 	if (cakeHalfFlag)
 	{
 		//ケーキが半分の画像を描画

@@ -64,15 +64,14 @@ private:
 	bool cakeEatFlag;		//エネミーがケーキに近づいて食べているかどうか
 	bool cakeHalfFlag;		//ケーキが半分になっているかどうか
 
+	VECTOR a;
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
-	static const std::string SOUND_FOLDER_PATH;	//soundフォルダまでのパス
 	static const std::string PLAYER_FIND_PATH;	//プレイヤーを見つけた画像のパス
 	static const std::string MARK_PATH;			//ビックリマーク画像のパス
 	static const std::string CAKE_PATH;			//ケーキ画像のパス
 	static const std::string CAKE_HALF_PATH;	//ケーキが半分の画像のパス
-	static const std::string SPOTTED_SE_PATH;	//プレイヤー発見SE音のパス
 
 
 };

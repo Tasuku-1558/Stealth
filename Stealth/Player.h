@@ -22,6 +22,7 @@ public:
 
 	void Update(float deltaTime, Camera* camera, 
 				VECTOR back, bool mapHit);										//更新処理
+
 	void FoundEnemy(float deltaTime, Enemy* enemy);								//エネミーに見つかった場合
 	void Draw();																//描画処理
 
@@ -37,5 +38,11 @@ private:
 
 	void Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit);		//移動処理
 
-	float count;
+	float count;		//エネミーに見つかった時カウントを開始する
+
+
+	//静的定数
+	static const std::string SOUND_FOLDER_PATH;		//soundフォルダまでのパス
+	static const std::string SPOTTED_SE_PATH;		//エネミーに見つかった時のSE音のパス
+
 };

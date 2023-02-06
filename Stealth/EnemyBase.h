@@ -24,7 +24,6 @@ protected:
 	bool cakeFlag;					//ケーキを発見したかどうか
 	int playerFindImage;			//プレイヤーを見つけた画像格納用
 	int markImage;					//ビックリマーク画像格納用
-	int spottedSE;					//プレイヤー発見SE音
 	int cakeImage[2];				//ケーキの画像格納用
 
 	int visualModelHandle;			//視野モデルハンドル

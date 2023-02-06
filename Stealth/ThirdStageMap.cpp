@@ -67,8 +67,11 @@ void ThirdStageMap::Finalize()
 /// </summary>
 void ThirdStageMap::MapList()
 {
-	positionList.push_back(VGet(1.0f, 0.0f, 0.0f));
-	positionList.push_back(VGet(5.0f, 0.0f, 0.0f));
+	positionList.push_back({ 1.0f, 0.0f,  0.0f });
+	positionList.push_back({ 2.0f, 0.0f,  0.0f });
+	positionList.push_back({ 10.0f, 0.0f,  0.0f });
+
+
 
 }
 

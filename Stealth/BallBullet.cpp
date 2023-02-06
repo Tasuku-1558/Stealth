@@ -30,8 +30,8 @@ BallBullet::~BallBullet()
 /// </summary>
 void BallBullet::Activate()
 {
-    bullet->Activate();
     cake->Activate();
+    bullet->Activate();
 }
 
 /// <summary>

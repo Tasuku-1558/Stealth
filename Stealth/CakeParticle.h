@@ -28,5 +28,10 @@ private:
 	float particlePopTime;	//パーティクルの出現時間
 	bool endFlag;			//パーティクルを消す
 	float xPower;			//横方向の力
-	float yPower;			//縦方向の力
+	float zPower;			//縦方向の力
+
+
+	//静的定数
+	//パーティクルのカラー
+	static const unsigned int Color;
 };
