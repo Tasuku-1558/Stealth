@@ -14,7 +14,10 @@ using namespace std;
 /// コンストラクタ
 /// </summary>
 Player::Player() : PlayerBase()
-	, count(0)
+	, initialCount(0.0f)
+	, pastPosition()
+	, emptyModel(0)
+	, count(0.0f)
 {
 	//処理なし
 }
@@ -37,7 +40,7 @@ Player::~Player()
 void Player::Initialize()
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::PLAYER));
-
+	emptyModel= MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::PLAYER));
 	//読み込み失敗でエラー
 	if (modelHandle < 0)
 	{
@@ -85,6 +88,20 @@ void Player::Update(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 	Move(deltaTime, camera, back, mapHit);
 
 	MV1SetPosition(modelHandle, position);
+
+	count += deltaTime;
+
+
+	if (count > 1.0f)
+	{
+		pastPosition = position;
+
+		MV1SetPosition(emptyModel, pastPosition);
+
+		MV1SetMaterialEmiColor(emptyModel, 0, GetColorF(0.0f, 0.0f, 1.0f, 1.0f));
+
+		count = 0.0f;
+	}
 }
 
 /// <summary>
@@ -176,7 +193,7 @@ void Player::FoundEnemy(float deltaTime, Enemy* enemy)
 	//エネミーに見つかったら
 	if (enemy->Spotted())
 	{
-		count += deltaTime;
+		initialCount += deltaTime;
 
 		//プレイヤーの動きを止める
 		speed = 0.0f;
@@ -192,7 +209,7 @@ void Player::FoundEnemy(float deltaTime, Enemy* enemy)
 	}
 
 	//カウントが0.6秒経過したら
-	if (count > 0.6f)
+	if (initialCount > 0.6f)
 	{
 		//位置と向きを初期位置に
 		//スピードを元に戻す
@@ -202,7 +219,7 @@ void Player::FoundEnemy(float deltaTime, Enemy* enemy)
 		speed = SPEED;
 
 		playerFindCount++;
-		count = 0.0f;
+		initialCount = 0.0f;
 		spottedSeFlag = false;
 	}
 }
@@ -213,4 +230,6 @@ void Player::FoundEnemy(float deltaTime, Enemy* enemy)
 void Player::Draw()
 {	
 	MV1DrawModel(modelHandle);
+
+	MV1DrawModel(emptyModel);
 }

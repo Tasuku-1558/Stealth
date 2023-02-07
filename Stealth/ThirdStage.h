@@ -13,6 +13,7 @@ class BallBullet;
 class HitChecker;
 class ThirdStageMap;
 class CakeRepopEffect;
+class CakeParticle;
 class UiManager;
 
 
@@ -41,11 +42,6 @@ public:
 
 private:
 	ThirdStage(const ThirdStage&);	//コピーコンストラクタ
-
-
-	void EntryBallBullet(BallBullet* newBallBullet);		//ボールバレットを登録
-	void DeleteBallBullet(BallBullet* deleteBallBullet);	//ボールバレットを削除
-	void BallBulletPop();									//ボールバレットの出現
 	
 	Camera* camera;
 	Light* light;
@@ -57,8 +53,20 @@ private:
 	HitChecker* hitChecker;
 	ThirdStageMap* thirdStageMap;
 	CakeRepopEffect* cakeEffect;
+	std::vector<CakeParticle*> cakeParticle;
 	UiManager* uiManager;
 
+	void EntryEnemy(Enemy* newEnemy);								//エネミーを登録
+	void DeleteEnemy(Enemy* deleteEnemy);							//エネミーを削除
+	void EnemyPop();												//エネミーの出現
+
+	void EntryBallBullet(BallBullet* newBallBullet);				//ボールバレットを登録
+	void DeleteBallBullet(BallBullet* deleteBallBullet);			//ボールバレットを削除
+	void BallBulletPop();											//ボールバレットの出現
+
+	void EntryCakeParticle(CakeParticle* newCakeParticle);			//ケーキのパーティクルを登録
+	void DeleteCakeParticle(CakeParticle* deleteCakeParticle);		//ケーキのパーティクルを削除
+	void CakeParticlePop();											//ケーキのパーティクルの出現
 
 	void UpdateStart(float deltaTime);						//ゲーム開始前
 	void UpdateGame(float deltaTime);						//ゲーム中
@@ -66,11 +74,17 @@ private:
 	void (ThirdStage::* pUpdate)(float deltaTime);			//Update関数ポインタ
 
 
-	State state;		//ゲームの状態
-	int  font;			//ゲームフォント
+	State state;			//ゲームの状態
+	int   font;				//ゲームフォント
+	float frame;			//フレーム数
+	float particleInterval;	//パーティクル出現のインターバル
+	bool  particleFlag;		//パーティクルを出したら
+
 
 	//静的定数
-	//static const int GOAL_POSITION_X;					//ゴールの位置
+	static const float GOAL_POSITION_X;				//ゴールの位置X座標
+	static const float GOAL_POSITION_Z;				//ゴールの位置Z座標
+	static const int   PARTICLE_NUMBER;				//パーティクルの数
 
 
 };

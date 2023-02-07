@@ -266,6 +266,8 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 
 		cakeFlag = false;
 
+		cakeFindFlag = false;
+
 		cakeHalfFlag = false;
 
 		//カウントの初期化
@@ -292,7 +294,7 @@ void Enemy::CakeEatCount(float deltaTime)
 
 	//ケーキを見つけてエネミーがこの位置まで移動したら
 	//ケーキの画像を表示する
-	if (270.0f > bulletDirection)
+	if (/*270.0f > bulletDirection*/!cakeFindFlag)
 	{
 		speed = 0.0f;
 		cakeEatFlag = true;
@@ -372,7 +374,6 @@ void Enemy::Reaction()
 		break;
 
 	case Object::WALL:
-		printfDx("WALL");
 		break;
 	}
 }
@@ -422,7 +423,7 @@ void Enemy::ReactionDraw()
 	if (cakeFindFlag)
 	{
 		//ビックリマーク画像を描画
-		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
+		DrawBillboard3D(VGet(position.x - 300.0f, 400.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
 	}
 
 	//ケーキがエネミーの視野角に入ったならば
@@ -445,9 +446,9 @@ void Enemy::ReactionDraw()
 /// </summary>
 void Enemy::Draw()
 {
-	ReactionDraw();
-
 	MV1DrawModel(modelHandle);
 
 	MV1DrawModel(visualModelHandle);
+
+	ReactionDraw();
 }

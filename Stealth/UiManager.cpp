@@ -92,7 +92,7 @@ void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 		StartGameDraw(STAGE1);
 		PlayerHpDraw(playerCount);
 		OperationMethodDraw(hitUi);
-		DrawGraph(0, 900, uiHandle[KEY], TRUE);		//WASDキー描画
+		//DrawGraph(0, 900, uiHandle[KEY], TRUE);		//WASDキー描画
 		break;
 
 	case FirstStage::State::GOAL:
@@ -118,7 +118,7 @@ void UiManager::Draw(SecondStage::State state, int playerCount)
 		
 		StartGameDraw(STAGE2);
 		PlayerHpDraw(playerCount);
-		DrawGraph(0, 900, uiHandle[KEY], TRUE);		//WASDキー描画
+		//DrawGraph(0, 900, uiHandle[KEY], TRUE);		//WASDキー描画
 		break;
 
 	case SecondStage::State::GOAL:

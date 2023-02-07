@@ -13,6 +13,7 @@ class BallBullet;
 class Wall;
 class HitChecker;
 class SecondStageMap;
+class CakeParticle;
 class CakeRepopEffect;
 class UiManager;
 class FadeManager;
@@ -50,9 +51,9 @@ private:
 	Player* player;
 	std::vector<Enemy*> enemy;
 	std::vector<BallBullet*> ballBullet;
-	std::vector<Wall*> wall;
 	HitChecker* hitChecker;
 	SecondStageMap* secondStageMap;
+	std::vector<CakeParticle*> cakeParticle;
 	CakeRepopEffect* cakeEffect;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
@@ -66,19 +67,23 @@ private:
 	void DeleteBallBullet(BallBullet* deleteBallBullet);	//ボールバレットを削除
 	void BallBulletPop();									//ボールバレットの出現
 
-	void EntryWall(Wall* newWall);							//壁を登録
-	void DeleteWall(Wall* deleteWall);						//壁を削除
-	void WallPop();											//壁の出現
+	void EntryCakeParticle(CakeParticle* newCakeParticle);			//ケーキのパーティクルを登録
+	void DeleteCakeParticle(CakeParticle* deleteCakeParticle);		//ケーキのパーティクルを削除
+	void CakeParticlePop();											//ケーキのパーティクルの出現
 
 	void UpdateStart(float deltaTime);						//ゲーム開始前
 	void UpdateGame(float deltaTime);						//ゲーム中
 	void UpdateGoal(float deltaTime);						//ゴール
 	void (SecondStage::* pUpdate)(float deltaTime);			//Update関数ポインタ
 
-	State state;		//ゲームの状態
-	int  font;			//ゲームフォント
-	float frame;
+	State state;			//ゲームの状態
+	int   font;				//ゲームフォント
+	float frame;			//フレーム数
+	float particleInterval;	//パーティクル出現のインターバル
+	bool  particleFlag;		//パーティクルを出したら
 
 	//静的定数
-	static const int GOAL_POSITION;					//ゴールの位置
+	static const float GOAL_POSITION_X;				//ゴールの位置X座標
+	static const int   PARTICLE_NUMBER;				//パーティクルの数
+
 };

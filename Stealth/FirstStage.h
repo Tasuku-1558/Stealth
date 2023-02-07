@@ -9,7 +9,6 @@ class BackGround;
 class Player;
 class Enemy;
 class BallBullet;
-class Wall;
 class HitChecker;
 class FirstStageMap;
 class CakeRepopEffect;
@@ -49,7 +48,6 @@ private:
 	Player* player;
 	Enemy* enemy;
 	BallBullet* ballBullet;
-	Wall* wall;
 	HitChecker* hitChecker;
 	FirstStageMap* firstStageMap;
 	CakeRepopEffect* cakeEffect;
@@ -70,10 +68,10 @@ private:
 	int	  font;				//ゲームフォント
 	float frame;			//フレーム数
 	float particleInterval;	//パーティクル出現のインターバル
-	bool  pushFlag;			//パーティクルを出したら
+	bool  particleFlag;		//パーティクルを出したら
 
 
 	//静的定数
-	static const int GOAL_POSITION;					//ゴールの位置
-	static const int PARTICLE_NUMBER;				//パーティクルの数
+	static const float GOAL_POSITION_X;			//ゴールの位置X座標
+	static const int   PARTICLE_NUMBER;			//パーティクルの数
 };

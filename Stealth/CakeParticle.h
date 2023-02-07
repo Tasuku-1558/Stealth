@@ -32,6 +32,5 @@ private:
 
 
 	//静的定数
-	//パーティクルのカラー
-	static const unsigned int Color;
+	static const unsigned int PINK;		//パーティクルのカラー
 };

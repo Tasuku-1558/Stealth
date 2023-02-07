@@ -12,9 +12,14 @@
 #include "BallBullet.h"
 #include "HitChecker.h"
 #include "CakeRepopEffect.h"
+#include "CakeParticle.h"
 #include "ThirdStageMap.h"
 #include "UiManager.h"
 
+
+const float ThirdStage::GOAL_POSITION_X = -1900.0f;		//ゴールの位置X座標
+const float ThirdStage::GOAL_POSITION_Z = 4600.0f;		//ゴールの位置Z座標
+const int   ThirdStage::PARTICLE_NUMBER = 500;			//パーティクルの数
 
 /// <summary>
 /// コンストラクタ
@@ -33,9 +38,13 @@ ThirdStage::ThirdStage(SceneManager* const sceneManager)
 	, ballBullet()
 	, hitChecker(nullptr)
 	, cakeEffect(nullptr)
+	, cakeParticle()
 	, thirdStageMap(nullptr)
 	, uiManager(nullptr)
 	, font(0)
+	, frame(0.0f)
+	, particleFlag(false)
+	, particleInterval(0.0f)
 {
 	//処理なし
 }
@@ -72,7 +81,7 @@ void ThirdStage::Initialize()
 	thirdStageMap = new ThirdStageMap();
 	thirdStageMap->Initialize();
 
-	monitoringEnemy = new MonitoringEnemy(thirdStageMap->GetMap());
+	monitoringEnemy = new MonitoringEnemy(thirdStageMap->GetMap2());
 	monitoringEnemy->Initialize();
 
 	//ケーキの再出現エフェクトクラス
@@ -88,6 +97,8 @@ void ThirdStage::Initialize()
 
 	//出現関数
 	BallBulletPop();
+
+	EnemyPop();
 }
 
 /// <summary>
@@ -119,6 +130,11 @@ void ThirdStage::Finalize()
 
 	SafeDelete(cakeEffect);
 
+	for (auto particlePtr : cakeParticle)
+	{
+		SafeDelete(particlePtr);
+	}
+
 	SafeDelete(uiManager);
 
 	//作成したフォントデータの削除
@@ -148,6 +164,11 @@ void ThirdStage::Activate()
 		ballBulletPtr->Activate();
 	}
 
+	for (auto particlePtr : cakeParticle)
+	{
+		particlePtr->Activate();
+	}
+
 	cakeEffect->Activate();
 
 	uiManager->Activate();
@@ -163,6 +184,46 @@ void ThirdStage::Update(float deltaTime)
 	{
 		(this->*pUpdate)(deltaTime);		//状態ごとに更新
 	}
+}
+
+/// <summary>
+/// エネミーを登録
+/// </summary>
+/// <param name="newEnemy"></param>
+void ThirdStage::EntryEnemy(Enemy* newEnemy)
+{
+	enemy.emplace_back(newEnemy);
+}
+
+/// <summary>
+/// エネミーを削除
+/// </summary>
+/// <param name="deleteEnemy"></param>
+void ThirdStage::DeleteEnemy(Enemy* deleteEnemy)
+{
+	//エネミーオブジェクトから検索して削除
+	auto iter = std::find(enemy.begin(), enemy.end(), deleteEnemy);
+
+	if (iter != enemy.end())
+	{
+		//エネミーオブジェクトを最後尾に移動してデータを消す
+		std::iter_swap(iter, enemy.end() - 1);
+		enemy.pop_back();
+
+		return;
+	}
+}
+
+/// <summary>
+/// エネミーの出現
+/// </summary>
+void ThirdStage::EnemyPop()
+{
+	Enemy* newEnemy = new Enemy(thirdStageMap->GetMap());
+	EntryEnemy(newEnemy);
+
+	Enemy* newEnemy2 = new Enemy(thirdStageMap->GetMap2());
+	EntryEnemy(newEnemy2);
 }
 
 /// <summary>
@@ -201,11 +262,61 @@ void ThirdStage::BallBulletPop()
 	BallBullet* newBallBullet = new BallBullet({ -600.0f,30.0f,0.0f });
 	EntryBallBullet(newBallBullet);
 
-	BallBullet* newBallBullet2 = new BallBullet({ -3500.0f,30.0f,0.0f });
+	BallBullet* newBallBullet2 = new BallBullet({ -1400.0f,30.0f,2000.0f });
 	EntryBallBullet(newBallBullet2);
 
 	BallBullet* newBallBullet3 = new BallBullet({ -4000.0f,30.0f,0.0f });
 	EntryBallBullet(newBallBullet3);
+}
+
+/// <summary>
+/// ケーキのパーティクルを登録
+/// </summary>
+/// <param name="newCakeParticle"></param>
+void ThirdStage::EntryCakeParticle(CakeParticle* newCakeParticle)
+{
+	cakeParticle.emplace_back(newCakeParticle);
+}
+
+/// <summary>
+/// ケーキのパーティクルを削除
+/// </summary>
+/// <param name="deleteCakeParticle"></param>
+void ThirdStage::DeleteCakeParticle(CakeParticle* deleteCakeParticle)
+{
+	//ケーキのパーティクルオブジェクトから検索して削除
+	auto iter = std::find(cakeParticle.begin(), cakeParticle.end(), deleteCakeParticle);
+
+	if (iter != cakeParticle.end())
+	{
+		//ケーキのパーティクルオブジェクトを最後尾に移動してデータを消す
+		std::iter_swap(iter, cakeParticle.end() - 1);
+		cakeParticle.pop_back();
+
+		return;
+	}
+}
+
+/// <summary>
+/// ケーキのパーティクルの出現
+/// </summary>
+void ThirdStage::CakeParticlePop()
+{
+	for (auto ballBulletPtr : ballBullet)
+	{
+		//マウスカーソルを左クリックし、且つケーキとバレットが非アクティブ且つパーティクルが出ていないならば
+		if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && ballBulletPtr->bullet->GetAlive() && !ballBulletPtr->cake->GetAlive() && !particleFlag)
+		{
+			//パーティクルの個数分エントリーする
+			for (int i = 0; i < PARTICLE_NUMBER; i++)
+			{
+				CakeParticle* newCakeParticle = new CakeParticle(ballBulletPtr->bullet->GetPosition());
+				EntryCakeParticle(newCakeParticle);
+			}
+
+			particleFlag = true;
+		}
+	}
 }
 
 /// <summary>
@@ -214,8 +325,21 @@ void ThirdStage::BallBulletPop()
 /// <param name="deltaTime"></param>
 void ThirdStage::UpdateStart(float deltaTime)
 {
-	state = State::GAME;
-	pUpdate = &ThirdStage::UpdateGame;
+	camera->Update(player->GetPosition());
+
+	//サードステージでのライトの方向の設定
+	light->Update({ 0.0f,-0.5f,0.0f });
+
+	frame += deltaTime;
+
+	//1.3秒経過したらゲーム画面へ移行
+	if (frame > 1.3f)
+	{
+		state = State::GAME;
+		pUpdate = &ThirdStage::UpdateGame;
+	}
+
+	cakeEffect->Update(player->GetPosition().x, player->GetPosition().y, player->GetPosition().z);
 }
 
 /// <summary>
@@ -224,9 +348,6 @@ void ThirdStage::UpdateStart(float deltaTime)
 /// <param name="deltaTime"></param>
 void ThirdStage::UpdateGame(float deltaTime)
 {
-	//サードステージでのライトの方向の設定
-	light->Update({ 0.0f,-0.5f,0.0f });
-
 	camera->Update(player->GetPosition());
 
 	player->Update(deltaTime, camera, hitChecker->Back(), hitChecker->MapHit());
@@ -251,6 +372,35 @@ void ThirdStage::UpdateGame(float deltaTime)
 		}
 	}
 
+	for (auto ballBulletPtr : ballBullet)
+	{
+		ballBulletPtr->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
+	}
+
+	//ケーキのパーティクル出現
+	CakeParticlePop();
+
+	//パーティクルを出したら
+	if (particleFlag)
+	{
+		particleInterval += deltaTime;
+
+		//５秒経過したら
+		//パーティクルを再度出せるようにする
+		if (particleInterval > 5.0f)
+		{
+			particleFlag = false;
+			particleInterval = 0.0f;
+		}
+	}
+
+	hitChecker->Check(thirdStageMap->GetModelHandle(), player);
+
+	for (auto particlePtr : cakeParticle)
+	{
+		particlePtr->Update(deltaTime);
+	}
+
 	//エネミーに3回見つかったら
 	if (player->GetPlayerCount() == 3)
 	{
@@ -258,20 +408,22 @@ void ThirdStage::UpdateGame(float deltaTime)
 		return;
 	}
 
-	for (auto ballBulletPtr : ballBullet)
-	{
-		ballBulletPtr->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
-	}
-
-	hitChecker->Check(thirdStageMap->GetModelHandle(), player);
-
 	//プレイヤーがゴール地点に辿り着いたら
-	/*if (player->GetPosition().x < GOAL_POSITION &&
-		player->GetPosition().z)
+	if (player->GetPosition().x < GOAL_POSITION_X &&
+		player->GetPosition().z > GOAL_POSITION_Z)
 	{
 		state = State::GOAL;
 		pUpdate = &ThirdStage::UpdateGoal;
-	}*/
+	}
+
+	for (auto particlePtr : cakeParticle)
+	{
+		//パーティクルを出し終わったら
+		if (particlePtr->IsParticleEnd())
+		{
+			DeleteCakeParticle(particlePtr);
+		}
+	}
 }
 
 /// <summary>
@@ -297,24 +449,28 @@ void ThirdStage::Draw()
 	//マップ描画
 	thirdStageMap->Draw();
 
-	//プレイヤー描画
-	player->Draw();
-
-	monitoringEnemy->Draw();
-
-	//エネミー描画
-	for (auto enemyPtr : enemy)
+	//ゲーム状態がゲームとゴールの時だけ描画する
+	if (state == State::GAME || state == State::GOAL)
 	{
-		enemyPtr->Draw();
+		//プレイヤー描画
+		player->Draw();
+
+		//エネミー描画
+		for (auto enemyPtr : enemy)
+		{
+			enemyPtr->Draw();
+		}
+
+		//ボールバレット管理クラス描画
+		for (auto ballBulletPtr : ballBullet)
+		{
+			ballBulletPtr->Draw();
+
+			uiManager->CakeGetDraw(!ballBulletPtr->cake->GetAlive());
+		}
 	}
 
-	//ボールバレット管理クラス描画
-	for (auto ballBulletPtr : ballBullet)
-	{
-		ballBulletPtr->Draw();
-
-		uiManager->CakeGetDraw(!ballBulletPtr->cake->GetAlive());
-	}
+	//monitoringEnemy->Draw();
 
 	//ケーキの再出現エフェクト描画
 	cakeEffect->Draw();
@@ -322,11 +478,18 @@ void ThirdStage::Draw()
 	//UI管理クラス描画
 	uiManager->Draw(state, player->GetPlayerCount());
 
+	//ケーキのパーティクルの描画
+	for (auto particlePtr : cakeParticle)
+	{
+		particlePtr->Draw();
+	}
+
 	//デバック用
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %.0f", player->GetPosition().z);
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->GetPlayerCount());
+	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());
 
 	for (auto ballBulletPtr : ballBullet)
 	{

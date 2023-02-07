@@ -3,8 +3,8 @@
 #include "ModelManager.h"
 
 
-const VECTOR SecondStageMap::SIZE	  = { 80.0f, 50.0f, 80.0f };				//モデルの倍率
-const VECTOR SecondStageMap::POSITION = { -200.0f, -100.0f, 1350.0f };			//モデルの位置
+const VECTOR SecondStageMap::SIZE	  = { 80.0f, 60.0f, 80.0f };				//モデルの倍率
+const VECTOR SecondStageMap::POSITION = { -7000.0f, -100.0f, -2900.0f };		//モデルの位置
 
 using namespace std;
 
@@ -60,28 +60,25 @@ void SecondStageMap::Finalize()
 }
 
 /// <summary>
-/// 敵の行動パターンリスト
-/// 壁の周りを回る敵
+/// 敵の行動パターンリスト(壁の周りを回る敵)
 /// </summary>
 void SecondStageMap::MapList()
 {
-	positionList.push_back({ -2300.0f, 100.0f, 500.0f });
-	positionList.push_back({ -2300.0f, 100.0f, -500.0f });
-	positionList.push_back({ -1800.0f, 100.0f, -500.0f });
-	positionList.push_back({ -1800.0f, 100.0f, 500.0f });
+	positionList.push_back({ -2200.0f, 0.0f, 600.0f });
+	positionList.push_back({ -2200.0f, 0.0f, -700.0f });
+	positionList.push_back({ -1400.0f, 0.0f, -700.0f });
+	positionList.push_back({ -1400.0f, 0.0f, 600.0f });
 
-
-	itr = positionList.begin();   //イテレータを先頭に設定
+	itr = positionList.begin();		//イテレータを先頭に設定
 }
 
 /// <summary>
-/// 敵の行動パターンリスト2
-/// 上下移動の敵
+/// 敵の行動パターンリスト2(上下移動の敵)
 /// </summary>
 void SecondStageMap::MapList2()
 {
-	positionList2.push_back({ -5400.0f, 100.0f, 0.0f });
-	positionList2.push_back({ -4600.0f, 100.0f, 0.0f });
+	positionList2.push_back({ -5000.0f, 0.0f, 0.0f });
+	positionList2.push_back({ -4400.0f, 0.0f, 0.0f });
 
 	itr2 = positionList2.begin();   //イテレータを先頭に設定
 }

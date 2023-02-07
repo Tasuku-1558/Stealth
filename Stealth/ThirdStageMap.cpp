@@ -3,8 +3,8 @@
 #include "ModelManager.h"
 
 
-const VECTOR ThirdStageMap::SIZE	 = { 45.0f, 50.0f, 45.0f };						//モデルの倍率
-const VECTOR ThirdStageMap::POSITION = { -1500.0f, -100.0f, 1450.0f };				//モデルの位置
+const VECTOR ThirdStageMap::SIZE	 = { 60.0f, 60.0f, 60.0f };						//モデルの倍率
+const VECTOR ThirdStageMap::POSITION = { -1800.0f, -100.0f, 1900.0f };				//モデルの位置
 const VECTOR ThirdStageMap::ROTATE	 = { 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f };	//モデルの回転値
 
 
@@ -23,11 +23,7 @@ ThirdStageMap::ThirdStageMap() : StageBase()
 /// </summary>
 ThirdStageMap::~ThirdStageMap()
 {
-	//終了処理が呼ばれてなければ
-	if (modelHandle != NULL)
-	{
-		Finalize();
-	}
+	Finalize();
 }
 
 /// <summary>
@@ -59,7 +55,6 @@ void ThirdStageMap::Initialize()
 void ThirdStageMap::Finalize()
 {
 	MV1DeleteModel(modelHandle);
-	modelHandle = NULL;
 }
 
 /// <summary>
@@ -67,19 +62,21 @@ void ThirdStageMap::Finalize()
 /// </summary>
 void ThirdStageMap::MapList()
 {
-	positionList.push_back({ 1.0f, 0.0f,  0.0f });
-	positionList.push_back({ 2.0f, 0.0f,  0.0f });
-	positionList.push_back({ 10.0f, 0.0f,  0.0f });
+	positionList.push_back({ -1700.0f, 0.0f, 1000.0f });
+	positionList.push_back({ -1100.0f, 0.0f, 1000.0f });
 
-
-
+	itr = positionList.begin();   //イテレータを先頭に設定
 }
 
 /// <summary>
-/// 敵の行動パターンリスト2
+/// 敵の行動パターンリスト2(ゴールの位置を塞ぐ敵)
 /// </summary>
 void ThirdStageMap::MapList2()
 {
+	positionList2.push_back({ -2000.0f, 0.0f,  3000.0f });
+	positionList2.push_back({ -2000.0f, 0.0f,  2000.0f });
+
+	itr2 = positionList.begin();   //イテレータを先頭に設定
 }
 
 /// <summary>

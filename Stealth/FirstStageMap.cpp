@@ -61,15 +61,14 @@ void FirstStageMap::Finalize()
 }
 
 /// <summary>
-/// 敵の行動パターンリスト
-/// 左右移動の敵
+/// 敵の行動パターンリスト(左右移動の敵)
 /// </summary>
 void FirstStageMap::MapList()
 {
-	positionList.push_back({ -3200.0f, 100.0f, 1000.0f });
-	positionList.push_back({ -3200.0f, 100.0f, -1000.0f });
+	positionList.push_back({ -3200.0f, 0.0f, 1000.0f });
+	positionList.push_back({ -3200.0f, 0.0f, -1000.0f });
 
-	itr = positionList.begin();   //  イテレータを先頭に設定
+	itr = positionList.begin();   //イテレータを先頭に設定
 }
 
 /// <summary>

@@ -2,7 +2,7 @@
 #include "CakeParticle.h"
 
 
-const unsigned int CakeParticle::Color = GetColor(224, 148, 171);		//パーティクルのカラー
+const unsigned int CakeParticle::PINK = GetColor(224, 148, 171);		//パーティクルのカラー
 
 
 /// <summary>
@@ -81,6 +81,6 @@ void CakeParticle::Update(float deltaTime)
 void CakeParticle::Draw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-	DrawSphere3D(position, radius, 8, Color, Color, FALSE);
+	DrawSphere3D(position, radius, 8, PINK, PINK, FALSE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }

@@ -108,7 +108,7 @@ void Bullet::MouseMove(Cake* cake, VECTOR playerPos)
 		worldMouseZ = (float)mouseZ * (1900.0f / 1080.0f) * 1.5f + playerPos.x;
 
 		//Æ€‚ğ‰ñ“]‚³‚¹‚é
-		cursorRotate += 0.01f;
+		//cursorRotate += 0.01f;
 	}
 	else
 	{

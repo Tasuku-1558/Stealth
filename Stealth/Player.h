@@ -38,8 +38,10 @@ private:
 
 	void Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit);		//移動処理
 
-	float count;		//エネミーに見つかった時カウントを開始する
-
+	float initialCount;		//初期位置に戻すカウント
+	int emptyModel;
+	VECTOR pastPosition;
+	float count;
 
 	//静的定数
 	static const std::string SOUND_FOLDER_PATH;		//soundフォルダまでのパス

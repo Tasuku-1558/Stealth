@@ -9,7 +9,6 @@
 #include "Light.h"
 #include "BackGround.h"
 #include "BallBullet.h"
-#include "Wall.h"
 #include "HitChecker.h"
 #include "FirstStageMap.h"
 #include "CakeRepopEffect.h"
@@ -18,8 +17,8 @@
 #include "FadeManager.h"
 
 
-const int FirstStage::GOAL_POSITION	  = -4000;	//ゴールの位置
-const int FirstStage::PARTICLE_NUMBER = 500;	//パーティクルの数
+const float FirstStage::GOAL_POSITION_X	= -4000.0f;		//ゴールの位置X座標
+const int   FirstStage::PARTICLE_NUMBER = 500;			//パーティクルの数
 
 /// <summary>
 /// コンストラクタ
@@ -35,7 +34,6 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 	, enemy(nullptr)
 	, pUpdate(nullptr)
 	, ballBullet(nullptr)
-	, wall(nullptr)
 	, hitChecker(nullptr)
 	, firstStageMap(nullptr)
 	, cakeEffect(nullptr)
@@ -44,7 +42,7 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 	, fadeManager(nullptr)
 	, font(0)
 	, frame(0.0f)
-	, pushFlag(false)
+	, particleFlag(false)
 	, particleInterval(0.0f)
 {
 	//処理なし
@@ -91,11 +89,6 @@ void FirstStage::Initialize()
 	//ケーキの初期位置を設定
 	ballBullet = new BallBullet({ -1500.0f,30.0f,0.0f });
 
-	//壁クラス
-	//壁の初期位置を設定
-	wall = new Wall({ -2500.0f,30.0f,0.0f });
-	wall->Initialize();
-	
 	//ケーキの再出現エフェクトクラス
 	cakeEffect = new CakeRepopEffect();
 	cakeEffect->Initialize();
@@ -131,8 +124,6 @@ void FirstStage::Finalize()
 	SafeDelete(enemy);
 
 	SafeDelete(ballBullet);
-
-	SafeDelete(wall);
 
 	SafeDelete(hitChecker);
 
@@ -225,7 +216,7 @@ void FirstStage::DeleteCakeParticle(CakeParticle* deleteCakeParticle)
 void FirstStage::CakeParticlePop()
 {
 	//マウスカーソルを左クリックし、且つケーキとバレットが非アクティブ且つパーティクルが出ていないならば
-	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && ballBullet->bullet->GetAlive() && !ballBullet->cake->GetAlive() && !pushFlag)
+	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && ballBullet->bullet->GetAlive() && !ballBullet->cake->GetAlive() && !particleFlag)
 	{
 		//パーティクルの個数分エントリーする
 		for (int i = 0; i < PARTICLE_NUMBER; i++)
@@ -234,7 +225,7 @@ void FirstStage::CakeParticlePop()
 			EntryCakeParticle(newCakeParticle);
 		}
 
-		pushFlag = true;
+		particleFlag = true;
 	}
 }
 
@@ -267,16 +258,11 @@ void FirstStage::UpdateStart(float deltaTime)
 /// <param name="deltaTime"></param>
 void FirstStage::UpdateGame(float deltaTime)
 {
-	//ファーストステージでのライトの方向の設定
-	light->Update({ 0.0f,-0.5f,0.0f });
-
 	camera->Update(player->GetPosition());
 
 	enemy->Update(deltaTime, player);
 
 	enemy->VisualAngleCake(ballBullet->bullet, deltaTime);
-
-	enemy->VisualAngleWall(wall->GetPosition());
 
 	player->Update(deltaTime, camera, hitChecker->Back(),hitChecker->MapHit());
 
@@ -288,7 +274,7 @@ void FirstStage::UpdateGame(float deltaTime)
 	CakeParticlePop();
 
 	//パーティクルを出したら
-	if (pushFlag)
+	if (particleFlag)
 	{
 		particleInterval += deltaTime;
 
@@ -296,7 +282,7 @@ void FirstStage::UpdateGame(float deltaTime)
 		//パーティクルを再度出せるようにする
 		if (particleInterval > 5.0f)
 		{
-			pushFlag = false;
+			particleFlag = false;
 			particleInterval = 0.0f;
 		}
 	}
@@ -308,18 +294,18 @@ void FirstStage::UpdateGame(float deltaTime)
 		particlePtr->Update(deltaTime);
 	}
 	
-	//プレイヤーがゴール地点に辿り着いたら
-	if (player->GetPosition().x < GOAL_POSITION)
-	{
-		state = State::GOAL;
-		pUpdate = &FirstStage::UpdateGoal;
-	}
-
 	//エネミーに3回見つかったら
 	if (player->GetPlayerCount() == 3)
 	{
 		parent->SetNextScene(SceneManager::SELECTION);
 		return;
+	}
+
+	//プレイヤーがゴール地点に辿り着いたら
+	if (player->GetPosition().x < GOAL_POSITION_X)
+	{
+		state = State::GOAL;
+		pUpdate = &FirstStage::UpdateGoal;
 	}
 
 	for (auto particlePtr : cakeParticle)
@@ -369,9 +355,6 @@ void FirstStage::Draw()
 		ballBullet->Draw();
 	}
 
-	//壁描画
-	//wall->Draw();
-
 	//ケーキの再出現エフェクト描画
 	cakeEffect->Draw();
 
@@ -384,7 +367,7 @@ void FirstStage::Draw()
 	//ケーキのパーティクルの描画
 	for (auto particlePtr : cakeParticle)
 	{
-		particlePtr->Draw();		
+		particlePtr->Draw();
 	}
 
 	//デバック用
