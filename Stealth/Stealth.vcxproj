@@ -152,7 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
-    <ClCompile Include="BallBullet.cpp" />
+    <ClCompile Include="CakeBullet.cpp" />
     <ClCompile Include="CakeParticle.cpp" />
     <ClCompile Include="CakeRepopEffect.cpp" />
     <ClCompile Include="FadeManager.cpp" />
@@ -175,7 +175,6 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SecondStage.cpp" />
     <ClCompile Include="SecondStageMap.cpp" />
-    <ClCompile Include="SelectionKey.cpp" />
     <ClCompile Include="SelectionUi.cpp" />
     <ClCompile Include="StageBase.cpp" />
     <ClCompile Include="StageSelection.cpp" />
@@ -187,7 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
-    <ClInclude Include="BallBullet.h" />
+    <ClInclude Include="CakeBullet.h" />
     <ClInclude Include="CakeParticle.h" />
     <ClInclude Include="CakeRepopEffect.h" />
     <ClInclude Include="EffectBase.h" />
@@ -212,7 +211,6 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SecondStage.h" />
     <ClInclude Include="SecondStageMap.h" />
-    <ClInclude Include="SelectionKey.h" />
     <ClInclude Include="SelectionUi.h" />
     <ClInclude Include="StageBase.h" />
     <ClInclude Include="StageSelection.h" />

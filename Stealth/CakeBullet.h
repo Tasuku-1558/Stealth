@@ -8,19 +8,18 @@
 
 class CakeRepopEffect;
 
-
 /// <summary>
 /// ケーキとバレット管理クラス
 /// </summary>
-class BallBullet final
+class CakeBullet final
 {
 public:
 
-    BallBullet(VECTOR cakePos);
-    virtual ~BallBullet();
+    CakeBullet(const VECTOR& cakePos);
+    virtual ~CakeBullet();
 
-    void Update(float deltaTime, VECTOR playerPos, 
-                HitChecker* hitChecker, CakeRepopEffect* cakeEffect);     //更新処理
+    void Update(float deltaTime, const VECTOR& playerPos, 
+                HitChecker* hitChecker, CakeRepopEffect* cakeEffect); //更新処理
 
     void Activate();            //活性化処理
     void Finalize();            //終了処理
@@ -31,7 +30,7 @@ public:
 
 private:
 
-    void Shoot(float deltaTime, VECTOR playerPos);                   //バレット発射処理
+    void Shoot(float deltaTime, const VECTOR& playerPos);            //バレット発射処理
     void BulletReuse(float deltaTime, CakeRepopEffect* cakeEffect);  //バレット再使用カウント
 
     float bulletCount;                                               //弾の効果時間

@@ -9,7 +9,7 @@ const unsigned int CakeParticle::PINK = GetColor(224, 148, 171);		//パーティクル
 /// コンストラクタ
 /// </summary>
 /// <param name="pos"></param>
-CakeParticle::CakeParticle(VECTOR pos)
+CakeParticle::CakeParticle(const VECTOR& pos)
 	: position()
 	, radius(30.0f)
 	, particleCount(0.0f)

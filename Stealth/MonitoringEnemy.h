@@ -17,7 +17,7 @@ class Bullet;
 class MonitoringEnemy final : public EnemyBase
 {
 public:
-	MonitoringEnemy(std::vector<VECTOR>& id);
+	MonitoringEnemy(const VECTOR& pos, VECTOR changeDir);
 	virtual ~MonitoringEnemy();
 
 	void Initialize();									//初期化処理
@@ -29,23 +29,13 @@ public:
 	void VisualAngleWall(VECTOR wallPos);					//エネミーの視野に壁が入った場合
 
 	const bool Spotted() { return playerSpotted; }			//プレイヤーを見つけたかどうかを返す
-
-	//エネミーの状態
-	enum class EnemyState
-	{
-		CRAWL,			//巡回中
-		ARRIVAL,		//目的地に到着
-	};
+	const bool CakeFlag() { return cakeFlag; }				//ケーキを見つけたかどうかを返す
 
 private:
-	MonitoringEnemy(const MonitoringEnemy&);						//コピーコンストラクタ
+	MonitoringEnemy(const MonitoringEnemy&);	//コピーコンストラクタ
 
-	void Position(std::vector<VECTOR>& id);		//エネミー位置設定
-	bool IsGoal(float deltaTime);				//目的地に到達したならば
-	void eUpdate(float deltaTime);				//エネミーの状態変化
-	void SetTargetPosition();					//目的地まで移動処理
 	void VisualAnglePlayer(Player* player);		//エネミーの視野にプレイヤーが入った場合
-
+	void DirMove(float deltaTime);				//エネミーの向きの処理
 	void Reaction();							//エネミーのオブジェクトごとの反応
 	void CakeEatCount(float deltaTime);			//秒数によってケーキの状態変化
 	void ReactionDraw();						//リアクション画像の描画処理
@@ -54,17 +44,8 @@ private:
 	std::string InputPath(std::string folderPath, //画像のパスを入力
 		std::string imagePath);
 
-	EnemyState enemyState;						//エネミーの状態
-
-	std::vector<VECTOR>::iterator itr;
-	std::vector<VECTOR> pointList;
-
-	float cakeCount;		//エネミーのケーキの反応カウント
-	bool cakeFindFlag;		//エネミーがケーキを見つけたかどうか
-	bool cakeEatFlag;		//エネミーがケーキに近づいて食べているかどうか
-	bool cakeHalfFlag;		//ケーキが半分になっているかどうか
-
-	VECTOR a;
+	float count;
+	VECTOR anotherDir;
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス

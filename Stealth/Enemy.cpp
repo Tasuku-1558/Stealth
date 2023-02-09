@@ -58,11 +58,11 @@ void Enemy::Initialize()
 	//âÊëúì«Ç›çûÇ›
 	playerFindImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
 
-	markImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
+	markImage		= LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
 
-	cakeImage[0] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_PATH).c_str());
+	cakeImage[0]	= LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_PATH).c_str());
 
-	cakeImage[1] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_HALF_PATH).c_str());
+	cakeImage[1]	= LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_HALF_PATH).c_str());
 }
 
 /// <summary>

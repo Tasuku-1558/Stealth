@@ -8,7 +8,7 @@ class Light;
 class BackGround;
 class Player;
 class Enemy;
-class BallBullet;
+class CakeBullet;
 class HitChecker;
 class FirstStageMap;
 class CakeRepopEffect;
@@ -37,6 +37,7 @@ public:
 		START,	//開始前
 		GAME,	//ゲーム中
 		GOAL,	//ゴール
+		OVER,	//ゲームオーバー
 	};
 
 private:
@@ -47,7 +48,7 @@ private:
 	BackGround* backGround;
 	Player* player;
 	Enemy* enemy;
-	BallBullet* ballBullet;
+	CakeBullet* cakeBullet;
 	HitChecker* hitChecker;
 	FirstStageMap* firstStageMap;
 	CakeRepopEffect* cakeEffect;
@@ -62,6 +63,7 @@ private:
 	void UpdateStart(float deltaTime);				//ゲーム開始前
 	void UpdateGame(float deltaTime);				//ゲーム中
 	void UpdateGoal(float deltaTime);				//ゴール
+	void UpdateOver(float deltaTime);				//ゲームオーバー
 	void (FirstStage::* pUpdate)(float deltaTime);	//Update関数ポインタ
 
 	State state;			//ゲーム状態

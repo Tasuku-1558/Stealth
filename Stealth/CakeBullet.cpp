@@ -1,11 +1,11 @@
-#include "BallBullet.h"
+#include "CakeBullet.h"
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="cakePos"></param>
-BallBullet::BallBullet(VECTOR cakePos)
+CakeBullet::CakeBullet(const VECTOR& cakePos)
     : cake(nullptr)
     , bullet(nullptr)
     , bulletCount(0)
@@ -20,7 +20,7 @@ BallBullet::BallBullet(VECTOR cakePos)
 /// <summary>
 /// デストラクタ
 /// </summary>
-BallBullet::~BallBullet()
+CakeBullet::~CakeBullet()
 {
     Finalize();
 }
@@ -28,7 +28,7 @@ BallBullet::~BallBullet()
 /// <summary>
 /// 活性化処理
 /// </summary>
-void BallBullet::Activate()
+void CakeBullet::Activate()
 {
     cake->Activate();
     bullet->Activate();
@@ -37,7 +37,7 @@ void BallBullet::Activate()
 /// <summary>
 /// 終了処理
 /// </summary>
-void BallBullet::Finalize()
+void CakeBullet::Finalize()
 {
     cake->Finalize();
     bullet->Finalize();
@@ -51,7 +51,7 @@ void BallBullet::Finalize()
 /// <param name="playerPos"></param>
 /// <param name="hitChecker"></param>
 /// <param name="cakeEffect"></param>
-void BallBullet::Update(float deltaTime, VECTOR playerPos, HitChecker* hitChecker, CakeRepopEffect* cakeEffect)
+void CakeBullet::Update(float deltaTime, const VECTOR& playerPos, HitChecker* hitChecker, CakeRepopEffect* cakeEffect)
 {
     //ケーキが生きてるならば
     if (cake->GetAlive())
@@ -69,7 +69,7 @@ void BallBullet::Update(float deltaTime, VECTOR playerPos, HitChecker* hitChecke
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="playerPos"></param>
-void BallBullet::Shoot(float deltaTime, VECTOR playerPos)
+void CakeBullet::Shoot(float deltaTime, const VECTOR& playerPos)
 {
     //マウスカーソルを左クリックし、且つケーキとバレットが非アクティブならば
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && !bullet->GetAlive() && !cake->GetAlive())
@@ -86,7 +86,7 @@ void BallBullet::Shoot(float deltaTime, VECTOR playerPos)
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="cakeEffect"></param>
-void BallBullet::BulletReuse(float deltaTime, CakeRepopEffect* cakeEffect)
+void CakeBullet::BulletReuse(float deltaTime, CakeRepopEffect* cakeEffect)
 {
     //バレットが生きてるならば
     if (bullet->GetAlive())
@@ -114,7 +114,7 @@ void BallBullet::BulletReuse(float deltaTime, CakeRepopEffect* cakeEffect)
 /// <summary>
 /// 描画処理
 /// </summary>
-void BallBullet::Draw()
+void CakeBullet::Draw()
 {
     //ケーキが生きてるならば
     if (cake->GetAlive())

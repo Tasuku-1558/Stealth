@@ -21,9 +21,10 @@ public:
     std::vector<VECTOR>& GetMap2() { return positionList2; }        //敵の行動パターンリスト2を返す
 
 private:
+    SecondStageMap(const SecondStageMap&);      //コピーコンストラクタ
 
-    void MapList();                     //敵の行動パターンリスト(壁の周りを回る敵)
-    void MapList2();                    //敵の行動パターンリスト2(上下移動の敵)
+    void MapList();                             //敵の行動パターンリスト(壁の周りを回る敵)
+    void MapList2();                            //敵の行動パターンリスト2(上下移動の敵)
 
     std::vector<VECTOR> positionList;
     std::vector<VECTOR>::iterator itr;

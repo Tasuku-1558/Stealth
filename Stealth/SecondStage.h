@@ -9,7 +9,7 @@ class Light;
 class BackGround;
 class Player;
 class Enemy;
-class BallBullet;
+class CakeBullet;
 class Wall;
 class HitChecker;
 class SecondStageMap;
@@ -40,6 +40,7 @@ public:
 		START,	//開始前
 		GAME,	//ゲーム中
 		GOAL,	//ゴール
+		OVER,	//ゲームオーバー
 	};
 
 private:
@@ -50,7 +51,7 @@ private:
 	BackGround* backGround;
 	Player* player;
 	std::vector<Enemy*> enemy;
-	std::vector<BallBullet*> ballBullet;
+	std::vector<CakeBullet*> cakeBullet;
 	HitChecker* hitChecker;
 	SecondStageMap* secondStageMap;
 	std::vector<CakeParticle*> cakeParticle;
@@ -63,9 +64,9 @@ private:
 	void DeleteEnemy(Enemy* deleteEnemy);					//エネミーを削除
 	void EnemyPop();										//エネミーの出現
 
-	void EntryBallBullet(BallBullet* newBallBullet);		//ボールバレットを登録
-	void DeleteBallBullet(BallBullet* deleteBallBullet);	//ボールバレットを削除
-	void BallBulletPop();									//ボールバレットの出現
+	void EntryCakeBullet(CakeBullet* newCakeBullet);		//ケーキバレットを登録
+	void DeleteCakeBullet(CakeBullet* deleteCakeBullet);	//ケーキバレットを削除
+	void CakeBulletPop();									//ケーキバレットの出現
 
 	void EntryCakeParticle(CakeParticle* newCakeParticle);			//ケーキのパーティクルを登録
 	void DeleteCakeParticle(CakeParticle* deleteCakeParticle);		//ケーキのパーティクルを削除
@@ -74,6 +75,7 @@ private:
 	void UpdateStart(float deltaTime);						//ゲーム開始前
 	void UpdateGame(float deltaTime);						//ゲーム中
 	void UpdateGoal(float deltaTime);						//ゴール
+	void UpdateOver(float deltaTime);						//ゲームオーバー
 	void (SecondStage::* pUpdate)(float deltaTime);			//Update関数ポインタ
 
 	State state;			//ゲームの状態

@@ -26,7 +26,6 @@ private:
 	CakeRepopEffect(const CakeRepopEffect&);		//コピーコンストラクタ
 	void Finalize();								//終了処理
 
-
 	int effectHandle;				//ケーキ再スポーン時エフェクト格納用
 	int effectTime;					//エフェクト時間
 

@@ -193,10 +193,6 @@ void StageSelection::KeyMove(float deltaTime)
 		stageNo = stageIncrement(stageNo);
 		pushCount = PUSH_INTERVAL;
 	}
-	if (CheckHitKey(KEY_INPUT_BACK))
-	{
-		parent->SetNextScene(SceneManager::TITLE);
-	}
 
 	//リターンキーを押したならば
 	if (CheckHitKey(KEY_INPUT_RETURN))
@@ -242,6 +238,10 @@ void StageSelection::Draw()
 	else if (stageNo == 3)
 	{
 		selectionUi->StageUiDraw(2);
+	}
+	else if (stageNo == 4)
+	{
+		selectionUi->TitleUiDraw();
 	}
 
 	if (!changeScene || (changeTimeCount / 5) % 2 == 0)

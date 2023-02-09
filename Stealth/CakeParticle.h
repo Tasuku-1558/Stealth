@@ -9,7 +9,7 @@
 class CakeParticle final
 {
 public:
-	CakeParticle(VECTOR pos);
+	CakeParticle(const VECTOR& pos);
 	virtual ~CakeParticle();
 
 	void Initialize();				//‰Šú‰»ˆ—

@@ -8,7 +8,7 @@
 #include "BackGround.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "BallBullet.h"
+#include "CakeBullet.h"
 #include "HitChecker.h"
 #include "CakeParticle.h"
 #include "CakeRepopEffect.h"
@@ -34,7 +34,7 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, player(nullptr)
 	, enemy()
 	, pUpdate(nullptr)
-	, ballBullet()
+	, cakeBullet()
 	, hitChecker(nullptr)
 	, secondStageMap(nullptr)
 	, cakeEffect(nullptr)
@@ -98,7 +98,7 @@ void SecondStage::Initialize()
 	//出現関数
 	EnemyPop();
 
-	BallBulletPop();
+	CakeBulletPop();
 }
 
 /// <summary>
@@ -122,10 +122,10 @@ void SecondStage::Finalize()
 		DeleteEnemy(enemyPtr);
 	}
 
-	for (auto ballBulletPtr : ballBullet)
+	for (auto cakeBulletPtr : cakeBullet)
 	{
-		SafeDelete(ballBulletPtr);
-		DeleteBallBullet(ballBulletPtr);
+		SafeDelete(cakeBulletPtr);
+		DeleteCakeBullet(cakeBulletPtr);
 	}
 
 	SafeDelete(hitChecker);
@@ -165,9 +165,9 @@ void SecondStage::Activate()
 		enemyPtr->Activate();
 	}
 
-	for (auto ballBulletPtr : ballBullet)
+	for (auto cakeBulletPtr : cakeBullet)
 	{
-		ballBulletPtr->Activate();
+		cakeBulletPtr->Activate();
 	}
 
 	for (auto particlePtr : cakeParticle)
@@ -178,6 +178,8 @@ void SecondStage::Activate()
 	cakeEffect->Activate();
 
 	uiManager->Activate();
+
+	fadeManager->Activate();
 }
 
 /// <summary>
@@ -190,8 +192,6 @@ void SecondStage::Update(float deltaTime)
 	{
 		(this->*pUpdate)(deltaTime);		//状態ごとに更新
 	}
-
-	//++frame;
 }
 
 /// <summary>
@@ -235,43 +235,43 @@ void SecondStage::EnemyPop()
 }
 
 /// <summary>
-/// ボールバレットを登録
+/// ケーキバレットを登録
 /// </summary>
-/// <param name="newBallBullet"></param>
-void SecondStage::EntryBallBullet(BallBullet* newBallBullet)
+/// <param name="newCakeBullet"></param>
+void SecondStage::EntryCakeBullet(CakeBullet* newCakeBullet)
 {
-	ballBullet.emplace_back(newBallBullet);
+	cakeBullet.emplace_back(newCakeBullet);
 }
 
 /// <summary>
-/// ボールバレットを削除
+/// ケーキバレットを削除
 /// </summary>
-/// <param name="deleteBallBullet"></param>
-void SecondStage::DeleteBallBullet(BallBullet* deleteBallBullet)
+/// <param name="deleteCakeBullet"></param>
+void SecondStage::DeleteCakeBullet(CakeBullet* deleteCakeBullet)
 {
-	//ボールバレットオブジェクトから検索して削除
-	auto iter = std::find(ballBullet.begin(), ballBullet.end(), deleteBallBullet);
+	//ケーキバレットオブジェクトから検索して削除
+	auto iter = std::find(cakeBullet.begin(), cakeBullet.end(), deleteCakeBullet);
 
-	if (iter != ballBullet.end())
+	if (iter != cakeBullet.end())
 	{
-		//ボールバレットオブジェクトを最後尾に移動してデータを消す
-		std::iter_swap(iter, ballBullet.end() - 1);
-		ballBullet.pop_back();
+		//ケーキバレットオブジェクトを最後尾に移動してデータを消す
+		std::iter_swap(iter, cakeBullet.end() - 1);
+		cakeBullet.pop_back();
 
 		return;
 	}
 }
 
 /// <summary>
-/// ボールバレットの出現
+/// ケーキバレットの出現
 /// </summary>
-void SecondStage::BallBulletPop()
+void SecondStage::CakeBulletPop()
 {
-	BallBullet* newBallBullet = new BallBullet({ -600.0f,30.0f,0.0f });
-	EntryBallBullet(newBallBullet);
+	CakeBullet* newCakeBullet = new CakeBullet({ -600.0f,30.0f,0.0f });
+	EntryCakeBullet(newCakeBullet);
 
-	BallBullet* newBallBullet2 = new BallBullet({ -3000.0f,30.0f,0.0f });
-	EntryBallBullet(newBallBullet2);
+	CakeBullet* newCakeBullet2 = new CakeBullet({ -3000.0f,30.0f,0.0f });
+	EntryCakeBullet(newCakeBullet2);
 }
 
 /// <summary>
@@ -307,15 +307,15 @@ void SecondStage::DeleteCakeParticle(CakeParticle* deleteCakeParticle)
 /// </summary>
 void SecondStage::CakeParticlePop()
 {
-	for (auto ballBulletPtr : ballBullet)
+	for (auto cakeBulletPtr : cakeBullet)
 	{
-		//マウスカーソルを左クリックし、且つケーキとバレットが非アクティブ且つパーティクルが出ていないならば
-		if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && ballBulletPtr->bullet->GetAlive() && !ballBulletPtr->cake->GetAlive() && !particleFlag)
+		//マウスカーソルを左クリックし、且つケーキとバレットが非アクティブで、パーティクルが出ていないならば
+		if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && cakeBulletPtr->bullet->GetAlive() && !cakeBulletPtr->cake->GetAlive() && !particleFlag)
 		{
 			//パーティクルの個数分エントリーする
 			for (int i = 0; i < PARTICLE_NUMBER; i++)
 			{
-				CakeParticle* newCakeParticle = new CakeParticle(ballBulletPtr->bullet->GetPosition());
+				CakeParticle* newCakeParticle = new CakeParticle(cakeBulletPtr->bullet->GetPosition());
 				EntryCakeParticle(newCakeParticle);
 			}
 
@@ -361,11 +361,11 @@ void SecondStage::UpdateGame(float deltaTime)
 	{
 		enemyPtr->Update(deltaTime, player);
 		
-		player->FoundEnemy(deltaTime, enemyPtr);
+		player->FoundEnemy(deltaTime, enemyPtr->Spotted());
 		
-		for (auto ballBulletPtr : ballBullet)
+		for (auto cakeBulletPtr : cakeBullet)
 		{
-			enemyPtr->VisualAngleCake(ballBulletPtr->bullet, deltaTime);
+			enemyPtr->VisualAngleCake(cakeBulletPtr->bullet, deltaTime);
 			
 			//エネミーがケーキを見つけたならば
 			if (enemyPtr->CakeFlag())
@@ -375,9 +375,9 @@ void SecondStage::UpdateGame(float deltaTime)
 		}
 	}
 
-	for (auto ballBulletPtr : ballBullet)
+	for (auto cakeBulletPtr : cakeBullet)
 	{
-		ballBulletPtr->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
+		cakeBulletPtr->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
 	}
 
 	//ケーキのパーティクル出現
@@ -388,7 +388,7 @@ void SecondStage::UpdateGame(float deltaTime)
 	{
 		particleInterval += deltaTime;
 
-		//５秒経過したら
+		//5秒経過したら
 		//パーティクルを再度出せるようにする
 		if (particleInterval > 5.0f)
 		{
@@ -407,8 +407,8 @@ void SecondStage::UpdateGame(float deltaTime)
 	//エネミーに3回見つかったら
 	if (player->GetPlayerCount() == 3)
 	{
-		parent->SetNextScene(SceneManager::SELECTION);
-		return;
+		state = State::OVER;
+		pUpdate = &SecondStage::UpdateOver;
 	}
 
 	//プレイヤーがゴール地点に辿り着いたら
@@ -434,10 +434,36 @@ void SecondStage::UpdateGame(float deltaTime)
 /// <param name="deltaTime"></param>
 void SecondStage::UpdateGoal(float deltaTime)
 {
-	WaitTimer(1000);
+	frame += deltaTime;
 
-	parent->SetNextScene(SceneManager::SELECTION);
-	return;
+	fadeManager->FadeMove();
+
+	//フレーム数が2.9秒経過したら
+	if (frame > 2.9f)
+	{
+		//ステージ選択画面へ遷移
+		parent->SetNextScene(SceneManager::SELECTION);
+		return;
+	}
+}
+
+/// <summary>
+/// ゲームオーバー
+/// </summary>
+/// <param name="deltaTime"></param>
+void SecondStage::UpdateOver(float deltaTime)
+{
+	frame += deltaTime;
+
+	fadeManager->FadeMove();
+
+	//フレーム数が2.8秒経過したら
+	if (frame > 2.8f)
+	{
+		//ステージ選択画面へ遷移
+		parent->SetNextScene(SceneManager::SELECTION);
+		return;
+	}
 }
 
 /// <summary>
@@ -463,12 +489,12 @@ void SecondStage::Draw()
 			enemyPtr->Draw();
 		}
 
-		//ボールバレット管理クラス描画
-		for (auto ballBulletPtr : ballBullet)
+		//ケーキバレット管理クラス描画
+		for (auto cakeBulletPtr : cakeBullet)
 		{
-			ballBulletPtr->Draw();
+			cakeBulletPtr->Draw();
 
-			uiManager->CakeGetDraw(!ballBulletPtr->cake->GetAlive());
+			uiManager->CakeGetDraw(!cakeBulletPtr->cake->GetAlive());
 		}
 	}
 
@@ -484,6 +510,8 @@ void SecondStage::Draw()
 		particlePtr->Draw();
 	}
 
+	//画面効果クラス描画
+	fadeManager->Draw();
 
 	//デバック用
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
@@ -492,12 +520,8 @@ void SecondStage::Draw()
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->GetPlayerCount());
 	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());
 
-	for (auto ballBulletPtr : ballBullet)
+	for (auto cakeBulletPtr : cakeBullet)
 	{
-		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", ballBulletPtr->cake->GetAlive());
+		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", cakeBulletPtr->cake->GetAlive());
 	}
-
-
-	//画面効果クラス描画
-	fadeManager->Draw();
 }

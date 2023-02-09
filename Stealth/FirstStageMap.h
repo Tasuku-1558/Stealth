@@ -21,7 +21,8 @@ public:
 
 private:
 
-    void MapList();                    //敵の行動パターンリスト(左右移動の敵)
+    FirstStageMap(const FirstStageMap&);    //コピーコンストラクタ
+    void MapList();                         //敵の行動パターンリスト(左右移動の敵)
 
     std::vector<VECTOR> positionList;
     std::vector<VECTOR>::iterator itr;

@@ -10,7 +10,7 @@ const VECTOR Cake::SIZE	= { 20.0f, 20.0f, 20.0f };		//モデルの倍率
 /// コンストラクタ
 /// </summary>
 /// <param name="pos"></param>
-Cake::Cake(VECTOR pos) : ObjectBase()
+Cake::Cake(const VECTOR& pos) : ObjectBase()
 	, alive(true)
 {
 	position = pos;

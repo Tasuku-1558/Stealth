@@ -5,10 +5,10 @@
 #include "Bullet.h"
 
 const string MonitoringEnemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
-const string MonitoringEnemy::PLAYER_FIND_PATH = "playerFind.png";	//プレイヤーを見つけた画像のパス
-const string MonitoringEnemy::MARK_PATH = "mark.png";			//ビックリマーク画像のパス
-const string MonitoringEnemy::CAKE_PATH = "ui9.png";			//ケーキ画像のパス
-const string MonitoringEnemy::CAKE_HALF_PATH = "cakeHalf.png";		//ケーキが半分画像のパス
+const string MonitoringEnemy::PLAYER_FIND_PATH	= "playerFind.png";		//プレイヤーを見つけた画像のパス
+const string MonitoringEnemy::MARK_PATH			= "mark.png";			//ビックリマーク画像のパス
+const string MonitoringEnemy::CAKE_PATH			= "ui9.png";			//ケーキ画像のパス
+const string MonitoringEnemy::CAKE_HALF_PATH	= "cakeHalf.png";		//ケーキが半分画像のパス
 
 
 using namespace Math3d;
@@ -17,16 +17,12 @@ using namespace std;
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="id"></param>
-MonitoringEnemy::MonitoringEnemy(std::vector<VECTOR>& id) : EnemyBase()
-	, cakeCount(0.0f)
-	, cakeFindFlag(false)
-	, cakeEatFlag(false)
-	, cakeHalfFlag(false)
-	, a()
+MonitoringEnemy::MonitoringEnemy(const VECTOR& pos, VECTOR changeDir) : EnemyBase()	
+	, count(0.0f)
+	, anotherDir()
 {
-	enemyState = EnemyState::CRAWL;
-	Position(id);
+	position = pos;
+	anotherDir = changeDir;
 
 	Initialize();
 	Activate();
@@ -47,6 +43,7 @@ void MonitoringEnemy::Initialize()
 {
 	//モデルの読み込み
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY));
+	MV1SetDifColorScale(modelHandle, GetColorF(0.0f, 0.5f, 2.0f, 1.0f));
 
 	visualModelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY_VISUAL));
 
@@ -56,17 +53,14 @@ void MonitoringEnemy::Initialize()
 		printfDx("モデルデータ読み込みに失敗\n");
 	}
 
-	targetPosition = ZERO_VECTOR;
-	a = ZERO_VECTOR;
-
 	//画像の読み込み
 	playerFindImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
 
-	markImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
+	markImage		= LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
 
-	cakeImage[0] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_PATH).c_str());
+	cakeImage[0]	= LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_PATH).c_str());
 
-	cakeImage[1] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_HALF_PATH).c_str());
+	cakeImage[1]	= LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_HALF_PATH).c_str());
 }
 
 /// <summary>
@@ -88,25 +82,6 @@ void MonitoringEnemy::Activate()
 	dir = ZERO_VECTOR;
 	playerSpotted = false;
 	cakeFlag = false;
-	cakeFindFlag = false;
-	cakeEatFlag = false;
-	cakeHalfFlag = false;
-	cakeCount = 0.0f;
-}
-
-/// <summary>
-/// エネミー位置設定
-/// </summary>
-/// <param name="id"></param>
-void MonitoringEnemy::Position(std::vector<VECTOR>& id)
-{
-	pointList = id;					//マップから座標リストを受け取る
-
-	itr = pointList.begin();		//イテレータを先頭に設定
-
-	dir = *itr++;				//イテレータから敵座標を設定
-
-	enemyState = EnemyState::ARRIVAL;
 }
 
 /// <summary>
@@ -134,9 +109,11 @@ void MonitoringEnemy::Finalize()
 void MonitoringEnemy::Update(float deltaTime, Player* player)
 {
 	//ベクトルの正規化
-	a = VNorm(targetPosition - dir);
+	dir = VNorm(dir);
 
-	position += a * speed * deltaTime;
+	DirMove(deltaTime);
+
+	position += dir * deltaTime;
 
 	//エネミーの位置をセット
 	MV1SetPosition(modelHandle, position);
@@ -146,11 +123,9 @@ void MonitoringEnemy::Update(float deltaTime, Player* player)
 
 	VisualAnglePlayer(player);
 
-	eUpdate(deltaTime);
-
 	//z軸が逆を向いているのでdirを180度回転させる
 	MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
-	VECTOR negativeVec = VTransform(a, rotYMat);
+	VECTOR negativeVec = VTransform(dir, rotYMat);
 
 	//モデルに回転をセット
 	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
@@ -158,29 +133,28 @@ void MonitoringEnemy::Update(float deltaTime, Player* player)
 }
 
 /// <summary>
-/// 目的地まで移動処理
-/// </summary>
-void MonitoringEnemy::SetTargetPosition()
-{
-	targetPosition = *itr++;
-
-	//最終目的地に到着したら次の目的地を初期位置にする
-	if (itr == pointList.end())
-	{
-		itr = pointList.begin();
-	}
-
-	enemyState = EnemyState::CRAWL;
-}
-
-/// <summary>
-/// 目的地に到達したならば
+/// エネミーの向きの処理
 /// </summary>
 /// <param name="deltaTime"></param>
-/// <returns></returns>
-bool MonitoringEnemy::IsGoal(float deltaTime)
+void MonitoringEnemy::DirMove(float deltaTime)
 {
-	return VSize(targetPosition - dir) /*< speed * deltaTime*/;
+	count += deltaTime;
+
+	//2秒経過したらエネミーの向きを変更する
+	if (count > 2.0f)
+	{
+		dir = anotherDir;
+	}
+	else
+	{
+		dir = { 0.0f,0.0f,-1.0f };
+	}
+
+	//4秒経過したらカウントを0にする
+	if (count > 4.0f)
+	{
+		count = 0.0f;
+	}
 }
 
 /// <summary>
@@ -268,11 +242,6 @@ void MonitoringEnemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 		speed = SPEED;
 
 		cakeFlag = false;
-
-		cakeHalfFlag = false;
-
-		//カウントの初期化
-		cakeCount = 0.0f;
 	}
 }
 
@@ -282,33 +251,7 @@ void MonitoringEnemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 /// <param name="deltaTime"></param>
 void MonitoringEnemy::CakeEatCount(float deltaTime)
 {
-	cakeCount += deltaTime;
-
-	//ケーキを見つけてカウントが1.5秒経過したら
-	if (cakeCount > 1.5f)
-	{
-		speed = SPEED;
-
-		//ビックリマーク画像を非表示にする
-		cakeFindFlag = false;
-	}
-
-	//ケーキを見つけてエネミーがこの位置まで移動したら
-	//ケーキの画像を表示する
-	if (270.0f > bulletDirection)
-	{
-		speed = 0.0f;
-		cakeEatFlag = true;
-
-		//カウントが4秒経過したら
-		//半分になったケーキの画像を表示する
-		if (cakeCount > 4.0f)
-		{
-			cakeEatFlag = false;
-
-			cakeHalfFlag = true;
-		}
-	}
+	
 }
 
 /// <summary>
@@ -366,38 +309,9 @@ void MonitoringEnemy::Reaction()
 
 		cakeFlag = true;
 
-		//ケーキを見つけた
-		cakeFindFlag = true;
-
-		//エネミーの動きを止める
-		speed = 0.0f;
-
 		break;
 
 	case Object::WALL:
-		break;
-	}
-}
-
-/// <summary>
-/// エネミーの状態
-/// </summary>
-/// <param name="deltaTime"></param>
-void MonitoringEnemy::eUpdate(float deltaTime)
-{
-	switch (enemyState)
-	{
-	case EnemyState::CRAWL:
-
-		if (IsGoal(deltaTime))
-		{
-			enemyState = EnemyState::ARRIVAL;
-		}
-
-		break;
-
-	case EnemyState::ARRIVAL:
-		SetTargetPosition();
 		break;
 	}
 }
@@ -411,34 +325,13 @@ void MonitoringEnemy::ReactionDraw()
 	if (playerSpotted)
 	{
 		//エネミーの動きを止める
-		speed = 0.0f;
+		//count = 0.0f;
 
 		//ビックリマークの画像を描画
 		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
 
 		//敵に見つかったというUI画像を描画
 		DrawGraph(50, -100, playerFindImage, TRUE);
-	}
-
-	//ケーキを見つけたならば
-	if (cakeFindFlag)
-	{
-		//ビックリマーク画像を描画
-		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
-	}
-
-	//ケーキにエネミーが近づいたならば
-	if (cakeEatFlag)
-	{
-		//ケーキの画像を描画
-		DrawBillboard3D(VGet(position.x + 100.0f, 800.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, cakeImage[0], TRUE);
-	}
-
-	//ケーキがエネミーに近づいて4秒経過したら
-	if (cakeHalfFlag)
-	{
-		//ケーキが半分の画像を描画
-		DrawBillboard3D(VGet(position.x + 100.0f, 800.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, cakeImage[1], TRUE);
 	}
 }
 

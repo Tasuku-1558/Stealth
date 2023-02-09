@@ -3,8 +3,8 @@
 #include "ModelManager.h"
 
 
-const VECTOR ThirdStageMap::SIZE	 = { 60.0f, 60.0f, 60.0f };						//モデルの倍率
-const VECTOR ThirdStageMap::POSITION = { -1800.0f, -100.0f, 1900.0f };				//モデルの位置
+const VECTOR ThirdStageMap::SIZE	 = { 50.0f, 50.0f, 55.0f };						//モデルの倍率
+const VECTOR ThirdStageMap::POSITION = { -2600.0f, -100.0f, 2650.0f };				//モデルの位置
 const VECTOR ThirdStageMap::ROTATE	 = { 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f };	//モデルの回転値
 
 
@@ -62,8 +62,8 @@ void ThirdStageMap::Finalize()
 /// </summary>
 void ThirdStageMap::MapList()
 {
-	positionList.push_back({ -1700.0f, 0.0f, 1000.0f });
-	positionList.push_back({ -1100.0f, 0.0f, 1000.0f });
+	positionList.push_back({ -2500.0f, 0.0f, 800.0f });
+	positionList.push_back({ -1500.0f, 0.0f, 800.0f });
 
 	itr = positionList.begin();   //イテレータを先頭に設定
 }
@@ -73,10 +73,12 @@ void ThirdStageMap::MapList()
 /// </summary>
 void ThirdStageMap::MapList2()
 {
-	positionList2.push_back({ -2000.0f, 0.0f,  3000.0f });
-	positionList2.push_back({ -2000.0f, 0.0f,  2000.0f });
+	positionList2.push_back({ -2500.0f, 0.0f,  5000.0f });
+	positionList2.push_back({ -2500.0f, 0.0f,  4300.0f });
+	positionList2.push_back({ -2800.0f, 0.0f,  4300.0f });
+	positionList2.push_back({ -2500.0f, 0.0f,  4300.0f });
 
-	itr2 = positionList.begin();   //イテレータを先頭に設定
+	itr2 = positionList2.begin();   //イテレータを先頭に設定
 }
 
 /// <summary>

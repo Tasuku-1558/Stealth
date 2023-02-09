@@ -100,9 +100,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
-    <ClCompile Include="BallBullet.cpp">
-      <Filter>ソース ファイル\Player</Filter>
-    </ClCompile>
     <ClCompile Include="StageBase.cpp">
       <Filter>ソース ファイル\Map</Filter>
     </ClCompile>
@@ -110,9 +107,6 @@
       <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
     <ClCompile Include="StageSelection.cpp">
-      <Filter>ソース ファイル\Scene\StageSelection</Filter>
-    </ClCompile>
-    <ClCompile Include="SelectionKey.cpp">
       <Filter>ソース ファイル\Scene\StageSelection</Filter>
     </ClCompile>
     <ClCompile Include="SelectionUi.cpp">
@@ -129,6 +123,9 @@
     </ClCompile>
     <ClCompile Include="CakeParticle.cpp">
       <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CakeBullet.cpp">
+      <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -204,7 +201,7 @@
     <ClInclude Include="SecondStageMap.h">
       <Filter>ソース ファイル\Map</Filter>
     </ClInclude>
-    <ClInclude Include="BallBullet.h">
+    <ClInclude Include="CakeBullet.h">
       <Filter>ソース ファイル\Player</Filter>
     </ClInclude>
     <ClInclude Include="StageBase.h">
@@ -217,9 +214,6 @@
       <Filter>ソース ファイル\Effect</Filter>
     </ClInclude>
     <ClInclude Include="StageSelection.h">
-      <Filter>ソース ファイル\Scene\StageSelection</Filter>
-    </ClInclude>
-    <ClInclude Include="SelectionKey.h">
       <Filter>ソース ファイル\Scene\StageSelection</Filter>
     </ClInclude>
     <ClInclude Include="SelectionUi.h">

@@ -20,6 +20,7 @@ public:
 	void Activate();								//活性化処理
 	void Draw();									//描画処理
 	void StageUiDraw(int number);					//ステージのUI描画処理
+	void TitleUiDraw();								//タイトルへ遷移するUI描画処理
 
 
 private:
@@ -35,6 +36,7 @@ private:
 
 
 	int selectionKeyImage;							//ステージセレクションUI画像
+	int selectionUiImage;							//ステージセレクションからタイトルへ遷移のUI画像
 	int stageDescription[3];						//ステージの説明画像ハンドル
 	int modelHandle[3];								//マップモデルハンドル
 	VECTOR position[3];								//マップモデルの位置
@@ -43,6 +45,7 @@ private:
 	//静的定数
 	static const string IMAGE_FOLDER_PATH;			//imageフォルダまでのパス
 	static const string SELECTION_KEY_PATH;			//ステージセレクションUI画像のパス
+	static const string SELECTION_TITLE_PATH;		//ステージセレクションからタイトルへ遷移のUI画像
 	static const string STAGE1_DESCRIPTION_PATH;	//ステージ1の説明画像のパス
 	static const string STAGE2_DESCRIPTION_PATH;	//ステージ2の説明画像のパス
 	static const string STAGE3_DESCRIPTION_PATH;	//ステージ3の説明画像のパス

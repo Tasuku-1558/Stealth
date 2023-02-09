@@ -6,16 +6,16 @@
 class Camera;
 class Light;
 class BackGround;
+class ThirdStageMap;
 class Player;
 class Enemy;
 class MonitoringEnemy;
-class BallBullet;
+class CakeBullet;
 class HitChecker;
-class ThirdStageMap;
 class CakeRepopEffect;
 class CakeParticle;
 class UiManager;
-
+class FadeManager;
 
 /// <summary>
 /// ThirdStageクラス
@@ -38,6 +38,7 @@ public:
 		START,	//開始前
 		GAME,	//ゲーム中
 		GOAL,	//ゴール
+		OVER,	//ゲームオーバー
 	};
 
 private:
@@ -46,23 +47,28 @@ private:
 	Camera* camera;
 	Light* light;
 	BackGround* backGround;
+	ThirdStageMap* thirdStageMap;
 	Player* player;
 	std::vector<Enemy*> enemy;
-	MonitoringEnemy* monitoringEnemy;
-	std::vector<BallBullet*> ballBullet;
+	std::vector<MonitoringEnemy*> monitoringEnemy;
+	std::vector<CakeBullet*> cakeBullet;
 	HitChecker* hitChecker;
-	ThirdStageMap* thirdStageMap;
 	CakeRepopEffect* cakeEffect;
 	std::vector<CakeParticle*> cakeParticle;
 	UiManager* uiManager;
+	FadeManager* fadeManager;
 
 	void EntryEnemy(Enemy* newEnemy);								//エネミーを登録
 	void DeleteEnemy(Enemy* deleteEnemy);							//エネミーを削除
 	void EnemyPop();												//エネミーの出現
 
-	void EntryBallBullet(BallBullet* newBallBullet);				//ボールバレットを登録
-	void DeleteBallBullet(BallBullet* deleteBallBullet);			//ボールバレットを削除
-	void BallBulletPop();											//ボールバレットの出現
+	void EntryMonitoringEnemy(MonitoringEnemy* newMonitoringEnemy);			//監視エネミーを登録
+	void DeleteMonitoringEnemy(MonitoringEnemy* deleteMonitoringEnemy);		//監視エネミーを削除
+	void MonitoringEnemyPop();												//監視エネミーの出現
+
+	void EntryCakeBullet(CakeBullet* newCakeBullet);				//ケーキバレットを登録
+	void DeleteCakeBullet(CakeBullet* deleteCakeBullet);			//ケーキバレットを削除
+	void CakeBulletPop();											//ケーキバレットの出現
 
 	void EntryCakeParticle(CakeParticle* newCakeParticle);			//ケーキのパーティクルを登録
 	void DeleteCakeParticle(CakeParticle* deleteCakeParticle);		//ケーキのパーティクルを削除
@@ -71,6 +77,7 @@ private:
 	void UpdateStart(float deltaTime);						//ゲーム開始前
 	void UpdateGame(float deltaTime);						//ゲーム中
 	void UpdateGoal(float deltaTime);						//ゴール
+	void UpdateOver(float deltaTime);						//ゲームオーバー
 	void (ThirdStage::* pUpdate)(float deltaTime);			//Update関数ポインタ
 
 

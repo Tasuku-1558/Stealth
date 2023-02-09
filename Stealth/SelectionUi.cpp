@@ -3,6 +3,7 @@
 
 const string SelectionUi::IMAGE_FOLDER_PATH		  = "data/image/";				//imageƒtƒHƒ‹ƒ_‚Ü‚Å‚ÌƒpƒX
 const string SelectionUi::SELECTION_KEY_PATH	  = "selection_key.png";		//ƒXƒe[ƒWƒZƒŒƒNƒVƒ‡ƒ“UI‰æ‘œ‚ÌƒpƒX
+const string SelectionUi::SELECTION_TITLE_PATH	  = "selection_Ui.png";			//ƒXƒe[ƒWƒZƒŒƒNƒVƒ‡ƒ“‚©‚çƒ^ƒCƒgƒ‹‚Ö‘JˆÚ‚ÌUI‰æ‘œ
 const string SelectionUi::STAGE1_DESCRIPTION_PATH = "stage1_description.png";	//ƒXƒe[ƒW1‚Ìà–¾‰æ‘œ‚ÌƒpƒX
 const string SelectionUi::STAGE2_DESCRIPTION_PATH = "stage2_description.png";	//ƒXƒe[ƒW2‚Ìà–¾‰æ‘œ‚ÌƒpƒX
 const string SelectionUi::STAGE3_DESCRIPTION_PATH = "stage3_description.png";	//ƒXƒe[ƒW3‚Ìà–¾‰æ‘œ‚ÌƒpƒX
@@ -16,8 +17,8 @@ const VECTOR SelectionUi::STAGE2_POSITION		  = { 900.0f, 1050.0f, 0.0f };		//ƒXƒ
 const VECTOR SelectionUi::STAGE2_SIZE			  = { 9.0f, 9.0f, 9.0f };			//ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚Ì”{—¦
 const VECTOR SelectionUi::STAGE2_ROTATE = { 80.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f }; //ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
 
-const VECTOR SelectionUi::STAGE3_POSITION		  = { 1200.0f, 750.0f, -150.0f };	//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚ÌˆÊ’u
-const VECTOR SelectionUi::STAGE3_SIZE			  = { 8.0f, 8.0f, 8.0f };			//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚Ì”{—¦
+const VECTOR SelectionUi::STAGE3_POSITION		  = { 1250.0f, 750.0f, -150.0f };	//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚ÌˆÊ’u
+const VECTOR SelectionUi::STAGE3_SIZE			  = { 7.0f, 7.0f, 7.0f };			//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚Ì”{—¦
 const VECTOR SelectionUi::STAGE3_ROTATE = { 90.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }; //ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
 
 
@@ -26,6 +27,7 @@ const VECTOR SelectionUi::STAGE3_ROTATE = { 90.0f * DX_PI_F / 180.0f, 180.0f * D
 /// </summary>
 SelectionUi::SelectionUi()
 	: selectionKeyImage(0)
+	, selectionUiImage(0)
 	, stageDescription()
 	, modelHandle()
 	, position()
@@ -54,6 +56,8 @@ void SelectionUi::Initialize()
 	stageDescription[2] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE3_DESCRIPTION_PATH).c_str());
 
 	selectionKeyImage   = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_KEY_PATH).c_str());
+
+	selectionUiImage	= LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_TITLE_PATH).c_str());
 
 	//ƒ}ƒbƒvƒ‚ƒfƒ‹“Ç‚İ‚İ
 	MapInput(0, ModelManager::STAGE1, STAGE1_POSITION, STAGE1_SIZE, STAGE1_ROTATE);
@@ -122,6 +126,14 @@ void SelectionUi::StageUiDraw(int number)
 {
 	DrawGraph(100, 150, stageDescription[number], TRUE);
 	MV1DrawModel(modelHandle[number]);
+}
+
+/// <summary>
+/// ƒ^ƒCƒgƒ‹‚Ö‘JˆÚ‚·‚éUI•`‰æˆ—
+/// </summary>
+void SelectionUi::TitleUiDraw()
+{
+	DrawRotaGraph(950, 550, 0.7f, 0, selectionUiImage, TRUE);
 }
 
 /// <summary>
