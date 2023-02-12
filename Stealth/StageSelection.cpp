@@ -25,13 +25,13 @@ StageSelection::StageSelection(SceneManager* const sceneManager)
 	: SceneBase(sceneManager)
 	, font(0)
 	, stageMax(0)
-	, stageNo(1)
+	, stageNo(0)
 	, light(nullptr)
 	, selectionUi(nullptr)
 	, fadeManager(nullptr)
 	, changeScene(false)
 	, changeTimeCount(0)
-	, maxTime(80)
+	, maxTime(0)
 	, pushCount(0.0f)
 	, frame(0.0f)
 {
@@ -83,10 +83,11 @@ void StageSelection::Finalize()
 void StageSelection::Activate()
 {
 	stageNo = 1;
+	frame = 0.0f;
 	changeScene = false;
 	changeTimeCount = 0;
+	maxTime = 80;
 	pushCount = 0.0f;
-	frame = 0.0f;
 
 	selectionUi->Activate();
 

@@ -21,7 +21,8 @@ public:
 	void Activate();		//活性化処理
 	void Finalize();		//終了処理
 
-	void Draw(FirstStage::State state, 
+
+	void Draw(FirstStage::State state,
 			  int playerCount, bool hitUi);	//FirstStageのUI描画処理
 
 	void Draw(SecondStage::State state, 
@@ -55,7 +56,6 @@ private:
 	void StartGameDraw(UiManager::Graphic graphic);	//ゲーム開始UI
 	void PlayerHpDraw(int playerCount);				//プレイヤーHPUI
 	void OperationMethodDraw(bool hitUi);			//操作方法説明UI
-
 
 	int stageCount;									//ステージ名称表示カウント
 	

@@ -16,16 +16,9 @@ public:
 	 virtual ~TitleScene();
 
 	void Initialize();					//初期化処理
-	void Finalize();					//終了処理
 	void Activate();					//活性化処理
 	void Update(float deltaTime);		//更新処理
 	void Draw();						//描画処理
-
-	//ゲームの状態
-	enum class State
-	{
-		START,	//開始前
-	};
 
 private:
 
@@ -35,8 +28,8 @@ private:
 						  std::string path);
 
 	void Blink();						//文字の点滅処理
+	void Finalize();					//終了処理
 
-	State state;						//ゲームの状態
 	int backGroundHandle;				//タイトル動画の格納用
 	int titleName;						//タイトル名の画像格納用
 	int titleUi;						//ステージ選択シーンへ遷移キーのUI格納用

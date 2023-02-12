@@ -1,7 +1,7 @@
 #include "PlayerBase.h"
 
 
-const float  PlayerBase::SPEED	  = 500.0f;						//移動速度
+const float  PlayerBase::SPEED	  = 450.0f;						//移動速度
 const VECTOR PlayerBase::POSITION = { 0.0f, 0.0f, 0.0f };		//モデルの位置
 const VECTOR PlayerBase::DIR	  = { -1.0f,0.0f,0.0f };		//モデルの向き
 

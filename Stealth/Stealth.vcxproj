@@ -155,6 +155,9 @@
     <ClCompile Include="CakeBullet.cpp" />
     <ClCompile Include="CakeParticle.cpp" />
     <ClCompile Include="CakeRepopEffect.cpp" />
+    <ClCompile Include="FireWorksParticle.cpp" />
+    <ClCompile Include="ResultScene.cpp" />
+    <ClCompile Include="DeltaTime.cpp" />
     <ClCompile Include="FadeManager.cpp" />
     <ClCompile Include="FirstStageMap.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -189,6 +192,9 @@
     <ClInclude Include="CakeBullet.h" />
     <ClInclude Include="CakeParticle.h" />
     <ClInclude Include="CakeRepopEffect.h" />
+    <ClInclude Include="FireWorksParticle.h" />
+    <ClInclude Include="ResultScene.h" />
+    <ClInclude Include="DeltaTime.h" />
     <ClInclude Include="EffectBase.h" />
     <ClInclude Include="FadeManager.h" />
     <ClInclude Include="FirstStageMap.h" />

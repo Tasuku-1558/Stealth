@@ -21,6 +21,7 @@ public:
     void Update(float deltaTime, const VECTOR& playerPos, 
                 HitChecker* hitChecker, CakeRepopEffect* cakeEffect); //XVˆ—
 
+    void Initialize();          //‰Šú‰»ˆ—
     void Activate();            //Šˆ«‰»ˆ—
     void Finalize();            //I—¹ˆ—
     void Draw();                //•`‰æˆ—

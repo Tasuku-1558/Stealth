@@ -5,7 +5,7 @@
 
 const string Player::SOUND_FOLDER_PATH  = "data/sound/";		//soundフォルダまでのパス
 const string Player::SPOTTED_SE_PATH    = "spotted.mp3";		//エネミーに見つかった時のSE音のパス
-const int	 Player::AFTER_IMAGE_NUMBER = 3;					//プレイヤーの残像枚数
+const int	 Player::AFTER_IMAGE_NUMBER = 22;					//プレイヤーの残像枚数
 
 using namespace Math3d;
 using namespace std;
@@ -18,7 +18,6 @@ Player::Player() : PlayerBase()
 	, initialCount(0.0f)
 	, pastPosition()
 	, emptyModel()
-	, count(0.0f)
 {
 	//処理なし
 }
@@ -43,7 +42,7 @@ void Player::Initialize()
 	for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
 	{
 		emptyModel[i] = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::PLAYER));
-		MV1SetOpacityRate(emptyModel[i], 0.3f);
+		MV1SetOpacityRate(emptyModel[i], 0.05f);
 		MV1SetMaterialEmiColor(emptyModel[i], 0, GetColorF(0.0f, 0.0f, 1.0f, 1.0f));
 	}
 
@@ -65,6 +64,11 @@ void Player::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 
+	for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
+	{
+		MV1DeleteModel(emptyModel[i]);
+	}
+
 	//サウンドリソースを削除
 	InitSoundMem();
 }
@@ -79,7 +83,7 @@ void Player::Activate()
 
 	for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
 	{
-		pastPosition[i] = POSITION;
+		pastPosition[i] = position;
 	}
 
 	dir = DIR;
@@ -100,7 +104,7 @@ void Player::Update(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 
 	MV1SetPosition(modelHandle, position);
 
-	AfterImage(deltaTime);
+	AfterImage();
 }
 
 /// <summary>
@@ -189,35 +193,18 @@ void Player::Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 }
 
 /// <summary>
-/// プレイヤーの残像
+/// プレイヤーの残像処理
 /// </summary>
-/// <param name="deltaTime"></param>
-void Player::AfterImage(float deltaTime)
+void Player::AfterImage()
 {
-	count += deltaTime;
-
-	if (count > 0.1f)
+	for (int i = 21; i >= 1; i--)
 	{
-		pastPosition[0] = position;
-
-		MV1SetPosition(emptyModel[0], pastPosition[0]);
-
-		if (count > 0.2f)
-		{
-			pastPosition[1] = pastPosition[0];
-
-			MV1SetPosition(emptyModel[1], pastPosition[1]);
-
-			if (count > 0.3f)
-			{
-				pastPosition[2] = pastPosition[1];
-
-				MV1SetPosition(emptyModel[2], pastPosition[2]);
-
-				count = 0.0f;
-			}
-		}
+		pastPosition[i] = pastPosition[i - 1];
+		MV1SetPosition(emptyModel[i], pastPosition[i]);
 	}
+
+	pastPosition[0] = position;
+	MV1SetPosition(emptyModel[0], pastPosition[0]);
 }
 
 /// <summary>

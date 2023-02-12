@@ -5,6 +5,7 @@
 #include "EffekseerForDXLib.h"
 #include "PreCompiledHeader.h"
 #include "ModelManager.h"
+#include "DeltaTime.h"
 #include "SceneManager.h"
 
 //-----------------------------------------------------------------------------
@@ -62,6 +63,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int nowTime;
 	int prevTime = nowTime = GetNowCount();
 	float deltaTime = 0.0f;
+	//DeltaTime::Initialize();
+
 	ModelManager::GetInstance();	//モデル管理クラスの生成
 
 	SceneManager* sceneManager = new SceneManager();
@@ -77,6 +80,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		deltaTime = (nowTime - prevTime) / 1000.0f;
 
 		prevTime = nowTime;
+
+		//DeltaTime::DeltaTimeCount();
 
 		// DXライブラリのカメラとEffekseerのカメラを同期
 		Effekseer_Sync3DSetting();

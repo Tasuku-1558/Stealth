@@ -13,7 +13,7 @@ class ModelManager final
 public:
 
 	ModelManager();
-	~ModelManager();
+	virtual ~ModelManager();
 
 	//モデルの種類
 	enum ModelType
@@ -42,7 +42,6 @@ private:
 
 	 void LoadAllModel();						//全てのモデルの読み込み
 	 void DeleteAllModel();						//全てのモデルの削除
-
 
 	 int modelHandle[MODEL_AMOUNT];				//モデルハンドル
 

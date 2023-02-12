@@ -5,6 +5,7 @@
 #include "FirstStage.h"
 #include "SecondStage.h"
 #include "ThirdStage.h"
+#include "ResultScene.h"
 
 
 /// <summary>
@@ -38,7 +39,7 @@ void SceneManager::Initialize()
 	eachScene[STAGE1]	 = new FirstStage(this);
 	eachScene[STAGE2]	 = new SecondStage(this);
 	eachScene[STAGE3]	 = new ThirdStage(this);
-
+	eachScene[RESULT]	 = new ResultScene(this);
 	
 	//‘S‚Ä‚ÌƒV[ƒ“‚Ì‰Šú‰»
 	for (int i = 0; i < SceneManager::END; ++i)

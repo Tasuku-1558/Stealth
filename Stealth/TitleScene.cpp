@@ -24,7 +24,6 @@ TitleScene::TitleScene(SceneManager* const sceneManager)
 	, inc(0)
 	, frame(0.0f)
 	, prevAlpha(0)
-	, state()
 {
 	//ˆ—‚È‚µ
 }

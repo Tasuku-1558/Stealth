@@ -22,7 +22,6 @@ public:
 	void StageUiDraw(int number);					//ステージのUI描画処理
 	void TitleUiDraw();								//タイトルへ遷移するUI描画処理
 
-
 private:
 	SelectionUi(const SelectionUi&);				//コピーコンストラクタ
 

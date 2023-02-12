@@ -8,13 +8,13 @@
 CakeBullet::CakeBullet(const VECTOR& cakePos)
     : cake(nullptr)
     , bullet(nullptr)
-    , bulletCount(0)
+    , bulletCount(0.0f)
 {
     cake = new Cake(cakePos);
     bullet = new Bullet();
 
-    cake->Initialize();
-    bullet->Initialize();
+    Initialize();
+    Activate();
 }
 
 /// <summary>
@@ -26,12 +26,23 @@ CakeBullet::~CakeBullet()
 }
 
 /// <summary>
+/// ‰Šú‰»ˆ—
+/// </summary>
+void CakeBullet::Initialize()
+{
+    cake->Initialize();
+    bullet->Initialize();
+}
+
+/// <summary>
 /// Šˆ«‰»ˆ—
 /// </summary>
 void CakeBullet::Activate()
 {
     cake->Activate();
     bullet->Activate();
+
+    bulletCount = 0.0f;
 }
 
 /// <summary>

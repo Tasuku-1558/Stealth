@@ -31,11 +31,7 @@ Bullet::Bullet() : ObjectBase()
 /// </summary>
 Bullet::~Bullet()
 {
-	// I—¹ˆ—‚ªŒÄ‚Î‚ê‚Ä‚¢‚È‚¯‚ê‚Î
-	if (modelHandle != NULL)
-	{
-		Finalize();
-	}
+	Finalize();
 }
 
 /// <summary>
@@ -75,7 +71,6 @@ void Bullet::Activate()
 void Bullet::Finalize()
 {
 	MV1DeleteModel(modelHandle);
-	modelHandle = NULL;
 
 	DeleteGraph(cursorImage);
 }

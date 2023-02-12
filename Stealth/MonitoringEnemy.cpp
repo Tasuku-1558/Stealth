@@ -7,9 +7,6 @@
 const string MonitoringEnemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
 const string MonitoringEnemy::PLAYER_FIND_PATH	= "playerFind.png";		//プレイヤーを見つけた画像のパス
 const string MonitoringEnemy::MARK_PATH			= "mark.png";			//ビックリマーク画像のパス
-const string MonitoringEnemy::CAKE_PATH			= "ui9.png";			//ケーキ画像のパス
-const string MonitoringEnemy::CAKE_HALF_PATH	= "cakeHalf.png";		//ケーキが半分画像のパス
-
 
 using namespace Math3d;
 using namespace std;
@@ -57,10 +54,6 @@ void MonitoringEnemy::Initialize()
 	playerFindImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
 
 	markImage		= LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
-
-	cakeImage[0]	= LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_PATH).c_str());
-
-	cakeImage[1]	= LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_HALF_PATH).c_str());
 }
 
 /// <summary>
@@ -199,62 +192,6 @@ void MonitoringEnemy::VisualAnglePlayer(Player* player)
 }
 
 /// <summary>
-/// エネミーの視野にケーキが入った場合
-/// </summary>
-/// <param name="bullet"></param>
-/// <param name="deltaTime"></param>
-void MonitoringEnemy::VisualAngleCake(Bullet* bullet, float deltaTime)
-{
-	//バレットからエネミーの座標を引いた値を取得
-	VECTOR sub = bullet->GetPosition() - position;
-
-	//バレットとエネミーの2点間の距離を計算
-	bulletDirection = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
-
-	//ベクトルの正規化
-	sub = VNorm(sub);
-
-	//内積計算
-	float dot = VDot(sub, dir);
-
-	float range = RANGE_DEGREE * (float)(DX_PI / 180.0f);
-
-	//エネミーの視野をcosにする
-	float radian = cosf(range / 2.0f);
-
-	//ベクトルとエネミーの長さの比較
-	if (length > bulletDirection)
-	{
-		//バレットがエネミーの視野範囲内にいるならば
-		if (radian <= dot)
-		{
-			object = Object::CAKE;
-
-			//視野範囲内ならば
-			Reaction();
-
-			CakeEatCount(deltaTime);
-		}
-	}
-	else
-	{
-		//エネミーの視野範囲外ならスピードを元のスピードに戻す
-		speed = SPEED;
-
-		cakeFlag = false;
-	}
-}
-
-/// <summary>
-/// 秒数によってケーキの状態変化
-/// </summary>
-/// <param name="deltaTime"></param>
-void MonitoringEnemy::CakeEatCount(float deltaTime)
-{
-	
-}
-
-/// <summary>
 /// エネミーの視野に壁が入った場合
 /// </summary>
 /// <param name="wallPos"></param>
@@ -305,12 +242,6 @@ void MonitoringEnemy::Reaction()
 
 		break;
 
-	case Object::CAKE:
-
-		cakeFlag = true;
-
-		break;
-
 	case Object::WALL:
 		break;
 	}
@@ -324,9 +255,6 @@ void MonitoringEnemy::ReactionDraw()
 	//エネミーに見つかったら
 	if (playerSpotted)
 	{
-		//エネミーの動きを止める
-		//count = 0.0f;
-
 		//ビックリマークの画像を描画
 		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
 

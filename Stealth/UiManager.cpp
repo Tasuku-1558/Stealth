@@ -78,9 +78,6 @@ void UiManager::Finalize()
 /// <param name="hitUi"></param>
 void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 {
-	//吹き出し画像描画
-	DrawBillboard3D(VGet(-800.0f, 0.0f, 0.0f), 0.5f, 0.5f, 200.0f, 0.0f, uiHandle[BALLOON], TRUE);
-
 	switch (state)
 	{
 	case FirstStage::State::START:
@@ -92,6 +89,9 @@ void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 		StartGameDraw(STAGE1);
 		PlayerHpDraw(playerCount);
 		OperationMethodDraw(hitUi);
+
+		//吹き出し画像描画
+		DrawBillboard3D(VGet(-800.0f, 0.0f, 0.0f), 0.5f, 0.5f, 200.0f, 0.0f, uiHandle[BALLOON], TRUE);
 		//DrawGraph(0, 900, uiHandle[KEY], TRUE);		//WASDキー描画
 		break;
 
@@ -157,7 +157,7 @@ void UiManager::Draw(ThirdStage::State state, int playerCount)
 /// ゲーム開始UI
 /// </summary>
 /// <param name="graphic"></param>
-void UiManager::StartGameDraw(UiManager::Graphic graphic)
+void UiManager::StartGameDraw(Graphic graphic)
 {
 	stageCount++;
 
