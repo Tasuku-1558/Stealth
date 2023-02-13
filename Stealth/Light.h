@@ -13,7 +13,4 @@ public:
 	 virtual ~Light();
 
 	void Update(VECTOR direction);	//XVˆ—
-
-private:
-
 };

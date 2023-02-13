@@ -268,6 +268,8 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 
 		cakeFindFlag = false;
 
+		cakeEatFlag = false;
+
 		cakeHalfFlag = false;
 
 		//カウントの初期化
@@ -430,14 +432,14 @@ void Enemy::ReactionDraw()
 	if (cakeEatFlag)
 	{
 		//ケーキの画像を描画
-		DrawBillboard3D(VGet(position.x + 100.0f, 800.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, cakeImage[0], TRUE);
+		DrawBillboard3D(VGet(position.x + 100.0f, 500.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, cakeImage[0], TRUE);
 	}
 
 	//ケーキがエネミーの視野角に入って4秒経過したら
 	if (cakeHalfFlag)
 	{
 		//ケーキが半分の画像を描画
-		DrawBillboard3D(VGet(position.x + 100.0f, 800.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, cakeImage[1], TRUE);
+		DrawBillboard3D(VGet(position.x + 100.0f, 500.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, cakeImage[1], TRUE);
 	}
 }
 

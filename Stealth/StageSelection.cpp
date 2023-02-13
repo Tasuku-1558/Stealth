@@ -14,6 +14,7 @@ char stageName[][32] =
 	"STAGE1",
 	"STAGE2",
 	"STAGE3",
+	"STAGE4",
 	"TITLE",
 };
 
@@ -156,6 +157,10 @@ int StageSelection::StageCreator(int stageNumber)
 		break;
 
 	case 4:
+		parent->SetNextScene(SceneManager::STAGE4);
+		break;
+
+	case 5:
 		parent->SetNextScene(SceneManager::TITLE);
 		break;
 	}
@@ -241,6 +246,10 @@ void StageSelection::Draw()
 		selectionUi->StageUiDraw(2);
 	}
 	else if (stageNo == 4)
+	{
+		selectionUi->StageUiDraw(3);
+	}
+	else if (stageNo == 5)
 	{
 		selectionUi->TitleUiDraw();
 	}

@@ -26,6 +26,7 @@ public:
 		STAGE1,			//ステージ1モデル
 		STAGE2,			//ステージ2モデル
 		STAGE3,			//ステージ3モデル
+		STAGE4,
 		MODEL_AMOUNT	//モデルの個数
 	};
 
@@ -38,7 +39,7 @@ private:
 	 ModelManager(const ModelManager&);			//コピーコンストラクタ
 
 	 string InputPath(string folderPath,	//モデルのパスを入力
-					  string path);
+					  string modelPath);
 
 	 void LoadAllModel();						//全てのモデルの読み込み
 	 void DeleteAllModel();						//全てのモデルの削除
@@ -55,5 +56,6 @@ private:
 	 static const string STAGE1_PATH;			//stage1モデルファイルのパス
 	 static const string STAGE2_PATH;			//stage2モデルファイルのパス
 	 static const string STAGE3_PATH;			//stage3モデルファイルのパス
+	 static const string STAGE4_PATH;			//stage4モデルファイルのパス
 
 };

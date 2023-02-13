@@ -13,13 +13,13 @@ public:
 	 Camera();
 	 virtual ~Camera();
 
-	void Initialize();						//初期化処理
-	void Update(VECTOR pos);				//更新処理
+	void Initialize();							//初期化処理
+	void Update(VECTOR pos);					//更新処理
 
-	VECTOR GetUp()	  { return up; }
-	VECTOR GetDown()  { return down; }
-	VECTOR GetRight() { return right; }
-	VECTOR GetLeft()  { return left; }
+	const VECTOR GetUp()	{ return up; }		//カメラの上方向を返す
+	const VECTOR GetDown()  { return down; }	//カメラの下方向を返す
+	const VECTOR GetRight() { return right; }	//カメラの右方向を返す
+	const VECTOR GetLeft()  { return left; }	//カメラの左方向を返す
 	
 private:
 
@@ -29,10 +29,10 @@ private:
 	float yaw;				//カメラ回転角
 	float angleY;
 	
-	VECTOR up;				//上方向
-	VECTOR down;			//下方向
-	VECTOR right;			//右方向
-	VECTOR left;			//左方向
+	VECTOR up;				//カメラの上方向
+	VECTOR down;			//カメラの下方向
+	VECTOR right;			//カメラの右方向
+	VECTOR left;			//カメラの左方向
 
 	//静的定数
 	static const float  NEAR_DISTANCE;		//カメラに映る手前の範囲

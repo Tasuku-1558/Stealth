@@ -36,9 +36,10 @@ private:
 
 	int selectionKeyImage;							//ステージセレクションUI画像
 	int selectionUiImage;							//ステージセレクションからタイトルへ遷移のUI画像
-	int stageDescription[3];						//ステージの説明画像ハンドル
-	int modelHandle[3];								//マップモデルハンドル
-	VECTOR position[3];								//マップモデルの位置
+	int stageDescription[4];						//ステージの説明画像ハンドル
+	int modelHandle[4];								//マップモデルハンドル
+	VECTOR position[4];								//マップモデルの位置
+	
 
 
 	//静的定数
@@ -48,6 +49,7 @@ private:
 	static const string STAGE1_DESCRIPTION_PATH;	//ステージ1の説明画像のパス
 	static const string STAGE2_DESCRIPTION_PATH;	//ステージ2の説明画像のパス
 	static const string STAGE3_DESCRIPTION_PATH;	//ステージ3の説明画像のパス
+	static const string STAGE4_DESCRIPTION_PATH;	//ステージ4の説明画像のパス
 	static const int	STAGE_NUMBER;				//ステージ数
 
 	static const VECTOR STAGE1_POSITION;			//ステージ1モデルの位置
@@ -62,5 +64,8 @@ private:
 	static const VECTOR STAGE3_SIZE;				//ステージ3モデルの倍率
 	static const VECTOR STAGE3_ROTATE;				//ステージ3モデルの回転値
 
+	static const VECTOR STAGE4_POSITION;			//ステージ4モデルの位置
+	static const VECTOR STAGE4_SIZE;				//ステージ4モデルの倍率
+	static const VECTOR STAGE4_ROTATE;				//ステージ4モデルの回転値
 
 };

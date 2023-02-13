@@ -25,8 +25,6 @@ public:
 	void Update(float deltaTime, Player* player);		//更新処理
 	void Draw();										//描画処理
 
-	void VisualAngleWall(VECTOR wallPos);					//エネミーの視野に壁が入った場合
-
 	const bool Spotted() { return playerSpotted; }			//プレイヤーを見つけたかどうかを返す
 
 private:
@@ -34,20 +32,18 @@ private:
 
 	void VisualAnglePlayer(Player* player);		//エネミーの視野にプレイヤーが入った場合
 	void DirMove(float deltaTime);				//エネミーの向きの処理
-	void Reaction();							//エネミーのオブジェクトごとの反応
+	void Reaction();							//エネミーのプレイヤーの反応
 	void ReactionDraw();						//リアクション画像の描画処理
 	void Finalize();							//終了処理
 
 	std::string InputPath(std::string folderPath, //画像のパスを入力
-		std::string imagePath);
+						  std::string imagePath);
 
-	float count;
-	VECTOR anotherDir;
+	float dirCount;			//向き変更カウント
+	VECTOR anotherDir;		//別の向き
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
 	static const std::string PLAYER_FIND_PATH;	//プレイヤーを見つけた画像のパス
 	static const std::string MARK_PATH;			//ビックリマーク画像のパス
-
-
 };

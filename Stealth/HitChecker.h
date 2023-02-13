@@ -43,4 +43,7 @@ private:
 
 	MV1_COLL_RESULT_POLY_DIM hitPolyDim;
 
+	//Ã“I’è”
+	static const VECTOR UI_POSITION;	//UI‰æ‘œ‚ÌˆÊ’u
+
 };

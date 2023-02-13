@@ -6,7 +6,7 @@
 class Camera;
 class Light;
 class BackGround;
-class ThirdStageMap;
+class StageMap;
 class Player;
 class Enemy;
 class MonitoringEnemy;
@@ -47,7 +47,7 @@ private:
 	Camera* camera;
 	Light* light;
 	BackGround* backGround;
-	ThirdStageMap* thirdStageMap;
+	StageMap* stageMap;
 	Player* player;
 	std::vector<Enemy*> enemy;
 	std::vector<MonitoringEnemy*> monitoringEnemy;

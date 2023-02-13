@@ -8,9 +8,9 @@
 #include "Camera.h"
 #include "Light.h"
 #include "BackGround.h"
+#include "StageMap.h"
 #include "CakeBullet.h"
 #include "HitChecker.h"
-#include "FirstStageMap.h"
 #include "CakeRepopEffect.h"
 #include "CakeParticle.h"
 #include "UiManager.h"
@@ -35,7 +35,7 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 	, pUpdate(nullptr)
 	, cakeBullet(nullptr)
 	, hitChecker(nullptr)
-	, firstStageMap(nullptr)
+	, stageMap(nullptr)
 	, cakeEffect(nullptr)
 	, cakeParticle()
 	, uiManager(nullptr)
@@ -73,12 +73,14 @@ void FirstStage::Initialize()
 	backGround->Initialize();
 
 	//マップクラス
-	firstStageMap = new FirstStageMap();
-	firstStageMap->Initialize();
+	//マップモデルの種類、サイズ、回転値、位置を入力する
+	stageMap = new StageMap(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f }, 
+							{ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f }, { -2700.0f, -100.0f, -750.0f });
+	stageMap->Initialize();
 
 	//エネミークラス
 	//エネミーに行動パターンのリストを設定
-	enemy = new Enemy(firstStageMap->GetMap());
+	enemy = new Enemy(stageMap->GetMap(0));
 	enemy->Initialize();
 
 	//プレイヤークラス
@@ -117,7 +119,7 @@ void FirstStage::Finalize()
 
 	SafeDelete(player);
 
-	SafeDelete(firstStageMap);
+	SafeDelete(stageMap);
 
 	SafeDelete(cakeEffect);
 
@@ -287,7 +289,7 @@ void FirstStage::UpdateGame(float deltaTime)
 		}
 	}
 	
-	hitChecker->Check(firstStageMap->GetModelHandle(), player);
+	hitChecker->Check(stageMap->GetModelHandle(), player);
 
 	for (auto particlePtr : cakeParticle)
 	{
@@ -365,7 +367,7 @@ void FirstStage::Draw()
 	backGround->Draw();
 
 	//マップ描画
-	firstStageMap->Draw();
+	stageMap->Draw();
 
 	//ゲーム状態がゲームとゴールの時だけ描画する
 	if (state == State::GAME || state == State::GOAL)

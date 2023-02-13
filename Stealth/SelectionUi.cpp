@@ -7,7 +7,8 @@ const string SelectionUi::SELECTION_TITLE_PATH	  = "selection_Ui.png";			//ƒXƒe
 const string SelectionUi::STAGE1_DESCRIPTION_PATH = "stage1_description.png";	//ƒXƒe[ƒW1‚Ìà–¾‰æ‘œ‚ÌƒpƒX
 const string SelectionUi::STAGE2_DESCRIPTION_PATH = "stage2_description.png";	//ƒXƒe[ƒW2‚Ìà–¾‰æ‘œ‚ÌƒpƒX
 const string SelectionUi::STAGE3_DESCRIPTION_PATH = "stage3_description.png";	//ƒXƒe[ƒW3‚Ìà–¾‰æ‘œ‚ÌƒpƒX
-const int	 SelectionUi::STAGE_NUMBER			  = 3;							//ƒXƒe[ƒW”
+const string SelectionUi::STAGE4_DESCRIPTION_PATH = "stage4_description.png";	//ƒXƒe[ƒW4‚Ìà–¾‰æ‘œ‚ÌƒpƒX
+const int	 SelectionUi::STAGE_NUMBER			  = 4;							//ƒXƒe[ƒW”
 
 const VECTOR SelectionUi::STAGE1_POSITION		  = { 1300.0f, 740.0f, 0.0f };		//ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚ÌˆÊ’u
 const VECTOR SelectionUi::STAGE1_SIZE			  = { 10.0f, 10.0f, 10.0f };		//ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚Ì”{—¦
@@ -20,6 +21,10 @@ const VECTOR SelectionUi::STAGE2_ROTATE = { 80.0f * DX_PI_F / 180.0f, 180.0f * D
 const VECTOR SelectionUi::STAGE3_POSITION		  = { 1250.0f, 750.0f, -150.0f };	//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚ÌˆÊ’u
 const VECTOR SelectionUi::STAGE3_SIZE			  = { 7.0f, 7.0f, 7.0f };			//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚Ì”{—¦
 const VECTOR SelectionUi::STAGE3_ROTATE = { 90.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }; //ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
+
+const VECTOR SelectionUi::STAGE4_POSITION		  = { 1100.0f, 800.0f, -150.0f };	//ƒXƒe[ƒW4ƒ‚ƒfƒ‹‚ÌˆÊ’u
+const VECTOR SelectionUi::STAGE4_SIZE			  = { 6.0f, 6.0f, 6.0f };			//ƒXƒe[ƒW4ƒ‚ƒfƒ‹‚Ì”{—¦
+const VECTOR SelectionUi::STAGE4_ROTATE = { 90.0f * DX_PI_F / 180.0f, 190.0f * DX_PI_F / 180.0f, 0.0f }; //ƒXƒe[ƒW4ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
 
 
 /// <summary>
@@ -55,9 +60,12 @@ void SelectionUi::Initialize()
 
 	stageDescription[2] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE3_DESCRIPTION_PATH).c_str());
 
+	stageDescription[3] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE4_DESCRIPTION_PATH).c_str());
+
 	selectionKeyImage   = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_KEY_PATH).c_str());
 
 	selectionUiImage	= LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_TITLE_PATH).c_str());
+
 
 	//ƒ}ƒbƒvƒ‚ƒfƒ‹“Ç‚İ‚İ
 	MapInput(0, ModelManager::STAGE1, STAGE1_POSITION, STAGE1_SIZE, STAGE1_ROTATE);
@@ -65,6 +73,8 @@ void SelectionUi::Initialize()
 	MapInput(1, ModelManager::STAGE2, STAGE2_POSITION, STAGE2_SIZE, STAGE2_ROTATE);
 
 	MapInput(2, ModelManager::STAGE3, STAGE3_POSITION, STAGE3_SIZE, STAGE3_ROTATE);
+
+	MapInput(3, ModelManager::STAGE4, STAGE4_POSITION, STAGE4_SIZE, STAGE4_ROTATE);
 
 }
 

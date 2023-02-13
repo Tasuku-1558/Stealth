@@ -11,6 +11,7 @@ const string ModelManager::CAKE_PATH         = "cake.mv1";       //cakeƒ‚ƒfƒ‹ƒtƒ
 const string ModelManager::STAGE1_PATH       = "stage1.mv1";     //stage1ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::STAGE2_PATH       = "stage2.mv1";     //stage2ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::STAGE3_PATH       = "stage3.mv1";     //stage3ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
+const string ModelManager::STAGE4_PATH       = "stage4.mv1";     //stage4ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 
 
 /// <summary>
@@ -61,6 +62,7 @@ void ModelManager::LoadAllModel()
 
     modelHandle[STAGE3]       = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, STAGE3_PATH).c_str());
 
+    modelHandle[STAGE4]       = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, STAGE4_PATH).c_str());
 
     //“Ç‚İ‚İ¸”s‚È‚çƒGƒ‰[
     for (int i = 0; i < MODEL_AMOUNT; ++i)
@@ -78,9 +80,9 @@ void ModelManager::LoadAllModel()
 /// <param name="folderPath"></param>
 /// <param name="path"></param>
 /// <returns></returns>
-string ModelManager::InputPath(string folderPath, string path)
+string ModelManager::InputPath(string folderPath, string modelPath)
 {
-    return string(folderPath + path);
+    return string(folderPath + modelPath);
 }
 
 /// <summary>

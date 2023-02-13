@@ -21,7 +21,6 @@ public:
 	void Activate();		//活性化処理
 	void Finalize();		//終了処理
 
-
 	void Draw(FirstStage::State state,
 			  int playerCount, bool hitUi);	//FirstStageのUI描画処理
 
@@ -60,6 +59,7 @@ private:
 	int stageCount;									//ステージ名称表示カウント
 	
 	int uiHandle[GRAPHIC_AMOUNT];					//画像ハンドル
+
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;		//画像格納フォルダ

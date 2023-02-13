@@ -26,6 +26,8 @@ public:
     void Finalize();            //終了処理
     void Draw();                //描画処理
     
+    const bool Click() { return click; }
+
     Cake* cake;
     Bullet* bullet;
 
@@ -35,4 +37,5 @@ private:
     void BulletReuse(float deltaTime, CakeRepopEffect* cakeEffect);  //バレット再使用カウント
 
     float bulletCount;                                               //弾の効果時間
+    bool click;
 };

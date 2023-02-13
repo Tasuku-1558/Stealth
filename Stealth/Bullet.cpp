@@ -21,7 +21,6 @@ Bullet::Bullet() : ObjectBase()
 	, worldMouseY(30.0f)
 	, worldMouseZ(0.0f)
 	, alive(false)
-	, cursorRotate(0.0f)
 {
 	//処理なし
 }
@@ -101,13 +100,6 @@ void Bullet::MouseMove(Cake* cake, VECTOR playerPos)
 		//マウスのX,Z座標のワールド座標を計算
 		worldMouseX = (float)mouseX * (3000.0f / 1920.0f) * 1.6f + playerPos.z;
 		worldMouseZ = (float)mouseZ * (1900.0f / 1080.0f) * 1.5f + playerPos.x;
-
-		//照準を回転させる
-		//cursorRotate += 0.01f;
-	}
-	else
-	{
-		cursorRotate = 0.0f;
 	}
 }
 
@@ -149,5 +141,5 @@ void Bullet::Draw()
 		MV1DrawModel(modelHandle);
 	}
 
-	DrawRotaGraph(mouseX + 960, mouseZ + 540, SCALE, cursorRotate, cursorImage, TRUE);
+	DrawRotaGraph(mouseX + 960, mouseZ + 540, SCALE, 0.0f, cursorImage, TRUE);
 }

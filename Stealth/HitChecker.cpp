@@ -1,9 +1,11 @@
 #include "HitChecker.h"
 #include "Player.h"
-#include "FirstStageMap.h"
 #include "Wall.h"
 #include "Cake.h"
 #include "PreCompiledHeader.h"
+
+
+const VECTOR HitChecker::UI_POSITION = { -800.0f, 30.0f, 0.0f };	//UI‰æ‘œ‚ÌˆÊ’u
 
 using namespace Math3d;
 
@@ -18,7 +20,7 @@ HitChecker::HitChecker()
 	, pushBack()
 	, mapHit(false)
 {
-	uiPosition = VGet(-800.0f, 30.0f, 0.0f);
+	uiPosition = UI_POSITION;
 }
 
 /// <summary>

@@ -12,7 +12,7 @@
 #include "HitChecker.h"
 #include "CakeParticle.h"
 #include "CakeRepopEffect.h"
-#include "SecondStageMap.h"
+#include "StageMap.h"
 #include "UiManager.h"
 #include "FadeManager.h"
 
@@ -36,7 +36,7 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, pUpdate(nullptr)
 	, cakeBullet()
 	, hitChecker(nullptr)
-	, secondStageMap(nullptr)
+	, stageMap(nullptr)
 	, cakeEffect(nullptr)
 	, cakeParticle()
 	, uiManager(nullptr)
@@ -77,9 +77,11 @@ void SecondStage::Initialize()
 	player = new Player();
 	player->Initialize();
 
-	//セカンドステージマップクラス
-	secondStageMap = new SecondStageMap();
-	secondStageMap->Initialize();
+	//マップクラス
+	//マップモデルの種類、サイズ、回転値、位置を入力する
+	stageMap = new StageMap(ModelManager::STAGE2, { 80.0f, 60.0f, 80.0f }, 
+							{ 0.0f, 0.0f, 0.0f }, { -7000.0f, -100.0f, -2900.0f });
+	stageMap->Initialize();
 
 	//ケーキの再出現エフェクトクラス
 	cakeEffect = new CakeRepopEffect();
@@ -114,7 +116,7 @@ void SecondStage::Finalize()
 
 	SafeDelete(player);
 
-	SafeDelete(secondStageMap);
+	SafeDelete(stageMap);
 
 	for (auto enemyPtr : enemy)
 	{
@@ -227,10 +229,10 @@ void SecondStage::DeleteEnemy(Enemy* deleteEnemy)
 /// </summary>
 void SecondStage::EnemyPop()
 {
-	Enemy* newEnemy = new Enemy(secondStageMap->GetMap());
+	Enemy* newEnemy = new Enemy(stageMap->GetMap(1));
 	EntryEnemy(newEnemy);
 
-	Enemy* newEnemy2 = new Enemy(secondStageMap->GetMap2());
+	Enemy* newEnemy2 = new Enemy(stageMap->GetMap(2));
 	EntryEnemy(newEnemy2);
 }
 
@@ -397,7 +399,7 @@ void SecondStage::UpdateGame(float deltaTime)
 		}
 	}
 
-	hitChecker->Check(secondStageMap->GetModelHandle(), player);
+	hitChecker->Check(stageMap->GetModelHandle(), player);
 
 	for (auto particlePtr : cakeParticle)
 	{
@@ -475,7 +477,7 @@ void SecondStage::Draw()
 	backGround->Draw();
 	
 	//マップ描画
-	secondStageMap->Draw();
+	stageMap->Draw();
 
 	//ゲーム状態がゲームとゴールの時だけ描画する
 	if (state == State::GAME || state == State::GOAL)

@@ -10,7 +10,7 @@ class Player;
 class Enemy;
 class CakeBullet;
 class HitChecker;
-class FirstStageMap;
+class StageMap;
 class CakeRepopEffect;
 class CakeParticle;
 class UiManager;
@@ -50,7 +50,7 @@ private:
 	Enemy* enemy;
 	CakeBullet* cakeBullet;
 	HitChecker* hitChecker;
-	FirstStageMap* firstStageMap;
+	StageMap* stageMap;
 	CakeRepopEffect* cakeEffect;
 	std::vector<CakeParticle*> cakeParticle;
 	UiManager* uiManager;

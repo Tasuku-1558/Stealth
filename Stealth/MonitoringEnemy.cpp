@@ -15,7 +15,7 @@ using namespace std;
 /// コンストラクタ
 /// </summary>
 MonitoringEnemy::MonitoringEnemy(const VECTOR& pos, VECTOR changeDir) : EnemyBase()	
-	, count(0.0f)
+	, dirCount(0.0f)
 	, anotherDir()
 {
 	position = pos;
@@ -131,10 +131,10 @@ void MonitoringEnemy::Update(float deltaTime, Player* player)
 /// <param name="deltaTime"></param>
 void MonitoringEnemy::DirMove(float deltaTime)
 {
-	count += deltaTime;
+	dirCount += deltaTime;
 
 	//2秒経過したらエネミーの向きを変更する
-	if (count > 2.0f)
+	if (dirCount > 2.0f)
 	{
 		dir = anotherDir;
 	}
@@ -144,9 +144,9 @@ void MonitoringEnemy::DirMove(float deltaTime)
 	}
 
 	//4秒経過したらカウントを0にする
-	if (count > 4.0f)
+	if (dirCount > 4.0f)
 	{
-		count = 0.0f;
+		dirCount = 0.0f;
 	}
 }
 
@@ -192,44 +192,7 @@ void MonitoringEnemy::VisualAnglePlayer(Player* player)
 }
 
 /// <summary>
-/// エネミーの視野に壁が入った場合
-/// </summary>
-/// <param name="wallPos"></param>
-void MonitoringEnemy::VisualAngleWall(VECTOR wallPos)
-{
-	//壁からエネミーの座標を引いた値を取得
-	VECTOR sub = wallPos - position;
-
-	//壁とエネミーの2点間の距離を計算
-	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
-
-	//ベクトルの正規化
-	sub = VNorm(sub);
-
-	//内積計算
-	float dot = VDot(sub, dir);
-
-	float range = RANGE_DEGREE * (float)(DX_PI / 180.0f);
-
-	//エネミーの視野をcosにする
-	float radian = cosf(range / 2.0f);
-
-	//ベクトルとエネミーの長さの比較
-	if (length > direction)
-	{
-		//壁がエネミーの視野範囲内にいるならば
-		if (radian <= dot)
-		{
-			object = Object::WALL;
-
-			//視野範囲内ならば
-			Reaction();
-		}
-	}
-}
-
-/// <summary>
-/// エネミーのオブジェクトごとの反応
+/// エネミーのプレイヤーの反応
 /// </summary>
 void MonitoringEnemy::Reaction()
 {
@@ -240,9 +203,6 @@ void MonitoringEnemy::Reaction()
 		//プレイヤーを発見した
 		playerSpotted = true;
 
-		break;
-
-	case Object::WALL:
 		break;
 	}
 }

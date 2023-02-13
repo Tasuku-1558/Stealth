@@ -9,6 +9,7 @@ CakeBullet::CakeBullet(const VECTOR& cakePos)
     : cake(nullptr)
     , bullet(nullptr)
     , bulletCount(0.0f)
+    , click(false)
 {
     cake = new Cake(cakePos);
     bullet = new Bullet();
@@ -87,6 +88,7 @@ void CakeBullet::Shoot(float deltaTime, const VECTOR& playerPos)
 	{
 		bullet->Update(deltaTime);
 		bullet->BulletAlive();
+        click = true;
 	}
 
 	bullet->MouseMove(cake, playerPos);

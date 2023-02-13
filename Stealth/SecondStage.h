@@ -12,7 +12,7 @@ class Enemy;
 class CakeBullet;
 class Wall;
 class HitChecker;
-class SecondStageMap;
+class StageMap;
 class CakeParticle;
 class CakeRepopEffect;
 class UiManager;
@@ -53,7 +53,7 @@ private:
 	std::vector<Enemy*> enemy;
 	std::vector<CakeBullet*> cakeBullet;
 	HitChecker* hitChecker;
-	SecondStageMap* secondStageMap;
+	StageMap* stageMap;
 	std::vector<CakeParticle*> cakeParticle;
 	CakeRepopEffect* cakeEffect;
 	UiManager* uiManager;

@@ -13,7 +13,7 @@
 #include "HitChecker.h"
 #include "CakeRepopEffect.h"
 #include "CakeParticle.h"
-#include "ThirdStageMap.h"
+#include "StageMap.h"
 #include "UiManager.h"
 #include "FadeManager.h"
 
@@ -32,7 +32,7 @@ ThirdStage::ThirdStage(SceneManager* const sceneManager)
 	, light(nullptr)
 	, camera(nullptr)
 	, backGround(nullptr)
-	, thirdStageMap(nullptr)
+	, stageMap(nullptr)
 	, player(nullptr)
 	, enemy()
 	, monitoringEnemy()
@@ -75,9 +75,11 @@ void ThirdStage::Initialize()
 	backGround = new BackGround();
 	backGround->Initialize();
 
-	//サードステージマップクラス
-	thirdStageMap = new ThirdStageMap();
-	thirdStageMap->Initialize();
+	//マップクラス
+	//マップモデルの種類、サイズ、回転値、位置を入力する
+	stageMap = new StageMap(ModelManager::STAGE3, { 50.0f, 50.0f, 55.0f }, 
+							{ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f }, { -2600.0f, -100.0f, 2650.0f });
+	stageMap->Initialize();
 
 	//プレイヤークラス
 	player = new Player();
@@ -118,7 +120,7 @@ void ThirdStage::Finalize()
 
 	SafeDelete(player);
 
-	SafeDelete(thirdStageMap);
+	SafeDelete(stageMap);
 
 	for (auto enemyPtr : enemy)
 	{
@@ -239,10 +241,10 @@ void ThirdStage::DeleteEnemy(Enemy* deleteEnemy)
 /// </summary>
 void ThirdStage::EnemyPop()
 {
-	Enemy* newEnemy = new Enemy(thirdStageMap->GetMap());
+	Enemy* newEnemy = new Enemy(stageMap->GetMap(3));
 	EntryEnemy(newEnemy);
 
-	Enemy* newEnemy2 = new Enemy(thirdStageMap->GetMap2());
+	Enemy* newEnemy2 = new Enemy(stageMap->GetMap(4));
 	EntryEnemy(newEnemy2);
 }
 
@@ -279,7 +281,7 @@ void ThirdStage::DeleteMonitoringEnemy(MonitoringEnemy* deleteMonitoringEnemy)
 /// </summary>
 void ThirdStage::MonitoringEnemyPop()
 {
-	MonitoringEnemy* newMonitoringEnemy = new MonitoringEnemy({ -2700.0f, 0.0f, 3000.0f }, { 1.0f,0.0f,0.0f });
+	MonitoringEnemy* newMonitoringEnemy = new MonitoringEnemy({ -2850.0f, 0.0f, 3000.0f }, { 1.0f,0.0f,0.0f });
 	EntryMonitoringEnemy(newMonitoringEnemy);
 
 	MonitoringEnemy* newMonitoringEnemy2 = new MonitoringEnemy({ -1000.0f, 0.0f, 3000.0f }, { -1.0f,0.0f,0.0f });
@@ -460,7 +462,7 @@ void ThirdStage::UpdateGame(float deltaTime)
 		}
 	}
 
-	hitChecker->Check(thirdStageMap->GetModelHandle(), player);
+	hitChecker->Check(stageMap->GetModelHandle(), player);
 
 	for (auto particlePtr : cakeParticle)
 	{
@@ -539,7 +541,7 @@ void ThirdStage::Draw()
 	backGround->Draw();
 
 	//マップ描画
-	thirdStageMap->Draw();
+	stageMap->Draw();
 
 	//ゲーム状態がゲームとゴールの時だけ描画する
 	if (state == State::GAME || state == State::GOAL)
