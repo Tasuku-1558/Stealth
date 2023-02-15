@@ -92,7 +92,6 @@ void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 
 		//‚«o‚µ‰æ‘œ•`‰æ
 		DrawBillboard3D(VGet(-800.0f, 0.0f, 0.0f), 0.5f, 0.5f, 200.0f, 0.0f, uiHandle[BALLOON], TRUE);
-		//DrawGraph(0, 900, uiHandle[KEY], TRUE);		//WASDƒL[•`‰æ
 		break;
 
 	case FirstStage::State::GOAL:
@@ -118,7 +117,6 @@ void UiManager::Draw(SecondStage::State state, int playerCount)
 		
 		StartGameDraw(STAGE2);
 		PlayerHpDraw(playerCount);
-		//DrawGraph(0, 900, uiHandle[KEY], TRUE);		//WASDƒL[•`‰æ
 		break;
 
 	case SecondStage::State::GOAL:
@@ -144,10 +142,59 @@ void UiManager::Draw(ThirdStage::State state, int playerCount)
 
 		StartGameDraw(STAGE3);
 		PlayerHpDraw(playerCount);
-		DrawGraph(0, 900, uiHandle[KEY], TRUE);		//WASDƒL[•`‰æ
 		break;
 
 	case ThirdStage::State::GOAL:
+		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
+		break;
+	}
+}
+
+/// <summary>
+/// FourthStage‚ÌUI•`‰æˆ—
+/// </summary>
+/// <param name="state"></param>
+/// <param name="playerCount"></param>
+void UiManager::Draw(FourthStage::State state, int playerCount)
+{
+	switch (state)
+	{
+	case FourthStage::State::START:
+
+		break;
+
+	case FourthStage::State::GAME:
+
+		StartGameDraw(STAGE4);
+		PlayerHpDraw(playerCount);
+		break;
+
+	case FourthStage::State::GOAL:
+		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
+		break;
+	}
+}
+
+/// <summary>
+/// FifthStage‚ÌUI•`‰æˆ—
+/// </summary>
+/// <param name="state"></param>
+/// <param name="playerCount"></param>
+void UiManager::Draw(FifthStage::State state, int playerCount)
+{
+	switch (state)
+	{
+	case FifthStage::State::START:
+
+		break;
+
+	case FifthStage::State::GAME:
+
+		StartGameDraw(STAGE5);
+		PlayerHpDraw(playerCount);
+		break;
+
+	case FifthStage::State::GOAL:
 		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
 		break;
 	}

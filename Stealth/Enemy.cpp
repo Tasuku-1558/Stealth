@@ -3,11 +3,12 @@
 #include "PreCompiledHeader.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "HitChecker.h"
 
 const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
 const string Enemy::PLAYER_FIND_PATH  = "playerFind.png";	//プレイヤーを見つけた画像のパス
 const string Enemy::MARK_PATH		  = "mark.png";			//ビックリマーク画像のパス
-const string Enemy::CAKE_PATH		  = "ui9.png";			//ケーキ画像のパス
+const string Enemy::CAKE_PATH		  = "ui8.png";			//ケーキ画像のパス
 const string Enemy::CAKE_HALF_PATH	  = "cakeHalf.png";		//ケーキが半分画像のパス
 
 
@@ -18,17 +19,21 @@ using namespace std;
 /// コンストラクタ
 /// </summary>
 /// <param name="id"></param>
-Enemy::Enemy(std::vector<VECTOR>& id) : EnemyBase()
+/// <param name="enemySpeed"></param>
+Enemy::Enemy(std::vector<VECTOR>& id, float enemySpeed) : EnemyBase()
 	, cakeCount(0.0f)
 	, cakeFindFlag(false)
 	, cakeEatFlag(false)
 	, cakeHalfFlag(false)
+	, angle(0.0f)
 {
 	enemyState = EnemyState::CRAWL;
 	Position(id);
 
 	Initialize();
 	Activate();
+
+	changeSpeed = enemySpeed;
 }
 
 /// <summary>
@@ -49,12 +54,6 @@ void Enemy::Initialize()
 
 	visualModelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY_VISUAL));
 
-	//読み込み失敗でエラー
-	if (modelHandle < 0 || visualModelHandle < 0)
-	{
-		printfDx("モデルデータ読み込みに失敗\n");
-	}
-	
 	//画像読み込み
 	playerFindImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
 
@@ -81,14 +80,15 @@ std::string Enemy::InputPath(string folderPath, string imagePath)
 /// </summary>
 void Enemy::Activate()
 {
+	speed = changeSpeed;
 	dir = ZERO_VECTOR;
-	speed = SPEED;
 	playerSpotted = false;
 	cakeFlag = false;
 	cakeFindFlag = false;
 	cakeEatFlag = false;
 	cakeHalfFlag = false;
 	cakeCount = 0.0f;
+	angle = 0.0f;
 }
 
 /// <summary>
@@ -128,7 +128,8 @@ void Enemy::Finalize()
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="player"></param>
-void Enemy::Update(float deltaTime, Player* player)
+/// <param name="hitChecker"></param>
+void Enemy::Update(float deltaTime, Player* player, HitChecker* hitChecker)
 {
 	//ベクトルの正規化
 	dir = VNorm(targetPosition - position);
@@ -144,9 +145,18 @@ void Enemy::Update(float deltaTime, Player* player)
 	VisualAnglePlayer(player);
 	
 	eUpdate(deltaTime);
+
+	hitChecker->EnemyAndPlayer(player->GetPosition(), position);
+
+	if (hitChecker->EnemyHit())
+	{
+		playerSpotted = true;
+	}
 	
+	angle = 180.0f;
+
 	//z軸が逆を向いているのでdirを180度回転させる
-	MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
+	MATRIX rotYMat = MGetRotY(angle * (float)(DX_PI / 180.0f));
 	VECTOR negativeVec = VTransform(dir, rotYMat);
 
 	//モデルに回転をセット
@@ -213,6 +223,7 @@ void Enemy::VisualAnglePlayer(Player* player)
 
 			//視野範囲内ならば
 			Reaction();
+
 		}
 	}
 	else
@@ -262,7 +273,7 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 	else
 	{
 		//エネミーの視野範囲外ならスピードを元のスピードに戻す
-		speed = SPEED;
+		speed = changeSpeed;
 
 		cakeFlag = false;
 
@@ -288,15 +299,15 @@ void Enemy::CakeEatCount(float deltaTime)
 	//ケーキを見つけてカウントが1.5秒経過したら
 	if (cakeCount > 1.5f)
 	{
-		speed = SPEED;
+		speed = changeSpeed;
 
 		//ビックリマーク画像を非表示にする
 		cakeFindFlag = false;
 	}
 
-	//ケーキを見つけてエネミーがこの位置まで移動したら
+	//ビックリマーク画像が非表示になったら
 	//ケーキの画像を表示する
-	if (/*270.0f > bulletDirection*/!cakeFindFlag)
+	if (!cakeFindFlag)
 	{
 		speed = 0.0f;
 		cakeEatFlag = true;
@@ -453,4 +464,9 @@ void Enemy::Draw()
 	MV1DrawModel(visualModelHandle);
 
 	ReactionDraw();
+
+	/*DrawTriangle3D(
+		position + VGet(100.0f, 100.0f, 500.0f),
+		position + VGet(500.0f, 400.0f, 0.0f),
+		position + VGet(600.0f, 100.0f, 500.0f), GetColor(0, 255, 0), TRUE);*/
 }

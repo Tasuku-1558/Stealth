@@ -86,7 +86,7 @@ private:
 	float frame;			//フレーム数
 	float particleInterval;	//パーティクル出現のインターバル
 	bool  particleFlag;		//パーティクルを出したら
-
+	bool clear;
 
 	//静的定数
 	static const float GOAL_POSITION_X;				//ゴールの位置X座標

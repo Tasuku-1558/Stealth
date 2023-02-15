@@ -3,6 +3,7 @@
 #include "PreCompiledHeader.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "HitChecker.h"
 
 const string MonitoringEnemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
 const string MonitoringEnemy::PLAYER_FIND_PATH	= "playerFind.png";		//プレイヤーを見つけた画像のパス
@@ -11,15 +12,21 @@ const string MonitoringEnemy::MARK_PATH			= "mark.png";			//ビックリマーク画像の
 using namespace Math3d;
 using namespace std;
 
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
-MonitoringEnemy::MonitoringEnemy(const VECTOR& pos, VECTOR changeDir) : EnemyBase()	
+/// <param name="pos"></param>
+/// <param name="changeDir"></param>
+/// <param name="currentDir"></param>
+MonitoringEnemy::MonitoringEnemy(const VECTOR& pos, VECTOR changeDir, VECTOR currentDir) : EnemyBase()
 	, dirCount(0.0f)
 	, anotherDir()
+	, initialDir()
 {
 	position = pos;
 	anotherDir = changeDir;
+	initialDir = currentDir;
 
 	Initialize();
 	Activate();
@@ -43,12 +50,6 @@ void MonitoringEnemy::Initialize()
 	MV1SetDifColorScale(modelHandle, GetColorF(0.0f, 0.5f, 2.0f, 1.0f));
 
 	visualModelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY_VISUAL));
-
-	//読み込み失敗でエラー
-	if (modelHandle < 0 || visualModelHandle < 0)
-	{
-		printfDx("モデルデータ読み込みに失敗\n");
-	}
 
 	//画像の読み込み
 	playerFindImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
@@ -99,7 +100,8 @@ void MonitoringEnemy::Finalize()
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="player"></param>
-void MonitoringEnemy::Update(float deltaTime, Player* player)
+/// <param name="hitChecker"></param>
+void MonitoringEnemy::Update(float deltaTime, Player* player, HitChecker* hitChecker)
 {
 	//ベクトルの正規化
 	dir = VNorm(dir);
@@ -115,6 +117,13 @@ void MonitoringEnemy::Update(float deltaTime, Player* player)
 	MV1SetPosition(visualModelHandle, position);
 
 	VisualAnglePlayer(player);
+
+	hitChecker->EnemyAndPlayer(player->GetPosition(), position);
+
+	if (hitChecker->EnemyHit())
+	{
+		playerSpotted = true;
+	}
 
 	//z軸が逆を向いているのでdirを180度回転させる
 	MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
@@ -140,7 +149,7 @@ void MonitoringEnemy::DirMove(float deltaTime)
 	}
 	else
 	{
-		dir = { 0.0f,0.0f,-1.0f };
+		dir = initialDir;
 	}
 
 	//4秒経過したらカウントを0にする

@@ -1,6 +1,10 @@
 #include "CakeBullet.h"
 
 
+const string CakeBullet::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
+const string CakeBullet::LOCATE_SE_PATH    = "locate.mp3";		//ケーキを置いた時のSE音のパス
+
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -9,7 +13,8 @@ CakeBullet::CakeBullet(const VECTOR& cakePos)
     : cake(nullptr)
     , bullet(nullptr)
     , bulletCount(0.0f)
-    , click(false)
+    , cakeGet(false)
+    , locateSe(0)
 {
     cake = new Cake(cakePos);
     bullet = new Bullet();
@@ -33,6 +38,10 @@ void CakeBullet::Initialize()
 {
     cake->Initialize();
     bullet->Initialize();
+
+    //SE音の読み込み
+    string failePath = SOUND_FOLDER_PATH + LOCATE_SE_PATH;
+    locateSe = LoadSoundMem(failePath.c_str());
 }
 
 /// <summary>
@@ -53,6 +62,9 @@ void CakeBullet::Finalize()
 {
     cake->Finalize();
     bullet->Finalize();
+
+    //サウンドリソースを削除
+    InitSoundMem();
 }
 
 /// <summary>
@@ -71,6 +83,11 @@ void CakeBullet::Update(float deltaTime, const VECTOR& playerPos, HitChecker* hi
         hitChecker->BallAndPlayer(playerPos, cake);
         cake->IsAlive(hitChecker);
     }
+    else
+    {
+        cakeGet = true;
+    }
+
     
     Shoot(deltaTime, playerPos);
     BulletReuse(deltaTime, cakeEffect);
@@ -88,7 +105,9 @@ void CakeBullet::Shoot(float deltaTime, const VECTOR& playerPos)
 	{
 		bullet->Update(deltaTime);
 		bullet->BulletAlive();
-        click = true;
+
+        //ケーキを置いた時のSE音を再生
+        PlaySoundMem(locateSe, DX_PLAYTYPE_BACK);
 	}
 
 	bullet->MouseMove(cake, playerPos);
@@ -105,6 +124,8 @@ void CakeBullet::BulletReuse(float deltaTime, CakeRepopEffect* cakeEffect)
     if (bullet->GetAlive())
     {
         bulletCount += deltaTime;
+
+        cakeGet = false;
 
         if (bulletCount > 5.7f)
         {

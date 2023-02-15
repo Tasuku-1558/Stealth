@@ -2,10 +2,10 @@
 #include "ModelManager.h"
 
 
-const VECTOR Bullet::SIZE			   = { 20.0f, 20.0f, 20.0f };	//モデルの倍率
-const VECTOR Bullet::POSITION		   = { 0.0f, 30.0f, 0.0f };		//モデルの位置
 const string Bullet::IMAGE_FOLDER_PATH = "data/image/";				//imageフォルダまでのパス
 const string Bullet::CURSOR_PATH	   = "pointer.png";				//カーソル画像のパス
+const VECTOR Bullet::SIZE			   = { 20.0f, 20.0f, 20.0f };	//モデルの倍率
+const VECTOR Bullet::POSITION		   = { 0.0f, 30.0f, 0.0f };		//モデルの位置
 const float  Bullet::SCALE			   = 0.4f;						//カーソル画像の大きさ
 
 using namespace Math3d;

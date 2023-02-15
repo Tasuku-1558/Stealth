@@ -18,6 +18,7 @@ DeltaTime::DeltaTime()
 /// </summary>
 DeltaTime::~DeltaTime()
 {
+	//ˆ—‚È‚µ
 }
 
 /// <summary>

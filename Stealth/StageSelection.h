@@ -24,10 +24,8 @@ public:
 	void Update(float deltaTime);					//更新処理
 	void Draw();									//描画処理
 
-
 private:
 	StageSelection(const StageSelection&);			//コピーコンストラクタ
-
 
 	Light* light;
 	SelectionUi* selectionUi;

@@ -16,6 +16,7 @@
 #include "StageMap.h"
 #include "UiManager.h"
 #include "FadeManager.h"
+#include "Set.h"
 
 
 const float ThirdStage::GOAL_POSITION_X = -2800.0f;		//ゴールの位置X座標
@@ -47,6 +48,7 @@ ThirdStage::ThirdStage(SceneManager* const sceneManager)
 	, frame(0.0f)
 	, particleFlag(false)
 	, particleInterval(0.0f)
+	, clear(true)
 {
 	//処理なし
 }
@@ -241,10 +243,10 @@ void ThirdStage::DeleteEnemy(Enemy* deleteEnemy)
 /// </summary>
 void ThirdStage::EnemyPop()
 {
-	Enemy* newEnemy = new Enemy(stageMap->GetMap(3));
+	Enemy* newEnemy = new Enemy(stageMap->GetMap(3), 1000.0f);
 	EntryEnemy(newEnemy);
 
-	Enemy* newEnemy2 = new Enemy(stageMap->GetMap(4));
+	Enemy* newEnemy2 = new Enemy(stageMap->GetMap(4), 1000.0f);
 	EntryEnemy(newEnemy2);
 }
 
@@ -278,13 +280,14 @@ void ThirdStage::DeleteMonitoringEnemy(MonitoringEnemy* deleteMonitoringEnemy)
 
 /// <summary>
 /// 監視エネミーの出現
+/// 位置、別方向の向き、初期の向きを入力
 /// </summary>
 void ThirdStage::MonitoringEnemyPop()
 {
-	MonitoringEnemy* newMonitoringEnemy = new MonitoringEnemy({ -2850.0f, 0.0f, 3000.0f }, { 1.0f,0.0f,0.0f });
+	MonitoringEnemy* newMonitoringEnemy = new MonitoringEnemy({ -2850.0f, 0.0f, 3000.0f }, { 1.0f,0.0f,0.0f }, { 0.0f,0.0f,-1.0f });
 	EntryMonitoringEnemy(newMonitoringEnemy);
 
-	MonitoringEnemy* newMonitoringEnemy2 = new MonitoringEnemy({ -1000.0f, 0.0f, 3000.0f }, { -1.0f,0.0f,0.0f });
+	MonitoringEnemy* newMonitoringEnemy2 = new MonitoringEnemy({ -1000.0f, 0.0f, 3000.0f }, { -1.0f,0.0f,0.0f }, { 0.0f,0.0f,-1.0f });
 	EntryMonitoringEnemy(newMonitoringEnemy2);
 }
 
@@ -413,7 +416,7 @@ void ThirdStage::UpdateGame(float deltaTime)
 
 	for (auto enemyPtr : enemy)
 	{
-		enemyPtr->Update(deltaTime, player);
+		enemyPtr->Update(deltaTime, player, hitChecker);
 
 		//巡回しているエネミーに見つかったら
 		player->FoundEnemy(deltaTime, enemyPtr->Spotted());
@@ -421,8 +424,6 @@ void ThirdStage::UpdateGame(float deltaTime)
 		for (auto cakeBulletPtr : cakeBullet)
 		{
 			enemyPtr->VisualAngleCake(cakeBulletPtr->bullet, deltaTime);
-
-			//monitoringEnemy->VisualAngleCake(cakeBulletPtr->bullet, deltaTime);
 
 			//エネミーがケーキを見つけたならば
 			if (enemyPtr->CakeFlag())
@@ -435,7 +436,7 @@ void ThirdStage::UpdateGame(float deltaTime)
 	for (auto monitoringEnemyPtr : monitoringEnemy)
 	{
 		//監視しているエネミーに見つかったら
-		monitoringEnemyPtr->Update(deltaTime, player);
+		monitoringEnemyPtr->Update(deltaTime, player, hitChecker);
 
 		player->FoundEnemy(deltaTime, monitoringEnemyPtr->Spotted());
 	}
@@ -504,11 +505,13 @@ void ThirdStage::UpdateGoal(float deltaTime)
 
 	fadeManager->FadeMove();
 
+	Set::GetInstance().SetResult(clear);
+
 	//フレーム数が2.9秒経過したら
 	if (frame > 2.9f)
 	{
 		//ステージ選択画面へ遷移
-		parent->SetNextScene(SceneManager::SELECTION);
+		parent->SetNextScene(SceneManager::RESULT);
 		return;
 	}
 }
@@ -527,7 +530,7 @@ void ThirdStage::UpdateOver(float deltaTime)
 	if (frame > 2.8f)
 	{
 		//ステージ選択画面へ遷移
-		parent->SetNextScene(SceneManager::SELECTION);
+		parent->SetNextScene(SceneManager::RESULT);
 		return;
 	}
 }
@@ -543,8 +546,8 @@ void ThirdStage::Draw()
 	//マップ描画
 	stageMap->Draw();
 
-	//ゲーム状態がゲームとゴールの時だけ描画する
-	if (state == State::GAME || state == State::GOAL)
+	//ゲーム状態がゲームとゴールとオーバーの時だけ描画する
+	if (state == State::GAME || state == State::GOAL || state == State::OVER)
 	{
 		//プレイヤー描画
 		player->Draw();
@@ -566,7 +569,7 @@ void ThirdStage::Draw()
 		{
 			cakeBulletPtr->Draw();
 
-			uiManager->CakeGetDraw(!cakeBulletPtr->cake->GetAlive());
+			uiManager->CakeGetDraw(cakeBulletPtr->CakeGet());
 		}
 	}
 

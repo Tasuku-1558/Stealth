@@ -26,7 +26,7 @@ public:
     void Finalize();            //終了処理
     void Draw();                //描画処理
     
-    const bool Click() { return click; }
+    const bool CakeGet() { return cakeGet; }                        //ケーキを所持しているかいないかを返す
 
     Cake* cake;
     Bullet* bullet;
@@ -37,5 +37,12 @@ private:
     void BulletReuse(float deltaTime, CakeRepopEffect* cakeEffect);  //バレット再使用カウント
 
     float bulletCount;                                               //弾の効果時間
-    bool click;
+    bool cakeGet;                                                    //ケーキを所持しているかいないか
+    int	locateSe;				                                     //ケーキを置いた時のSE音格納用
+
+
+    //静的定数
+    static const std::string SOUND_FOLDER_PATH;		//soundフォルダまでのパス
+    static const std::string LOCATE_SE_PATH;		//ケーキを置いた時のSE音のパス
+
 };

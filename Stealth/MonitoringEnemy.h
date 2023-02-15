@@ -9,7 +9,7 @@
 
 class Player;
 class Bullet;
-
+class HitChecker;
 
 /// <summary>
 /// 監視エネミークラス
@@ -17,12 +17,12 @@ class Bullet;
 class MonitoringEnemy final : public EnemyBase
 {
 public:
-	MonitoringEnemy(const VECTOR& pos, VECTOR changeDir);
+	MonitoringEnemy(const VECTOR& pos, VECTOR changeDir, VECTOR currentDir);
 	virtual ~MonitoringEnemy();
 
 	void Initialize();									//初期化処理
 	void Activate();									//活性化処理
-	void Update(float deltaTime, Player* player);		//更新処理
+	void Update(float deltaTime, Player* player, HitChecker* hitChecker);	//更新処理
 	void Draw();										//描画処理
 
 	const bool Spotted() { return playerSpotted; }			//プレイヤーを見つけたかどうかを返す
@@ -41,6 +41,7 @@ private:
 
 	float dirCount;			//向き変更カウント
 	VECTOR anotherDir;		//別の向き
+	VECTOR initialDir;		//初期の向き
 
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス

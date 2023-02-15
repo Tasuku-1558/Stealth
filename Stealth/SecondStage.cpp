@@ -15,6 +15,7 @@
 #include "StageMap.h"
 #include "UiManager.h"
 #include "FadeManager.h"
+#include "Set.h"
 
 
 const float SecondStage::GOAL_POSITION_X = -5700.0f;	//ゴールの位置
@@ -45,6 +46,7 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 	, frame(0.0f)
 	, particleFlag(false)
 	, particleInterval(0.0f)
+	, clear(true)
 {
 	//処理なし
 }
@@ -79,10 +81,11 @@ void SecondStage::Initialize()
 
 	//マップクラス
 	//マップモデルの種類、サイズ、回転値、位置を入力する
-	stageMap = new StageMap(ModelManager::STAGE2, { 80.0f, 60.0f, 80.0f }, 
+	stageMap = new StageMap(ModelManager::STAGE2, { 80.0f, 60.0f, 80.0f },
 							{ 0.0f, 0.0f, 0.0f }, { -7000.0f, -100.0f, -2900.0f });
-	stageMap->Initialize();
 
+	stageMap->Initialize();
+	
 	//ケーキの再出現エフェクトクラス
 	cakeEffect = new CakeRepopEffect();
 	cakeEffect->Initialize();
@@ -229,10 +232,10 @@ void SecondStage::DeleteEnemy(Enemy* deleteEnemy)
 /// </summary>
 void SecondStage::EnemyPop()
 {
-	Enemy* newEnemy = new Enemy(stageMap->GetMap(1));
+	Enemy* newEnemy = new Enemy(stageMap->GetMap(1), 1000.0f);
 	EntryEnemy(newEnemy);
 
-	Enemy* newEnemy2 = new Enemy(stageMap->GetMap(2));
+	Enemy* newEnemy2 = new Enemy(stageMap->GetMap(2), 1000.0f);
 	EntryEnemy(newEnemy2);
 }
 
@@ -357,11 +360,11 @@ void SecondStage::UpdateGame(float deltaTime)
 {
 	camera->Update(player->GetPosition());
 
-	player->Update(deltaTime, camera, hitChecker->Back(),hitChecker->MapHit());
+	player->Update(deltaTime, camera, hitChecker->Back(), hitChecker->MapHit());
 	
 	for (auto enemyPtr : enemy)
 	{
-		enemyPtr->Update(deltaTime, player);
+		enemyPtr->Update(deltaTime, player, hitChecker);
 		
 		player->FoundEnemy(deltaTime, enemyPtr->Spotted());
 		
@@ -440,11 +443,13 @@ void SecondStage::UpdateGoal(float deltaTime)
 
 	fadeManager->FadeMove();
 
+	Set::GetInstance().SetResult(clear);
+
 	//フレーム数が2.9秒経過したら
 	if (frame > 2.9f)
 	{
 		//ステージ選択画面へ遷移
-		parent->SetNextScene(SceneManager::SELECTION);
+		parent->SetNextScene(SceneManager::RESULT);
 		return;
 	}
 }
@@ -463,7 +468,7 @@ void SecondStage::UpdateOver(float deltaTime)
 	if (frame > 2.8f)
 	{
 		//ステージ選択画面へ遷移
-		parent->SetNextScene(SceneManager::SELECTION);
+		parent->SetNextScene(SceneManager::RESULT);
 		return;
 	}
 }
@@ -479,8 +484,8 @@ void SecondStage::Draw()
 	//マップ描画
 	stageMap->Draw();
 
-	//ゲーム状態がゲームとゴールの時だけ描画する
-	if (state == State::GAME || state == State::GOAL)
+	//ゲーム状態がゲームとゴールとオーバーの時だけ描画する
+	if (state == State::GAME || state == State::GOAL || state == State::OVER)
 	{
 		//プレイヤー描画
 		player->Draw();
@@ -496,7 +501,7 @@ void SecondStage::Draw()
 		{
 			cakeBulletPtr->Draw();
 
-			uiManager->CakeGetDraw(!cakeBulletPtr->cake->GetAlive());
+			uiManager->CakeGetDraw(cakeBulletPtr->CakeGet());
 		}
 	}
 
@@ -516,7 +521,7 @@ void SecondStage::Draw()
 	fadeManager->Draw();
 
 	//デバック用
-	/*DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
+	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %.0f", player->GetPosition().z);
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->GetPlayerCount());
@@ -525,5 +530,5 @@ void SecondStage::Draw()
 	for (auto cakeBulletPtr : cakeBullet)
 	{
 		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", cakeBulletPtr->cake->GetAlive());
-	}*/
+	}
 }

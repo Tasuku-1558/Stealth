@@ -9,6 +9,7 @@
 
 class Player;
 class Bullet;
+class HitChecker;
 
 /// <summary>
 /// エネミークラス(赤色)
@@ -16,12 +17,12 @@ class Bullet;
 class Enemy final : public EnemyBase
 {
 public:
-	 Enemy(std::vector<VECTOR>& id);
+	 Enemy(std::vector<VECTOR>& id, float enemySpeed);
 	 virtual ~Enemy();
 
 	void Initialize();									//初期化処理
 	void Activate();									//活性化処理
-	void Update(float deltaTime, Player* player);		//更新処理
+	void Update(float deltaTime, Player* player, HitChecker* hitChecker);		//更新処理
 	void Draw();										//描画処理
 
 	void VisualAngleCake(Bullet* bullet, float deltaTime);	//エネミーの視野にケーキが入った場合
@@ -65,7 +66,7 @@ private:
 	bool cakeEatFlag;		//エネミーがケーキに近づいて食べているかどうか
 	bool cakeHalfFlag;		//ケーキが半分になっているかどうか
 
-
+	float angle;
 	//静的定数
 	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
 	static const std::string PLAYER_FIND_PATH;	//プレイヤーを見つけた画像のパス

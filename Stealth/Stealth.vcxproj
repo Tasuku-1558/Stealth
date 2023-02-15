@@ -155,6 +155,7 @@
     <ClCompile Include="CakeBullet.cpp" />
     <ClCompile Include="CakeParticle.cpp" />
     <ClCompile Include="CakeRepopEffect.cpp" />
+    <ClCompile Include="FifthStage.cpp" />
     <ClCompile Include="FireWorksParticle.cpp" />
     <ClCompile Include="FourthStage.cpp" />
     <ClCompile Include="ResultScene.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SecondStage.cpp" />
     <ClCompile Include="SelectionUi.cpp" />
+    <ClCompile Include="Set.cpp" />
     <ClCompile Include="StageBase.cpp" />
     <ClCompile Include="StageMap.cpp" />
     <ClCompile Include="StageSelection.cpp" />
@@ -191,6 +193,7 @@
     <ClInclude Include="CakeBullet.h" />
     <ClInclude Include="CakeParticle.h" />
     <ClInclude Include="CakeRepopEffect.h" />
+    <ClInclude Include="FifthStage.h" />
     <ClInclude Include="FireWorksParticle.h" />
     <ClInclude Include="FourthStage.h" />
     <ClInclude Include="ResultScene.h" />
@@ -216,6 +219,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SecondStage.h" />
     <ClInclude Include="SelectionUi.h" />
+    <ClInclude Include="Set.h" />
     <ClInclude Include="StageBase.h" />
     <ClInclude Include="StageMap.h" />
     <ClInclude Include="StageSelection.h" />

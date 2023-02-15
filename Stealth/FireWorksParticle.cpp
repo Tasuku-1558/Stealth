@@ -2,16 +2,16 @@
 #include "FireWorksParticle.h"
 
 
-const unsigned int FireWorksParticle::ORANGE = GetColor(255, 165, 0);		//パーティクルのカラー
+const unsigned int FireWorksParticle::ORANGE = GetColor(255, 0, 0);		//パーティクルのカラー
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="pos"></param>
-FireWorksParticle::FireWorksParticle(const VECTOR& pos)
+FireWorksParticle::FireWorksParticle(const VECTOR pos)
 	: position()
-	, radius(30.0f)
+	, radius(100.0f)
 	, particleCount(0.0f)
 	, particlePopTime(5.0f)
 	, endFlag(false)
@@ -61,8 +61,8 @@ void FireWorksParticle::Update(float deltaTime)
 {
 	radius = ((particlePopTime - particleCount) / particlePopTime) * radius;
 	position.x += xPower;
-	position.y += yPower;
-	position.z = 0.0f;
+	position.y = 0.0f;
+	position.z += yPower;
 
 	particleCount += deltaTime;
 

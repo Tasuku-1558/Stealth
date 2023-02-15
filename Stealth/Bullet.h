@@ -44,9 +44,9 @@ private:
 	bool alive;								//生きてるか死んでるか
 
 	//静的定数
-	static const VECTOR SIZE;				//モデルの倍率
-	static const VECTOR POSITION;			//モデルの位置
 	static const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
 	static const string CURSOR_PATH;		//カーソル画像のパス
+	static const VECTOR SIZE;				//モデルの倍率
+	static const VECTOR POSITION;			//モデルの位置
 	static const float	SCALE;				//カーソル画像の大きさ
 };

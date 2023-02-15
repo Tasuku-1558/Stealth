@@ -19,7 +19,10 @@ public:
 	void Initialize();								//初期化処理
 	void Activate();								//活性化処理
 	void Draw();									//描画処理
-	void StageUiDraw(int number);					//ステージのUI描画処理
+	void StageUiDraw(int mapNumber,
+					 int enemyNumber, 
+					 int cakeNumber);				//ステージのUI描画処理
+
 	void TitleUiDraw();								//タイトルへ遷移するUI描画処理
 
 private:
@@ -31,25 +34,23 @@ private:
 				  VECTOR mapPos, VECTOR size, VECTOR rotate);		//マップ情報入力
 
 	std::string InputPath(std::string folderPath,	//画像のパスを入力
-						  std::string path);
+						  std::string imagePath);
 
-
+	int font;										//ゲームフォント
 	int selectionKeyImage;							//ステージセレクションUI画像
 	int selectionUiImage;							//ステージセレクションからタイトルへ遷移のUI画像
-	int stageDescription[4];						//ステージの説明画像ハンドル
-	int modelHandle[4];								//マップモデルハンドル
-	VECTOR position[4];								//マップモデルの位置
+	int stageDescription;							//ステージの説明画像ハンドル
+	int operationMethod;							//操作方法説明画像のハンドル
+	int modelHandle[5];								//マップモデルハンドル
+	VECTOR position[5];								//マップモデルの位置
 	
-
 
 	//静的定数
 	static const string IMAGE_FOLDER_PATH;			//imageフォルダまでのパス
 	static const string SELECTION_KEY_PATH;			//ステージセレクションUI画像のパス
 	static const string SELECTION_TITLE_PATH;		//ステージセレクションからタイトルへ遷移のUI画像
-	static const string STAGE1_DESCRIPTION_PATH;	//ステージ1の説明画像のパス
-	static const string STAGE2_DESCRIPTION_PATH;	//ステージ2の説明画像のパス
-	static const string STAGE3_DESCRIPTION_PATH;	//ステージ3の説明画像のパス
-	static const string STAGE4_DESCRIPTION_PATH;	//ステージ4の説明画像のパス
+	static const string STAGE_DESCRIPTION_PATH;		//ステージの説明画像のパス
+	static const string OPERATION_METHOD_PATH;		//操作方法説明画像のパス
 	static const int	STAGE_NUMBER;				//ステージ数
 
 	static const VECTOR STAGE1_POSITION;			//ステージ1モデルの位置
@@ -67,5 +68,9 @@ private:
 	static const VECTOR STAGE4_POSITION;			//ステージ4モデルの位置
 	static const VECTOR STAGE4_SIZE;				//ステージ4モデルの倍率
 	static const VECTOR STAGE4_ROTATE;				//ステージ4モデルの回転値
+
+	static const VECTOR STAGE5_POSITION;			//ステージ5モデルの位置
+	static const VECTOR STAGE5_SIZE;				//ステージ5モデルの倍率
+	static const VECTOR STAGE5_ROTATE;				//ステージ5モデルの回転値
 
 };

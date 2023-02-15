@@ -24,8 +24,8 @@ private:
 
 	TitleScene(const TitleScene&);		//コピーコンストラクタ
 
-	std::string InputPath(std::string folderPath,	//画像のパスを入力
-						  std::string path);
+	string InputPath(string folderPath,	//画像のパスを入力
+					 string path);
 
 	void Blink();						//文字の点滅処理
 	void Finalize();					//終了処理
@@ -41,6 +41,8 @@ private:
 	//静的定数
 	static const string VIDEO_FOLDER_PATH;	//videoフォルダまでのパス
 	static const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
+	static const string SOUND_FOLDER_PATH;	//soundフォルダまでのパス
+	static const string TITLE_BGM_PATH;		//タイトル画面のBGM音のパス
 	static const string PLAY_VIDEO_PATH;	//タイトル動画のパス
 	static const string TITLENAME_PATH;		//タイトル名の画像のパス
 	static const string TITLE_UI_PATH;		//ステージ選択シーンへ遷移キーのUIのパス

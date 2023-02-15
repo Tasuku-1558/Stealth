@@ -15,6 +15,7 @@
 #include "CakeParticle.h"
 #include "UiManager.h"
 #include "FadeManager.h"
+#include "Set.h"
 
 
 const float FirstStage::GOAL_POSITION_X	= -4000.0f;		//ゴールの位置X座標
@@ -44,6 +45,7 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 	, frame(0.0f)
 	, particleFlag(false)
 	, particleInterval(0.0f)
+	, clear(true)
 {
 	//処理なし
 }
@@ -74,13 +76,15 @@ void FirstStage::Initialize()
 
 	//マップクラス
 	//マップモデルの種類、サイズ、回転値、位置を入力する
-	stageMap = new StageMap(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f }, 
+	stageMap = new StageMap(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
 							{ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f }, { -2700.0f, -100.0f, -750.0f });
+
 	stageMap->Initialize();
 
 	//エネミークラス
 	//エネミーに行動パターンのリストを設定
-	enemy = new Enemy(stageMap->GetMap(0));
+	enemy = new Enemy(stageMap->GetMap(0), 1000.0f);
+
 	enemy->Initialize();
 
 	//プレイヤークラス
@@ -262,7 +266,7 @@ void FirstStage::UpdateGame(float deltaTime)
 {
 	camera->Update(player->GetPosition());
 
-	enemy->Update(deltaTime, player);
+	enemy->Update(deltaTime, player, hitChecker);
 
 	enemy->VisualAngleCake(cakeBullet->bullet, deltaTime);
 
@@ -330,11 +334,13 @@ void FirstStage::UpdateGoal(float deltaTime)
 
 	fadeManager->FadeMove();
 
+	Set::GetInstance().SetResult(clear);
+
 	//フレーム数が2.9秒経過したら
 	if (frame > 2.9f)
 	{
 		//ステージ選択画面へ遷移
-		parent->SetNextScene(SceneManager::SELECTION);
+		parent->SetNextScene(SceneManager::RESULT);
 		return;
 	}
 }
@@ -353,7 +359,7 @@ void FirstStage::UpdateOver(float deltaTime)
 	if (frame > 2.8f)
 	{
 		//ステージ選択画面へ遷移
-		parent->SetNextScene(SceneManager::SELECTION);
+		parent->SetNextScene(SceneManager::RESULT);
 		return;
 	}
 }
@@ -369,8 +375,8 @@ void FirstStage::Draw()
 	//マップ描画
 	stageMap->Draw();
 
-	//ゲーム状態がゲームとゴールの時だけ描画する
-	if (state == State::GAME || state == State::GOAL)
+	//ゲーム状態がゲームとゴールとオーバーの時だけ描画する
+	if (state == State::GAME || state == State::GOAL || state == State::OVER)
 	{
 		//エネミー描画
 		enemy->Draw();
@@ -389,7 +395,7 @@ void FirstStage::Draw()
 	uiManager->Draw(state, player->GetPlayerCount(), hitChecker->UI());
 	
 	//ケーキを所持しているか描画
-	uiManager->CakeGetDraw(!cakeBullet->cake->GetAlive());
+	uiManager->CakeGetDraw(cakeBullet->CakeGet());
 	
 	//ケーキのパーティクルの描画
 	for (auto particlePtr : cakeParticle)
@@ -401,11 +407,12 @@ void FirstStage::Draw()
 	fadeManager->Draw();
 
 	//デバック用
-	/*DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
+	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %.0f", player->GetPosition().z);
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->GetPlayerCount());
 	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "CakeAlive : %d\n(1:true 0:false)", cakeBullet->cake->GetAlive());
-	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());*/
+	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());
+
 
 }

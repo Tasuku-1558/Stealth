@@ -59,9 +59,9 @@ void TitleScene::Initialize()
 /// <param name="folderPath"></param>
 /// <param name="path"></param>
 /// <returns></returns>
-std::string TitleScene::InputPath(string folderPath, string path)
+string TitleScene::InputPath(string folderPath, string path)
 {
-	return std::string(folderPath + path);
+	return string(folderPath + path);
 }
 
 /// <summary>
@@ -110,15 +110,6 @@ void TitleScene::Blink()
 	}
 		
 	alpha += inc;
-	/*alpha += inc;
-
-	if (alpha <= 0 || alpha >= 255)
-	{
-		inc = -inc;
-		alpha = prevAlpha;
-	}
-
-	prevAlpha = alpha;*/
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 

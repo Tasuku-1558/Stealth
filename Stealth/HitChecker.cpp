@@ -1,8 +1,8 @@
 #include "HitChecker.h"
-#include "Player.h"
-#include "Wall.h"
-#include "Cake.h"
 #include "PreCompiledHeader.h"
+
+#include "Player.h"
+#include "Cake.h"
 
 
 const VECTOR HitChecker::UI_POSITION = { -800.0f, 30.0f, 0.0f };	//UI画像の位置
@@ -19,6 +19,7 @@ HitChecker::HitChecker()
 	, uiDraw(false)
 	, pushBack()
 	, mapHit(false)
+	, enemyHit(false)
 {
 	uiPosition = UI_POSITION;
 }
@@ -63,6 +64,30 @@ void HitChecker::BallAndPlayer(VECTOR playerPos, Cake* cake)
 	else
 	{
 		cakeHit = false;
+	}
+}
+
+/// <summary>
+/// エネミーとプレイヤーの当たり判定
+/// </summary>
+/// <param name="playerPos"></param>
+/// <param name="monitoringEnemy"></param>
+void HitChecker::EnemyAndPlayer(VECTOR playerPos, VECTOR enemyPos)
+{
+	//プレイヤーからケーキの座標を引いた値を取得
+	VECTOR sub = playerPos - enemyPos;
+
+	//プレイヤーとケーキの2点間の距離を計算
+	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
+
+	//衝突しているならば
+	if (direction < PLAYER_RADIUS + ENEMY_RADIUS)
+	{
+		enemyHit = true;
+	}
+	else
+	{
+		enemyHit = false;
 	}
 }
 

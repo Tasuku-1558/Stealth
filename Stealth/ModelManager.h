@@ -26,7 +26,8 @@ public:
 		STAGE1,			//ステージ1モデル
 		STAGE2,			//ステージ2モデル
 		STAGE3,			//ステージ3モデル
-		STAGE4,
+		STAGE4,			//ステージ4モデル
+		STAGE5,			//ステージ5モデル
 		MODEL_AMOUNT	//モデルの個数
 	};
 
@@ -57,5 +58,6 @@ private:
 	 static const string STAGE2_PATH;			//stage2モデルファイルのパス
 	 static const string STAGE3_PATH;			//stage3モデルファイルのパス
 	 static const string STAGE4_PATH;			//stage4モデルファイルのパス
+	 static const string STAGE5_PATH;			//stage5モデルファイルのパス
 
 };

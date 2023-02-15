@@ -5,18 +5,8 @@
 #include "SelectionUi.h"
 #include "FadeManager.h"
 
-
 const float StageSelection::PUSH_INTERVAL = 0.2f;		//切り替えカウントのインターバル
 
-
-char stageName[][32] =
-{
-	"STAGE1",
-	"STAGE2",
-	"STAGE3",
-	"STAGE4",
-	"TITLE",
-};
 
 /// <summary>
 /// コンストラクタ
@@ -59,7 +49,7 @@ void StageSelection::Initialize()
 
 	fadeManager = new FadeManager();
 
-	stageMax = sizeof(stageName) / sizeof(char[32]);
+	stageMax = sizeof(char[6][32]) / sizeof(char[32]);
 
 }
 
@@ -161,6 +151,10 @@ int StageSelection::StageCreator(int stageNumber)
 		break;
 
 	case 5:
+		parent->SetNextScene(SceneManager::STAGE5);
+		break;
+
+	case 6:
 		parent->SetNextScene(SceneManager::TITLE);
 		break;
 	}
@@ -178,6 +172,7 @@ void StageSelection::Update(float deltaTime)
 	light->Update({ 0.0f, 0.0f, 0.5f });
 
 	KeyMove(deltaTime);
+
 }
 
 /// <summary>
@@ -232,24 +227,37 @@ void StageSelection::KeyMove(float deltaTime)
 /// </summary>
 void StageSelection::Draw()
 {
+	/*for (int i = 0; i < 4; i++)
+	{
+		if (stageNo == i + 1)
+		{
+			selectionUi->StageUiDraw(i, 1, 1);
+		}
+	}*/
+
 	//それぞれのステージごとのUI描画処理
+	//マップの番号、敵の数、ケーキの数を入力
 	if (stageNo == 1)
 	{
-		selectionUi->StageUiDraw(0);
+		selectionUi->StageUiDraw(0, 1, 1);
 	}
 	else if (stageNo == 2)
 	{
-		selectionUi->StageUiDraw(1);
+		selectionUi->StageUiDraw(1, 2, 2);
 	}
 	else if (stageNo == 3)
 	{
-		selectionUi->StageUiDraw(2);
+		selectionUi->StageUiDraw(2, 4, 2);
 	}
 	else if (stageNo == 4)
 	{
-		selectionUi->StageUiDraw(3);
+		selectionUi->StageUiDraw(3, 3, 1);
 	}
 	else if (stageNo == 5)
+	{
+		selectionUi->StageUiDraw(4, 4, 1);
+	}
+	else if (stageNo == 6)
 	{
 		selectionUi->TitleUiDraw();
 	}

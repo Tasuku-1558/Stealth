@@ -9,7 +9,7 @@
 class FireWorksParticle final
 {
 public:
-	FireWorksParticle(const VECTOR& pos);
+	FireWorksParticle(const VECTOR pos);
 	virtual ~FireWorksParticle();
 
 	void Initialize();				//‰Šú‰»ˆ—

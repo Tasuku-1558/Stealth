@@ -5,7 +5,7 @@
 
 const string Player::SOUND_FOLDER_PATH  = "data/sound/";		//soundフォルダまでのパス
 const string Player::SPOTTED_SE_PATH    = "spotted.mp3";		//エネミーに見つかった時のSE音のパス
-const int	 Player::AFTER_IMAGE_NUMBER = 22;					//プレイヤーの残像枚数
+const int	 Player::AFTER_IMAGE_NUMBER = 12;					//プレイヤーの残像枚数
 
 using namespace Math3d;
 using namespace std;
@@ -197,14 +197,14 @@ void Player::Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 /// </summary>
 void Player::AfterImage()
 {
-	for (int i = 21; i >= 1; i--)
+	for (int i = 11; i >= 1; i--)
 	{
 		pastPosition[i] = pastPosition[i - 1];
-		MV1SetPosition(emptyModel[i], pastPosition[i]);
+		MV1SetPosition(emptyModel[i], pastPosition[i] - VGet(0.0f, 10.0f, 0.0f));
 	}
 
 	pastPosition[0] = position;
-	MV1SetPosition(emptyModel[0], pastPosition[0]);
+	MV1SetPosition(emptyModel[0], pastPosition[0] - VGet(0.0f, 10.0f, 0.0f));
 }
 
 /// <summary>
@@ -217,11 +217,11 @@ void Player::FoundEnemy(float deltaTime, bool spotted)
 	//エネミーに見つかったら
 	if (spotted)
 	{
-		//初期位置に戻すカウントを開始する
-		initialCount += deltaTime;
-
 		//プレイヤーの動きを止める
 		speed = 0.0f;
+
+		//初期位置に戻すカウントを開始する
+		initialCount += deltaTime;
 
 		//一度だけサウンドを流す
 		if (!spottedSeFlag)
@@ -240,6 +240,12 @@ void Player::FoundEnemy(float deltaTime, bool spotted)
 		//スピードを元に戻す
 		position = POSITION;
 		previewPosition = POSITION;
+
+		for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
+		{
+			pastPosition[i] = position;
+		}
+
 		dir = DIR;
 		speed = SPEED;
 

@@ -4,10 +4,8 @@
 const string SelectionUi::IMAGE_FOLDER_PATH		  = "data/image/";				//imageƒtƒHƒ‹ƒ_‚Ü‚Å‚ÌƒpƒX
 const string SelectionUi::SELECTION_KEY_PATH	  = "selection_key.png";		//ƒXƒe[ƒWƒZƒŒƒNƒVƒ‡ƒ“UI‰æ‘œ‚ÌƒpƒX
 const string SelectionUi::SELECTION_TITLE_PATH	  = "selection_Ui.png";			//ƒXƒe[ƒWƒZƒŒƒNƒVƒ‡ƒ“‚©‚çƒ^ƒCƒgƒ‹‚Ö‘JˆÚ‚ÌUI‰æ‘œ
-const string SelectionUi::STAGE1_DESCRIPTION_PATH = "stage1_description.png";	//ƒXƒe[ƒW1‚Ìà–¾‰æ‘œ‚ÌƒpƒX
-const string SelectionUi::STAGE2_DESCRIPTION_PATH = "stage2_description.png";	//ƒXƒe[ƒW2‚Ìà–¾‰æ‘œ‚ÌƒpƒX
-const string SelectionUi::STAGE3_DESCRIPTION_PATH = "stage3_description.png";	//ƒXƒe[ƒW3‚Ìà–¾‰æ‘œ‚ÌƒpƒX
-const string SelectionUi::STAGE4_DESCRIPTION_PATH = "stage4_description.png";	//ƒXƒe[ƒW4‚Ìà–¾‰æ‘œ‚ÌƒpƒX
+const string SelectionUi::STAGE_DESCRIPTION_PATH  = "stage_description.png";	//ƒXƒe[ƒW‚Ìà–¾‰æ‘œ‚ÌƒpƒX
+const string SelectionUi::OPERATION_METHOD_PATH	  = "operation_method.png";		//‘€ì•û–@à–¾‰æ‘œ‚ÌƒpƒX
 const int	 SelectionUi::STAGE_NUMBER			  = 4;							//ƒXƒe[ƒW”
 
 const VECTOR SelectionUi::STAGE1_POSITION		  = { 1300.0f, 740.0f, 0.0f };		//ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚ÌˆÊ’u
@@ -22,18 +20,24 @@ const VECTOR SelectionUi::STAGE3_POSITION		  = { 1250.0f, 750.0f, -150.0f };	//ƒ
 const VECTOR SelectionUi::STAGE3_SIZE			  = { 7.0f, 7.0f, 7.0f };			//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚Ì”{—¦
 const VECTOR SelectionUi::STAGE3_ROTATE = { 90.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }; //ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
 
-const VECTOR SelectionUi::STAGE4_POSITION		  = { 1100.0f, 800.0f, -150.0f };	//ƒXƒe[ƒW4ƒ‚ƒfƒ‹‚ÌˆÊ’u
+const VECTOR SelectionUi::STAGE4_POSITION		  = { 1050.0f, 800.0f, -150.0f };	//ƒXƒe[ƒW4ƒ‚ƒfƒ‹‚ÌˆÊ’u
 const VECTOR SelectionUi::STAGE4_SIZE			  = { 6.0f, 6.0f, 6.0f };			//ƒXƒe[ƒW4ƒ‚ƒfƒ‹‚Ì”{—¦
-const VECTOR SelectionUi::STAGE4_ROTATE = { 90.0f * DX_PI_F / 180.0f, 190.0f * DX_PI_F / 180.0f, 0.0f }; //ƒXƒe[ƒW4ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
+const VECTOR SelectionUi::STAGE4_ROTATE = { 90.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }; //ƒXƒe[ƒW4ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
+
+const VECTOR SelectionUi::STAGE5_POSITION		  = { 750.0f, 950.0f, -150.0f };	//ƒXƒe[ƒW5ƒ‚ƒfƒ‹‚ÌˆÊ’u
+const VECTOR SelectionUi::STAGE5_SIZE			  = { 8.0f, 8.0f, 8.0f };			//ƒXƒe[ƒW5ƒ‚ƒfƒ‹‚Ì”{—¦
+const VECTOR SelectionUi::STAGE5_ROTATE = { 90.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }; //ƒXƒe[ƒW5ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
 
 
 /// <summary>
 /// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 /// </summary>
 SelectionUi::SelectionUi()
-	: selectionKeyImage(0)
+	: font(0)
+	, selectionKeyImage(0)
 	, selectionUiImage(0)
-	, stageDescription()
+	, stageDescription(0)
+	, operationMethod(0)
 	, modelHandle()
 	, position()
 {
@@ -54,18 +58,13 @@ SelectionUi::~SelectionUi()
 void SelectionUi::Initialize()
 {
 	//‰æ‘œ“Ç‚İ‚İ
-	stageDescription[0] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE1_DESCRIPTION_PATH).c_str());
+	stageDescription  = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE_DESCRIPTION_PATH).c_str());
 
-	stageDescription[1] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE2_DESCRIPTION_PATH).c_str());
+	selectionKeyImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_KEY_PATH).c_str());
 
-	stageDescription[2] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE3_DESCRIPTION_PATH).c_str());
+	selectionUiImage  = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_TITLE_PATH).c_str());
 
-	stageDescription[3] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE4_DESCRIPTION_PATH).c_str());
-
-	selectionKeyImage   = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_KEY_PATH).c_str());
-
-	selectionUiImage	= LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_TITLE_PATH).c_str());
-
+	operationMethod	  = LoadGraph(InputPath(IMAGE_FOLDER_PATH, OPERATION_METHOD_PATH).c_str());
 
 	//ƒ}ƒbƒvƒ‚ƒfƒ‹“Ç‚İ‚İ
 	MapInput(0, ModelManager::STAGE1, STAGE1_POSITION, STAGE1_SIZE, STAGE1_ROTATE);
@@ -75,6 +74,11 @@ void SelectionUi::Initialize()
 	MapInput(2, ModelManager::STAGE3, STAGE3_POSITION, STAGE3_SIZE, STAGE3_ROTATE);
 
 	MapInput(3, ModelManager::STAGE4, STAGE4_POSITION, STAGE4_SIZE, STAGE4_ROTATE);
+
+	MapInput(4, ModelManager::STAGE5, STAGE5_POSITION, STAGE5_SIZE, STAGE5_ROTATE);
+
+	//ƒtƒHƒ“ƒgƒf[ƒ^‚Ìì¬
+	font = CreateFontToHandle("Oranienbaum", 90, 1);
 
 }
 
@@ -101,9 +105,9 @@ void SelectionUi::MapInput(int number, ModelManager::ModelType modelType, VECTOR
 /// <param name="folderPath"></param>
 /// <param name="path"></param>
 /// <returns></returns>
-std::string SelectionUi::InputPath(std::string folderPath, std::string path)
+std::string SelectionUi::InputPath(std::string folderPath, std::string imagePath)
 {
-	return std::string(folderPath + path);
+	return std::string(folderPath + imagePath);
 }
 
 /// <summary>
@@ -111,6 +115,7 @@ std::string SelectionUi::InputPath(std::string folderPath, std::string path)
 /// </summary>
 void SelectionUi::Activate()
 {
+
 }
 
 /// <summary>
@@ -120,22 +125,33 @@ void SelectionUi::Finalize()
 {
 	for (int i = 0; i < STAGE_NUMBER; i++)
 	{
-		DeleteGraph(stageDescription[i]);
-
 		MV1DeleteModel(modelHandle[i]);
 	}
 
 	DeleteGraph(selectionKeyImage);
+
+	DeleteGraph(stageDescription);
+
+	DeleteGraph(operationMethod);
+
+	//ì¬‚µ‚½ƒtƒHƒ“ƒgƒf[ƒ^‚Ìíœ
+	DeleteFontToHandle(font);
 }
 
 /// <summary>
 /// ƒXƒe[ƒW‚ÌUI•`‰æˆ—
 /// </summary>
-/// <param name="number"></param>
-void SelectionUi::StageUiDraw(int number)
+/// <param name="mapNumber"></param>
+/// <param name="enemyNumber"></param>
+/// <param name="cakeNumber"></param>
+void SelectionUi::StageUiDraw(int mapNumber, int enemyNumber, int cakeNumber)
 {
-	DrawGraph(100, 150, stageDescription[number], TRUE);
-	MV1DrawModel(modelHandle[number]);
+	DrawGraph(100, 150, stageDescription, TRUE);
+	MV1DrawModel(modelHandle[mapNumber]);
+
+	//“G‚ÆƒP[ƒL‚Ì”‚ğ•\¦
+	DrawFormatStringToHandle(370, 470, GetColor(255, 255, 255), font, "%d", enemyNumber);
+	DrawFormatStringToHandle(520, 570, GetColor(255, 255, 255), font, "%d", cakeNumber);
 }
 
 /// <summary>
@@ -151,5 +167,7 @@ void SelectionUi::TitleUiDraw()
 /// </summary>
 void SelectionUi::Draw()
 {
-	DrawRotaGraph(1350, 950, 0.7f, 0, selectionKeyImage, TRUE);
+	DrawRotaGraph(500, 950, 0.85f, 0, operationMethod, TRUE);
+
+	DrawRotaGraph(1450, 950, 0.6f, 0, selectionKeyImage, TRUE);
 }

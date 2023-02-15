@@ -29,6 +29,9 @@
     <Filter Include="ソース ファイル\Scene\StageSelection">
       <UniqueIdentifier>{60442f97-7011-45fc-9164-87af64412f18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Cake">
+      <UniqueIdentifier>{67df388f-c401-4ff2-8ea9-58dd3a065616}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -63,12 +66,6 @@
     </ClCompile>
     <ClCompile Include="HitChecker.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Cake.cpp">
-      <Filter>ソース ファイル\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
     <ClCompile Include="UiManager.cpp">
       <Filter>ソース ファイル\System</Filter>
@@ -115,9 +112,6 @@
     <ClCompile Include="CakeParticle.cpp">
       <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="CakeBullet.cpp">
-      <Filter>ソース ファイル\Player</Filter>
-    </ClCompile>
     <ClCompile Include="DeltaTime.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
@@ -131,6 +125,21 @@
       <Filter>ソース ファイル\Map</Filter>
     </ClCompile>
     <ClCompile Include="FourthStage.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>ソース ファイル\Cake</Filter>
+    </ClCompile>
+    <ClCompile Include="Cake.cpp">
+      <Filter>ソース ファイル\Cake</Filter>
+    </ClCompile>
+    <ClCompile Include="CakeBullet.cpp">
+      <Filter>ソース ファイル\Cake</Filter>
+    </ClCompile>
+    <ClCompile Include="Set.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="FifthStage.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -171,12 +180,6 @@
     <ClInclude Include="HitChecker.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Cake.h">
-      <Filter>ソース ファイル\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>ソース ファイル\Player</Filter>
-    </ClInclude>
     <ClInclude Include="UiManager.h">
       <Filter>ソース ファイル\System</Filter>
     </ClInclude>
@@ -197,9 +200,6 @@
     </ClInclude>
     <ClInclude Include="BackGround.h">
       <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CakeBullet.h">
-      <Filter>ソース ファイル\Player</Filter>
     </ClInclude>
     <ClInclude Include="StageBase.h">
       <Filter>ソース ファイル\Map</Filter>
@@ -241,6 +241,21 @@
       <Filter>ソース ファイル\Map</Filter>
     </ClInclude>
     <ClInclude Include="FourthStage.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>ソース ファイル\Cake</Filter>
+    </ClInclude>
+    <ClInclude Include="Cake.h">
+      <Filter>ソース ファイル\Cake</Filter>
+    </ClInclude>
+    <ClInclude Include="CakeBullet.h">
+      <Filter>ソース ファイル\Cake</Filter>
+    </ClInclude>
+    <ClInclude Include="Set.h">
+      <Filter>ソース ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="FifthStage.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>

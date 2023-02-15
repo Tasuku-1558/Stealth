@@ -39,8 +39,8 @@ private:
 	void AfterImage();															//プレイヤーの残像処理
 
 	float initialCount;			//初期位置に戻すカウント
-	int emptyModel[22];			//残像モデル格納用
-	VECTOR pastPosition[22];	//プレイヤーの過去の位置
+	int emptyModel[12];			//残像モデル格納用
+	VECTOR pastPosition[12];	//プレイヤーの過去の位置
 
 	//静的定数
 	static const std::string SOUND_FOLDER_PATH;		//soundフォルダまでのパス

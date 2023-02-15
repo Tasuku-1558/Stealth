@@ -6,6 +6,8 @@
 #include "FirstStage.h"
 #include "SecondStage.h"
 #include "ThirdStage.h"
+#include "FourthStage.h"
+#include "FifthStage.h"
 
 
 /// <summary>
@@ -30,6 +32,12 @@ public:
 	void Draw(ThirdStage::State state,
 			  int playerCount);				//ThirdStageの描画処理
 
+	void Draw(FourthStage::State state,
+			  int playerCount);				//FourthStageの描画処理
+
+	void Draw(FifthStage::State state,
+		int playerCount);					//FifthStageの描画処理
+
 	void CakeGetDraw(bool cakeGet);			//ケーキを持っているかのUI
 
 private:
@@ -46,9 +54,10 @@ private:
 		CLEAR,				//ゲームクリア画像
 		STAGE2,				//ステージ2スタート画像
 		FRAME,				//プレイヤーHPフレーム画像
-		KEY,				//プレイヤー移動キー画像
 		CAKE,				//ケーキ画像
 		STAGE3,				//ステージ3スタート画像
+		STAGE4,				//ステージ4スタート画像
+		STAGE5,				//ステージ5スタート画像
 		GRAPHIC_AMOUNT		//画像の数
 	};
 

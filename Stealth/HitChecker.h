@@ -4,9 +4,7 @@
 #include "Math3D.h"
 
 class Player;
-class Wall;
 class Cake;
-
 
 /// <summary>
 /// 当たり判定クラス
@@ -19,9 +17,11 @@ public:
 
 	void Check(int model, Player* player);					//衝突判定
 	void BallAndPlayer(VECTOR playerPos, Cake* cake);		//ケーキとプレイヤーの当たり判定
+	void EnemyAndPlayer(VECTOR playerPos, VECTOR enemyPos);	//エネミーとプレイヤーの当たり判定
 
 
 	const bool CakeHit() { return cakeHit; }				//ケーキにプレイヤーが当たったかどうかを返す
+	const bool EnemyHit() { return enemyHit; }				//エネミーにプレイヤーが当たったかどうかを返す
 	const bool UI() { return uiDraw; }						//UI画像に当たったかどうかを返す
 	const VECTOR Back() { return pushBack; }				//マップの壁にプレイヤーが衝突したときの押し戻し値を返す
 	const bool MapHit() { return mapHit; }					//マップもプレイヤーが衝突したかどうかを返す
@@ -35,6 +35,7 @@ private:
 
 
 	bool cakeHit;			//ケーキに衝突したならば
+	bool enemyHit;			//エネミーと衝突したならば
 	VECTOR uiPosition;		//UI画像の位置
 	bool uiDraw;			//UI画像を描画するかどうか
 

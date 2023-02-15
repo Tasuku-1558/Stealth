@@ -31,11 +31,16 @@ StageMap::~StageMap()
 /// </summary>
 void StageMap::Initialize()
 {
+	//エネミーの行動パターンリスト
 	MapList();
 	MapList2();
 	MapList3();
 	MapList4();
 	MapList5();
+	MapList6();
+	MapList7();
+	MapList8();
+	MapList9();
 
 }
 
@@ -61,8 +66,8 @@ void StageMap::Draw()
 /// </summary>
 void StageMap::MapList()
 {
-	positionList[0].push_back({-3200.0f, 0.0f, 1000.0f});
-	positionList[0].push_back({-3200.0f, 0.0f, -1000.0f});
+	positionList[0].push_back({ -3200.0f, 0.0f, 1000.0f });
+	positionList[0].push_back({ -3200.0f, 0.0f, -1000.0f });
 
 	itr[0] = positionList[0].begin();   //イテレータを先頭に設定
 }
@@ -73,10 +78,16 @@ void StageMap::MapList()
 /// </summary>
 void StageMap::MapList2()
 {
-	positionList[1].push_back({-2200.0f, 0.0f, 600.0f});
-	positionList[1].push_back({-2200.0f, 0.0f, -700.0f});
-	positionList[1].push_back({-1400.0f, 0.0f, -700.0f});
-	positionList[1].push_back({-1400.0f, 0.0f, 600.0f});
+	positionList[1].push_back({ -2200.0f, 0.0f, 600.0f });
+	positionList[1].push_back({ -2200.0f, 0.0f, -700.0f });
+
+	//positionList[1].push_back({ -2100.0f, 0.0f, -800.0f });
+
+	positionList[1].push_back({ -1400.0f, 0.0f, -700.0f });
+	positionList[1].push_back({ -1400.0f, 0.0f, 600.0f });
+
+	/*positionList[1].push_back({ -1400.0f, 0.0f, -700.0f });
+	positionList[1].push_back({ -1400.0f, 0.0f, 600.0f });*/
 
 	itr[1] = positionList[1].begin();	//イテレータを先頭に設定
 }
@@ -87,8 +98,8 @@ void StageMap::MapList2()
 /// </summary>
 void StageMap::MapList3()
 {
-	positionList[2].push_back({-5000.0f, 0.0f, 0.0f});
-	positionList[2].push_back({-4400.0f, 0.0f, 0.0f});
+	positionList[2].push_back({ -5000.0f, 0.0f, 0.0f });
+	positionList[2].push_back({ -4400.0f, 0.0f, 0.0f });
 
 	itr[2] = positionList[2].begin();   //イテレータを先頭に設定
 }
@@ -99,8 +110,8 @@ void StageMap::MapList3()
 /// </summary>
 void StageMap::MapList4()
 {
-	positionList[3].push_back({-2500.0f, 0.0f, 800.0f});
-	positionList[3].push_back({-1500.0f, 0.0f, 800.0f});
+	positionList[3].push_back({ -2500.0f, 0.0f, 800.0f });
+	positionList[3].push_back({ -1500.0f, 0.0f, 800.0f });
 
 	itr[3] = positionList[3].begin();   //イテレータを先頭に設定
 }
@@ -111,10 +122,62 @@ void StageMap::MapList4()
 /// </summary>
 void StageMap::MapList5()
 {
-	positionList[4].push_back({-2500.0f, 0.0f,  5000.0f});
-	positionList[4].push_back({-2500.0f, 0.0f,  4300.0f});
-	positionList[4].push_back({-2800.0f, 0.0f,  4300.0f});
-	positionList[4].push_back({-2500.0f, 0.0f,  4300.0f});
+	positionList[4].push_back({ -2500.0f, 0.0f,  5000.0f });
+	positionList[4].push_back({ -2500.0f, 0.0f,  4300.0f });
+	positionList[4].push_back({ -2800.0f, 0.0f,  4300.0f });
+	positionList[4].push_back({ -2500.0f, 0.0f,  4300.0f });
 
 	itr[4] = positionList[4].begin();   //イテレータを先頭に設定
+}
+
+/// <summary>
+/// 敵の行動パターンリスト6(左右移動の敵)
+/// FourthStageの敵
+/// </summary>
+void StageMap::MapList6()
+{
+	positionList[5].push_back({ -1300.0f, 0.0f, 500.0f });
+	positionList[5].push_back({ -1300.0f, 0.0f, -500.0f });
+
+	itr[5] = positionList[5].begin();   //イテレータを先頭に設定
+}
+
+/// <summary>
+/// 敵の行動パターンリスト7(壁の周りを回る敵)
+/// FourthStageの敵
+/// </summary>
+void StageMap::MapList7()
+{
+	positionList[6].push_back({ -4800.0f, 0.0f, -500.0f });
+	positionList[6].push_back({ -4800.0f, 0.0f, -1500.0f });
+	positionList[6].push_back({ -3800.0f, 0.0f, -1500.0f });
+	positionList[6].push_back({ -3800.0f, 0.0f, -500.0f });
+
+	itr[6] = positionList[6].begin();	//イテレータを先頭に設定
+}
+
+/// <summary>
+/// 敵の行動パターンリスト8
+/// </summary>
+void StageMap::MapList8()
+{
+	positionList[7].push_back({ -2300.0f, 0.0f, 3300.0f });
+	positionList[7].push_back({ -620.0f, 0.0f, 3300.0f });
+	positionList[7].push_back({ -620.0f, 0.0f, 2800.0f });
+	positionList[7].push_back({ -620.0f, 0.0f, 3300.0f });
+
+	itr[7] = positionList[7].begin();   //イテレータを先頭に設定
+}
+
+/// <summary>
+/// 敵の行動パターンリスト9
+/// </summary>
+void StageMap::MapList9()
+{
+	positionList[8].push_back({ -2200.0f, 0.0f, 2200.0f });
+	positionList[8].push_back({ -3300.0f, 0.0f, 2200.0f });
+	positionList[8].push_back({ -3300.0f, 0.0f, 2800.0f });
+	positionList[8].push_back({ -3300.0f, 0.0f, 2200.0f });
+
+	itr[8] = positionList[8].begin();   //イテレータを先頭に設定
 }

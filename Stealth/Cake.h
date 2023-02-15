@@ -19,9 +19,9 @@ public:
 	void Update();						//更新処理
 	void CakeAlive();					//ケーキをアクティブ化
 	void Draw();						//描画処理
+	void IsAlive(HitChecker* hitChecker);			//ケーキが生きてるか死んでいるかを判定
 
 	const bool GetAlive() { return alive; }			//ケーキが生きてるか死んでるかを返す
-	void IsAlive(HitChecker* hitChecker);			//ケーキが生きてるか死んでいるかを判定
 
 private:
 
