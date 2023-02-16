@@ -17,6 +17,7 @@
 #include "UiManager.h"
 #include "FadeManager.h"
 #include "Set.h"
+#include "SoundManager.h"
 
 
 const float FourthStage::GOAL_POSITION_X = -5400.0f;	//ゴールの位置X座標
@@ -133,6 +134,7 @@ void FourthStage::Finalize()
 	for (auto enemyPtr : enemy)
 	{
 		SafeDelete(enemyPtr);
+		DeleteEnemy(enemyPtr);
 	}
 
 	SafeDelete(cakeBullet);
@@ -146,6 +148,7 @@ void FourthStage::Finalize()
 	for (auto particlePtr : cakeParticle)
 	{
 		SafeDelete(particlePtr);
+		DeleteCakeParticle(particlePtr);
 	}
 
 	SafeDelete(uiManager);
@@ -154,6 +157,8 @@ void FourthStage::Finalize()
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
+
+	SoundManager::GetInstance().DeleteBgm();
 }
 
 /// <summary>
@@ -164,6 +169,8 @@ void FourthStage::Activate()
 	state = State::START;
 
 	frame = 0.0f;
+
+	SoundManager::GetInstance().PlayBgm();
 
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
@@ -411,6 +418,8 @@ void FourthStage::UpdateGoal(float deltaTime)
 	//フレーム数が2.9秒経過したら
 	if (frame > 2.9f)
 	{
+		SoundManager::GetInstance().StopBgm();
+
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
@@ -430,6 +439,8 @@ void FourthStage::UpdateOver(float deltaTime)
 	//フレーム数が2.8秒経過したら
 	if (frame > 2.8f)
 	{
+		SoundManager::GetInstance().StopBgm();
+
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
@@ -484,12 +495,12 @@ void FourthStage::Draw()
 	fadeManager->Draw();
 
 	//デバック用
-	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
+	/*DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %.0f", player->GetPosition().z);
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->GetPlayerCount());
 	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());
 
-	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", cakeBullet->cake->GetAlive());
+	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", cakeBullet->cake->GetAlive());*/
 
 }

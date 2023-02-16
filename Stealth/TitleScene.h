@@ -33,6 +33,7 @@ private:
 	int backGroundHandle;				//タイトル動画の格納用
 	int titleName;						//タイトル名の画像格納用
 	int titleUi;						//ステージ選択シーンへ遷移キーのUI格納用
+	int titleBgm;						//タイトル画面のBGM
 	int alpha;
 	int inc;
 	int prevAlpha;

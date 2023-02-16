@@ -40,8 +40,8 @@ private:
 	void MapList7();                        //敵の行動パターンリスト7(壁の周りを回る敵)
 
 	//FifthStageでの敵の行動
-	void MapList8();                        //敵の行動パターンリスト8(左右移動の敵)
-	void MapList9();                        //敵の行動パターンリスト9(壁の周りを回る敵)
+	void MapList8();                        //敵の行動パターンリスト8(右下L字移動の敵)
+	void MapList9();                        //敵の行動パターンリスト9(左上L字移動の敵)
 
 	std::vector<VECTOR> positionList[9];
 	std::vector<VECTOR>::iterator itr[9];

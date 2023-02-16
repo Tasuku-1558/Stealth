@@ -137,7 +137,7 @@ void StageMap::MapList5()
 void StageMap::MapList6()
 {
 	positionList[5].push_back({ -1300.0f, 0.0f, 500.0f });
-	positionList[5].push_back({ -1300.0f, 0.0f, -500.0f });
+	positionList[5].push_back({ -1300.0f, 0.0f, -700.0f });
 
 	itr[5] = positionList[5].begin();   //イテレータを先頭に設定
 }
@@ -157,7 +157,8 @@ void StageMap::MapList7()
 }
 
 /// <summary>
-/// 敵の行動パターンリスト8
+/// 敵の行動パターンリスト8(右下L字移動の敵)
+/// FifthStageの敵
 /// </summary>
 void StageMap::MapList8()
 {
@@ -170,7 +171,8 @@ void StageMap::MapList8()
 }
 
 /// <summary>
-/// 敵の行動パターンリスト9
+/// 敵の行動パターンリスト9(左上L字移動の敵)
+/// FifthStageの敵
 /// </summary>
 void StageMap::MapList9()
 {

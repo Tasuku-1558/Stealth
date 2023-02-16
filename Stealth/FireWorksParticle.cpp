@@ -11,7 +11,7 @@ const unsigned int FireWorksParticle::ORANGE = GetColor(255, 0, 0);		//ÉpÅ[ÉeÉBÉ
 /// <param name="pos"></param>
 FireWorksParticle::FireWorksParticle(const VECTOR pos)
 	: position()
-	, radius(100.0f)
+	, radius(40.0f)
 	, particleCount(0.0f)
 	, particlePopTime(5.0f)
 	, endFlag(false)
@@ -61,8 +61,8 @@ void FireWorksParticle::Update(float deltaTime)
 {
 	radius = ((particlePopTime - particleCount) / particlePopTime) * radius;
 	position.x += xPower;
-	position.y = 0.0f;
-	position.z += yPower;
+	position.y += yPower;
+	position.z = 0.0f;
 
 	particleCount += deltaTime;
 

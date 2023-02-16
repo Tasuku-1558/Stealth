@@ -6,7 +6,7 @@ const string SelectionUi::SELECTION_KEY_PATH	  = "selection_key.png";		//ƒXƒe[ƒ
 const string SelectionUi::SELECTION_TITLE_PATH	  = "selection_Ui.png";			//ƒXƒe[ƒWƒZƒŒƒNƒVƒ‡ƒ“‚©‚çƒ^ƒCƒgƒ‹‚Ö‘JˆÚ‚ÌUI‰æ‘œ
 const string SelectionUi::STAGE_DESCRIPTION_PATH  = "stage_description.png";	//ƒXƒe[ƒW‚Ìà–¾‰æ‘œ‚ÌƒpƒX
 const string SelectionUi::OPERATION_METHOD_PATH	  = "operation_method.png";		//‘€ì•û–@à–¾‰æ‘œ‚ÌƒpƒX
-const int	 SelectionUi::STAGE_NUMBER			  = 4;							//ƒXƒe[ƒW”
+const int	 SelectionUi::STAGE_NUMBER			  = 5;							//ƒXƒe[ƒW”
 
 const VECTOR SelectionUi::STAGE1_POSITION		  = { 1300.0f, 740.0f, 0.0f };		//ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚ÌˆÊ’u
 const VECTOR SelectionUi::STAGE1_SIZE			  = { 10.0f, 10.0f, 10.0f };		//ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚Ì”{—¦
@@ -57,15 +57,6 @@ SelectionUi::~SelectionUi()
 /// </summary>
 void SelectionUi::Initialize()
 {
-	//‰æ‘œ“Ç‚İ‚İ
-	stageDescription  = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE_DESCRIPTION_PATH).c_str());
-
-	selectionKeyImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_KEY_PATH).c_str());
-
-	selectionUiImage  = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_TITLE_PATH).c_str());
-
-	operationMethod	  = LoadGraph(InputPath(IMAGE_FOLDER_PATH, OPERATION_METHOD_PATH).c_str());
-
 	//ƒ}ƒbƒvƒ‚ƒfƒ‹“Ç‚İ‚İ
 	MapInput(0, ModelManager::STAGE1, STAGE1_POSITION, STAGE1_SIZE, STAGE1_ROTATE);
 
@@ -76,6 +67,16 @@ void SelectionUi::Initialize()
 	MapInput(3, ModelManager::STAGE4, STAGE4_POSITION, STAGE4_SIZE, STAGE4_ROTATE);
 
 	MapInput(4, ModelManager::STAGE5, STAGE5_POSITION, STAGE5_SIZE, STAGE5_ROTATE);
+	
+
+	//‰æ‘œ“Ç‚İ‚İ
+	stageDescription = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE_DESCRIPTION_PATH).c_str());
+
+	selectionKeyImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_KEY_PATH).c_str());
+
+	selectionUiImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_TITLE_PATH).c_str());
+
+	operationMethod = LoadGraph(InputPath(IMAGE_FOLDER_PATH, OPERATION_METHOD_PATH).c_str());
 
 	//ƒtƒHƒ“ƒgƒf[ƒ^‚Ìì¬
 	font = CreateFontToHandle("Oranienbaum", 90, 1);
@@ -111,14 +112,6 @@ std::string SelectionUi::InputPath(std::string folderPath, std::string imagePath
 }
 
 /// <summary>
-/// Šˆ«‰»ˆ—
-/// </summary>
-void SelectionUi::Activate()
-{
-
-}
-
-/// <summary>
 /// I—¹ˆ—
 /// </summary>
 void SelectionUi::Finalize()
@@ -136,6 +129,24 @@ void SelectionUi::Finalize()
 
 	//ì¬‚µ‚½ƒtƒHƒ“ƒgƒf[ƒ^‚Ìíœ
 	DeleteFontToHandle(font);
+}
+
+/// <summary>
+/// Šˆ«‰»ˆ—
+/// </summary>
+void SelectionUi::Activate()
+{
+
+	//ƒ}ƒbƒvƒ‚ƒfƒ‹“Ç‚İ‚İ
+	MapInput(0, ModelManager::STAGE1, STAGE1_POSITION, STAGE1_SIZE, STAGE1_ROTATE);
+
+	MapInput(1, ModelManager::STAGE2, STAGE2_POSITION, STAGE2_SIZE, STAGE2_ROTATE);
+
+	MapInput(2, ModelManager::STAGE3, STAGE3_POSITION, STAGE3_SIZE, STAGE3_ROTATE);
+
+	MapInput(3, ModelManager::STAGE4, STAGE4_POSITION, STAGE4_SIZE, STAGE4_ROTATE);
+
+	MapInput(4, ModelManager::STAGE5, STAGE5_POSITION, STAGE5_SIZE, STAGE5_ROTATE);
 }
 
 /// <summary>

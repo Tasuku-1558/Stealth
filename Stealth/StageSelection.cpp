@@ -4,6 +4,7 @@
 #include "Light.h"
 #include "SelectionUi.h"
 #include "FadeManager.h"
+#include "Set.h"
 
 const float StageSelection::PUSH_INTERVAL = 0.2f;		//切り替えカウントのインターバル
 
@@ -25,8 +26,11 @@ StageSelection::StageSelection(SceneManager* const sceneManager)
 	, maxTime(0)
 	, pushCount(0.0f)
 	, frame(0.0f)
+	, getStage(0)
 {
 	//処理なし
+	Initialize();
+	Activate();
 }
 
 /// <summary>
@@ -172,7 +176,6 @@ void StageSelection::Update(float deltaTime)
 	light->Update({ 0.0f, 0.0f, 0.5f });
 
 	KeyMove(deltaTime);
-
 }
 
 /// <summary>
@@ -227,13 +230,7 @@ void StageSelection::KeyMove(float deltaTime)
 /// </summary>
 void StageSelection::Draw()
 {
-	/*for (int i = 0; i < 4; i++)
-	{
-		if (stageNo == i + 1)
-		{
-			selectionUi->StageUiDraw(i, 1, 1);
-		}
-	}*/
+	selectionUi->Draw();
 
 	//それぞれのステージごとのUI描画処理
 	//マップの番号、敵の数、ケーキの数を入力
@@ -267,7 +264,6 @@ void StageSelection::Draw()
 		DrawFormatStringToHandle(200, 250, GetColor(0, 255, 0), font, "STAGE : %d", stageNo);
 	}
 	
-	selectionUi->Draw();
 
 	fadeManager->Draw();
 }

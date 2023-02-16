@@ -17,6 +17,7 @@
 #include "UiManager.h"
 #include "FadeManager.h"
 #include "Set.h"
+#include "SoundManager.h"
 
 
 const float ThirdStage::GOAL_POSITION_X = -2800.0f;		//ゴールの位置X座標
@@ -127,16 +128,19 @@ void ThirdStage::Finalize()
 	for (auto enemyPtr : enemy)
 	{
 		SafeDelete(enemyPtr);
+		DeleteEnemy(enemyPtr);
 	}
 
 	for (auto cakeBulletPtr : cakeBullet)
 	{
 		SafeDelete(cakeBulletPtr);
+		DeleteCakeBullet(cakeBulletPtr);
 	}
 
 	for (auto monitoringEnemyPtr : monitoringEnemy)
 	{
 		SafeDelete(monitoringEnemyPtr);
+		DeleteMonitoringEnemy(monitoringEnemyPtr);
 	}
 
 	SafeDelete(hitChecker);
@@ -146,6 +150,7 @@ void ThirdStage::Finalize()
 	for (auto particlePtr : cakeParticle)
 	{
 		SafeDelete(particlePtr);
+		DeleteCakeParticle(particlePtr);
 	}
 
 	SafeDelete(uiManager);
@@ -154,6 +159,8 @@ void ThirdStage::Finalize()
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
+
+	SoundManager::GetInstance().DeleteBgm();
 }
 
 /// <summary>
@@ -164,6 +171,8 @@ void ThirdStage::Activate()
 	state = State::START;
 
 	frame = 0.0f;
+
+	SoundManager::GetInstance().PlayBgm();
 
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
@@ -510,6 +519,8 @@ void ThirdStage::UpdateGoal(float deltaTime)
 	//フレーム数が2.9秒経過したら
 	if (frame > 2.9f)
 	{
+		SoundManager::GetInstance().StopBgm();
+
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
@@ -529,6 +540,8 @@ void ThirdStage::UpdateOver(float deltaTime)
 	//フレーム数が2.8秒経過したら
 	if (frame > 2.8f)
 	{
+		SoundManager::GetInstance().StopBgm();
+
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
@@ -589,7 +602,7 @@ void ThirdStage::Draw()
 	fadeManager->Draw();
 
 	//デバック用
-	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
+	/*DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %.0f", player->GetPosition().z);
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->GetPlayerCount());
@@ -598,5 +611,5 @@ void ThirdStage::Draw()
 	for (auto cakeBulletPtr : cakeBullet)
 	{
 		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", cakeBulletPtr->cake->GetAlive());
-	}
+	}*/
 }

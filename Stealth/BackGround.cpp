@@ -18,10 +18,7 @@ BackGround::BackGround()
 /// </summary>
 BackGround::~BackGround()
 {
-	if (backGroundHandle != NULL)
-	{
-		Finalize();
-	}
+	Finalize();
 }
 
 /// <summary>
@@ -39,7 +36,6 @@ void BackGround::Initialize()
 void BackGround::Finalize()
 {
 	DeleteGraph(backGroundHandle);
-	backGroundHandle = NULL;
 }
 
 /// <summary>
@@ -47,7 +43,6 @@ void BackGround::Finalize()
 /// </summary>
 void BackGround::Activate()
 {
-	//èàóùÇ»Çµ
 }
 
 /// <summary>

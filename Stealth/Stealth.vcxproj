@@ -180,6 +180,7 @@
     <ClCompile Include="SecondStage.cpp" />
     <ClCompile Include="SelectionUi.cpp" />
     <ClCompile Include="Set.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="StageBase.cpp" />
     <ClCompile Include="StageMap.cpp" />
     <ClCompile Include="StageSelection.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="SecondStage.h" />
     <ClInclude Include="SelectionUi.h" />
     <ClInclude Include="Set.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="StageBase.h" />
     <ClInclude Include="StageMap.h" />
     <ClInclude Include="StageSelection.h" />

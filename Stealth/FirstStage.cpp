@@ -16,6 +16,7 @@
 #include "UiManager.h"
 #include "FadeManager.h"
 #include "Set.h"
+#include "SoundManager.h"
 
 
 const float FirstStage::GOAL_POSITION_X	= -4000.0f;		//ゴールの位置X座標
@@ -140,10 +141,13 @@ void FirstStage::Finalize()
 	for (auto particlePtr : cakeParticle)
 	{
 		SafeDelete(particlePtr);
+		DeleteCakeParticle(particlePtr);
 	}
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
+
+	SoundManager::GetInstance().DeleteBgm();
 }
 
 /// <summary>
@@ -157,6 +161,8 @@ void FirstStage::Activate()
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
 	pUpdate = &FirstStage::UpdateStart;
+
+	SoundManager::GetInstance().PlayBgm();
 
 	player->Activate();
 
@@ -334,11 +340,13 @@ void FirstStage::UpdateGoal(float deltaTime)
 
 	fadeManager->FadeMove();
 
-	Set::GetInstance().SetResult(clear);
-
 	//フレーム数が2.9秒経過したら
 	if (frame > 2.9f)
 	{
+		Set::GetInstance().SetResult(clear);
+
+		SoundManager::GetInstance().StopBgm();
+
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
@@ -358,6 +366,9 @@ void FirstStage::UpdateOver(float deltaTime)
 	//フレーム数が2.8秒経過したら
 	if (frame > 2.8f)
 	{
+
+		SoundManager::GetInstance().StopBgm();
+
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
@@ -407,12 +418,12 @@ void FirstStage::Draw()
 	fadeManager->Draw();
 
 	//デバック用
-	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
+	/*DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %.0f", player->GetPosition().z);
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->GetPlayerCount());
 	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "CakeAlive : %d\n(1:true 0:false)", cakeBullet->cake->GetAlive());
-	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());
+	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());*/
 
 
 }

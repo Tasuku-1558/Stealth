@@ -5,6 +5,8 @@
 
 const string TitleScene::VIDEO_FOLDER_PATH = "data/video/";		//videoフォルダまでのパス
 const string TitleScene::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
+const string TitleScene::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
+const string TitleScene::TITLE_BGM_PATH	   = "titleBgm.mp3";	//タイトル画面のBGM音のパス
 const string TitleScene::PLAY_VIDEO_PATH   = "PlayVideo.mp4";	//タイトル動画のパス
 const string TitleScene::TITLENAME_PATH	   = "titleName.png";	//タイトル名の画像のパス
 const string TitleScene::TITLE_UI_PATH	   = "titleUi.png";		//ステージ選択シーンへ遷移キーのUIのパス
@@ -24,6 +26,7 @@ TitleScene::TitleScene(SceneManager* const sceneManager)
 	, inc(0)
 	, frame(0.0f)
 	, prevAlpha(0)
+	, titleBgm(0)
 {
 	//処理なし
 }
@@ -49,6 +52,9 @@ void TitleScene::Initialize()
 
 	titleUi = LoadGraph(InputPath(IMAGE_FOLDER_PATH, TITLE_UI_PATH).c_str());
 
+	//タイトルBGMの読み込み
+	titleBgm = LoadSoundMem(InputPath(SOUND_FOLDER_PATH, TITLE_BGM_PATH).c_str());
+
 	alpha = 255;
 	inc = -3;
 }
@@ -70,6 +76,8 @@ string TitleScene::InputPath(string folderPath, string path)
 void TitleScene::Finalize()
 {
 	DeleteGraph(backGroundHandle);
+
+	DeleteSoundMem(titleBgm);
 }
 
 /// <summary>
@@ -77,7 +85,7 @@ void TitleScene::Finalize()
 /// </summary>
 void TitleScene::Activate()
 {
-	//処理なし
+	PlaySoundMem(titleBgm, DX_PLAYTYPE_LOOP);					//タイトル曲を流す
 }
 
 /// <summary>
@@ -89,6 +97,8 @@ void TitleScene::Update(float deltaTime)
 	//次のシーンへ
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
+		StopSoundMem(titleBgm);									//タイトル曲を止める	
+
 		parent->SetNextScene(SceneManager::SELECTION);
 	}
 }
@@ -98,7 +108,6 @@ void TitleScene::Update(float deltaTime)
 /// </summary>
 void TitleScene::Blink()
 {
-	
 	if (alpha > 255 && inc > 0)
 	{
 		inc *= -1;
@@ -127,7 +136,7 @@ void TitleScene::Draw()
 
 	if (GetMovieStateToGraph(backGroundHandle) == 0)
 	{
-		SeekMovieToGraph(backGroundHandle, 5000);
+		SeekMovieToGraph(backGroundHandle, 0);
 
 		PlayMovieToGraph(backGroundHandle);
 	}

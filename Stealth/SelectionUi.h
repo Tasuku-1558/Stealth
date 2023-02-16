@@ -33,8 +33,8 @@ private:
 	void MapInput(int number, ModelManager::ModelType modelType, 
 				  VECTOR mapPos, VECTOR size, VECTOR rotate);		//マップ情報入力
 
-	std::string InputPath(std::string folderPath,	//画像のパスを入力
-						  std::string imagePath);
+	string InputPath(string folderPath,		//画像のパスを入力
+					 string imagePath);
 
 	int font;										//ゲームフォント
 	int selectionKeyImage;							//ステージセレクションUI画像
@@ -43,7 +43,7 @@ private:
 	int operationMethod;							//操作方法説明画像のハンドル
 	int modelHandle[5];								//マップモデルハンドル
 	VECTOR position[5];								//マップモデルの位置
-	
+
 
 	//静的定数
 	static const string IMAGE_FOLDER_PATH;			//imageフォルダまでのパス

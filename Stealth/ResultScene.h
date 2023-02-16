@@ -2,9 +2,15 @@
 
 #include "SceneBase.h"
 #include <vector>
+#include <string>
 
+
+class BackGround;
 class FireWorksParticle;
 class FadeManager;
+
+using namespace std;
+
 
 /// <summary>
 /// リザルトシーン
@@ -26,19 +32,23 @@ private:
 	
 	void Finalize();					//終了処理
 	void SceneChange();					//シーン切り替え
+	void Blink();						//文字の点滅処理
+	void ReturnTitle(float deltaTime);				//タイトル画面へ
+	void ReturnSelection(float deltaTime);			//セレクション画面へ
+
+	string InputPath(string folderPath,	//画像のパスを入力
+					 string path);
 
 	void EntryFireWorksParticle(FireWorksParticle* newFireWorksParticle);		//花火パーティクルを登録
 	void DeleteFireWorksParticle(FireWorksParticle* deleteFireWorksParticle);	//花火パーティクルを削除
 	void FireWorksParticlePop();												//花火パーティクルの出現
 
-	void UpdateGame(float deltaTime);				//ゲーム中
-	void ReturnTitle(float deltaTime);				//タイトル画面へ
-	void ReturnSelection(float deltaTime);			//セレクション画面へ
-	void ReturnStage(float deltaTime);				//もう一度プレイ
-	void (ResultScene::* pUpdate)(float deltaTime);	//Update関数ポインタ
+	
+	//void (ResultScene::* pUpdate)(float deltaTime);	//Update関数ポインタ
 
 
-	std::vector<FireWorksParticle*> fireWorksParticle;
+	BackGround* backGround;
+	vector<FireWorksParticle*> fireWorksParticle;
 	FadeManager* fadeManager;
 
 
@@ -47,5 +57,17 @@ private:
 	float frame;			//フレーム数
 	float particleInterval;	//パーティクル出現のインターバル
 	bool  particleFlag;		//パーティクルを出したら
+	int resultUiImage;
+	int stageNo;
+	bool clear;
+	int alpha;
+	int inc;
+	int prevAlpha;
+	bool title;
+	bool selection;
+
+	//静的定数
+	static const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
+	static const string RESULT_UI_PATH;		//リザルト画面のUIのパス
 
 };

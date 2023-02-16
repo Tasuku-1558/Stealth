@@ -3,11 +3,14 @@
 
 Set::Set()
 	: resultFlag(0)
+	, stageNo(0)
 {
+	//ˆ—‚È‚µ
 }
 
 Set::~Set()
 {
+	//ˆ—‚È‚µ
 }
 
 Set& Set::GetInstance()
@@ -19,4 +22,9 @@ Set& Set::GetInstance()
 void Set::SetResult(bool result)
 {
 	resultFlag = result;
+}
+
+void Set::SetStage(int number)
+{
+	stageNo = number;
 }

@@ -3,12 +3,16 @@
 #include "SceneManager.h"
 #include "PreCompiledHeader.h"
 #include "FireWorksParticle.h"
+#include "BackGround.h"
 #include "FadeManager.h"
 #include "Set.h"
 
 
 char GameClear[] = { "GAME CLEAR" };
 char GameOver[]  = { "GAME OVER" };
+
+const string ResultScene::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
+const string ResultScene::RESULT_UI_PATH	= "resultUi.png";		//リザルト画面のUIのパス
 
 
 /// <summary>
@@ -20,10 +24,18 @@ ResultScene::ResultScene(SceneManager* const sceneManager)
 	, font(0)
 	, frame(0.0f)
 	, fireWorksParticle()
-	, pUpdate(nullptr)
+	, backGround(nullptr)
 	, particleFlag(false)
 	, particleInterval(0.0f)
 	, fadeManager(nullptr)
+	, stageNo(0)
+	, clear(false)
+	, resultUiImage(0)
+	, alpha(0)
+	, inc(0)
+	, prevAlpha(0)
+	, title(false)
+	, selection(false)
 {
 	//処理なし
 }
@@ -41,8 +53,22 @@ ResultScene::~ResultScene()
 /// </summary>
 void ResultScene::Initialize()
 {
+	//背景クラス
+	backGround = new BackGround();
+	backGround->Initialize();
+
 	//画面効果クラス
 	fadeManager = new FadeManager();
+
+	resultUiImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, RESULT_UI_PATH).c_str());
+
+	alpha = 255;
+	inc = -3;
+}
+
+string ResultScene::InputPath(string folderPath, string path)
+{
+	return string(folderPath + path);
 }
 
 /// <summary>
@@ -50,6 +76,8 @@ void ResultScene::Initialize()
 /// </summary>
 void ResultScene::Finalize()
 {
+	SafeDelete(backGround);
+
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
 
@@ -57,6 +85,8 @@ void ResultScene::Finalize()
 	{
 		SafeDelete(fireWorksParticlePtr);
 	}
+
+	DeleteGraph(resultUiImage);
 }
 
 /// <summary>
@@ -97,8 +127,14 @@ void ResultScene::FireWorksParticlePop()
 		//パーティクルの個数分エントリーする
 		for (int i = 0; i < 500; i++)
 		{
-			FireWorksParticle* newFireWorksParticle = new FireWorksParticle({ 5000.0f,0.0f,0.0f });
+			FireWorksParticle* newFireWorksParticle = new FireWorksParticle({ 500.0f,600.0f,0.0f });
 			EntryFireWorksParticle(newFireWorksParticle);
+
+			FireWorksParticle* newFireWorksParticle2 = new FireWorksParticle({ 1500.0f,600.0f,0.0f });
+			EntryFireWorksParticle(newFireWorksParticle2);
+
+			FireWorksParticle* newFireWorksParticle3 = new FireWorksParticle({ 1000.0f,800.0f,0.0f });
+			EntryFireWorksParticle(newFireWorksParticle3);
 		}
 
 		particleFlag = true;
@@ -111,7 +147,12 @@ void ResultScene::FireWorksParticlePop()
 void ResultScene::Activate()
 {
 	frame = 0.0f;
-	pUpdate = &ResultScene::UpdateGame;
+	stageNo = Set::GetInstance().GetStage();
+
+	clear = Set::GetInstance().GetResult();
+
+	title = false;
+	selection = false;
 
 	font = CreateFontToHandle("Oranienbaum", 150, 1);
 
@@ -130,11 +171,11 @@ void ResultScene::SceneChange()
 {
 	if (CheckHitKey(KEY_INPUT_BACK))
 	{
-		pUpdate = &ResultScene::ReturnTitle;
+		title = true;
 	}
-	if (CheckHitKey(KEY_INPUT_G))
+	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
-		pUpdate = &ResultScene::ReturnSelection;
+		selection = true;
 	}
 }
 
@@ -144,41 +185,27 @@ void ResultScene::SceneChange()
 /// <param name="deltaTime"></param>
 void ResultScene::Update(float deltaTime)
 {
-	if (pUpdate != nullptr)
-	{
-		(this->*pUpdate)(deltaTime);		//状態ごとに更新
-	}
-}
-
-/// <summary>
-/// ゲーム中
-/// </summary>
-/// <param name="deltaTime"></param>
-void ResultScene::UpdateGame(float deltaTime)
-{
 	FireWorksParticlePop();
-
-	for (auto fireWorksParticlePtr : fireWorksParticle)
-	{
-		fireWorksParticlePtr->Update(deltaTime);
-	}
-
+	
 	//パーティクルを出したら
 	if (particleFlag)
 	{
 		particleInterval += deltaTime;
-
+	
 		//5秒経過したら
 		//パーティクルを再度出せるようにする
-		if (particleInterval > 1.0f)
+		if (particleInterval > 2.0f)
 		{
 			particleFlag = false;
 			particleInterval = 0.0f;
 		}
 	}
-
-	SceneChange();
-
+	
+	for (auto fireWorksParticlePtr : fireWorksParticle)
+	{
+		fireWorksParticlePtr->Update(deltaTime);
+	}
+	
 	for (auto fireWorksParticlePtr : fireWorksParticle)
 	{
 		//パーティクルを出し終わったら
@@ -187,6 +214,11 @@ void ResultScene::UpdateGame(float deltaTime)
 			DeleteFireWorksParticle(fireWorksParticlePtr);
 		}
 	}
+	
+	SceneChange();
+
+	ReturnTitle(deltaTime);
+	ReturnSelection(deltaTime);
 }
 
 /// <summary>
@@ -195,15 +227,18 @@ void ResultScene::UpdateGame(float deltaTime)
 /// <param name="deltaTime"></param>
 void ResultScene::ReturnTitle(float deltaTime)
 {
-	frame += deltaTime;
-
-	fadeManager->FadeMove();
-
-	//フレーム数が2.8秒経過したら
-	if (frame > 2.8f)
+	if (title)
 	{
-		//タイトル画面へ遷移
-		parent->SetNextScene(SceneManager::TITLE);
+		frame += deltaTime;
+
+		fadeManager->FadeMove();
+
+		//フレーム数が2.4秒経過したら
+		if (frame > 2.4f)
+		{
+			//タイトル画面へ遷移
+			parent->SetNextScene(SceneManager::TITLE);
+		}
 	}
 }
 
@@ -213,24 +248,40 @@ void ResultScene::ReturnTitle(float deltaTime)
 /// <param name="deltaTime"></param>
 void ResultScene::ReturnSelection(float deltaTime)
 {
-	frame += deltaTime;
-
-	fadeManager->FadeMove();
-
-	//フレーム数が2.8秒経過したら
-	if (frame > 2.8f)
+	if (selection)
 	{
-		//ステージ選択画面へ遷移
-		parent->SetNextScene(SceneManager::SELECTION);
+		frame += deltaTime;
+
+		fadeManager->FadeMove();
+
+		//フレーム数が2.4秒経過したら
+		if (frame > 2.4f)
+		{
+			//ステージ選択画面へ遷移
+			parent->SetNextScene(SceneManager::SELECTION);
+		}
 	}
 }
 
-/// <summary>
-/// もう一度プレイ
-/// </summary>
-/// <param name="deltaTime"></param>
-void ResultScene::ReturnStage(float deltaTime)
+void ResultScene::Blink()
 {
+	if (alpha > 255 && inc > 0)
+	{
+		inc *= -1;
+	}
+
+	if (alpha < 0 && inc < 0)
+	{
+		inc *= -1;
+	}
+
+	alpha += inc;
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+
+	DrawRotaGraph(1500, 1000, 0.5f, 0, resultUiImage, TRUE);
+
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
 }
 
 /// <summary>
@@ -238,15 +289,13 @@ void ResultScene::ReturnStage(float deltaTime)
 /// </summary>
 void ResultScene::Draw()
 {
-	//ステージクリアならば
-	if (Set::GetInstance().GetResult())
-	{
-		DrawFormatStringToHandle(600, 400, GetColor(255, 0, 0), font, "%s", GameClear);
+	//背景描画
+	//backGround->Draw();
 
-		for (auto fireWorksParticlePtr : fireWorksParticle)
-		{
-			fireWorksParticlePtr->Draw();
-		}
+	//ステージクリアならば
+	if (clear)
+	{
+		DrawFormatStringToHandle(600, 400, GetColor(255, 215, 0), font, "%s", GameClear);
 
 	}
 	//ゲームオーバーならば
@@ -255,7 +304,12 @@ void ResultScene::Draw()
 		DrawFormatStringToHandle(600, 400, GetColor(255, 0, 0), font, "%s", GameOver);
 	}
 
-	fadeManager->Draw();
+	for (auto fireWorksParticlePtr : fireWorksParticle)
+	{
+		fireWorksParticlePtr->Draw();
+	}
 
-	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "ParticleSize : %d", fireWorksParticle.size());
+	Blink();
+
+	fadeManager->Draw();
 }

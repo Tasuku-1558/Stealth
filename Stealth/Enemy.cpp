@@ -465,8 +465,4 @@ void Enemy::Draw()
 
 	ReactionDraw();
 
-	/*DrawTriangle3D(
-		position + VGet(100.0f, 100.0f, 500.0f),
-		position + VGet(500.0f, 400.0f, 0.0f),
-		position + VGet(600.0f, 100.0f, 500.0f), GetColor(0, 255, 0), TRUE);*/
 }

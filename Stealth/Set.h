@@ -13,9 +13,12 @@ public:
 	void SetResult(bool result);
 	bool GetResult() { return resultFlag; }
 
+	void SetStage(int number);
+	bool GetStage() { return stageNo; }
 
 private:
 	Set(const Set&);		//コピーコンストラクタ
 
 	bool resultFlag;
+	int stageNo;
 };
