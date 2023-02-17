@@ -1,5 +1,5 @@
-#include <math.h>
 #include "CakeParticle.h"
+#include <math.h>
 
 
 const unsigned int CakeParticle::PINK = GetColor(224, 148, 171);		//パーティクルのカラー

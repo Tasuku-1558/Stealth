@@ -5,6 +5,7 @@
 
 
 class Light;
+class Camera;
 class SelectionUi;
 class FadeManager;
 
@@ -28,6 +29,7 @@ private:
 	StageSelection(const StageSelection&);			//コピーコンストラクタ
 
 	Light* light;
+	Camera* camera;
 	SelectionUi* selectionUi;
 	FadeManager* fadeManager;
 
@@ -45,7 +47,6 @@ private:
 	int changeTimeCount;							//ステージ遷移カウント
 	int maxTime;									//マックスステージ遷移カウント
 	float pushCount;								//ステージ切り替えカウント
-	int getStage;
 
 	//静的定数
 	static const float PUSH_INTERVAL;				//切り替えカウントのインターバル

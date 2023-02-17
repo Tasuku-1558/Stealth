@@ -17,7 +17,6 @@
 #include "UiManager.h"
 #include "FadeManager.h"
 #include "Set.h"
-#include "SoundManager.h"
 
 
 const float FifthStage::GOAL_POSITION_X = -3350.0f;	//ゴールの位置X座標
@@ -59,7 +58,6 @@ FifthStage::FifthStage(SceneManager* const sceneManager)
 /// </summary>
 FifthStage::~FifthStage()
 {
-	//処理なし
 }
 
 /// <summary>
@@ -69,6 +67,7 @@ void FifthStage::Initialize()
 {
 	//ライトクラス
 	light = new Light();
+	light->Initialize();
 
 	//カメラクラス
 	camera = new Camera();
@@ -158,8 +157,6 @@ void FifthStage::Finalize()
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
-
-	SoundManager::GetInstance().DeleteBgm();
 }
 
 /// <summary>
@@ -170,8 +167,6 @@ void FifthStage::Activate()
 	state = State::START;
 
 	frame = 0.0f;
-
-	SoundManager::GetInstance().PlayBgm();
 
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
@@ -248,10 +243,10 @@ void FifthStage::DeleteEnemy(Enemy* deleteEnemy)
 /// </summary>
 void FifthStage::EnemyPop()
 {
-	Enemy* newEnemy = new Enemy(stageMap->GetMap(7), 1500.0f);
+	Enemy* newEnemy = new Enemy(stageMap->GetMap(7), 1200.0f);
 	EntryEnemy(newEnemy);
 
-	Enemy* newEnemy2 = new Enemy(stageMap->GetMap(8), 1500.0f);
+	Enemy* newEnemy2 = new Enemy(stageMap->GetMap(8), 1200.0f);
 	EntryEnemy(newEnemy2);
 }
 
@@ -350,9 +345,6 @@ void FifthStage::CakeParticlePop()
 void FifthStage::UpdateStart(float deltaTime)
 {
 	camera->Update(player->GetPosition());
-
-	//サードステージでのライトの方向の設定
-	light->Update({ 0.0f,-0.5f,0.0f });
 
 	frame += deltaTime;
 
@@ -466,8 +458,6 @@ void FifthStage::UpdateGoal(float deltaTime)
 	//フレーム数が2.9秒経過したら
 	if (frame > 2.9f)
 	{
-		SoundManager::GetInstance().StopBgm();
-
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
@@ -484,11 +474,11 @@ void FifthStage::UpdateOver(float deltaTime)
 
 	fadeManager->FadeMove();
 
+	Set::GetInstance().SetResult(!clear);
+
 	//フレーム数が2.8秒経過したら
 	if (frame > 2.8f)
 	{
-		SoundManager::GetInstance().StopBgm();
-
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;

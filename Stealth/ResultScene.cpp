@@ -2,8 +2,8 @@
 #include "DxLib.h"
 #include "SceneManager.h"
 #include "PreCompiledHeader.h"
+#include "Camera.h"
 #include "FireWorksParticle.h"
-#include "BackGround.h"
 #include "FadeManager.h"
 #include "Set.h"
 
@@ -11,8 +11,10 @@
 char GameClear[] = { "GAME CLEAR" };
 char GameOver[]  = { "GAME OVER" };
 
-const string ResultScene::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
-const string ResultScene::RESULT_UI_PATH	= "resultUi.png";		//リザルト画面のUIのパス
+const string ResultScene::IMAGE_FOLDER_PATH		 = "data/image/";			//imageフォルダまでのパス
+const string ResultScene::RESULT_UI_PATH		 = "resultUi.png";			//リザルト画面のUIのパス
+const string ResultScene::RESULT_BACKGROUND_PATH = "resultBackGround.png";	//リザルト画面の背景画像のパス
+const int    ResultScene::PARTICLE_NUMBER		 = 500;						//パーティクルの数
 
 
 /// <summary>
@@ -24,11 +26,10 @@ ResultScene::ResultScene(SceneManager* const sceneManager)
 	, font(0)
 	, frame(0.0f)
 	, fireWorksParticle()
-	, backGround(nullptr)
+	, camera(nullptr)
 	, particleFlag(false)
 	, particleInterval(0.0f)
 	, fadeManager(nullptr)
-	, stageNo(0)
 	, clear(false)
 	, resultUiImage(0)
 	, alpha(0)
@@ -36,8 +37,12 @@ ResultScene::ResultScene(SceneManager* const sceneManager)
 	, prevAlpha(0)
 	, title(false)
 	, selection(false)
+	, backGroundImage(0)
+	, backGroundX(0)
+	, backGroundY(0)
 {
-	//処理なし
+	Initialize();
+	Activate();
 }
 
 /// <summary>
@@ -45,7 +50,7 @@ ResultScene::ResultScene(SceneManager* const sceneManager)
 /// </summary>
 ResultScene::~ResultScene()
 {
-	Finalize();
+	//処理なし
 }
 
 /// <summary>
@@ -53,14 +58,15 @@ ResultScene::~ResultScene()
 /// </summary>
 void ResultScene::Initialize()
 {
-	//背景クラス
-	backGround = new BackGround();
-	backGround->Initialize();
+	camera = new Camera();
+	camera->Initialize();
 
 	//画面効果クラス
 	fadeManager = new FadeManager();
 
 	resultUiImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, RESULT_UI_PATH).c_str());
+
+	backGroundImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, RESULT_BACKGROUND_PATH).c_str());
 
 	alpha = 255;
 	inc = -3;
@@ -76,14 +82,19 @@ string ResultScene::InputPath(string folderPath, string path)
 /// </summary>
 void ResultScene::Finalize()
 {
-	SafeDelete(backGround);
-
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
+
+	DeleteGraph(backGroundImage);
+
+	SafeDelete(fadeManager);
+
+	SafeDelete(camera);
 
 	for (auto fireWorksParticlePtr : fireWorksParticle)
 	{
 		SafeDelete(fireWorksParticlePtr);
+		DeleteFireWorksParticle(fireWorksParticlePtr);
 	}
 
 	DeleteGraph(resultUiImage);
@@ -125,16 +136,20 @@ void ResultScene::FireWorksParticlePop()
 	if (!particleFlag)
 	{
 		//パーティクルの個数分エントリーする
-		for (int i = 0; i < 500; i++)
+		for (int i = 0; i < PARTICLE_NUMBER; i++)
 		{
-			FireWorksParticle* newFireWorksParticle = new FireWorksParticle({ 500.0f,600.0f,0.0f });
+			//パーティクルの位置と色を入力する
+			FireWorksParticle* newFireWorksParticle = new FireWorksParticle({ -500.0f,0.0f,0.0f }, GetColor(255, 255, 0));
 			EntryFireWorksParticle(newFireWorksParticle);
 
-			FireWorksParticle* newFireWorksParticle2 = new FireWorksParticle({ 1500.0f,600.0f,0.0f });
+			FireWorksParticle* newFireWorksParticle2 = new FireWorksParticle({ 600.0f,0.0f,0.0f }, GetColor(0, 128, 0));
 			EntryFireWorksParticle(newFireWorksParticle2);
 
-			FireWorksParticle* newFireWorksParticle3 = new FireWorksParticle({ 1000.0f,800.0f,0.0f });
+			FireWorksParticle* newFireWorksParticle3 = new FireWorksParticle({ 50.0f,0.0f,200.0f }, GetColor(240, 100, 100));
 			EntryFireWorksParticle(newFireWorksParticle3);
+
+			FireWorksParticle* newFireWorksParticle4 = new FireWorksParticle({ 50.0f,0.0f,-200.0f }, GetColor(128, 0, 128));
+			EntryFireWorksParticle(newFireWorksParticle4);
 		}
 
 		particleFlag = true;
@@ -147,7 +162,6 @@ void ResultScene::FireWorksParticlePop()
 void ResultScene::Activate()
 {
 	frame = 0.0f;
-	stageNo = Set::GetInstance().GetStage();
 
 	clear = Set::GetInstance().GetResult();
 
@@ -158,10 +172,56 @@ void ResultScene::Activate()
 
 	for (auto fireWorksParticlePtr : fireWorksParticle)
 	{
+		DeleteFireWorksParticle(fireWorksParticlePtr);
 		fireWorksParticlePtr->Activate();
 	}
 
 	fadeManager->Activate();
+}
+
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="deltaTime"></param>
+void ResultScene::Update(float deltaTime)
+{
+	camera->SelectionCamera();
+
+	FireWorksParticlePop();
+	
+	//パーティクルを出したら
+	if (particleFlag)
+	{
+		particleInterval += deltaTime;
+	
+		//2秒経過したら
+		//パーティクルを再度出せるようにする
+		if (particleInterval > 2.2f)
+		{
+			particleFlag = false;
+			particleInterval = 0.0f;
+		}
+	}
+	
+	for (auto fireWorksParticlePtr : fireWorksParticle)
+	{
+		fireWorksParticlePtr->Update(deltaTime);
+	}
+
+	BackGroundMove();
+	
+	SceneChange();
+
+	ReturnScreen(deltaTime);
+
+	for (auto fireWorksParticlePtr : fireWorksParticle)
+	{
+		//パーティクルを出し終わったら
+		if (fireWorksParticlePtr->IsParticleEnd())
+		{
+			DeleteFireWorksParticle(fireWorksParticlePtr);
+		}
+	}
 }
 
 /// <summary>
@@ -180,89 +240,47 @@ void ResultScene::SceneChange()
 }
 
 /// <summary>
-/// 更新処理
+/// 画面を遷移する
 /// </summary>
 /// <param name="deltaTime"></param>
-void ResultScene::Update(float deltaTime)
+void ResultScene::ReturnScreen(float deltaTime)
 {
-	FireWorksParticlePop();
-	
-	//パーティクルを出したら
-	if (particleFlag)
-	{
-		particleInterval += deltaTime;
-	
-		//5秒経過したら
-		//パーティクルを再度出せるようにする
-		if (particleInterval > 2.0f)
-		{
-			particleFlag = false;
-			particleInterval = 0.0f;
-		}
-	}
-	
-	for (auto fireWorksParticlePtr : fireWorksParticle)
-	{
-		fireWorksParticlePtr->Update(deltaTime);
-	}
-	
-	for (auto fireWorksParticlePtr : fireWorksParticle)
-	{
-		//パーティクルを出し終わったら
-		if (fireWorksParticlePtr->IsParticleEnd())
-		{
-			DeleteFireWorksParticle(fireWorksParticlePtr);
-		}
-	}
-	
-	SceneChange();
-
-	ReturnTitle(deltaTime);
-	ReturnSelection(deltaTime);
-}
-
-/// <summary>
-/// タイトル画面へ
-/// </summary>
-/// <param name="deltaTime"></param>
-void ResultScene::ReturnTitle(float deltaTime)
-{
+	//タイトル画面なら
 	if (title)
 	{
 		frame += deltaTime;
 
 		fadeManager->FadeMove();
 
-		//フレーム数が2.4秒経過したら
-		if (frame > 2.4f)
+		//フレーム数が2.2秒経過したら
+		if (frame > 2.2f)
 		{
 			//タイトル画面へ遷移
 			parent->SetNextScene(SceneManager::TITLE);
+			return;
 		}
 	}
-}
 
-/// <summary>
-/// セレクション画面へ
-/// </summary>
-/// <param name="deltaTime"></param>
-void ResultScene::ReturnSelection(float deltaTime)
-{
+	//セレクション画面なら
 	if (selection)
 	{
 		frame += deltaTime;
 
 		fadeManager->FadeMove();
 
-		//フレーム数が2.4秒経過したら
-		if (frame > 2.4f)
+		//フレーム数が2.2秒経過したら
+		if (frame > 2.2f)
 		{
 			//ステージ選択画面へ遷移
 			parent->SetNextScene(SceneManager::SELECTION);
+			return;
 		}
 	}
 }
 
+/// <summary>
+/// 文字の点滅処理
+/// </summary>
 void ResultScene::Blink()
 {
 	if (alpha > 255 && inc > 0)
@@ -285,28 +303,43 @@ void ResultScene::Blink()
 }
 
 /// <summary>
+/// 背景画像の動き
+/// </summary>
+void ResultScene::BackGroundMove()
+{
+	backGroundY += 2;
+
+	//Y座標が端になったら
+	if (backGroundY == 1080)
+	{
+		backGroundY = 0;
+	}
+}
+
+/// <summary>
 /// 描画処理
 /// </summary>
 void ResultScene::Draw()
 {
 	//背景描画
-	//backGround->Draw();
+	DrawGraph(backGroundX, backGroundY,  backGroundImage, TRUE);
+
+	DrawGraph(backGroundX, backGroundY -1080, backGroundImage, TRUE);
 
 	//ステージクリアならば
 	if (clear)
 	{
-		DrawFormatStringToHandle(600, 400, GetColor(255, 215, 0), font, "%s", GameClear);
+		for (auto fireWorksParticlePtr : fireWorksParticle)
+		{
+			fireWorksParticlePtr->Draw();
+		}
 
+		DrawFormatStringToHandle(600, 400, GetColor(255, 215, 0), font, "%s", GameClear);
 	}
 	//ゲームオーバーならば
 	else
 	{
 		DrawFormatStringToHandle(600, 400, GetColor(255, 0, 0), font, "%s", GameOver);
-	}
-
-	for (auto fireWorksParticlePtr : fireWorksParticle)
-	{
-		fireWorksParticlePtr->Draw();
 	}
 
 	Blink();

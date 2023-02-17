@@ -17,7 +17,6 @@
 #include "UiManager.h"
 #include "FadeManager.h"
 #include "Set.h"
-#include "SoundManager.h"
 
 
 const float ThirdStage::GOAL_POSITION_X = -2800.0f;		//ゴールの位置X座標
@@ -69,6 +68,7 @@ void ThirdStage::Initialize()
 {
 	//ライトクラス
 	light = new Light();
+	light->Initialize();
 
 	//カメラクラス
 	camera = new Camera();
@@ -159,8 +159,6 @@ void ThirdStage::Finalize()
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
-
-	SoundManager::GetInstance().DeleteBgm();
 }
 
 /// <summary>
@@ -172,7 +170,7 @@ void ThirdStage::Activate()
 
 	frame = 0.0f;
 
-	SoundManager::GetInstance().PlayBgm();
+	//SoundManager::GetInstance().PlayBgm();
 
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
@@ -398,9 +396,6 @@ void ThirdStage::UpdateStart(float deltaTime)
 {
 	camera->Update(player->GetPosition());
 
-	//サードステージでのライトの方向の設定
-	light->Update({ 0.0f,-0.5f,0.0f });
-
 	frame += deltaTime;
 
 	//1.3秒経過したらゲーム画面へ移行
@@ -519,8 +514,6 @@ void ThirdStage::UpdateGoal(float deltaTime)
 	//フレーム数が2.9秒経過したら
 	if (frame > 2.9f)
 	{
-		SoundManager::GetInstance().StopBgm();
-
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
@@ -537,11 +530,11 @@ void ThirdStage::UpdateOver(float deltaTime)
 
 	fadeManager->FadeMove();
 
+	Set::GetInstance().SetResult(!clear);
+
 	//フレーム数が2.8秒経過したら
 	if (frame > 2.8f)
 	{
-		SoundManager::GetInstance().StopBgm();
-
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;

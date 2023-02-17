@@ -16,7 +16,6 @@
 #include "UiManager.h"
 #include "FadeManager.h"
 #include "Set.h"
-#include "SoundManager.h"
 
 
 const float FirstStage::GOAL_POSITION_X	= -4000.0f;		//ゴールの位置X座標
@@ -49,6 +48,7 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 	, clear(true)
 {
 	//処理なし
+
 }
 
 /// <summary>
@@ -70,6 +70,7 @@ void FirstStage::Initialize()
 
 	//ライトクラス
 	light = new Light();
+	light->Initialize();
 	
 	//背景クラス
 	backGround = new BackGround();
@@ -79,7 +80,7 @@ void FirstStage::Initialize()
 	//マップモデルの種類、サイズ、回転値、位置を入力する
 	stageMap = new StageMap(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
 							{ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f }, { -2700.0f, -100.0f, -750.0f });
-
+	
 	stageMap->Initialize();
 
 	//エネミークラス
@@ -88,13 +89,13 @@ void FirstStage::Initialize()
 
 	enemy->Initialize();
 
-	//プレイヤークラス
-	player = new Player();
-	player->Initialize();
-
 	//ケーキバレット管理クラス
 	//ケーキの初期位置を設定
 	cakeBullet = new CakeBullet({ -1500.0f,30.0f,0.0f });
+
+	//プレイヤークラス
+	player = new Player();
+	player->Initialize();
 
 	//ケーキの再出現エフェクトクラス
 	cakeEffect = new CakeRepopEffect();
@@ -146,8 +147,6 @@ void FirstStage::Finalize()
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
-
-	SoundManager::GetInstance().DeleteBgm();
 }
 
 /// <summary>
@@ -161,8 +160,6 @@ void FirstStage::Activate()
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
 	pUpdate = &FirstStage::UpdateStart;
-
-	SoundManager::GetInstance().PlayBgm();
 
 	player->Activate();
 
@@ -248,9 +245,6 @@ void FirstStage::CakeParticlePop()
 void FirstStage::UpdateStart(float deltaTime)
 {
 	camera->Update(player->GetPosition());
-
-	//ファーストステージでのライトの方向の設定
-	light->Update({ 0.0f,-0.5f,0.0f });
 
 	frame += deltaTime;
 
@@ -340,12 +334,10 @@ void FirstStage::UpdateGoal(float deltaTime)
 
 	fadeManager->FadeMove();
 
-	//フレーム数が2.9秒経過したら
-	if (frame > 2.9f)
+	//フレーム数が3.0秒経過したら
+	if (frame > 2.8f)
 	{
 		Set::GetInstance().SetResult(clear);
-
-		SoundManager::GetInstance().StopBgm();
 
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
@@ -363,11 +355,10 @@ void FirstStage::UpdateOver(float deltaTime)
 
 	fadeManager->FadeMove();
 
-	//フレーム数が2.8秒経過したら
-	if (frame > 2.8f)
+	//フレーム数が3.4秒経過したら
+	if (frame > 3.4f)
 	{
-
-		SoundManager::GetInstance().StopBgm();
+		Set::GetInstance().SetResult(!clear);
 
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
@@ -425,5 +416,6 @@ void FirstStage::Draw()
 	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "CakeAlive : %d\n(1:true 0:false)", cakeBullet->cake->GetAlive());
 	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());*/
 
+	//DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "stageNo : %d", stageNo);
 
 }

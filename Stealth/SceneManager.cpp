@@ -28,7 +28,7 @@ SceneManager::SceneManager()
 /// </summary>
 SceneManager::~SceneManager()
 {
-	//ˆ—‚È‚µ
+	Finalize();
 }
 
 /// <summary>

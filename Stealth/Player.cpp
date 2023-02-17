@@ -46,12 +46,6 @@ void Player::Initialize()
 		MV1SetMaterialEmiColor(emptyModel[i], 0, GetColorF(0.0f, 0.0f, 1.0f, 1.0f));
 	}
 
-	//読み込み失敗でエラー
-	if (modelHandle < 0)
-	{
-		printfDx("モデルデータ読み込みに失敗[PLAYER]\n");
-	}
-
 	//SE音の読み込み
 	string failePath = SOUND_FOLDER_PATH + SPOTTED_SE_PATH;
 	spottedSe = LoadSoundMem(failePath.c_str());
@@ -249,7 +243,7 @@ void Player::FoundEnemy(float deltaTime, bool spotted)
 		dir = DIR;
 		speed = SPEED;
 
-		playerFindCount++;
+		playerFindCount+=3;
 		initialCount = 0.0f;
 		spottedSeFlag = false;
 	}

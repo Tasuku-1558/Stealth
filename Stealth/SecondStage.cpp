@@ -16,7 +16,6 @@
 #include "UiManager.h"
 #include "FadeManager.h"
 #include "Set.h"
-#include "SoundManager.h"
 
 
 const float SecondStage::GOAL_POSITION_X = -5700.0f;	//ゴールの位置
@@ -57,7 +56,6 @@ SecondStage::SecondStage(SceneManager* const sceneManager)
 /// </summary>
 SecondStage::~SecondStage()
 {
-	//処理なし
 }
 
 /// <summary>
@@ -71,6 +69,7 @@ void SecondStage::Initialize()
 
 	//ライトクラス
 	light = new Light();
+	light->Initialize();
 
 	//背景クラス
 	backGround = new BackGround();
@@ -150,8 +149,6 @@ void SecondStage::Finalize()
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
-
-	SoundManager::GetInstance().DeleteBgm();
 }
 
 /// <summary>
@@ -162,8 +159,6 @@ void SecondStage::Activate()
 	state = State::START;
 
 	frame = 0.0f;
-
-	SoundManager::GetInstance().PlayBgm();
 
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
@@ -343,9 +338,6 @@ void SecondStage::UpdateStart(float deltaTime)
 {
 	camera->Update(player->GetPosition());
 
-	//ファーストステージでのライトの方向の設定
-	light->Update({ 0.0f,-0.5f,0.0f });
-
 	frame += deltaTime;
 
 	//1.3秒経過したらゲーム画面へ移行
@@ -454,8 +446,6 @@ void SecondStage::UpdateGoal(float deltaTime)
 	//フレーム数が2.9秒経過したら
 	if (frame > 2.9f)
 	{
-		SoundManager::GetInstance().StopBgm();
-
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
@@ -472,11 +462,11 @@ void SecondStage::UpdateOver(float deltaTime)
 
 	fadeManager->FadeMove();
 
+	Set::GetInstance().SetResult(!clear);
+
 	//フレーム数が2.8秒経過したら
 	if (frame > 2.8f)
 	{
-		SoundManager::GetInstance().StopBgm();
-
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
@@ -541,4 +531,7 @@ void SecondStage::Draw()
 	{
 		DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "BallAlive : %d\n(1:true 0:false)", cakeBulletPtr->cake->GetAlive());
 	}*/
+
+	//DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "stageNo : %d", stageNo);
+
 }

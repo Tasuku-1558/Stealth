@@ -23,11 +23,7 @@ Cake::Cake(const VECTOR& pos) : ObjectBase()
 /// </summary>
 Cake::~Cake()
 {
-	// 終了処理が呼ばれていなければ
-	if (modelHandle != NULL)
-	{
-		Finalize();
-	}
+	Finalize();
 }
 
 /// <summary>
@@ -38,12 +34,6 @@ void Cake::Initialize()
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::CAKE));
 	MV1SetScale(modelHandle, SIZE);
 	MV1SetPosition(modelHandle, position);
-
-	//読み込み失敗でエラー
-	if (modelHandle < 0)
-	{
-		printfDx("モデルデータ読み込みに失敗 [CAKE]\n");
-	}
 }
 
 /// <summary>
@@ -60,7 +50,6 @@ void Cake::Activate()
 void Cake::Finalize()
 {
 	MV1DeleteModel(modelHandle);
-	modelHandle = NULL;
 }
 
 /// <summary>

@@ -1,16 +1,18 @@
-#include "StageSelection.h"
+ï»¿#include "StageSelection.h"
+
 #include "DxLib.h"
 #include "PreCompiledHeader.h"
 #include "Light.h"
+#include "Camera.h"
 #include "SelectionUi.h"
 #include "FadeManager.h"
 #include "Set.h"
 
-const float StageSelection::PUSH_INTERVAL = 0.2f;		//Ø‚è‘Ö‚¦ƒJƒEƒ“ƒg‚ÌƒCƒ“ƒ^[ƒoƒ‹
+const float StageSelection::PUSH_INTERVAL = 0.2f;		//åˆ‡ã‚Šæ›¿ãˆã‚«ã‚¦ãƒ³ãƒˆã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«
 
 
 /// <summary>
-/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 /// <param name="sceneManager"></param>
 StageSelection::StageSelection(SceneManager* const sceneManager)
@@ -19,6 +21,7 @@ StageSelection::StageSelection(SceneManager* const sceneManager)
 	, stageMax(0)
 	, stageNo(0)
 	, light(nullptr)
+	, camera(nullptr)
 	, selectionUi(nullptr)
 	, fadeManager(nullptr)
 	, changeScene(false)
@@ -26,27 +29,28 @@ StageSelection::StageSelection(SceneManager* const sceneManager)
 	, maxTime(0)
 	, pushCount(0.0f)
 	, frame(0.0f)
-	, getStage(0)
 {
-	//ˆ—‚È‚µ
-	Initialize();
-	Activate();
+	//å‡¦ç†ãªã—
 }
 
 /// <summary>
-/// ƒfƒXƒgƒ‰ƒNƒ^
+/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 /// </summary>
 StageSelection::~StageSelection()
 {
-	Finalize();
+	//å‡¦ç†ãªã—
 }
 
 /// <summary>
-/// ‰Šú‰»ˆ—
+/// åˆæœŸåŒ–å‡¦ç†
 /// </summary>
 void StageSelection::Initialize()
 {
 	light = new Light();
+	light->Initialize();
+
+	camera = new Camera();
+	camera->Initialize();
 	
 	selectionUi = new SelectionUi();
 	selectionUi->Initialize();
@@ -58,22 +62,24 @@ void StageSelection::Initialize()
 }
 
 /// <summary>
-/// I—¹ˆ—
+/// çµ‚äº†å‡¦ç†
 /// </summary>
 void StageSelection::Finalize()
 {
 	SafeDelete(light);
 
+	SafeDelete(camera);
+
 	SafeDelete(selectionUi);
 
 	SafeDelete(fadeManager);
 
-	//ì¬‚µ‚½ƒtƒHƒ“ƒgƒf[ƒ^‚Ìíœ
+	//ä½œæˆã—ãŸãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã®å‰Šé™¤
 	DeleteFontToHandle(font);
 }
 
 /// <summary>
-/// Šˆ«‰»ˆ—
+/// æ´»æ€§åŒ–å‡¦ç†
 /// </summary>
 void StageSelection::Activate()
 {
@@ -84,16 +90,14 @@ void StageSelection::Activate()
 	maxTime = 80;
 	pushCount = 0.0f;
 
-	selectionUi->Activate();
-
 	fadeManager->Activate();
 
-	//ƒtƒHƒ“ƒgƒf[ƒ^‚Ìì¬
+	//ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ
 	font = CreateFontToHandle("Oranienbaum", 120, 1);
 }
 
 /// <summary>
-/// ‘I‘ğƒXƒe[ƒW‚ğ1‚Âæ‚É‚Á‚Ä‚¢‚­
+/// é¸æŠã‚¹ãƒ†ãƒ¼ã‚¸ã‚’1ã¤å…ˆã«æŒã£ã¦ã„ã
 /// </summary>
 /// <param name="stageNum"></param>
 /// <returns></returns>
@@ -108,13 +112,13 @@ int StageSelection::stageIncrement(int stageNumber)
 }
 
 /// <summary>
-/// ‘I‘ğƒXƒe[ƒW‚ğ1‚Â‘O‚É‚Á‚Ä‚¢‚­
+/// é¸æŠã‚¹ãƒ†ãƒ¼ã‚¸ã‚’1ã¤å‰ã«æŒã£ã¦ã„ã
 /// </summary>
 /// <param name="stageNum"></param>
 /// <returns></returns>
 int StageSelection::stageDecrement(int stageNumber)
 {
-	//Å‰‚ÌƒXƒe[ƒW‚É—ˆ‚½
+	//æœ€åˆã®ã‚¹ãƒ†ãƒ¼ã‚¸ã«æ¥ãŸæ™‚
 	if (stageNumber == 1)
 	{
 		return stageMax;
@@ -124,7 +128,7 @@ int StageSelection::stageDecrement(int stageNumber)
 }
 
 /// <summary>
-/// ŠeƒV[ƒ“‚Ö‘JˆÚ
+/// å„ã‚·ãƒ¼ãƒ³ã¸é·ç§»
 /// </summary>
 /// <param name="stageNumber"></param>
 /// <returns></returns>
@@ -135,7 +139,7 @@ int StageSelection::StageCreator(int stageNumber)
 		return NULL;
 	}
 
-	//ŠeƒV[ƒ“
+	//å„ã‚·ãƒ¼ãƒ³
 	switch (stageNumber)
 	{
 	case 1:
@@ -167,26 +171,25 @@ int StageSelection::StageCreator(int stageNumber)
 }
 
 /// <summary>
-/// XVˆ—
+/// æ›´æ–°å‡¦ç†
 /// </summary>
 /// <param name="deltaTime"></param>
 void StageSelection::Update(float deltaTime)
 {
-	//ƒZƒŒƒNƒVƒ‡ƒ“‰æ–Ê‚Å‚Ìƒ‰ƒCƒg‚Ì•ûŒü‚Ìİ’è
-	light->Update({ 0.0f, 0.0f, 0.5f });
+	camera->SelectionCamera();
 
 	KeyMove(deltaTime);
 }
 
 /// <summary>
-/// ƒL[‘€ì
+/// ã‚­ãƒ¼æ“ä½œ
 /// </summary>
 /// <param name="deltaTime"></param>
 void StageSelection::KeyMove(float deltaTime)
 {
 	pushCount -= deltaTime;
 
-	//ƒL[‘€ì
+	//ã‚­ãƒ¼æ“ä½œ
 	if (CheckHitKey(KEY_INPUT_UP) && pushCount < 0.0f)
 	{
 		stageNo = stageDecrement(stageNo);
@@ -198,13 +201,13 @@ void StageSelection::KeyMove(float deltaTime)
 		pushCount = PUSH_INTERVAL;
 	}
 
-	//ƒŠƒ^[ƒ“ƒL[‚ğ‰Ÿ‚µ‚½‚È‚ç‚Î
+	//ãƒªã‚¿ãƒ¼ãƒ³ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸãªã‚‰ã°
 	if (CheckHitKey(KEY_INPUT_RETURN))
 	{
 		changeScene = true;
 	}
 
-	//ƒŠƒ^[ƒ“ƒL[‚ğ‰Ÿ‚µ‚½‚È‚ç‚Î
+	//ãƒªã‚¿ãƒ¼ãƒ³ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸãªã‚‰ã°
 	if (changeScene)
 	{
 		changeTimeCount++;
@@ -213,10 +216,10 @@ void StageSelection::KeyMove(float deltaTime)
 
 		if (changeTimeCount > maxTime)
 		{
-			//‰æ–ÊŒø‰Êˆ—‚ğs‚¤
+			//ç”»é¢åŠ¹æœå‡¦ç†ã‚’è¡Œã†
 			fadeManager->FadeMove();
 
-			//ƒtƒŒ[ƒ€‚ª3.5•bŒo‰ß‚µ‚½‚ç‰æ–Ê‚ğ‘JˆÚ‚·‚é
+			//ãƒ•ãƒ¬ãƒ¼ãƒ ãŒ3.5ç§’çµŒéã—ãŸã‚‰ç”»é¢ã‚’é·ç§»ã™ã‚‹
 			if (frame > 3.5f)
 			{
 				StageCreator(stageNo);
@@ -226,14 +229,12 @@ void StageSelection::KeyMove(float deltaTime)
 }
 
 /// <summary>
-/// •`‰æˆ—
+/// æç”»å‡¦ç†
 /// </summary>
 void StageSelection::Draw()
 {
-	selectionUi->Draw();
-
-	//‚»‚ê‚¼‚ê‚ÌƒXƒe[ƒW‚²‚Æ‚ÌUI•`‰æˆ—
-	//ƒ}ƒbƒv‚Ì”Ô†A“G‚Ì”AƒP[ƒL‚Ì”‚ğ“ü—Í
+	//ãã‚Œãã‚Œã®ã‚¹ãƒ†ãƒ¼ã‚¸ã”ã¨ã®UIæç”»å‡¦ç†
+	//ãƒãƒƒãƒ—ã®ç•ªå·ã€æ•µã®æ•°ã€ã‚±ãƒ¼ã‚­ã®æ•°ã‚’å…¥åŠ›
 	if (stageNo == 1)
 	{
 		selectionUi->StageUiDraw(0, 1, 1);
@@ -264,6 +265,7 @@ void StageSelection::Draw()
 		DrawFormatStringToHandle(200, 250, GetColor(0, 255, 0), font, "STAGE : %d", stageNo);
 	}
 	
+	selectionUi->Draw();
 
 	fadeManager->Draw();
 }

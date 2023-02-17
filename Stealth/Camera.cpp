@@ -5,8 +5,8 @@ using namespace Math3d;
 
 const float  Camera::NEAR_DISTANCE	   = 1.0f;								//カメラに映る手前の範囲
 const float  Camera::FAR_DISTANCE	   = 4000.0f;							//カメラに映る最奥の範囲
-//const VECTOR Camera::INITIAL_POSITION  = { 0.0f, 2000.0f, -100.0f };		//初期位置
-//const VECTOR Camera::UP_VECTOR		 = { 0.0f, 0.0f, 0.0f };			//カメラの注視点
+const VECTOR Camera::INITIAL_POSITION  = { 0.0f, 2000.0f, -100.0f };		//初期位置
+const VECTOR Camera::UP_VECTOR		 = { 0.0f, 0.0f, 0.0f };				//カメラの注視点
 
 /// <summary>
 /// コンストラクタ
@@ -70,4 +70,13 @@ void Camera::Update(VECTOR pos)
 	down  = VScale(front, -1.0f);
 	right = VCross(yaxis, front);
 	left  = VScale(right, -1.0f);
+}
+
+/// <summary>
+/// ステージセレクション画面用カメラ
+/// </summary>
+void Camera::SelectionCamera()
+{
+	//カメラの視点、注視点を設定
+	SetCameraPositionAndTarget_UpVecY(INITIAL_POSITION, UP_VECTOR);
 }

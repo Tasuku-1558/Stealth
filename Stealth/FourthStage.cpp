@@ -17,7 +17,6 @@
 #include "UiManager.h"
 #include "FadeManager.h"
 #include "Set.h"
-#include "SoundManager.h"
 
 
 const float FourthStage::GOAL_POSITION_X = -5400.0f;	//ゴールの位置X座標
@@ -59,7 +58,6 @@ FourthStage::FourthStage(SceneManager* const sceneManager)
 /// </summary>
 FourthStage::~FourthStage()
 {
-	//処理なし
 }
 
 /// <summary>
@@ -69,6 +67,7 @@ void FourthStage::Initialize()
 {
 	//ライトクラス
 	light = new Light();
+	light->Initialize();
 
 	//カメラクラス
 	camera = new Camera();
@@ -157,8 +156,6 @@ void FourthStage::Finalize()
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
-
-	SoundManager::GetInstance().DeleteBgm();
 }
 
 /// <summary>
@@ -169,8 +166,6 @@ void FourthStage::Activate()
 	state = State::START;
 
 	frame = 0.0f;
-
-	SoundManager::GetInstance().PlayBgm();
 
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
@@ -244,7 +239,7 @@ void FourthStage::DeleteEnemy(Enemy* deleteEnemy)
 /// </summary>
 void FourthStage::EnemyPop()
 {
-	Enemy* newEnemy = new Enemy(stageMap->GetMap(5), 430.0f);
+	Enemy* newEnemy = new Enemy(stageMap->GetMap(5), 300.0f);
 	EntryEnemy(newEnemy);
 
 	Enemy* newEnemy2 = new Enemy(stageMap->GetMap(6), 800.0f);
@@ -305,9 +300,6 @@ void FourthStage::CakeParticlePop()
 void FourthStage::UpdateStart(float deltaTime)
 {
 	camera->Update(player->GetPosition());
-
-	//サードステージでのライトの方向の設定
-	light->Update({ 0.0f,-0.5f,0.0f });
 
 	frame += deltaTime;
 
@@ -418,8 +410,6 @@ void FourthStage::UpdateGoal(float deltaTime)
 	//フレーム数が2.9秒経過したら
 	if (frame > 2.9f)
 	{
-		SoundManager::GetInstance().StopBgm();
-
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
@@ -436,11 +426,11 @@ void FourthStage::UpdateOver(float deltaTime)
 
 	fadeManager->FadeMove();
 
+	Set::GetInstance().SetResult(!clear);
+
 	//フレーム数が2.8秒経過したら
 	if (frame > 2.8f)
 	{
-		SoundManager::GetInstance().StopBgm();
-
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;

@@ -8,25 +8,25 @@ const string SelectionUi::STAGE_DESCRIPTION_PATH  = "stage_description.png";	//ƒ
 const string SelectionUi::OPERATION_METHOD_PATH	  = "operation_method.png";		//‘€ì•û–@à–¾‰æ‘œ‚ÌƒpƒX
 const int	 SelectionUi::STAGE_NUMBER			  = 5;							//ƒXƒe[ƒW”
 
-const VECTOR SelectionUi::STAGE1_POSITION		  = { 1300.0f, 740.0f, 0.0f };		//ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚ÌˆÊ’u
-const VECTOR SelectionUi::STAGE1_SIZE			  = { 10.0f, 10.0f, 10.0f };		//ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚Ì”{—¦
-const VECTOR SelectionUi::STAGE1_ROTATE = { 80.0f * DX_PI_F / 180.0f, 190.0f * DX_PI_F / 180.0f, 0.0f }; //ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
+const VECTOR SelectionUi::STAGE1_POSITION		  = { 500.0f, 700.0f, 250.0f };		//ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚ÌˆÊ’u
+const VECTOR SelectionUi::STAGE1_SIZE			  = { 14.0f, 14.0f, 14.0f };		//ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚Ì”{—¦
+const VECTOR SelectionUi::STAGE1_ROTATE = { 0.0f, 180.0f * DX_PI_F / 180.0f, 15.0f * DX_PI_F / 180.0f }; //ƒXƒe[ƒW1ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
 
-const VECTOR SelectionUi::STAGE2_POSITION		  = { 900.0f, 1050.0f, 0.0f };		//ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚ÌˆÊ’u
-const VECTOR SelectionUi::STAGE2_SIZE			  = { 9.0f, 9.0f, 9.0f };			//ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚Ì”{—¦
-const VECTOR SelectionUi::STAGE2_ROTATE = { 80.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f }; //ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
+const VECTOR SelectionUi::STAGE2_POSITION		  = { -100.0f, 800.0f, 600.0f };	//ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚ÌˆÊ’u
+const VECTOR SelectionUi::STAGE2_SIZE			  = { 11.0f, 11.0f, 11.0f };		//ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚Ì”{—¦
+const VECTOR SelectionUi::STAGE2_ROTATE = { 80.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f }; //ƒXƒe[ƒW2ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
 
-const VECTOR SelectionUi::STAGE3_POSITION		  = { 1250.0f, 750.0f, -150.0f };	//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚ÌˆÊ’u
-const VECTOR SelectionUi::STAGE3_SIZE			  = { 7.0f, 7.0f, 7.0f };			//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚Ì”{—¦
-const VECTOR SelectionUi::STAGE3_ROTATE = { 90.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }; //ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
+const VECTOR SelectionUi::STAGE3_POSITION		  = { 500.0f, 800.0f, 300.0f };		//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚ÌˆÊ’u
+const VECTOR SelectionUi::STAGE3_SIZE			  = { 10.0f, 10.0f, 10.0f };		//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚Ì”{—¦
+const VECTOR SelectionUi::STAGE3_ROTATE = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };//ƒXƒe[ƒW3ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
 
-const VECTOR SelectionUi::STAGE4_POSITION		  = { 1050.0f, 800.0f, -150.0f };	//ƒXƒe[ƒW4ƒ‚ƒfƒ‹‚ÌˆÊ’u
-const VECTOR SelectionUi::STAGE4_SIZE			  = { 6.0f, 6.0f, 6.0f };			//ƒXƒe[ƒW4ƒ‚ƒfƒ‹‚Ì”{—¦
-const VECTOR SelectionUi::STAGE4_ROTATE = { 90.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }; //ƒXƒe[ƒW4ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
+const VECTOR SelectionUi::STAGE4_POSITION		  = { 300.0f, 500.0f, 500.0f };		//ƒXƒe[ƒW4ƒ‚ƒfƒ‹‚ÌˆÊ’u
+const VECTOR SelectionUi::STAGE4_SIZE			  = { 11.0f, 11.0f, 11.0f };		//ƒXƒe[ƒW4ƒ‚ƒfƒ‹‚Ì”{—¦
+const VECTOR SelectionUi::STAGE4_ROTATE = { 0.0f, 180.0f * DX_PI_F / 180.0f, 5.0f * DX_PI_F / 180.0f };//ƒXƒe[ƒW4ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
 
-const VECTOR SelectionUi::STAGE5_POSITION		  = { 750.0f, 950.0f, -150.0f };	//ƒXƒe[ƒW5ƒ‚ƒfƒ‹‚ÌˆÊ’u
-const VECTOR SelectionUi::STAGE5_SIZE			  = { 8.0f, 8.0f, 8.0f };			//ƒXƒe[ƒW5ƒ‚ƒfƒ‹‚Ì”{—¦
-const VECTOR SelectionUi::STAGE5_ROTATE = { 90.0f * DX_PI_F / 180.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }; //ƒXƒe[ƒW5ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
+const VECTOR SelectionUi::STAGE5_POSITION		  = { -200.0f, 800.0f, 600.0f };	//ƒXƒe[ƒW5ƒ‚ƒfƒ‹‚ÌˆÊ’u
+const VECTOR SelectionUi::STAGE5_SIZE			  = { 13.0f, 13.0f, 13.0f };		//ƒXƒe[ƒW5ƒ‚ƒfƒ‹‚Ì”{—¦
+const VECTOR SelectionUi::STAGE5_ROTATE = { 0.0f, 180.0f * DX_PI_F / 180.0f, 5.0f * DX_PI_F / 180.0f }; //ƒXƒe[ƒW5ƒ‚ƒfƒ‹‚Ì‰ñ“]’l
 
 
 /// <summary>
@@ -67,7 +67,7 @@ void SelectionUi::Initialize()
 	MapInput(3, ModelManager::STAGE4, STAGE4_POSITION, STAGE4_SIZE, STAGE4_ROTATE);
 
 	MapInput(4, ModelManager::STAGE5, STAGE5_POSITION, STAGE5_SIZE, STAGE5_ROTATE);
-	
+
 
 	//‰æ‘œ“Ç‚Ýž‚Ý
 	stageDescription = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE_DESCRIPTION_PATH).c_str());
@@ -80,7 +80,7 @@ void SelectionUi::Initialize()
 
 	//ƒtƒHƒ“ƒgƒf[ƒ^‚Ìì¬
 	font = CreateFontToHandle("Oranienbaum", 90, 1);
-
+	
 }
 
 /// <summary>
@@ -127,26 +127,10 @@ void SelectionUi::Finalize()
 
 	DeleteGraph(operationMethod);
 
+	DeleteGraph(selectionUiImage);
+
 	//ì¬‚µ‚½ƒtƒHƒ“ƒgƒf[ƒ^‚Ìíœ
 	DeleteFontToHandle(font);
-}
-
-/// <summary>
-/// Šˆ«‰»ˆ—
-/// </summary>
-void SelectionUi::Activate()
-{
-
-	//ƒ}ƒbƒvƒ‚ƒfƒ‹“Ç‚Ýž‚Ý
-	MapInput(0, ModelManager::STAGE1, STAGE1_POSITION, STAGE1_SIZE, STAGE1_ROTATE);
-
-	MapInput(1, ModelManager::STAGE2, STAGE2_POSITION, STAGE2_SIZE, STAGE2_ROTATE);
-
-	MapInput(2, ModelManager::STAGE3, STAGE3_POSITION, STAGE3_SIZE, STAGE3_ROTATE);
-
-	MapInput(3, ModelManager::STAGE4, STAGE4_POSITION, STAGE4_SIZE, STAGE4_ROTATE);
-
-	MapInput(4, ModelManager::STAGE5, STAGE5_POSITION, STAGE5_SIZE, STAGE5_ROTATE);
 }
 
 /// <summary>

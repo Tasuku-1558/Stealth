@@ -44,12 +44,6 @@ void Bullet::Initialize()
 	//マウスカーソルを表示しない
 	SetMouseDispFlag(FALSE);
 
-	//読み込み失敗でエラー
-	if (modelHandle < 0)
-	{
-		printfDx("モデルデータ読み込みに失敗 [CAKE]\n");
-	}
-
 	string failePath = IMAGE_FOLDER_PATH + CURSOR_PATH;
 	cursorImage = LoadGraph(failePath.c_str());
 }

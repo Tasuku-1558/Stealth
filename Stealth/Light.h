@@ -12,5 +12,8 @@ public:
 	 Light();
 	 virtual ~Light();
 
-	void Update(VECTOR direction);	//更新処理
+	void Initialize();				//初期化処理
+
+	//静的定数
+	static const VECTOR DIRECTION;	//ライトの向き
 };

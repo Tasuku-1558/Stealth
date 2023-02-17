@@ -15,6 +15,7 @@ public:
 
 	void Initialize();							//初期化処理
 	void Update(VECTOR pos);					//更新処理
+	void SelectionCamera();						//ステージセレクション画面用カメラ
 
 	const VECTOR GetUp()	{ return up; }		//カメラの上方向を返す
 	const VECTOR GetDown()  { return down; }	//カメラの下方向を返す
@@ -37,7 +38,7 @@ private:
 	//静的定数
 	static const float  NEAR_DISTANCE;		//カメラに映る手前の範囲
 	static const float  FAR_DISTANCE;		//カメラに映る最奥の範囲
-	//static const VECTOR INITIAL_POSITION;	//初期位置
-	//static const VECTOR UP_VECTOR;		//カメラの上方向
+	static const VECTOR INITIAL_POSITION;	//初期位置
+	static const VECTOR UP_VECTOR;			//カメラの上方向
 };
 

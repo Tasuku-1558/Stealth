@@ -77,6 +77,10 @@ void TitleScene::Finalize()
 {
 	DeleteGraph(backGroundHandle);
 
+	DeleteGraph(titleName);
+
+	DeleteGraph(titleUi);
+
 	DeleteSoundMem(titleBgm);
 }
 
@@ -100,6 +104,7 @@ void TitleScene::Update(float deltaTime)
 		StopSoundMem(titleBgm);									//ƒ^ƒCƒgƒ‹‹È‚ðŽ~‚ß‚é	
 
 		parent->SetNextScene(SceneManager::SELECTION);
+		return;
 	}
 }
 
@@ -141,7 +146,7 @@ void TitleScene::Draw()
 		PlayMovieToGraph(backGroundHandle);
 	}
 
-	DrawGraph(750, 450, titleName, TRUE);
+	DrawRotaGraph(950, 450, 0.5f, 0, titleName, TRUE);
 
 	Blink();
 }

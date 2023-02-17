@@ -17,7 +17,6 @@ public:
 	virtual ~SelectionUi();
 
 	void Initialize();								//初期化処理
-	void Activate();								//活性化処理
 	void Draw();									//描画処理
 	void StageUiDraw(int mapNumber,
 					 int enemyNumber, 
@@ -33,7 +32,7 @@ private:
 	void MapInput(int number, ModelManager::ModelType modelType, 
 				  VECTOR mapPos, VECTOR size, VECTOR rotate);		//マップ情報入力
 
-	string InputPath(string folderPath,		//画像のパスを入力
+	string InputPath(string folderPath,				//画像のパスを入力
 					 string imagePath);
 
 	int font;										//ゲームフォント
@@ -43,7 +42,6 @@ private:
 	int operationMethod;							//操作方法説明画像のハンドル
 	int modelHandle[5];								//マップモデルハンドル
 	VECTOR position[5];								//マップモデルの位置
-
 
 	//静的定数
 	static const string IMAGE_FOLDER_PATH;			//imageフォルダまでのパス
