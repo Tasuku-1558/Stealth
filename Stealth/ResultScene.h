@@ -62,6 +62,7 @@ private:
 	int backGroundX;		//背景のX座標
 	int backGroundY;		//背景のY座標
 
+
 	//静的定数
 	static const string IMAGE_FOLDER_PATH;		//imageフォルダまでのパス
 	static const string RESULT_UI_PATH;			//リザルト画面のUIのパス

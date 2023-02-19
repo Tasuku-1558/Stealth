@@ -11,11 +11,13 @@ class Player;
 class Enemy;
 class MonitoringEnemy;
 class CakeBullet;
+class GoalFlag;
 class HitChecker;
 class CakeRepopEffect;
 class CakeParticle;
 class UiManager;
 class FadeManager;
+
 
 /// <summary>
 /// ThirdStageクラス
@@ -52,6 +54,7 @@ private:
 	std::vector<Enemy*> enemy;
 	std::vector<MonitoringEnemy*> monitoringEnemy;
 	std::vector<CakeBullet*> cakeBullet;
+	GoalFlag* goalFlag;
 	HitChecker* hitChecker;
 	CakeRepopEffect* cakeEffect;
 	std::vector<CakeParticle*> cakeParticle;
@@ -89,9 +92,7 @@ private:
 	bool clear;
 
 	//静的定数
-	static const float GOAL_POSITION_X;				//ゴールの位置X座標
-	static const float GOAL_POSITION_Z;				//ゴールの位置Z座標
-	static const int   PARTICLE_NUMBER;				//パーティクルの数
+	static const int PARTICLE_NUMBER;				//パーティクルの数
 
 
 };

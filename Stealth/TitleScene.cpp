@@ -89,7 +89,7 @@ void TitleScene::Finalize()
 /// </summary>
 void TitleScene::Activate()
 {
-	PlaySoundMem(titleBgm, DX_PLAYTYPE_LOOP);					//タイトル曲を流す
+	//PlaySoundMem(titleBgm, DX_PLAYTYPE_LOOP);					//タイトル曲を流す
 }
 
 /// <summary>
@@ -101,7 +101,7 @@ void TitleScene::Update(float deltaTime)
 	//次のシーンへ
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
-		StopSoundMem(titleBgm);									//タイトル曲を止める	
+		//StopSoundMem(titleBgm);									//タイトル曲を止める	
 
 		parent->SetNextScene(SceneManager::SELECTION);
 		return;

@@ -19,7 +19,8 @@ using namespace std;
 /// <param name="pos"></param>
 /// <param name="changeDir"></param>
 /// <param name="currentDir"></param>
-MonitoringEnemy::MonitoringEnemy(const VECTOR& pos, VECTOR changeDir, VECTOR currentDir) : EnemyBase()
+MonitoringEnemy::MonitoringEnemy(const VECTOR& pos, VECTOR changeDir, VECTOR currentDir)
+	: EnemyBase()
 	, dirCount(0.0f)
 	, anotherDir()
 	, initialDir()

@@ -10,6 +10,7 @@
 #include "Enemy.h"
 #include "MonitoringEnemy.h"
 #include "CakeBullet.h"
+#include "GoalFlag.h"
 #include "HitChecker.h"
 #include "CakeRepopEffect.h"
 #include "CakeParticle.h"
@@ -19,9 +20,7 @@
 #include "Set.h"
 
 
-const float FourthStage::GOAL_POSITION_X = -5400.0f;	//ゴールの位置X座標
-const float FourthStage::GOAL_POSITION_Z = 0.0f;		//ゴールの位置Z座標
-const int   FourthStage::PARTICLE_NUMBER = 500;			//パーティクルの数
+const int FourthStage::PARTICLE_NUMBER = 500;			//パーティクルの数
 
 /// <summary>
 /// コンストラクタ
@@ -39,6 +38,7 @@ FourthStage::FourthStage(SceneManager* const sceneManager)
 	, monitoringEnemy(nullptr)
 	, pUpdate(nullptr)
 	, cakeBullet(nullptr)
+	, goalFlag(nullptr)
 	, hitChecker(nullptr)
 	, cakeEffect(nullptr)
 	, cakeParticle()
@@ -58,6 +58,7 @@ FourthStage::FourthStage(SceneManager* const sceneManager)
 /// </summary>
 FourthStage::~FourthStage()
 {
+	//処理なし
 }
 
 /// <summary>
@@ -101,6 +102,10 @@ void FourthStage::Initialize()
 	cakeEffect = new CakeRepopEffect();
 	cakeEffect->Initialize();
 
+	//ゴールフラッグクラス
+	goalFlag = new GoalFlag({ -5400.0f ,0.0f,100.0f });
+	goalFlag->Initialize();
+
 	//ヒットチェッカークラス
 	hitChecker = new HitChecker();
 
@@ -137,6 +142,8 @@ void FourthStage::Finalize()
 	}
 
 	SafeDelete(cakeBullet);
+
+	SafeDelete(goalFlag);
 
 	SafeDelete(monitoringEnemy);
 
@@ -346,6 +353,8 @@ void FourthStage::UpdateGame(float deltaTime)
 
 	cakeBullet->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
 
+	goalFlag->Update(deltaTime);
+
 	//ケーキのパーティクル出現
 	CakeParticlePop();
 
@@ -363,7 +372,7 @@ void FourthStage::UpdateGame(float deltaTime)
 		}
 	}
 
-	hitChecker->Check(stageMap->GetModelHandle(), player);
+	hitChecker->Check(stageMap->GetModelHandle(), player, goalFlag->GetPosition());
 
 	for (auto particlePtr : cakeParticle)
 	{
@@ -378,8 +387,7 @@ void FourthStage::UpdateGame(float deltaTime)
 	}
 
 	//プレイヤーがゴール地点に辿り着いたら
-	if (player->GetPosition().x < GOAL_POSITION_X &&
-		player->GetPosition().z > GOAL_POSITION_Z)
+	if (hitChecker->FlagHit())
 	{
 		state = State::GOAL;
 		pUpdate = &FourthStage::UpdateGoal;
@@ -466,7 +474,8 @@ void FourthStage::Draw()
 		//ケーキバレット管理クラス描画
 		cakeBullet->Draw();
 
-		uiManager->CakeGetDraw(cakeBullet->CakeGet());
+		//ゴールフラッグの描画
+		goalFlag->Draw();
 	}
 
 	//ケーキの再出現エフェクト描画
@@ -474,6 +483,9 @@ void FourthStage::Draw()
 
 	//UI管理クラス描画
 	uiManager->Draw(state, player->GetPlayerCount());
+
+	//ケーキを所持しているか描画
+	uiManager->CakeGetDraw(cakeBullet->CakeGet());
 
 	//ケーキのパーティクルの描画
 	for (auto particlePtr : cakeParticle)

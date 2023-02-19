@@ -3,7 +3,6 @@
 #include "SceneBase.h"
 #include <string>
 
-
 using namespace std;
 
 /// <summary>

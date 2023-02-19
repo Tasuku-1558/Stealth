@@ -8,8 +8,8 @@
 #include "Set.h"
 
 
-char GameClear[] = { "GAME CLEAR" };
-char GameOver[]  = { "GAME OVER" };
+char gameClear[] = { "GAME CLEAR" };
+char gameOver[] = { "GAME OVER" };
 
 const string ResultScene::IMAGE_FOLDER_PATH		 = "data/image/";			//imageフォルダまでのパス
 const string ResultScene::RESULT_UI_PATH		 = "resultUi.png";			//リザルト画面のUIのパス
@@ -72,6 +72,12 @@ void ResultScene::Initialize()
 	inc = -3;
 }
 
+/// <summary>
+/// 画像のパスを入力
+/// </summary>
+/// <param name="folderPath"></param>
+/// <param name="path"></param>
+/// <returns></returns>
 string ResultScene::InputPath(string folderPath, string path)
 {
 	return string(folderPath + path);
@@ -148,8 +154,8 @@ void ResultScene::FireWorksParticlePop()
 			FireWorksParticle* newFireWorksParticle3 = new FireWorksParticle({ 50.0f,0.0f,200.0f }, GetColor(240, 100, 100));
 			EntryFireWorksParticle(newFireWorksParticle3);
 
-			FireWorksParticle* newFireWorksParticle4 = new FireWorksParticle({ 50.0f,0.0f,-200.0f }, GetColor(128, 0, 128));
-			EntryFireWorksParticle(newFireWorksParticle4);
+			/*FireWorksParticle* newFireWorksParticle4 = new FireWorksParticle({ 50.0f,0.0f,-200.0f }, GetColor(128, 0, 128));
+			EntryFireWorksParticle(newFireWorksParticle4);*/
 		}
 
 		particleFlag = true;
@@ -196,7 +202,7 @@ void ResultScene::Update(float deltaTime)
 	
 		//2秒経過したら
 		//パーティクルを再度出せるようにする
-		if (particleInterval > 2.2f)
+		if (particleInterval > 2.0f)
 		{
 			particleFlag = false;
 			particleInterval = 0.0f;
@@ -334,12 +340,12 @@ void ResultScene::Draw()
 			fireWorksParticlePtr->Draw();
 		}
 
-		DrawFormatStringToHandle(600, 400, GetColor(255, 215, 0), font, "%s", GameClear);
+		DrawFormatStringToHandle(600, 400, GetColor(255, 215, 0), font, "%s", gameClear);
 	}
 	//ゲームオーバーならば
 	else
 	{
-		DrawFormatStringToHandle(600, 400, GetColor(255, 0, 0), font, "%s", GameOver);
+		DrawFormatStringToHandle(600, 400, GetColor(255, 0, 0), font, "%s", gameOver);
 	}
 
 	Blink();

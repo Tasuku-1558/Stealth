@@ -166,8 +166,6 @@ int StageSelection::StageCreator(int stageNumber)
 		parent->SetNextScene(SceneManager::TITLE);
 		break;
 	}
-
-	return NULL;
 }
 
 /// <summary>

@@ -15,7 +15,7 @@ public:
 	 HitChecker();
 	 virtual ~HitChecker();
 
-	void Check(int model, Player* player);					//衝突判定
+	void Check(int model, Player* player, VECTOR flagPos);	//衝突判定
 	void BallAndPlayer(VECTOR playerPos, Cake* cake);		//ケーキとプレイヤーの当たり判定
 	void EnemyAndPlayer(VECTOR playerPos, VECTOR enemyPos);	//エネミーとプレイヤーの当たり判定
 
@@ -24,7 +24,8 @@ public:
 	const bool EnemyHit() { return enemyHit; }				//エネミーにプレイヤーが当たったかどうかを返す
 	const bool UI() { return uiDraw; }						//UI画像に当たったかどうかを返す
 	const VECTOR Back() { return pushBack; }				//マップの壁にプレイヤーが衝突したときの押し戻し値を返す
-	const bool MapHit() { return mapHit; }					//マップもプレイヤーが衝突したかどうかを返す
+	const bool MapHit() { return mapHit; }					//マップにプレイヤーが衝突したかどうかを返す
+	const bool FlagHit() { return flagHit; }				//ゴール旗にプレイヤーが当たったかどうかを返す
 
 private:
 
@@ -32,12 +33,14 @@ private:
 
 	void PlayerAndUI(Player* player);						//プレイヤーとUI画像の当たり判定
 	void MapAndPlayer(int model, Player* player);			//マップとプレイヤーの当たり判定
+	void FlagAndPlayer(VECTOR flagPos, Player* player);		//ゴール旗とプレイヤーの当たり判定
 
 
 	bool cakeHit;			//ケーキに衝突したならば
 	bool enemyHit;			//エネミーと衝突したならば
 	VECTOR uiPosition;		//UI画像の位置
 	bool uiDraw;			//UI画像を描画するかどうか
+	bool flagHit;			//ゴール旗に衝突したならば
 
 	bool mapHit;			//マップモデルに衝突したならば
 	VECTOR pushBack;		//マップに衝突した時の押し戻し量

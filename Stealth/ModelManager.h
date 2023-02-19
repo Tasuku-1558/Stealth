@@ -28,6 +28,7 @@ public:
 		STAGE3,			//ステージ3モデル
 		STAGE4,			//ステージ4モデル
 		STAGE5,			//ステージ5モデル
+		GOAL,			//ゴールフラッグモデル
 		MODEL_AMOUNT	//モデルの個数
 	};
 
@@ -59,5 +60,6 @@ private:
 	 static const string STAGE3_PATH;			//stage3モデルファイルのパス
 	 static const string STAGE4_PATH;			//stage4モデルファイルのパス
 	 static const string STAGE5_PATH;			//stage5モデルファイルのパス
+	 static const string GOAL_FLAG_PATH;		//goal_flagモデルファイルのパス
 
 };

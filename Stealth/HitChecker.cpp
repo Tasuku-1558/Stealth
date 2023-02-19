@@ -37,10 +37,11 @@ HitChecker::~HitChecker()
 /// </summary>
 /// <param name="model"></param>
 /// <param name="player"></param>
-void HitChecker::Check(int model, Player* player)
+void HitChecker::Check(int model, Player* player, VECTOR flagPos)
 {
 	PlayerAndUI(player);
 	MapAndPlayer(model, player);
+	FlagAndPlayer(flagPos, player);
 }
 
 /// <summary>
@@ -185,5 +186,29 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 	else
 	{
 		mapHit = false;
+	}
+}
+
+/// <summary>
+/// ゴール旗とプレイヤーの当たり判定
+/// </summary>
+/// <param name="flagPos"></param>
+/// <param name="player"></param>
+void HitChecker::FlagAndPlayer(VECTOR flagPos, Player* player)
+{
+	//プレイヤーからゴール旗の座標を引いた値を取得
+	VECTOR sub = player->GetPosition() - flagPos;
+
+	//プレイヤーとゴール旗の2点間の距離を計算
+	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
+
+	//衝突しているならば
+	if (direction < PLAYER_RADIUS + 50.0f)
+	{
+		flagHit = true;
+	}
+	else
+	{
+		flagHit = false;
 	}
 }

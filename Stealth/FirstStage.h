@@ -11,6 +11,7 @@ class Enemy;
 class CakeBullet;
 class HitChecker;
 class StageMap;
+class GoalFlag;
 class CakeRepopEffect;
 class CakeParticle;
 class UiManager;
@@ -51,6 +52,7 @@ private:
 	CakeBullet* cakeBullet;
 	HitChecker* hitChecker;
 	StageMap* stageMap;
+	GoalFlag* goalFlag;
 	CakeRepopEffect* cakeEffect;
 	std::vector<CakeParticle*> cakeParticle;
 	UiManager* uiManager;
@@ -73,8 +75,8 @@ private:
 	bool  particleFlag;		//パーティクルを出したら
 
 	bool clear;
+	int stageNo;
 
 	//静的定数
-	static const float GOAL_POSITION_X;			//ゴールの位置X座標
-	static const int   PARTICLE_NUMBER;			//パーティクルの数
+	static const int PARTICLE_NUMBER;			//パーティクルの数
 };

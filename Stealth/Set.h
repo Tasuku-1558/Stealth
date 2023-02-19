@@ -17,5 +17,4 @@ private:
 	Set(const Set&);		//コピーコンストラクタ
 
 	bool resultFlag;
-	
 };

@@ -1,7 +1,7 @@
 #include "EnemyBase.h"
 
 
-const float EnemyBase::RANGE_DEGREE		 = 45.0f;			//視野角度
+const float EnemyBase::RANGE_DEGREE		 = 27.0f;			//視野角度
 const int	EnemyBase::CAKE_IMAGE_NUMBER = 2;				//ケーキ画像数
 
 /// <summary>

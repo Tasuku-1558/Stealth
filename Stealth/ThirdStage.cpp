@@ -10,6 +10,7 @@
 #include "Enemy.h"
 #include "MonitoringEnemy.h"
 #include "CakeBullet.h"
+#include "GoalFlag.h"
 #include "HitChecker.h"
 #include "CakeRepopEffect.h"
 #include "CakeParticle.h"
@@ -19,9 +20,7 @@
 #include "Set.h"
 
 
-const float ThirdStage::GOAL_POSITION_X = -2800.0f;		//ゴールの位置X座標
-const float ThirdStage::GOAL_POSITION_Z = 4600.0f;		//ゴールの位置Z座標
-const int   ThirdStage::PARTICLE_NUMBER = 500;			//パーティクルの数
+const int ThirdStage::PARTICLE_NUMBER = 500;			//パーティクルの数
 
 /// <summary>
 /// コンストラクタ
@@ -39,6 +38,7 @@ ThirdStage::ThirdStage(SceneManager* const sceneManager)
 	, monitoringEnemy()
 	, pUpdate(nullptr)
 	, cakeBullet()
+	, goalFlag(nullptr)
 	, hitChecker(nullptr)
 	, cakeEffect(nullptr)
 	, cakeParticle()
@@ -91,6 +91,10 @@ void ThirdStage::Initialize()
 	//ケーキの再出現エフェクトクラス
 	cakeEffect = new CakeRepopEffect();
 	cakeEffect->Initialize();
+
+	//ゴールフラッグクラス
+	goalFlag = new GoalFlag({ -2800.0f ,0.0f,4800.0f });
+	goalFlag->Initialize();
 
 	//ヒットチェッカークラス
 	hitChecker = new HitChecker();
@@ -450,6 +454,8 @@ void ThirdStage::UpdateGame(float deltaTime)
 		cakeBulletPtr->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
 	}
 
+	goalFlag->Update(deltaTime);
+
 	//ケーキのパーティクル出現
 	CakeParticlePop();
 
@@ -467,7 +473,7 @@ void ThirdStage::UpdateGame(float deltaTime)
 		}
 	}
 
-	hitChecker->Check(stageMap->GetModelHandle(), player);
+	hitChecker->Check(stageMap->GetModelHandle(), player, goalFlag->GetPosition());
 
 	for (auto particlePtr : cakeParticle)
 	{
@@ -482,8 +488,7 @@ void ThirdStage::UpdateGame(float deltaTime)
 	}
 
 	//プレイヤーがゴール地点に辿り着いたら
-	if (player->GetPosition().x < GOAL_POSITION_X &&
-		player->GetPosition().z > GOAL_POSITION_Z)
+	if (hitChecker->FlagHit())
 	{
 		state = State::GOAL;
 		pUpdate = &ThirdStage::UpdateGoal;
@@ -577,6 +582,9 @@ void ThirdStage::Draw()
 
 			uiManager->CakeGetDraw(cakeBulletPtr->CakeGet());
 		}
+
+		//ゴールフラッグの描画
+		goalFlag->Draw();
 	}
 
 	//ケーキの再出現エフェクト描画

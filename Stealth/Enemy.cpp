@@ -20,7 +20,7 @@ using namespace std;
 /// </summary>
 /// <param name="id"></param>
 /// <param name="enemySpeed"></param>
-Enemy::Enemy(std::vector<VECTOR>& id, float enemySpeed) : EnemyBase()
+Enemy::Enemy(vector<VECTOR>& id, float enemySpeed) : EnemyBase()
 	, cakeCount(0.0f)
 	, cakeFindFlag(false)
 	, cakeEatFlag(false)
@@ -70,9 +70,9 @@ void Enemy::Initialize()
 /// <param name="folderPath"></param>
 /// <param name="path"></param>
 /// <returns></returns>
-std::string Enemy::InputPath(string folderPath, string imagePath)
+string Enemy::InputPath(string folderPath, string imagePath)
 {
-	return std::string(folderPath + imagePath);
+	return string(folderPath + imagePath);
 }
 
 /// <summary>

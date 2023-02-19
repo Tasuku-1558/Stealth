@@ -13,6 +13,7 @@ const string ModelManager::STAGE2_PATH       = "stage2.mv1";     //stage2ƒ‚ƒfƒ‹ƒ
 const string ModelManager::STAGE3_PATH       = "stage3.mv1";     //stage3ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::STAGE4_PATH       = "stage4.mv1";     //stage4ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::STAGE5_PATH       = "stage5.mv1";     //stage5ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
+const string ModelManager::GOAL_FLAG_PATH    = "goal.mv1";       //goal_flagƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 
 
 /// <summary>
@@ -66,6 +67,8 @@ void ModelManager::LoadAllModel()
     modelHandle[STAGE4]       = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, STAGE4_PATH).c_str());
 
     modelHandle[STAGE5]       = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, STAGE5_PATH).c_str());
+
+    modelHandle[GOAL]         = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, GOAL_FLAG_PATH).c_str());
 
     //“Ç‚İ‚İ¸”s‚È‚çƒGƒ‰[
     for (int i = 0; i < MODEL_AMOUNT; ++i)

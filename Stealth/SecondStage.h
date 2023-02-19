@@ -10,7 +10,7 @@ class BackGround;
 class Player;
 class Enemy;
 class CakeBullet;
-class Wall;
+class GoalFlag;
 class HitChecker;
 class StageMap;
 class CakeParticle;
@@ -52,6 +52,7 @@ private:
 	Player* player;
 	std::vector<Enemy*> enemy;
 	std::vector<CakeBullet*> cakeBullet;
+	GoalFlag* goalFlag;
 	HitChecker* hitChecker;
 	StageMap* stageMap;
 	std::vector<CakeParticle*> cakeParticle;
@@ -87,7 +88,6 @@ private:
 
 
 	//静的定数
-	static const float GOAL_POSITION_X;				//ゴールの位置X座標
-	static const int   PARTICLE_NUMBER;				//パーティクルの数
+	static const int PARTICLE_NUMBER;				//パーティクルの数
 
 };

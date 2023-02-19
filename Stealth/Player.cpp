@@ -243,7 +243,7 @@ void Player::FoundEnemy(float deltaTime, bool spotted)
 		dir = DIR;
 		speed = SPEED;
 
-		playerFindCount+=3;
+		playerFindCount++;
 		initialCount = 0.0f;
 		spottedSeFlag = false;
 	}

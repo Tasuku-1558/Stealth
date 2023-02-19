@@ -10,6 +10,7 @@
 #include "BackGround.h"
 #include "StageMap.h"
 #include "CakeBullet.h"
+#include "GoalFlag.h"
 #include "HitChecker.h"
 #include "CakeRepopEffect.h"
 #include "CakeParticle.h"
@@ -18,8 +19,7 @@
 #include "Set.h"
 
 
-const float FirstStage::GOAL_POSITION_X	= -4000.0f;		//ゴールの位置X座標
-const int   FirstStage::PARTICLE_NUMBER = 500;			//パーティクルの数
+const int FirstStage::PARTICLE_NUMBER = 500;	//パーティクルの数
 
 /// <summary>
 /// コンストラクタ
@@ -37,6 +37,7 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 	, cakeBullet(nullptr)
 	, hitChecker(nullptr)
 	, stageMap(nullptr)
+	, goalFlag(nullptr)
 	, cakeEffect(nullptr)
 	, cakeParticle()
 	, uiManager(nullptr)
@@ -46,9 +47,9 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 	, particleFlag(false)
 	, particleInterval(0.0f)
 	, clear(true)
+	, stageNo(0)
 {
 	//処理なし
-
 }
 
 /// <summary>
@@ -86,7 +87,6 @@ void FirstStage::Initialize()
 	//エネミークラス
 	//エネミーに行動パターンのリストを設定
 	enemy = new Enemy(stageMap->GetMap(0), 1000.0f);
-
 	enemy->Initialize();
 
 	//ケーキバレット管理クラス
@@ -100,6 +100,10 @@ void FirstStage::Initialize()
 	//ケーキの再出現エフェクトクラス
 	cakeEffect = new CakeRepopEffect();
 	cakeEffect->Initialize();
+
+	//ゴールフラッグクラス
+	goalFlag = new GoalFlag({ -4000.0f ,0.0f,0.0f });
+	goalFlag->Initialize();
 
 	//ヒットチェッカークラス
 	hitChecker = new HitChecker();
@@ -132,6 +136,8 @@ void FirstStage::Finalize()
 	SafeDelete(enemy);
 
 	SafeDelete(cakeBullet);
+
+	SafeDelete(goalFlag);
 
 	SafeDelete(hitChecker);
 
@@ -276,6 +282,8 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	cakeBullet->Update(deltaTime, player->GetPosition(), hitChecker, cakeEffect);
 
+	goalFlag->Update(deltaTime);
+
 	//ケーキのパーティクル出現
 	CakeParticlePop();
 
@@ -293,7 +301,7 @@ void FirstStage::UpdateGame(float deltaTime)
 		}
 	}
 	
-	hitChecker->Check(stageMap->GetModelHandle(), player);
+	hitChecker->Check(stageMap->GetModelHandle(), player, goalFlag->GetPosition());
 
 	for (auto particlePtr : cakeParticle)
 	{
@@ -308,7 +316,7 @@ void FirstStage::UpdateGame(float deltaTime)
 	}
 
 	//プレイヤーがゴール地点に辿り着いたら
-	if (player->GetPosition().x < GOAL_POSITION_X)
+	if (hitChecker->FlagHit())
 	{
 		state = State::GOAL;
 		pUpdate = &FirstStage::UpdateGoal;
@@ -388,6 +396,9 @@ void FirstStage::Draw()
 
 		//ケーキバレット管理クラス描画
 		cakeBullet->Draw();
+
+		//ゴールフラッグの描画
+		goalFlag->Draw();
 	}
 
 	//ケーキの再出現エフェクト描画
@@ -416,6 +427,5 @@ void FirstStage::Draw()
 	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "CakeAlive : %d\n(1:true 0:false)", cakeBullet->cake->GetAlive());
 	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());*/
 
-	//DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "stageNo : %d", stageNo);
 
 }
