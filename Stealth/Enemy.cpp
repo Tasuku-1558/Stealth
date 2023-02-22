@@ -148,6 +148,7 @@ void Enemy::Update(float deltaTime, Player* player, HitChecker* hitChecker)
 
 	hitChecker->EnemyAndPlayer(player->GetPosition(), position);
 
+	//エネミーにプレイヤーが衝突したならば
 	if (hitChecker->EnemyHit())
 	{
 		playerSpotted = true;

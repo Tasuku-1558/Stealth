@@ -1,8 +1,8 @@
 #include "CakeBullet.h"
 
 
-const string CakeBullet::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
-const string CakeBullet::LOCATE_SE_PATH    = "locate.mp3";		//ケーキを置いた時のSE音のパス
+//const string CakeBullet::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
+//const string CakeBullet::LOCATE_SE_PATH    = "locate.mp3";		//ケーキを置いた時のSE音のパス
 
 
 /// <summary>
@@ -15,6 +15,8 @@ CakeBullet::CakeBullet(const VECTOR& cakePos)
     , bulletCount(0.0f)
     , cakeGet(false)
     , locateSe(0)
+    , SOUND_FOLDER_PATH("data/sound/")
+    , LOCATE_SE_PATH("locate.mp3")
 {
     cake = new Cake(cakePos);
     bullet = new Bullet();

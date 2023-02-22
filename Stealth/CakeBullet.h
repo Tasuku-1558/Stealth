@@ -41,8 +41,8 @@ private:
     int	locateSe;				                                     //ケーキを置いた時のSE音格納用
 
 
-    //静的定数
-    static const std::string SOUND_FOLDER_PATH;		//soundフォルダまでのパス
-    static const std::string LOCATE_SE_PATH;		//ケーキを置いた時のSE音のパス
+    //定数
+    const std::string SOUND_FOLDER_PATH;		//soundフォルダまでのパス
+    const std::string LOCATE_SE_PATH;		    //ケーキを置いた時のSE音のパス
 
 };

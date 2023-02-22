@@ -25,7 +25,7 @@ public:
 	void Update(float deltaTime);					//更新処理
 	void Draw();									//描画処理
 
-	int GetStage() { return stageNo; }
+	const int GetStage() { return stageNo; }
 
 private:
 	StageSelection(const StageSelection&);			//コピーコンストラクタ

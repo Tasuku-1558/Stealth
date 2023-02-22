@@ -3,7 +3,7 @@
 #include "HitChecker.h"
 
 
-const VECTOR Cake::SIZE	= { 20.0f, 20.0f, 20.0f };		//ƒ‚ƒfƒ‹‚Ì”{—¦
+//const VECTOR Cake::SIZE	= { 20.0f, 20.0f, 20.0f };		//ƒ‚ƒfƒ‹‚Ì”{—¦
 
 
 /// <summary>
@@ -12,6 +12,7 @@ const VECTOR Cake::SIZE	= { 20.0f, 20.0f, 20.0f };		//ƒ‚ƒfƒ‹‚Ì”{—¦
 /// <param name="pos"></param>
 Cake::Cake(const VECTOR& pos) : ObjectBase()
 	, alive(true)
+	, SIZE({ 20.0f, 20.0f, 20.0f })
 {
 	position = pos;
 	Initialize();

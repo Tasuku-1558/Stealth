@@ -140,31 +140,13 @@ int StageSelection::StageCreator(int stageNumber)
 	}
 
 	//各シーン
-	switch (stageNumber)
+	if (stageNumber == 1)
 	{
-	case 1:
 		parent->SetNextScene(SceneManager::STAGE1);
-		break;
-
-	case 2:
-		parent->SetNextScene(SceneManager::STAGE2);
-		break;
-
-	case 3:
-		parent->SetNextScene(SceneManager::STAGE3);
-		break;
-
-	case 4:
-		parent->SetNextScene(SceneManager::STAGE4);
-		break;
-
-	case 5:
-		parent->SetNextScene(SceneManager::STAGE5);
-		break;
-
-	case 6:
+	}
+	if (stageNumber == 6)
+	{
 		parent->SetNextScene(SceneManager::TITLE);
-		break;
 	}
 }
 

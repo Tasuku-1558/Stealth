@@ -85,7 +85,7 @@ void SecondStage::Initialize()
 	stageMap = new StageMap(ModelManager::STAGE2, { 80.0f, 60.0f, 80.0f },
 							{ 0.0f, 0.0f, 0.0f }, { -7000.0f, -100.0f, -2900.0f });
 
-	stageMap->Initialize();
+	//stageMap->Initialize();
 	
 	//ケーキの再出現エフェクトクラス
 	cakeEffect = new CakeRepopEffect();

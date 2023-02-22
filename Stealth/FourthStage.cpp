@@ -83,7 +83,7 @@ void FourthStage::Initialize()
 	stageMap = new StageMap(ModelManager::STAGE4, { 50.0f, 50.0f, 55.0f },
 							{ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f }, { -4600.0f, -100.0f, -1300.0f });
 
-	stageMap->Initialize();
+	//stageMap->Initialize();
 
 	//プレイヤークラス
 	player = new Player();

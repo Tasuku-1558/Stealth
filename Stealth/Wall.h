@@ -2,7 +2,6 @@
 
 #include "ObjectBase.h"
 
-
 /// <summary>
 /// •ÇƒNƒ‰ƒX
 /// </summary>

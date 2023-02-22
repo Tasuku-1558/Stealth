@@ -30,7 +30,7 @@ private:
 	bool alive;							//ケーキが生きてるか死んでいるか
 
 
-	//静的定数
-	static const VECTOR SIZE;           //モデルの倍率
+	//定数
+	const VECTOR SIZE;           //モデルの倍率
 
 };

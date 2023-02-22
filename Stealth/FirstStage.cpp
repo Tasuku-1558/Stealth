@@ -77,12 +77,15 @@ void FirstStage::Initialize()
 	backGround = new BackGround();
 	backGround->Initialize();
 
-	//マップクラス
+	//if (stageMap->GetStage() == 1)
+	{
+		//マップクラス
 	//マップモデルの種類、サイズ、回転値、位置を入力する
-	stageMap = new StageMap(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
-							{ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f }, { -2700.0f, -100.0f, -750.0f });
-	
-	stageMap->Initialize();
+		stageMap = new StageMap(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
+			{ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f }, { -2700.0f, -100.0f, -750.0f });
+
+		stageMap->Initialize();
+	}
 
 	//エネミークラス
 	//エネミーに行動パターンのリストを設定

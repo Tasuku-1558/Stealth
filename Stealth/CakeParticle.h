@@ -31,6 +31,6 @@ private:
 	float zPower;			//縦方向の力
 
 
-	//静的定数
-	static const unsigned int PINK;		//パーティクルのカラー
+	//定数
+	const unsigned int PINK;		//パーティクルのカラー
 };

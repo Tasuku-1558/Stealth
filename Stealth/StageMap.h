@@ -4,7 +4,6 @@
 #include "ModelManager.h"
 #include <vector>
 
-
 /// <summary>
 /// ステージマップクラス
 /// </summary>
@@ -16,6 +15,8 @@ public:
 
 	void Initialize();      //初期化処理
 	void Draw();            //描画処理
+
+	const int GetStage() { return stageNo; }
 
 	std::vector<VECTOR>& GetMap(int number) { return positionList[number]; }      //敵の行動パターンリストを返す
 
@@ -45,4 +46,6 @@ private:
 
 	std::vector<VECTOR> positionList[9];
 	std::vector<VECTOR>::iterator itr[9];
+
+	int stageNo;
 };

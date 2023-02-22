@@ -40,10 +40,10 @@ void SceneManager::Initialize()
 	eachScene[TITLE]	 = new TitleScene(this);
 	eachScene[SELECTION] = new StageSelection(this);
 	eachScene[STAGE1]	 = new FirstStage(this);
-	eachScene[STAGE2]	 = new SecondStage(this);
+	/*eachScene[STAGE2]	 = new SecondStage(this);
 	eachScene[STAGE3]	 = new ThirdStage(this);
 	eachScene[STAGE4]	 = new FourthStage(this);
-	eachScene[STAGE5]	 = new FifthStage(this);
+	eachScene[STAGE5]	 = new FifthStage(this);*/
 	eachScene[RESULT]	 = new ResultScene(this);
 	
 	//‘S‚Ä‚ÌƒV[ƒ“‚Ì‰Šú‰»

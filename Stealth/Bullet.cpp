@@ -2,11 +2,11 @@
 #include "ModelManager.h"
 
 
-const string Bullet::IMAGE_FOLDER_PATH = "data/image/";				//imageフォルダまでのパス
-const string Bullet::CURSOR_PATH	   = "pointer.png";				//カーソル画像のパス
-const VECTOR Bullet::SIZE			   = { 20.0f, 20.0f, 20.0f };	//モデルの倍率
-const VECTOR Bullet::POSITION		   = { 0.0f, 30.0f, 0.0f };		//モデルの位置
-const float  Bullet::SCALE			   = 0.4f;						//カーソル画像の大きさ
+//const string IMAGE_FOLDER_PATH = "data/image/";				//imageフォルダまでのパス
+//const string CURSOR_PATH	   = "pointer.png";				//カーソル画像のパス
+//const VECTOR SIZE			   = { 20.0f, 20.0f, 20.0f };	//モデルの倍率
+//const VECTOR POSITION		   = { 0.0f, 30.0f, 0.0f };		//モデルの位置
+//const float  SCALE			   = 0.4f;						//カーソル画像の大きさ
 
 using namespace Math3d;
 
@@ -21,6 +21,11 @@ Bullet::Bullet() : ObjectBase()
 	, worldMouseY(30.0f)
 	, worldMouseZ(0.0f)
 	, alive(false)
+	, IMAGE_FOLDER_PATH("data/image/")
+	, CURSOR_PATH("pointer.png")
+	, SIZE({ 20.0f, 20.0f, 20.0f })
+	, POSITION({ 0.0f, 30.0f, 0.0f })
+	, SCALE(0.4f)
 {
 	//処理なし
 }

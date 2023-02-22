@@ -82,7 +82,7 @@ void ThirdStage::Initialize()
 	//マップモデルの種類、サイズ、回転値、位置を入力する
 	stageMap = new StageMap(ModelManager::STAGE3, { 50.0f, 50.0f, 55.0f }, 
 							{ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f }, { -2600.0f, -100.0f, 2650.0f });
-	stageMap->Initialize();
+	//stageMap->Initialize();
 
 	//プレイヤークラス
 	player = new Player();

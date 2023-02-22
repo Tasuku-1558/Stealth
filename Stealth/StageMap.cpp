@@ -10,7 +10,9 @@ using namespace std;
 /// <param name="size"></param>
 /// <param name="rotate"></param>
 /// <param name="position"></param>
-StageMap::StageMap(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position) : StageBase()
+StageMap::StageMap(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position)
+	: StageBase()
+	, stageNo(0)
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(modelType));
 	MV1SetScale(modelHandle, size);
@@ -31,6 +33,8 @@ StageMap::~StageMap()
 /// </summary>
 void StageMap::Initialize()
 {
+	stageNo = 1;
+
 	//エネミーの行動パターンリスト
 	MapList();
 	MapList2();
@@ -58,6 +62,7 @@ void StageMap::Finalize()
 void StageMap::Draw()
 {
 	MV1DrawModel(modelHandle);
+	DrawFormatString(500, 100, GetColor(255, 0, 0), "StageNo : %d", stageNo);
 }
 
 /// <summary>

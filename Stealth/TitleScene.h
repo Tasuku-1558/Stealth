@@ -35,7 +35,6 @@ private:
 	int titleBgm;						//タイトル画面のBGM
 	int alpha;
 	int inc;
-	int prevAlpha;
 	float frame;
 
 	//静的定数

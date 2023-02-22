@@ -2,9 +2,6 @@
 #include "FireWorksParticle.h"
 
 
-const unsigned int FireWorksParticle::ORANGE = GetColor(255, 255, 0);		//パーティクルのカラー
-
-
 /// <summary>
 /// コンストラクタ
 /// </summary>

@@ -9,7 +9,7 @@
 using namespace std;
 
 /// <summary>
-/// プレイヤーショットクラス
+/// ケーキ発射クラス
 /// </summary>
 class Bullet final : public ObjectBase
 {
@@ -29,7 +29,6 @@ public:
 	const bool GetAlive() { return alive; }				//バレットが生きてるか死んでるかを返す
 	
 private:
-
 	Bullet(const Bullet&);					//コピーコンストラクタ
 
 	void OnShot();							//球が撃たれた時
@@ -40,13 +39,13 @@ private:
 	float worldMouseX;						//ワールドマウスX座標
 	float worldMouseY;						//ワールドマウスY座標
 	float worldMouseZ;						//ワールドマウスZ座標
+	bool alive;								//バレットが生きてるか死んでるか
 
-	bool alive;								//生きてるか死んでるか
 
-	//静的定数
-	static const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
-	static const string CURSOR_PATH;		//カーソル画像のパス
-	static const VECTOR SIZE;				//モデルの倍率
-	static const VECTOR POSITION;			//モデルの位置
-	static const float	SCALE;				//カーソル画像の大きさ
+	//定数
+	const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
+	const string CURSOR_PATH;		//カーソル画像のパス
+	const VECTOR SIZE;				//モデルの倍率
+	const VECTOR POSITION;			//モデルの位置
+	const float	 SCALE;				//カーソル画像の大きさ
 };

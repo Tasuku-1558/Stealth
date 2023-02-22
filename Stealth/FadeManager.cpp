@@ -10,7 +10,7 @@ const int FadeManager::BLACK = GetColor(0, 0, 0);	//フェードのカラー
 /// </summary>
 FadeManager::FadeManager()
 	: fade(0)
-	, fadeInc(3)
+	, fadeInc(2)
 {
 	//処理なし
 }

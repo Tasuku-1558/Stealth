@@ -82,7 +82,7 @@ void FifthStage::Initialize()
 	stageMap = new StageMap(ModelManager::STAGE5, { 60.0f, 60.0f, 65.0f },
 							{ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f }, { -4200.0f, -100.0f, -1500.0f });
 
-	stageMap->Initialize();
+	//stageMap->Initialize();
 
 	//プレイヤークラス
 	player = new Player();

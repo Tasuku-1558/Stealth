@@ -13,6 +13,8 @@ const string UiManager::FILENAME_EXTENSION = ".png";			//‰æ‘œŠg’£q
 UiManager::UiManager()
 	: uiHandle()
 	, stageCount(0)
+	, alpha(0)
+	, inc(0)
 {
 	//ˆ—‚È‚µ
 }
@@ -56,6 +58,8 @@ void UiManager::Initialize()
 void UiManager::Activate()
 {
 	stageCount = 0;
+	alpha = 255;
+	inc = -3;
 }
 
 /// <summary>
@@ -208,9 +212,23 @@ void UiManager::StartGameDraw(Graphic graphic)
 {
 	stageCount++;
 
-	if (stageCount < 100)
+	if (stageCount < 190)
 	{
+		if (alpha > 255 && inc > 0)
+		{
+			inc *= -1;
+		}
+
+		alpha += inc;
+	}
+
+	if (stageCount < 200)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+
 		DrawGraph(0, -100, uiHandle[graphic], TRUE);
+
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
 	}
 }
 
