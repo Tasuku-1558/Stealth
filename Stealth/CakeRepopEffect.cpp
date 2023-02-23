@@ -3,8 +3,8 @@
 #include "EffekseerForDXLib.h"
 
 
-const string CakeRepopEffect::EFFECT_FOLDER_PATH = "data/effect/";		//effectフォルダまでのパス
-const string CakeRepopEffect::CAKE_PATH			 = "cake.efkefc";		//ケーキ再スポーン時エフェクトのパス
+//const string CakeRepopEffect::EFFECT_FOLDER_PATH = "data/effect/";		//effectフォルダまでのパス
+//const string CakeRepopEffect::CAKE_PATH			 = "cake.efkefc";		//ケーキ再スポーン時エフェクトのパス
 
 
 /// <summary>
@@ -17,6 +17,8 @@ CakeRepopEffect::CakeRepopEffect() : EffectBase()
 	, effectPosZ(0.0f)
 	, effectTime(0)
 	, playingEffectHandle(0)
+	, EFFECT_FOLDER_PATH("data/effect/")
+	, CAKE_PATH("cake.efkefc")
 {
 	//処理なし
 }

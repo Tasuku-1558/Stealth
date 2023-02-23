@@ -7,13 +7,14 @@ const string ModelManager::PLAYER_PATH       = "player.mv1";     //playerƒ‚ƒfƒ‹ƒ
 const string ModelManager::ENEMY_PATH        = "enemy.mv1";      //enemyƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::ENEMY_VISUAL_PATH = "enemyAngle.mv1"; //enemy_visualƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::WALL_PATH         = "wall.mv1";       //wallƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
-const string ModelManager::CAKE_PATH         = "cake.mv1";       //cakeƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
+const string ModelManager::CAKE_PATH         = "cakeHalf.mv1";       //cakeƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::STAGE1_PATH       = "stage1.mv1";     //stage1ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::STAGE2_PATH       = "stage2.mv1";     //stage2ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::STAGE3_PATH       = "stage3.mv1";     //stage3ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::STAGE4_PATH       = "stage4.mv1";     //stage4ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::STAGE5_PATH       = "stage5.mv1";     //stage5ƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 const string ModelManager::GOAL_FLAG_PATH    = "goal.mv1";       //goal_flagƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
+const string ModelManager::CAKE_HALF_PATH    = "cakeHalf.mv1";   //cake_halfƒ‚ƒfƒ‹ƒtƒ@ƒCƒ‹‚ÌƒpƒX
 
 
 /// <summary>

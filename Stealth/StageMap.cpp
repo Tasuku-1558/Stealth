@@ -10,14 +10,13 @@ using namespace std;
 /// <param name="size"></param>
 /// <param name="rotate"></param>
 /// <param name="position"></param>
-StageMap::StageMap(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position)
+StageMap::StageMap(/*ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position*/)
 	: StageBase()
 	, stageNo(0)
 {
-	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(modelType));
-	MV1SetScale(modelHandle, size);
-	MV1SetRotationXYZ(modelHandle, rotate);
-	MV1SetPosition(modelHandle, position);
+
+	stageNo = 1;
+
 }
 
 /// <summary>
@@ -31,9 +30,14 @@ StageMap::~StageMap()
 /// <summary>
 /// 初期化処理
 /// </summary>
-void StageMap::Initialize()
+void StageMap::Initialize(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position)
 {
-	stageNo = 1;
+
+	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(modelType));
+	MV1SetScale(modelHandle, size);
+	MV1SetRotationXYZ(modelHandle, rotate);
+	MV1SetPosition(modelHandle, position);
+
 
 	//エネミーの行動パターンリスト
 	MapList();

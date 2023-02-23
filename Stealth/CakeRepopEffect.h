@@ -34,9 +34,9 @@ private:
 	float effectPosY;
 	float effectPosZ;
 
-	int playingEffectHandle;		// 再生中のエフェクトのハンドルを初期化
+	int playingEffectHandle;		//再生中のエフェクトのハンドルを初期化
 
-	//静的定数
-	static const string EFFECT_FOLDER_PATH;		//effectフォルダまでのパス
-	static const string CAKE_PATH;				//ケーキ再スポーン時エフェクトのパス
+	//定数
+	const string EFFECT_FOLDER_PATH;	//effectフォルダまでのパス
+	const string CAKE_PATH;				//ケーキ再スポーン時エフェクトのパス
 };

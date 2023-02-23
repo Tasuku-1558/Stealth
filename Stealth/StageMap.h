@@ -10,10 +10,10 @@
 class StageMap final : public StageBase
 {
 public:
-	StageMap(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position);
+	StageMap(/*ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position*/);
 	virtual ~StageMap();
 
-	void Initialize();      //‰Šú‰»ˆ—
+	void Initialize(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position);      //‰Šú‰»ˆ—
 	void Draw();            //•`‰æˆ—
 
 	const int GetStage() { return stageNo; }

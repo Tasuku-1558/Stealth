@@ -29,6 +29,7 @@ public:
 		STAGE4,			//ステージ4モデル
 		STAGE5,			//ステージ5モデル
 		GOAL,			//ゴールフラッグモデル
+		CAKE_HALF,		//ケーキが半分のモデル
 		MODEL_AMOUNT	//モデルの個数
 	};
 
@@ -61,5 +62,6 @@ private:
 	 static const string STAGE4_PATH;			//stage4モデルファイルのパス
 	 static const string STAGE5_PATH;			//stage5モデルファイルのパス
 	 static const string GOAL_FLAG_PATH;		//goal_flagモデルファイルのパス
+	 static const string CAKE_HALF_PATH;		//cake_halfモデルファイルのパス
 
 };

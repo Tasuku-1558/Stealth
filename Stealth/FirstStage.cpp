@@ -18,6 +18,8 @@
 #include "FadeManager.h"
 #include "Set.h"
 
+//デバック用
+#define DEBUG
 
 const int FirstStage::PARTICLE_NUMBER = 500;	//パーティクルの数
 
@@ -77,24 +79,28 @@ void FirstStage::Initialize()
 	backGround = new BackGround();
 	backGround->Initialize();
 
-	//if (stageMap->GetStage() == 1)
+	//マップクラス
+	stageMap = new StageMap();
+
+	if (stageMap->GetStage() == 1)
 	{
-		//マップクラス
-	//マップモデルの種類、サイズ、回転値、位置を入力する
-		stageMap = new StageMap(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
+		//マップモデルの種類、サイズ、回転値、位置を入力する
+		stageMap->Initialize(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
 			{ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f }, { -2700.0f, -100.0f, -750.0f });
 
-		stageMap->Initialize();
+		//エネミークラス
+		//エネミーに行動パターンのリストとスピードを設定
+		enemy = new Enemy(stageMap->GetMap(0), 1000.0f);
+		enemy->Initialize();
+
+		//ケーキバレット管理クラス
+		//ケーキの初期位置を設定
+		cakeBullet = new CakeBullet({ -1500.0f,30.0f,0.0f });
+
+		//ゴールフラッグクラス
+		goalFlag = new GoalFlag({ -4000.0f ,0.0f,0.0f });
+		goalFlag->Initialize();
 	}
-
-	//エネミークラス
-	//エネミーに行動パターンのリストを設定
-	enemy = new Enemy(stageMap->GetMap(0), 1000.0f);
-	enemy->Initialize();
-
-	//ケーキバレット管理クラス
-	//ケーキの初期位置を設定
-	cakeBullet = new CakeBullet({ -1500.0f,30.0f,0.0f });
 
 	//プレイヤークラス
 	player = new Player();
@@ -103,10 +109,6 @@ void FirstStage::Initialize()
 	//ケーキの再出現エフェクトクラス
 	cakeEffect = new CakeRepopEffect();
 	cakeEffect->Initialize();
-
-	//ゴールフラッグクラス
-	goalFlag = new GoalFlag({ -4000.0f ,0.0f,0.0f });
-	goalFlag->Initialize();
 
 	//ヒットチェッカークラス
 	hitChecker = new HitChecker();
@@ -423,12 +425,12 @@ void FirstStage::Draw()
 	fadeManager->Draw();
 
 	//デバック用
-	/*DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
+#ifdef DEBUG
+	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %.0f", player->GetPosition().z);
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->GetPlayerCount());
 	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "CakeAlive : %d\n(1:true 0:false)", cakeBullet->cake->GetAlive());
-	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());*/
-
-
+	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());
+#endif // DEBUG
 }
