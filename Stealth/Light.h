@@ -14,6 +14,6 @@ public:
 
 	void Initialize();				//初期化処理
 
-	//静的定数
-	static const VECTOR DIRECTION;	//ライトの向き
+	//定数
+	const VECTOR DIRECTION;			//ライトの向き
 };

@@ -5,16 +5,14 @@
 #include "Camera.h"
 #include "FireWorksParticle.h"
 #include "FadeManager.h"
+#include "KeyManager.h"
 #include "Set.h"
+#include "TitleScene.h"
+#include "StageSelection.h"
 
 
 char gameClear[] = { "GAME CLEAR" };
 char gameOver[] = { "GAME OVER" };
-
-const string ResultScene::IMAGE_FOLDER_PATH		 = "data/image/";			//imageフォルダまでのパス
-const string ResultScene::RESULT_UI_PATH		 = "resultUi.png";			//リザルト画面のUIのパス
-const string ResultScene::RESULT_BACKGROUND_PATH = "resultBackGround.png";	//リザルト画面の背景画像のパス
-const int    ResultScene::PARTICLE_NUMBER		 = 500;						//パーティクルの数
 
 
 /// <summary>
@@ -40,6 +38,10 @@ ResultScene::ResultScene(SceneManager* const sceneManager)
 	, backGroundImage(0)
 	, backGroundX(0)
 	, backGroundY(0)
+	, IMAGE_FOLDER_PATH("data/image/")
+	, RESULT_UI_PATH("resultUi.png")
+	, RESULT_BACKGROUND_PATH("resultBackGround.png")
+	, PARTICLE_NUMBER(500)
 {
 	Initialize();
 	Activate();
@@ -191,7 +193,7 @@ void ResultScene::Activate()
 /// <param name="deltaTime"></param>
 void ResultScene::Update(float deltaTime)
 {
-	camera->SelectionCamera();
+	camera->SelectionAndResultCamera();
 
 	FireWorksParticlePop();
 	
@@ -228,6 +230,8 @@ void ResultScene::Update(float deltaTime)
 			DeleteFireWorksParticle(fireWorksParticlePtr);
 		}
 	}
+
+	//return retScene;
 }
 
 /// <summary>
@@ -235,11 +239,11 @@ void ResultScene::Update(float deltaTime)
 /// </summary>
 void ResultScene::SceneChange()
 {
-	if (CheckHitKey(KEY_INPUT_BACK))
+	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_BACK))
 	{
 		title = true;
 	}
-	if (CheckHitKey(KEY_INPUT_SPACE))
+	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_SPACE))
 	{
 		selection = true;
 	}
@@ -264,6 +268,7 @@ void ResultScene::ReturnScreen(float deltaTime)
 			//タイトル画面へ遷移
 			parent->SetNextScene(SceneManager::TITLE);
 			return;
+			//retScene = new TitleScene();
 		}
 	}
 
@@ -280,6 +285,8 @@ void ResultScene::ReturnScreen(float deltaTime)
 			//ステージ選択画面へ遷移
 			parent->SetNextScene(SceneManager::SELECTION);
 			return;
+			//retScene = new StageSelection();
+
 		}
 	}
 }

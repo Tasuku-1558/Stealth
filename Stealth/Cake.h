@@ -25,9 +25,9 @@ public:
 
 private:
 
-	Cake(const Cake&);					//コピーコンストラクタ
+	Cake(const Cake&);			//コピーコンストラクタ
 
-	bool alive;							//ケーキが生きてるか死んでいるか
+	bool alive;					//ケーキが生きてるか死んでいるか
 
 
 	//定数

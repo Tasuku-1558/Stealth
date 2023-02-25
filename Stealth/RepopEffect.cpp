@@ -1,20 +1,12 @@
-#include "CakeRepopEffect.h"
-#include "DxLib.h"
+#include "RepopEffect.h"
 #include "EffekseerForDXLib.h"
-
-
-//const string CakeRepopEffect::EFFECT_FOLDER_PATH = "data/effect/";		//effectフォルダまでのパス
-//const string CakeRepopEffect::CAKE_PATH			 = "cake.efkefc";		//ケーキ再スポーン時エフェクトのパス
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-CakeRepopEffect::CakeRepopEffect() : EffectBase()
+RepopEffect::RepopEffect() : EffectBase()
 	, effectHandle(0)
-	, effectPosX(0.0f)
-	, effectPosY(0.0f)
-	, effectPosZ(0.0f)
 	, effectTime(0)
 	, playingEffectHandle(0)
 	, EFFECT_FOLDER_PATH("data/effect/")
@@ -26,7 +18,7 @@ CakeRepopEffect::CakeRepopEffect() : EffectBase()
 /// <summary>
 /// デストラクタ
 /// </summary>
-CakeRepopEffect::~CakeRepopEffect()
+RepopEffect::~RepopEffect()
 {
 	Finalize();
 }
@@ -34,7 +26,7 @@ CakeRepopEffect::~CakeRepopEffect()
 /// <summary>
 /// 初期化処理
 /// </summary>
-void CakeRepopEffect::Initialize()
+void RepopEffect::Initialize()
 {
 	string failePath = EFFECT_FOLDER_PATH + CAKE_PATH;
 	effectHandle = LoadEffekseerEffect(failePath.c_str(), 30.0f);
@@ -43,7 +35,7 @@ void CakeRepopEffect::Initialize()
 /// <summary>
 /// 終了処理
 /// </summary>
-void CakeRepopEffect::Finalize()
+void RepopEffect::Finalize()
 {
 	//エフェクトリソースを削除
 	DeleteEffekseerEffect(effectHandle);
@@ -52,7 +44,7 @@ void CakeRepopEffect::Finalize()
 /// <summary>
 /// 活性化処理
 /// </summary>
-void CakeRepopEffect::Activate()
+void RepopEffect::Activate()
 {
 	//エフェクトを停止する
 	StopEffekseer3DEffect(playingEffectHandle);
@@ -61,16 +53,9 @@ void CakeRepopEffect::Activate()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="cakePosX"></param>
-/// <param name="cakePosY"></param>
-/// <param name="cakePosZ"></param>
-void CakeRepopEffect::Update(float cakePosX, float cakePosY, float cakePosZ)
+/// <param name="pos"></param>
+void RepopEffect::Update(VECTOR pos)
 {
-	//エフェクトの位置設定
-	effectPosX = cakePosX;
-	effectPosY = cakePosY;
-	effectPosZ = cakePosZ;
-
 	//定期的にエフェクトを再生
 	if (effectTime % 1 == 0)
 	{
@@ -79,7 +64,7 @@ void CakeRepopEffect::Update(float cakePosX, float cakePosY, float cakePosZ)
 	}
 
 	//再生中のエフェクトを移動
-	SetPosPlayingEffekseer3DEffect(playingEffectHandle, effectPosX, effectPosY, effectPosZ);
+	SetPosPlayingEffekseer3DEffect(playingEffectHandle, pos.x, pos.y, pos.z);
 
 	//時間を経過
 	effectTime++;
@@ -88,7 +73,7 @@ void CakeRepopEffect::Update(float cakePosX, float cakePosY, float cakePosZ)
 /// <summary>
 /// 描画処理
 /// </summary>
-void CakeRepopEffect::Draw()
+void RepopEffect::Draw()
 {
 	//再生中のエフェクトを更新
 	UpdateEffekseer3D();

@@ -1,30 +1,30 @@
-//-----------------------------------------------------------------------------
-// メイン処理
-//-----------------------------------------------------------------------------
 #include "DxLib.h"
 #include "EffekseerForDXLib.h"
 #include "PreCompiledHeader.h"
+#include "SceneManager.h"
 #include "ModelManager.h"
 #include "DeltaTime.h"
-#include "SceneManager.h"
+#include "KeyManager.h"
+#include "SoundManager.h"
+//#include "SceneBase.h"
+//#include "TitleScene.h"
+//#include "FirstStage.h"
 
-//-----------------------------------------------------------------------------
-// メイン関数
-//-----------------------------------------------------------------------------
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	SetOutApplicationLogValidFlag(FALSE);			// ログファイルを出力しない
 	ChangeWindowMode(IS_WINDOW_MODE);				// ウィンドウモードにするか
 	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, 16);	// 画面モードのセット
-	SetUseDirect3DVersion(DX_DIRECT3D_11);
+	SetUseDirect3DVersion(DX_DIRECT3D_11);			// DirectX11を使用するようにする
 	
-	// DXライブラリ初期化処理
+	// Dxlibの初期化処理
 	if (DxLib_Init() == -1)		
 	{
 		return -1;			// エラーが起きたら直ちに終了
 	}
 
-	// Effekseerを初期化処理
+	// Effekseerの初期化処理
 	if (Effekseer_Init(8000) == -1)
 	{
 		DxLib_End();
@@ -60,41 +60,63 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	else { MessageBox(NULL, "フォント読込失敗", "", MB_OK); }
 
 	// 時間計測
-	int nowTime;
-	int prevTime = nowTime = GetNowCount();
-	float deltaTime = 0.0f;
-	//DeltaTime::Initialize();
+	LONGLONG nowTime;
+	LONGLONG prevTime = nowTime = GetNowHiPerformanceCount();
 
-	ModelManager::GetInstance();	//モデル管理クラスの生成
+	//待機フレーム時間(60fps)
+	float waitFrameTime = 16667.0f;
+	
+	//モデル管理クラスの生成
+	ModelManager::GetInstance();
+
+	//サウンド管理クラスの生成
+	SoundManager::GetInstance();
 
 	SceneManager* sceneManager = new SceneManager();
+	/*SceneBase* nowScene = nullptr;
+
+	nowScene = new TitleScene();*/
 
 	sceneManager->Initialize();
+	/*nowScene->Initialize();
+	nowScene->Activate();*/
 	
 	// エスケープキーが押されるかウインドウが閉じられるまでループ
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
-		// フレーム時間を算出
-		nowTime = GetNowCount();
+		//前フレームと現在のフレームの差分
+		float deltaTime;
 
-		deltaTime = (nowTime - prevTime) / 1000.0f;
+		//現在のフレームを更新
+		nowTime = GetNowHiPerformanceCount();
 
-		prevTime = nowTime;
+		deltaTime = (nowTime - prevTime) / 1000000.0f;
 
-		//DeltaTime::DeltaTimeCount();
+		/*SceneBase* tmpScene;
 
-		// DXライブラリのカメラとEffekseerのカメラを同期
+		tmpScene = nowScene->Update(deltaTime);*/
+
+		// DxlibのカメラとEffekseerのカメラを同期
 		Effekseer_Sync3DSetting();
+
+		KeyManager::GetInstance().Update();
+
+		SoundManager::GetInstance().SeUpdate();
 
 		sceneManager->Update(deltaTime);
 
 		// 画面を初期化する
 		ClearDrawScreen();
 
+		//nowScene->Draw();
+
 		//// シャドウマップへの描画の準備
 		//ShadowMap_DrawSetup(shadowMapHandle);
 
-		//sceneManager->Draw();
+		sceneManager->Draw();
+
+		//デバック用　デルタタイム計測
+		DrawFormatString(0, 500, GetColor(255, 255, 255),"%f", deltaTime, TRUE);
 
 		//// シャドウマップへの描画を終了
 		//ShadowMap_DrawEnd();
@@ -103,12 +125,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//// 描画に使用するシャドウマップを設定
 		//SetUseShadowMap(0, shadowMapHandle);
 
-		sceneManager->Draw();
+		//sceneManager->Draw();
 
 		//// 描画に使用するシャドウマップの設定を解除
 		//SetUseShadowMap(0, -1);
 
-		// 裏画面の内容を表画面に反映させる
+		//裏画面の内容を表画面に反映させる
 		ScreenFlip();
 
 		// 次のシーンがENDなら
@@ -116,6 +138,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		{
 			break;
 		}
+		/*if (nowScene != tmpScene)
+		{
+			nowScene->Finalize();
+			delete nowScene;
+
+			nowScene = tmpScene;
+		}
+
+		if (!tmpScene)
+		{
+			break;
+		}*/
+
+		//60fps制御用ループ
+		while (GetNowHiPerformanceCount() - nowTime < waitFrameTime);
+
+		//現在のフレームを保存
+		prevTime = nowTime;
 	}
 
 	//フォントのアンロード
@@ -128,7 +168,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Effkseer_End();				// Effekseerの終了処理
 
-	DxLib_End();				// DXライブラリ使用の終了処理
+	DxLib_End();				// Dxlibの終了処理
 
 	return 0;					// ソフトの終了 
 }

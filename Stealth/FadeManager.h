@@ -19,6 +19,6 @@ private:
 	int fade;
 	int fadeInc;
 
-	//静的定数
-	static const int BLACK;			//フェードのカラー
+	//定数
+	const int BLACK;			//フェードのカラー
 };

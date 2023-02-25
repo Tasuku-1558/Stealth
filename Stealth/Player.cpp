@@ -1,15 +1,9 @@
 #include "Player.h"
 #include "PreCompiledHeader.h"
 #include "ModelManager.h"
-
-
-const string Player::SOUND_FOLDER_PATH  = "data/sound/";		//soundフォルダまでのパス
-const string Player::SPOTTED_SE_PATH    = "spotted.mp3";		//エネミーに見つかった時のSE音のパス
-const int	 Player::AFTER_IMAGE_NUMBER = 12;					//プレイヤーの残像枚数
+#include "KeyManager.h"
 
 using namespace Math3d;
-using namespace std;
-
 
 /// <summary>
 /// コンストラクタ
@@ -18,6 +12,11 @@ Player::Player() : PlayerBase()
 	, initialCount(0.0f)
 	, pastPosition()
 	, emptyModel()
+	, SOUND_FOLDER_PATH("data/sound/")
+	, IMAGE_FOLDER_PATH("data/image/")
+	, PLAYER_FIND_PATH("playerFind.png")
+	, SPOTTED_SE_PATH("spotted.mp3")
+	, AFTER_IMAGE_NUMBER(12)
 {
 	//処理なし
 }
@@ -46,9 +45,20 @@ void Player::Initialize()
 		MV1SetMaterialEmiColor(emptyModel[i], 0, GetColorF(0.0f, 0.0f, 1.0f, 1.0f));
 	}
 
-	//SE音の読み込み
-	string failePath = SOUND_FOLDER_PATH + SPOTTED_SE_PATH;
-	spottedSe = LoadSoundMem(failePath.c_str());
+	playerFindImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
+
+	spottedSe = LoadSoundMem(InputPath(SOUND_FOLDER_PATH, SPOTTED_SE_PATH).c_str());
+}
+
+/// <summary>
+/// パスの入力
+/// </summary>
+/// <param name="folderPath"></param>
+/// <param name="path"></param>
+/// <returns></returns>
+string Player::InputPath(string folderPath, string path)
+{
+	return string(folderPath + path);
 }
 
 /// <summary>
@@ -62,6 +72,8 @@ void Player::Finalize()
 	{
 		MV1DeleteModel(emptyModel[i]);
 	}
+
+	DeleteGraph(playerFindImage);
 
 	//サウンドリソースを削除
 	InitSoundMem();
@@ -96,8 +108,6 @@ void Player::Update(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 {
 	Move(deltaTime, camera, back, mapHit);
 
-	MV1SetPosition(modelHandle, position);
-
 	AfterImage();
 }
 
@@ -115,23 +125,23 @@ void Player::Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 	inputFlag = false;
 
 	//上下
-	if (CheckHitKey(KEY_INPUT_W))
+	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_W))
 	{
 		inputDirection += camera->GetUp();
 		inputFlag = true;
 	}
-	if (CheckHitKey(KEY_INPUT_S))
+	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_S))
 	{
 		inputDirection += camera->GetDown();
 		inputFlag = true;
 	}
 	//左右
-	if (CheckHitKey(KEY_INPUT_D))
+	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_D))
 	{
 		inputDirection += camera->GetRight();
 		inputFlag = true;
 	}
-	if (CheckHitKey(KEY_INPUT_A))
+	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_A))
 	{
 		inputDirection += camera->GetLeft();
 		inputFlag = true;
@@ -156,34 +166,36 @@ void Player::Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 		//十字キーの移動方向に移動
 		previewPosition += dir * speed * deltaTime;
 
-		//マップにプレイヤーが衝突したならば
-		if (mapHit)
-		{
-			//未来の位置に押し戻しの値を加える
-			previewPosition = back;
-
-			position = previewPosition;
-			previewPosition = position;
-		}
-		else
-		{
-			position = previewPosition;
-			previewPosition = position;
-		}
+		//マップに衝突した
+		HitMap(back, mapHit);
 	}
 
-	//z軸が逆を向いているのでdirを180度回転させる
-	MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
-	VECTOR negativeVec = VTransform(dir, rotYMat);
+	//モデルの位置と向きを設定
+	MV1SetPosition(modelHandle, position);
+	MV1SetRotationYUseDir(modelHandle, dir, 0.0f);
+}
 
-	//モデルに回転をセット dirを向く
-	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
-
-	for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
+/// <summary>
+/// マップに衝突した
+/// </summary>
+/// <param name="back"></param>
+/// <param name="mapHit"></param>
+void Player::HitMap(VECTOR back, bool mapHit)
+{
+	//マップにプレイヤーが衝突したならば
+	if (mapHit)
 	{
-		MV1SetRotationZYAxis(emptyModel[i], negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
-	}
+		//未来の位置に押し戻しの値を加える
+		previewPosition = back;
 
+		position = previewPosition;
+		previewPosition = position;
+	}
+	else
+	{
+		position = previewPosition;
+		previewPosition = position;
+	}
 }
 
 /// <summary>
@@ -199,6 +211,11 @@ void Player::AfterImage()
 
 	pastPosition[0] = position;
 	MV1SetPosition(emptyModel[0], pastPosition[0] - VGet(0.0f, 10.0f, 0.0f));
+
+	for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
+	{
+		MV1SetRotationYUseDir(emptyModel[i], dir, 0.0f);
+	}
 }
 
 /// <summary>
@@ -213,6 +230,9 @@ void Player::FoundEnemy(float deltaTime, bool spotted)
 	{
 		//プレイヤーの動きを止める
 		speed = 0.0f;
+
+		//エネミーに見つかった時の画像を表示
+		findImageFlag = true;
 
 		//初期位置に戻すカウントを開始する
 		initialCount += deltaTime;
@@ -245,6 +265,7 @@ void Player::FoundEnemy(float deltaTime, bool spotted)
 
 		playerFindCount++;
 		initialCount = 0.0f;
+		findImageFlag = false;
 		spottedSeFlag = false;
 	}
 }
@@ -254,6 +275,13 @@ void Player::FoundEnemy(float deltaTime, bool spotted)
 /// </summary>
 void Player::Draw()
 {
+	//エネミーに見つかったならば
+	if (findImageFlag)
+	{
+		//見つかったという画像を描画
+		DrawGraph(50, -100, playerFindImage, TRUE);
+	}
+
 	for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
 	{
 		MV1DrawModel(emptyModel[i]);

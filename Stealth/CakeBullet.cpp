@@ -1,8 +1,5 @@
 #include "CakeBullet.h"
-
-
-//const string CakeBullet::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
-//const string CakeBullet::LOCATE_SE_PATH    = "locate.mp3";		//ケーキを置いた時のSE音のパス
+#include "RepopEffect.h"
 
 
 /// <summary>
@@ -55,6 +52,8 @@ void CakeBullet::Activate()
     bullet->Activate();
 
     bulletCount = 0.0f;
+    cakeGet = false;
+
 }
 
 /// <summary>
@@ -77,12 +76,13 @@ void CakeBullet::Finalize()
 /// <param name="playerPos"></param>
 /// <param name="hitChecker"></param>
 /// <param name="cakeEffect"></param>
-void CakeBullet::Update(float deltaTime, const VECTOR& playerPos, HitChecker* hitChecker, CakeRepopEffect* cakeEffect)
+void CakeBullet::Update(float deltaTime, const VECTOR& playerPos, HitChecker* hitChecker, RepopEffect* cakeEffect)
 {
     //ケーキが生きてるならば
     if (cake->GetAlive())
     {
-        hitChecker->BallAndPlayer(playerPos, cake);
+        //判定処理を行う
+        hitChecker->CakeAndPlayer(playerPos, cake);
         cake->IsAlive(hitChecker);
     }
     else
@@ -120,7 +120,7 @@ void CakeBullet::Shoot(float deltaTime, const VECTOR& playerPos)
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="cakeEffect"></param>
-void CakeBullet::BulletReuse(float deltaTime, CakeRepopEffect* cakeEffect)
+void CakeBullet::BulletReuse(float deltaTime, RepopEffect* cakeEffect)
 {
     //バレットが生きてるならば
     if (bullet->GetAlive())
@@ -132,7 +132,7 @@ void CakeBullet::BulletReuse(float deltaTime, CakeRepopEffect* cakeEffect)
         if (bulletCount > 5.7f)
         {
             //ケーキ復活エフェクトを出す
-            cakeEffect->Update(cake->GetPosition().x, cake->GetPosition().y, cake->GetPosition().z);
+            cakeEffect->Update(cake->GetPosition());
         }
 
         //カウントが6秒以上経過したら

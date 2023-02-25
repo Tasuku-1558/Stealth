@@ -15,7 +15,6 @@ public:
 
 protected:
 
-	Object object;					//オブジェクトのタグ
 	VECTOR targetPosition;			//目的地の座標
 	float speed;					//エネミーの移動速度
 	float changeSpeed;				//ステージごとのエネミーの移動速度
@@ -23,7 +22,6 @@ protected:
 	float bulletDirection;			//バレットとエネミーの距離
 	bool playerSpotted;				//プレイヤーを発見したかどうか
 	bool cakeFlag;					//ケーキを発見したかどうか
-	int playerFindImage;			//プレイヤーを見つけた画像格納用
 	int markImage;					//ビックリマーク画像格納用
 	int cakeImage[2];				//ケーキの画像格納用
 
@@ -33,8 +31,8 @@ protected:
 
 
 
-	//静的定数
-	static const float RANGE_DEGREE;		//視野角度
-	static const int   CAKE_IMAGE_NUMBER;	//ケーキ画像数
+	//定数
+	const float RANGE_DEGREE;		//視野角度
+	const int   CAKE_IMAGE_NUMBER;	//ケーキ画像数
 	
 };

@@ -20,17 +20,9 @@ public:
 	  const VECTOR& GetDir() const;			//dirのgetter
 	  const int& GetModelHandle() const; 	//modelHandleのgetter
 
-	  //オブジェクトのタグ
-	  enum class Object
-	  {
-		  PLAYER,		//プレイヤー
-		  CAKE,			//ケーキ
-		  WALL,			//壁
-	  };
-
 protected:
+
 	VECTOR position;	//現在の座標
 	VECTOR dir;			//向きベクトル
 	int modelHandle;	//モデルハンドル
-	Object object;		//オブジェクトのタグ
 };

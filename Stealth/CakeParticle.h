@@ -1,12 +1,14 @@
 #pragma once
 
 #include "DxLib.h"
+#include "ParticleBase.h"
+
 
 /// <summary>
 /// ケーキパーティクルクラス
-/// マウスクリック時に出すパーティクル
+/// ケーキ発射時に出すパーティクル
 /// </summary>
-class CakeParticle final
+class CakeParticle final : public ParticleBase
 {
 public:
 	CakeParticle(const VECTOR& pos);
@@ -17,19 +19,8 @@ public:
 	void Update(float deltaTime);	//更新処理
 	void Draw();					//描画処理
 
-	const bool IsParticleEnd() { return endFlag; }		//パーティクルを消すフラグを返す
-
 private:
 	CakeParticle(const CakeParticle&);	//コピーコンストラクタ
-
-	VECTOR position;		//パーティクルの位置
-	float radius;			//パーティクルの半径
-	float particleCount;	//パーティクルカウント
-	float particlePopTime;	//パーティクルの出現時間
-	bool endFlag;			//パーティクルを消すか消さないか
-	float xPower;			//横方向の力
-	float zPower;			//縦方向の力
-
 
 	//定数
 	const unsigned int PINK;		//パーティクルのカラー

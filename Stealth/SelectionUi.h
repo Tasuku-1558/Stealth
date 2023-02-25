@@ -43,32 +43,32 @@ private:
 	int modelHandle[5];								//マップモデルハンドル
 	VECTOR position[5];								//マップモデルの位置
 
-	//静的定数
-	static const string IMAGE_FOLDER_PATH;			//imageフォルダまでのパス
-	static const string SELECTION_KEY_PATH;			//ステージセレクションUI画像のパス
-	static const string SELECTION_TITLE_PATH;		//ステージセレクションからタイトルへ遷移のUI画像
-	static const string STAGE_DESCRIPTION_PATH;		//ステージの説明画像のパス
-	static const string OPERATION_METHOD_PATH;		//操作方法説明画像のパス
-	static const int	STAGE_NUMBER;				//ステージ数
+	//定数
+	const string IMAGE_FOLDER_PATH;			//imageフォルダまでのパス
+	const string SELECTION_KEY_PATH;		//ステージセレクションUI画像のパス
+	const string SELECTION_TITLE_PATH;		//ステージセレクションからタイトルへ遷移のUI画像
+	const string STAGE_DESCRIPTION_PATH;	//ステージの説明画像のパス
+	const string OPERATION_METHOD_PATH;		//操作方法説明画像のパス
+	const int	STAGE_NUMBER;				//ステージ数
 
-	static const VECTOR STAGE1_POSITION;			//ステージ1モデルの位置
-	static const VECTOR STAGE1_SIZE;				//ステージ1モデルの倍率
-	static const VECTOR STAGE1_ROTATE;				//ステージ1モデルの回転値
+	const VECTOR STAGE1_POSITION;			//ステージ1モデルの位置
+	const VECTOR STAGE1_SIZE;				//ステージ1モデルの倍率
+	const VECTOR STAGE1_ROTATE;				//ステージ1モデルの回転値
 
-	static const VECTOR STAGE2_POSITION;			//ステージ2モデルの位置
-	static const VECTOR STAGE2_SIZE;				//ステージ2モデルの倍率
-	static const VECTOR STAGE2_ROTATE;				//ステージ2モデルの回転値
+	const VECTOR STAGE2_POSITION;			//ステージ2モデルの位置
+	const VECTOR STAGE2_SIZE;				//ステージ2モデルの倍率
+	const VECTOR STAGE2_ROTATE;				//ステージ2モデルの回転値
 
-	static const VECTOR STAGE3_POSITION;			//ステージ3モデルの位置
-	static const VECTOR STAGE3_SIZE;				//ステージ3モデルの倍率
-	static const VECTOR STAGE3_ROTATE;				//ステージ3モデルの回転値
+	const VECTOR STAGE3_POSITION;			//ステージ3モデルの位置
+	const VECTOR STAGE3_SIZE;				//ステージ3モデルの倍率
+	const VECTOR STAGE3_ROTATE;				//ステージ3モデルの回転値
 
-	static const VECTOR STAGE4_POSITION;			//ステージ4モデルの位置
-	static const VECTOR STAGE4_SIZE;				//ステージ4モデルの倍率
-	static const VECTOR STAGE4_ROTATE;				//ステージ4モデルの回転値
+	const VECTOR STAGE4_POSITION;			//ステージ4モデルの位置
+	const VECTOR STAGE4_SIZE;				//ステージ4モデルの倍率
+	const VECTOR STAGE4_ROTATE;				//ステージ4モデルの回転値
 
-	static const VECTOR STAGE5_POSITION;			//ステージ5モデルの位置
-	static const VECTOR STAGE5_SIZE;				//ステージ5モデルの倍率
-	static const VECTOR STAGE5_ROTATE;				//ステージ5モデルの回転値
+	const VECTOR STAGE5_POSITION;			//ステージ5モデルの位置
+	const VECTOR STAGE5_SIZE;				//ステージ5モデルの倍率
+	const VECTOR STAGE5_ROTATE;				//ステージ5モデルの回転値
 
 };

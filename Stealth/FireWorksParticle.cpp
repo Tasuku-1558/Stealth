@@ -1,19 +1,14 @@
-#include <math.h>
 #include "FireWorksParticle.h"
+#include <math.h>
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="pos"></param>
+/// <param name="changeColor"></param>
 FireWorksParticle::FireWorksParticle(const VECTOR pos, unsigned int changeColor)
-	: position()
-	, radius(50.0f)
-	, particleCount(0.0f)
-	, particlePopTime(3.0f)
-	, endFlag(false)
-	, xPower(0.0f)
-	, zPower(0.0f)
+	: ParticleBase()
 	, color(0)
 {
 	position = pos;

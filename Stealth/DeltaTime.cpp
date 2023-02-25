@@ -2,15 +2,14 @@
 #include "DxLib.h"
 
 
-float DeltaTime::deltaTime = 0.0f;
-float DeltaTime::prevTime  = 0.0f;
-float DeltaTime::nowTime   = 0.0f;
-
 /// <summary>
 /// コンストラクタ
 /// </summary>
 DeltaTime::DeltaTime()
+	//: deltaTime(0.0f)
+	//, waitFrameTime(0.0f)
 {
+	//処理なし
 }
 
 /// <summary>
@@ -22,20 +21,40 @@ DeltaTime::~DeltaTime()
 }
 
 /// <summary>
+/// アドレスを返す
+/// </summary>
+/// <returns></returns>
+DeltaTime& DeltaTime::GetInstance()
+{
+	static DeltaTime deltaTime;
+	return deltaTime;
+}
+
+/// <summary>
 /// 初期化処理
 /// </summary>
 void DeltaTime::Initialize()
 {
-	// 時間計測
-	prevTime = nowTime = GetNowCount();
+	//時間計測
+	//prevTime = nowTime = GetNowHiPerformanceCount();
+
+	////待機フレーム時間(60fps)
+	//waitFrameTime = 16667.0f;
 }
 
+/// <summary>
+/// 60Fps計測
+/// </summary>
 void DeltaTime::DeltaTimeCount()
 {
-	// フレーム時間を算出
-	nowTime = GetNowCount();
+	//現在のフレームを更新
+	//nowTime = GetNowHiPerformanceCount();
 
-	deltaTime = (nowTime - prevTime) / 1000.0f;
+	//deltaTime = (nowTime - prevTime) / 1000000.0f;
 
-	prevTime = nowTime;
+	////60fps制御用ループ
+	//while (GetNowHiPerformanceCount() - nowTime < waitFrameTime);
+
+	////現在のフレームを保存
+	//prevTime = nowTime;
 }

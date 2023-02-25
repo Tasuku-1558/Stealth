@@ -1,5 +1,5 @@
 #include "StageMap.h"
-
+#include "Set.h"
 
 using namespace std;
 
@@ -14,7 +14,6 @@ StageMap::StageMap(/*ModelManager::ModelType modelType, VECTOR size, VECTOR rota
 	: StageBase()
 	, stageNo(0)
 {
-
 	stageNo = 1;
 
 }

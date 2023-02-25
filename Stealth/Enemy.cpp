@@ -5,15 +5,7 @@
 #include "Bullet.h"
 #include "HitChecker.h"
 
-const string Enemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
-const string Enemy::PLAYER_FIND_PATH  = "playerFind.png";	//プレイヤーを見つけた画像のパス
-const string Enemy::MARK_PATH		  = "mark.png";			//ビックリマーク画像のパス
-const string Enemy::CAKE_PATH		  = "ui8.png";			//ケーキ画像のパス
-const string Enemy::CAKE_HALF_PATH	  = "cakeHalf.png";		//ケーキが半分画像のパス
-
-
 using namespace Math3d;
-using namespace std;
 
 /// <summary>
 /// コンストラクタ
@@ -25,15 +17,19 @@ Enemy::Enemy(vector<VECTOR>& id, float enemySpeed) : EnemyBase()
 	, cakeFindFlag(false)
 	, cakeEatFlag(false)
 	, cakeHalfFlag(false)
-	, angle(0.0f)
+	, IMAGE_FOLDER_PATH("data/image/")
+	, MARK_PATH("mark.png")
+	, CAKE_PATH("ui8.png")
+	, CAKE_HALF_PATH("cakeHalf.png")
 {
 	enemyState = EnemyState::CRAWL;
+
 	Position(id);
+
+	changeSpeed = enemySpeed;
 
 	Initialize();
 	Activate();
-
-	changeSpeed = enemySpeed;
 }
 
 /// <summary>
@@ -54,14 +50,12 @@ void Enemy::Initialize()
 
 	visualModelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY_VISUAL));
 
-	//画像読み込み
-	playerFindImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
+	//画像の読み込み
+	markImage	 = LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
 
-	markImage		= LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
+	cakeImage[0] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_PATH).c_str());
 
-	cakeImage[0]	= LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_PATH).c_str());
-
-	cakeImage[1]	= LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_HALF_PATH).c_str());
+	cakeImage[1] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_HALF_PATH).c_str());
 }
 
 /// <summary>
@@ -88,14 +82,13 @@ void Enemy::Activate()
 	cakeEatFlag = false;
 	cakeHalfFlag = false;
 	cakeCount = 0.0f;
-	angle = 0.0f;
 }
 
 /// <summary>
 /// エネミー位置設定
 /// </summary>
 /// <param name="id"></param>
-void Enemy::Position(std::vector<VECTOR>& id)
+void Enemy::Position(vector<VECTOR>& id)
 {
 	pointList = id;					//マップから座標リストを受け取る
 
@@ -114,7 +107,6 @@ void Enemy::Finalize()
 	MV1DeleteModel(modelHandle);
 	MV1DeleteModel(visualModelHandle);
 
-	DeleteGraph(playerFindImage);
 	DeleteGraph(markImage);
 
 	for (int i = 0; i < CAKE_IMAGE_NUMBER; i++)
@@ -131,38 +123,38 @@ void Enemy::Finalize()
 /// <param name="hitChecker"></param>
 void Enemy::Update(float deltaTime, Player* player, HitChecker* hitChecker)
 {
-	//ベクトルの正規化
-	dir = VNorm(targetPosition - position);
-	
-	position += dir * speed * deltaTime;
-
-	//エネミーの位置をセット
-	MV1SetPosition(modelHandle, position);
-
-	//エネミーの視野モデルをセット
-	MV1SetPosition(visualModelHandle, position);
-
-	VisualAnglePlayer(player);
-	
 	eUpdate(deltaTime);
 
-	hitChecker->EnemyAndPlayer(player->GetPosition(), position);
+	Move(deltaTime);
 
+	VisualAnglePlayer(player);
+
+	
 	//エネミーにプレイヤーが衝突したならば
 	if (hitChecker->EnemyHit())
 	{
 		playerSpotted = true;
 	}
-	
-	angle = 180.0f;
+}
 
-	//z軸が逆を向いているのでdirを180度回転させる
-	MATRIX rotYMat = MGetRotY(angle * (float)(DX_PI / 180.0f));
-	VECTOR negativeVec = VTransform(dir, rotYMat);
+/// <summary>
+/// 移動処理
+/// </summary>
+/// <param name="deltaTime"></param>
+void Enemy::Move(float deltaTime)
+{
+	//ベクトルの正規化
+	dir = VNorm(targetPosition - position);
 
-	//モデルに回転をセット
-	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
-	MV1SetRotationZYAxis(visualModelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
+	position += dir * speed * deltaTime;
+
+	//エネミーの位置と向きをセット
+	MV1SetPosition(modelHandle, position);
+	MV1SetRotationYUseDir(modelHandle, dir, 0.0f);
+
+	//エネミーの視野モデルの位置と向きをセット
+	MV1SetPosition(visualModelHandle, position);
+	MV1SetRotationYUseDir(visualModelHandle, dir, 0.0f);
 }
 
 /// <summary>
@@ -172,7 +164,7 @@ void Enemy::SetTargetPosition()
 {
 	targetPosition = *itr++;
 
-	//最終目的地に到着したら次の目的地を初期位置にする
+	//最終目的地に到着したら次の目的地に向かう
 	if (itr == pointList.end())
 	{
 		itr = pointList.begin();
@@ -220,11 +212,10 @@ void Enemy::VisualAnglePlayer(Player* player)
 		//プレイヤーがエネミーの視野範囲内にいるならば
 		if (radian <= dot)
 		{
-			object = Object::PLAYER;
+			enemyReaction = EnemyReaction::PLAYER;
 
 			//視野範囲内ならば
 			Reaction();
-
 		}
 	}
 	else
@@ -263,7 +254,7 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 		//バレットがエネミーの視野範囲内にいるならば
 		if (radian <= dot)
 		{
-			object = Object::CAKE;
+			enemyReaction = EnemyReaction::CAKE;
 
 			//視野範囲内ならば
 			Reaction();
@@ -325,57 +316,20 @@ void Enemy::CakeEatCount(float deltaTime)
 }
 
 /// <summary>
-/// エネミーの視野に壁が入った場合
-/// </summary>
-/// <param name="wallPos"></param>
-void Enemy::VisualAngleWall(VECTOR wallPos)
-{
-	//壁からエネミーの座標を引いた値を取得
-	VECTOR sub = wallPos - position;
-
-	//壁とエネミーの2点間の距離を計算
-	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
-
-	//ベクトルの正規化
-	sub = VNorm(sub);
-
-	//内積計算
-	float dot = VDot(sub, dir);
-
-	float range = RANGE_DEGREE * (float)(DX_PI / 180.0f);
-
-	//エネミーの視野をcosにする
-	float radian = cosf(range / 2.0f);
-
-	//ベクトルとエネミーの長さの比較
-	if (length > direction)
-	{
-		//壁がエネミーの視野範囲内にいるならば
-		if (radian <= dot)
-		{
-			object = Object::WALL;
-
-			//視野範囲内ならば
-			Reaction();
-		}
-	}
-}
-
-/// <summary>
 /// エネミーのオブジェクトごとの反応
 /// </summary>
 void Enemy::Reaction()
 {
-	switch (object)
+	switch (enemyReaction)
 	{
-	case Object::PLAYER:
+	case EnemyReaction::PLAYER:
 
 		//プレイヤーを発見した
 		playerSpotted = true;
 
 		break;
 
-	case Object::CAKE:
+	case EnemyReaction::CAKE:
 
 		cakeFlag = true;
 
@@ -385,9 +339,6 @@ void Enemy::Reaction()
 		//エネミーの動きを止める
 		speed = 0.0f;
 		
-		break;
-
-	case Object::WALL:
 		break;
 	}
 }
@@ -404,13 +355,29 @@ void Enemy::eUpdate(float deltaTime)
 
 		if (IsGoal(deltaTime))
 		{
-			enemyState = EnemyState::ARRIVAL;
+			//enemyState = EnemyState::ARRIVAL;
+
+			enemyState = EnemyState::ROTATION;
 		}
 			
 		break;
 
 	case EnemyState::ARRIVAL:
 		SetTargetPosition();
+		break;
+
+	case EnemyState::ROTATION:
+
+		speed = 0.0f;
+		dir += VGet(2.0f, 0.0f, 0.0f);
+		position += dir;
+		
+		if (CheckHitKey(KEY_INPUT_G))
+		{
+			speed = changeSpeed;
+			enemyState = EnemyState::ARRIVAL;
+		}
+
 		break;
 	}
 }
@@ -420,7 +387,7 @@ void Enemy::eUpdate(float deltaTime)
 /// </summary>
 void Enemy::ReactionDraw()
 {
-	//エネミーに見つかったら
+	//プレイヤーを見つけたら
 	if (playerSpotted)
 	{
 		//エネミーの動きを止める
@@ -428,9 +395,6 @@ void Enemy::ReactionDraw()
 
 		//ビックリマークの画像を描画
 		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
-
-		//敵に見つかったというUI画像を描画
-		DrawGraph(50, -100, playerFindImage, TRUE);
 	}
 
 	//ケーキを見つけたならば
@@ -465,5 +429,4 @@ void Enemy::Draw()
 	MV1DrawModel(visualModelHandle);
 
 	ReactionDraw();
-
 }

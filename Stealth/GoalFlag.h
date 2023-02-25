@@ -24,8 +24,8 @@ private:
 	VECTOR rotate;						//モデルの回転
 
 
-	//静的定数
-	static const VECTOR SIZE;           //モデルの倍率
-	static const VECTOR ROTATE_SPEED;	//モデルの回転スピード
+	//定数
+	const VECTOR SIZE;           //モデルの倍率
+	const VECTOR ROTATE_SPEED;	 //モデルの回転スピード
 
 };

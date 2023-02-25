@@ -19,11 +19,11 @@ public:
 	 StageSelection(SceneManager* const sceneManager);
 	 virtual ~StageSelection();
 
-	void Initialize();								//初期化処理
-	void Finalize();								//終了処理
-	void Activate();								//活性化処理
-	void Update(float deltaTime);					//更新処理
-	void Draw();									//描画処理
+	void Initialize()override;								//初期化処理
+	void Finalize()override;								//終了処理
+	void Activate()override;								//活性化処理
+	void Update(float deltaTime)override;					//更新処理
+	void Draw()override;									//描画処理
 
 	const int GetStage() { return stageNo; }
 
@@ -50,7 +50,9 @@ private:
 	int maxTime;									//マックスステージ遷移カウント
 	float pushCount;								//ステージ切り替えカウント
 
-	//静的定数
-	static const float PUSH_INTERVAL;				//切り替えカウントのインターバル
+	//定数
+	const float PUSH_INTERVAL;						//切り替えカウントのインターバル
+
+	//SceneBase* retScene = this;
 
 };

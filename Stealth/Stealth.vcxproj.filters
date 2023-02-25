@@ -32,6 +32,9 @@
     <Filter Include="ソース ファイル\Cake">
       <UniqueIdentifier>{67df388f-c401-4ff2-8ea9-58dd3a065616}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Particle">
+      <UniqueIdentifier>{1de4d3ce-2e7b-41bb-a6ea-84c61d2e3a88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -73,9 +76,6 @@
     <ClCompile Include="FadeManager.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
-    <ClCompile Include="Wall.cpp">
-      <Filter>ソース ファイル\ObjectBase</Filter>
-    </ClCompile>
     <ClCompile Include="SecondStage.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
@@ -94,9 +94,6 @@
     <ClCompile Include="StageBase.cpp">
       <Filter>ソース ファイル\Map</Filter>
     </ClCompile>
-    <ClCompile Include="CakeRepopEffect.cpp">
-      <Filter>ソース ファイル\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="StageSelection.cpp">
       <Filter>ソース ファイル\Scene\StageSelection</Filter>
     </ClCompile>
@@ -109,17 +106,11 @@
     <ClCompile Include="MonitoringEnemy.cpp">
       <Filter>ソース ファイル\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="CakeParticle.cpp">
-      <Filter>ソース ファイル\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="DeltaTime.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
     <ClCompile Include="ResultScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="FireWorksParticle.cpp">
-      <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
     <ClCompile Include="StageMap.cpp">
       <Filter>ソース ファイル\Map</Filter>
@@ -142,8 +133,32 @@
     <ClCompile Include="FifthStage.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="CakeParticle.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="FireWorksParticle.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleBase.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneBase.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="RepopEffect.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
     <ClCompile Include="GoalFlag.cpp">
       <Filter>ソース ファイル\ObjectBase</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>ソース ファイル\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -189,9 +204,6 @@
     <ClInclude Include="FadeManager.h">
       <Filter>ソース ファイル\System</Filter>
     </ClInclude>
-    <ClInclude Include="Wall.h">
-      <Filter>ソース ファイル\ObjectBase</Filter>
-    </ClInclude>
     <ClInclude Include="SecondStage.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
@@ -207,7 +219,7 @@
     <ClInclude Include="StageBase.h">
       <Filter>ソース ファイル\Map</Filter>
     </ClInclude>
-    <ClInclude Include="CakeRepopEffect.h">
+    <ClInclude Include="RepopEffect.h">
       <Filter>ソース ファイル\Effect</Filter>
     </ClInclude>
     <ClInclude Include="EffectBase.h">
@@ -225,17 +237,11 @@
     <ClInclude Include="MonitoringEnemy.h">
       <Filter>ソース ファイル\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="CakeParticle.h">
-      <Filter>ソース ファイル\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="DeltaTime.h">
       <Filter>ソース ファイル\System</Filter>
     </ClInclude>
     <ClInclude Include="ResultScene.h">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="FireWorksParticle.h">
-      <Filter>ソース ファイル\Effect</Filter>
     </ClInclude>
     <ClInclude Include="PreCompiledHeader.h">
       <Filter>ソース ファイル</Filter>
@@ -261,8 +267,26 @@
     <ClInclude Include="FifthStage.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>ソース ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="CakeParticle.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="FireWorksParticle.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleBase.h">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClInclude>
     <ClInclude Include="GoalFlag.h">
       <Filter>ソース ファイル\ObjectBase</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>ソース ファイル\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

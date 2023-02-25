@@ -2,12 +2,6 @@
 #include "ModelManager.h"
 
 
-//const string IMAGE_FOLDER_PATH = "data/image/";				//imageフォルダまでのパス
-//const string CURSOR_PATH	   = "pointer.png";				//カーソル画像のパス
-//const VECTOR SIZE			   = { 20.0f, 20.0f, 20.0f };	//モデルの倍率
-//const VECTOR POSITION		   = { 0.0f, 30.0f, 0.0f };		//モデルの位置
-//const float  SCALE			   = 0.4f;						//カーソル画像の大きさ
-
 using namespace Math3d;
 
 /// <summary>

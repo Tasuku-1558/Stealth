@@ -3,9 +3,6 @@
 #include "HitChecker.h"
 
 
-//const VECTOR Cake::SIZE	= { 20.0f, 20.0f, 20.0f };		//モデルの倍率
-
-
 /// <summary>
 /// コンストラクタ
 /// </summary>

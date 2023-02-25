@@ -5,6 +5,7 @@
 #include "Math3D.h"
 #include "Camera.h"
 
+using namespace std;
 
 /// <summary>
 /// プレイヤークラス
@@ -27,23 +28,24 @@ public:
 	const int GetPlayerCount() { return playerFindCount; }						//エネミーに見つかった回数を返す
 
 
-	//デバック用
-	float GetSpeed() { return SPEED; }
-
-
 private:
 	Player(const Player&);														//コピーコンストラクタ
 
 	void Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit);		//移動処理
 	void Finalize();															//終了処理
 	void AfterImage();															//プレイヤーの残像処理
+	void HitMap(VECTOR back, bool mapHit);										//マップに衝突した
+	string InputPath(string folderPath,											//パスを入力
+					 string path);
 
 	float initialCount;			//初期位置に戻すカウント
 	int emptyModel[12];			//残像モデル格納用
 	VECTOR pastPosition[12];	//プレイヤーの過去の位置
 
-	//静的定数
-	static const std::string SOUND_FOLDER_PATH;		//soundフォルダまでのパス
-	static const std::string SPOTTED_SE_PATH;		//エネミーに見つかった時のSE音のパス
-	static const int		 AFTER_IMAGE_NUMBER;	//プレイヤーの残像枚数
+	//定数
+	const string SOUND_FOLDER_PATH;		//soundフォルダまでのパス
+	const string IMAGE_FOLDER_PATH;		//imageフォルダまでのパス
+	const string PLAYER_FIND_PATH;		//エネミーに見つかった時の画像のパス
+	const string SPOTTED_SE_PATH;		//エネミーに見つかった時のSE音のパス
+	const int	 AFTER_IMAGE_NUMBER;	//プレイヤーの残像枚数
 };

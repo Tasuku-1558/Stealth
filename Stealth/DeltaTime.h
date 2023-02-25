@@ -3,22 +3,27 @@
 
 /// <summary>
 /// デルタタイムクラス
+/// シングルトン
 /// </summary>
 class DeltaTime final
 {
 public:
-	DeltaTime();
-	virtual ~DeltaTime();
 
-	static void Initialize();
-	static void DeltaTimeCount();
+	static DeltaTime& GetInstance();		//アドレスを返す
 
-	static const float GetDeltaTime() { return deltaTime; }
+	void Initialize();						//初期化処理
+	void DeltaTimeCount();					//60Fps計測
 
+	//const float GetDeltaTime() { return deltaTime; }	//デルタタイムを返す
 
 private:
 
-	static float deltaTime;
-	static float nowTime;
-	static float prevTime;
+	DeltaTime();
+	DeltaTime(const DeltaTime&);			//コピーコンストラクタ
+	virtual ~DeltaTime();
+
+	//float deltaTime;		//前フレームと現在のフレームの差分
+	//float waitFrameTime;	//待機フレーム時間(60fps)
+	//LONGLONG nowTime;		//現在のフレーム
+	//LONGLONG prevTime;		//昔のフレーム
 };

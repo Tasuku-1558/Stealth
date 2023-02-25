@@ -12,7 +12,7 @@ class CakeBullet;
 class HitChecker;
 class StageMap;
 class GoalFlag;
-class CakeRepopEffect;
+class RepopEffect;
 class CakeParticle;
 class UiManager;
 class FadeManager;
@@ -26,11 +26,11 @@ public:
 	 FirstStage(SceneManager* const sceneManager);
 	 virtual ~FirstStage();
 
-	void Initialize();				//初期化処理
-	void Finalize();				//終了処理
-	void Activate();				//活性化処理
-	void Update(float deltaTime);	//更新処理
-	void Draw();					//描画処理
+	void Initialize()override;				//初期化処理
+	void Finalize()override;				//終了処理
+	void Activate()override;				//活性化処理
+	void Update(float deltaTime)override;	//更新処理
+	void Draw()override;					//描画処理
 
 	//ゲームの状態
 	enum class State
@@ -53,10 +53,22 @@ private:
 	HitChecker* hitChecker;
 	StageMap* stageMap;
 	GoalFlag* goalFlag;
-	CakeRepopEffect* cakeEffect;
+	RepopEffect* cakeEffect;
 	std::vector<CakeParticle*> cakeParticle;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
+
+	void EntryEnemy(Enemy* newEnemy);								//エネミーを登録
+	void DeleteEnemy(Enemy* deleteEnemy);							//エネミーを削除
+	void EnemyPop();												//エネミーの出現
+
+	//void EntryMonitoringEnemy(MonitoringEnemy* newMonitoringEnemy);			//監視エネミーを登録
+	//void DeleteMonitoringEnemy(MonitoringEnemy* deleteMonitoringEnemy);		//監視エネミーを削除
+	//void MonitoringEnemyPop();												//監視エネミーの出現
+
+	//void EntryCakeBullet(CakeBullet* newCakeBullet);		//ケーキバレットを登録
+	//void DeleteCakeBullet(CakeBullet* deleteCakeBullet);	//ケーキバレットを削除
+	//void CakeBulletPop();									//ケーキバレットの出現
 
 	void EntryCakeParticle(CakeParticle* newCakeParticle);			//ケーキのパーティクルを登録
 	void DeleteCakeParticle(CakeParticle* deleteCakeParticle);		//ケーキのパーティクルを削除
@@ -77,6 +89,8 @@ private:
 	bool clear;
 	int stageNo;
 
-	//静的定数
-	static const int PARTICLE_NUMBER;			//パーティクルの数
+	//定数
+	const int PARTICLE_NUMBER;			//パーティクルの数
+
+	//SceneBase* retScene = this;
 };

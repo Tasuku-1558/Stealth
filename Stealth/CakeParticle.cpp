@@ -2,21 +2,12 @@
 #include <math.h>
 
 
-//const unsigned int CakeParticle::PINK = GetColor(224, 148, 171);		//パーティクルのカラー
-
-
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="pos"></param>
 CakeParticle::CakeParticle(const VECTOR& pos)
-	: position()
-	, radius(30.0f)
-	, particleCount(0.0f)
-	, particlePopTime(5.0f)
-	, endFlag(false)
-	, xPower(0.0f)
-	, zPower(0.0f)
+	: ParticleBase()
 	, PINK(GetColor(224, 148, 171))
 {
 	position = pos;

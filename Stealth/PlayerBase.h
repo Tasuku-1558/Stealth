@@ -1,8 +1,7 @@
 #pragma once
 
-#include <string>
-
 #include "ObjectBase.h"
+#include <string>
 
 
 /// <summary>
@@ -22,17 +21,19 @@ protected:
 	float  speed;					//移動速度
 	VECTOR previewPosition;			//未来のプレイヤーの位置
 	int	   playerFindCount;			//エネミーに見つかった回数を数える
+	int	   playerFindImage;			//エネミーに見つかった画像格納用
+	bool   findImageFlag;			//エネミーに見つかった画像を表示するかしないか
 	int	   spottedSe;				//エネミーに見つかった時のSE音格納用
 	bool   spottedSeFlag;			//エネミーに見つかった時のSE音を流すか流さないか
 
 
-	//静的定数
-	static const float  SPEED;		//移動速度
-	static const VECTOR POSITION;	//モデルの位置
-	static const VECTOR DIR;		//モデルの向き
+	//定数
+	const float  SPEED;		//移動速度
+	const VECTOR POSITION;	//モデルの位置
+	const VECTOR DIR;		//モデルの向き
 
-	//static const VECTOR UP;		//上方向
-	//static const VECTOR DOWN;		//下方向
-	//static const VECTOR LEFT;		//左方向
-	//static const VECTOR RIGHT;	//右方向
+	//const VECTOR UP;		//上方向
+	//const VECTOR DOWN;	//下方向
+	//const VECTOR LEFT;	//左方向
+	//const VECTOR RIGHT;	//右方向
 };

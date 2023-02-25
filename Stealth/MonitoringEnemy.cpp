@@ -5,13 +5,7 @@
 #include "Bullet.h"
 #include "HitChecker.h"
 
-const string MonitoringEnemy::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
-const string MonitoringEnemy::PLAYER_FIND_PATH	= "playerFind.png";		//プレイヤーを見つけた画像のパス
-const string MonitoringEnemy::MARK_PATH			= "mark.png";			//ビックリマーク画像のパス
-
 using namespace Math3d;
-using namespace std;
-
 
 /// <summary>
 /// コンストラクタ
@@ -24,6 +18,8 @@ MonitoringEnemy::MonitoringEnemy(const VECTOR& pos, VECTOR changeDir, VECTOR cur
 	, dirCount(0.0f)
 	, anotherDir()
 	, initialDir()
+	, IMAGE_FOLDER_PATH("data/image/")
+	, MARK_PATH("mark.png")
 {
 	position = pos;
 	anotherDir = changeDir;
@@ -53,8 +49,6 @@ void MonitoringEnemy::Initialize()
 	visualModelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY_VISUAL));
 
 	//画像の読み込み
-	playerFindImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
-
 	markImage		= LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
 }
 
@@ -87,7 +81,6 @@ void MonitoringEnemy::Finalize()
 	MV1DeleteModel(modelHandle);
 	MV1DeleteModel(visualModelHandle);
 
-	DeleteGraph(playerFindImage);
 	DeleteGraph(markImage);
 
 	for (int i = 0; i < CAKE_IMAGE_NUMBER; i++)
@@ -111,11 +104,14 @@ void MonitoringEnemy::Update(float deltaTime, Player* player, HitChecker* hitChe
 
 	position += dir * deltaTime;
 
-	//エネミーの位置をセット
+	//エネミーの位置と向きをセット
 	MV1SetPosition(modelHandle, position);
+	MV1SetRotationYUseDir(modelHandle, dir, 0.0f);
 
-	//エネミーの視野モデルをセット
+	//エネミーの視野モデルの位置と向きをセット
 	MV1SetPosition(visualModelHandle, position);
+	MV1SetRotationYUseDir(visualModelHandle, dir, 0.0f);
+
 
 	VisualAnglePlayer(player);
 
@@ -126,13 +122,13 @@ void MonitoringEnemy::Update(float deltaTime, Player* player, HitChecker* hitChe
 		playerSpotted = true;
 	}
 
-	//z軸が逆を向いているのでdirを180度回転させる
-	MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
-	VECTOR negativeVec = VTransform(dir, rotYMat);
+	////z軸が逆を向いているのでdirを180度回転させる
+	//MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
+	//VECTOR negativeVec = VTransform(dir, rotYMat);
 
-	//モデルに回転をセット
-	MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
-	MV1SetRotationZYAxis(visualModelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
+	////モデルに回転をセット
+	//MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
+	//MV1SetRotationZYAxis(visualModelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
 }
 
 /// <summary>
@@ -189,7 +185,7 @@ void MonitoringEnemy::VisualAnglePlayer(Player* player)
 		//プレイヤーがエネミーの視野範囲内にいるならば
 		if (radian <= dot)
 		{
-			object = Object::PLAYER;
+			//object = Object::PLAYER;
 
 			//視野範囲内ならば
 			Reaction();
@@ -206,15 +202,15 @@ void MonitoringEnemy::VisualAnglePlayer(Player* player)
 /// </summary>
 void MonitoringEnemy::Reaction()
 {
-	switch (object)
-	{
-	case Object::PLAYER:
+	//switch (object)
+	//{
+	//case Object::PLAYER:
 
-		//プレイヤーを発見した
-		playerSpotted = true;
+	//	//プレイヤーを発見した
+	//	playerSpotted = true;
 
-		break;
-	}
+	//	break;
+	//}
 }
 
 /// <summary>
@@ -227,9 +223,6 @@ void MonitoringEnemy::ReactionDraw()
 	{
 		//ビックリマークの画像を描画
 		DrawBillboard3D(VGet(position.x - 300.0f, 0.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
-
-		//敵に見つかったというUI画像を描画
-		DrawGraph(50, -100, playerFindImage, TRUE);
 	}
 }
 

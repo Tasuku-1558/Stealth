@@ -10,6 +10,8 @@
 #include "FifthStage.h"
 
 
+using namespace std;
+
 /// <summary>
 /// UI管理クラス
 /// </summary>
@@ -26,17 +28,17 @@ public:
 	void Draw(FirstStage::State state,
 			  int playerCount, bool hitUi);	//FirstStageのUI描画処理
 
-	void Draw(SecondStage::State state, 
-			  int playerCount);				//SecondStageのUI描画処理
+	//void Draw(SecondStage::State state, 
+	//		  int playerCount);				//SecondStageのUI描画処理
 
-	void Draw(ThirdStage::State state,
-			  int playerCount);				//ThirdStageの描画処理
+	//void Draw(ThirdStage::State state,
+	//		  int playerCount);				//ThirdStageの描画処理
 
-	void Draw(FourthStage::State state,
-			  int playerCount);				//FourthStageの描画処理
+	//void Draw(FourthStage::State state,
+	//		  int playerCount);				//FourthStageの描画処理
 
-	void Draw(FifthStage::State state,
-		int playerCount);					//FifthStageの描画処理
+	//void Draw(FifthStage::State state,
+	//	int playerCount);					//FifthStageの描画処理
 
 	void CakeGetDraw(bool cakeGet);			//ケーキを持っているかのUI
 
@@ -66,14 +68,12 @@ private:
 	void OperationMethodDraw(bool hitUi);			//操作方法説明UI
 
 	int stageCount;									//ステージ名称表示カウント
-	
 	int uiHandle[GRAPHIC_AMOUNT];					//画像ハンドル
-
-	int alpha;
+	int alpha;										//透過度
 	int inc;
 
-	//静的定数
-	static const std::string IMAGE_FOLDER_PATH;		//画像格納フォルダ
-	static const std::string UI_GRAPHIC_PATH;		//UI画像
-	static const std::string FILENAME_EXTENSION;	//画像拡張子
+	//定数
+	const string IMAGE_FOLDER_PATH;			//画像格納フォルダ
+	const string UI_GRAPHIC_PATH;			//UI画像
+	const string IMAGE_FILENAME_EXTENSION;	//画像拡張子
 };

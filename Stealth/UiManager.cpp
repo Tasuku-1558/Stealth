@@ -1,11 +1,5 @@
 #include "UiManager.h"
 
-using std::string;
-
-const string UiManager::IMAGE_FOLDER_PATH  = "data/image/";		//画像ファイルのパス
-const string UiManager::UI_GRAPHIC_PATH    = "ui";				//UI画像
-const string UiManager::FILENAME_EXTENSION = ".png";			//画像拡張子
-
 
 /// <summary>
 /// コンストラクタ
@@ -15,6 +9,9 @@ UiManager::UiManager()
 	, stageCount(0)
 	, alpha(0)
 	, inc(0)
+	, IMAGE_FOLDER_PATH("data/image/")
+	, UI_GRAPHIC_PATH("ui")
+	, IMAGE_FILENAME_EXTENSION(".png")
 {
 	//処理なし
 }
@@ -38,11 +35,11 @@ void UiManager::Initialize()
 {
 	//UI画像読み込み
 	string failePath;
-	string fullPath = failePath = IMAGE_FOLDER_PATH + UI_GRAPHIC_PATH;		// フォルダパス + ファイル名
+	string fullPath = failePath = IMAGE_FOLDER_PATH + UI_GRAPHIC_PATH;		//フォルダパス + ファイル名
 	
 	for (int i = 0; i < GRAPHIC_AMOUNT; ++i)
 	{
-		fullPath = failePath + std::to_string(i) + FILENAME_EXTENSION;
+		fullPath = failePath + std::to_string(i) + IMAGE_FILENAME_EXTENSION;
 		uiHandle[i] = LoadGraph(fullPath.c_str());
 
 		if (uiHandle[i] < 0)
@@ -109,100 +106,100 @@ void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 /// </summary>
 /// <param name="state"></param>
 /// <param name="playerCount"></param>
-void UiManager::Draw(SecondStage::State state, int playerCount)
-{
-	switch (state)
-	{
-	case SecondStage::State::START:
-		
-		break;
-
-	case SecondStage::State::GAME:
-		
-		StartGameDraw(STAGE2);
-		PlayerHpDraw(playerCount);
-		break;
-
-	case SecondStage::State::GOAL:
-		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
-		break;
-	}
-}
-
-/// <summary>
-/// ThirdStageのUI描画処理
-/// </summary>
-/// <param name="state"></param>
-/// <param name="playerCount"></param>
-void UiManager::Draw(ThirdStage::State state, int playerCount)
-{
-	switch (state)
-	{
-	case ThirdStage::State::START:
-
-		break;
-
-	case ThirdStage::State::GAME:
-
-		StartGameDraw(STAGE3);
-		PlayerHpDraw(playerCount);
-		break;
-
-	case ThirdStage::State::GOAL:
-		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
-		break;
-	}
-}
-
-/// <summary>
-/// FourthStageのUI描画処理
-/// </summary>
-/// <param name="state"></param>
-/// <param name="playerCount"></param>
-void UiManager::Draw(FourthStage::State state, int playerCount)
-{
-	switch (state)
-	{
-	case FourthStage::State::START:
-
-		break;
-
-	case FourthStage::State::GAME:
-
-		StartGameDraw(STAGE4);
-		PlayerHpDraw(playerCount);
-		break;
-
-	case FourthStage::State::GOAL:
-		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
-		break;
-	}
-}
-
-/// <summary>
-/// FifthStageのUI描画処理
-/// </summary>
-/// <param name="state"></param>
-/// <param name="playerCount"></param>
-void UiManager::Draw(FifthStage::State state, int playerCount)
-{
-	switch (state)
-	{
-	case FifthStage::State::START:
-
-		break;
-
-	case FifthStage::State::GAME:
-
-		StartGameDraw(STAGE5);
-		PlayerHpDraw(playerCount);
-		break;
-
-	case FifthStage::State::GOAL:
-		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
-		break;
-	}
-}
+//void UiManager::Draw(SecondStage::State state, int playerCount)
+//{
+//	switch (state)
+//	{
+//	case SecondStage::State::START:
+//		
+//		break;
+//
+//	case SecondStage::State::GAME:
+//		
+//		StartGameDraw(STAGE2);
+//		PlayerHpDraw(playerCount);
+//		break;
+//
+//	case SecondStage::State::GOAL:
+//		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
+//		break;
+//	}
+//}
+//
+///// <summary>
+///// ThirdStageのUI描画処理
+///// </summary>
+///// <param name="state"></param>
+///// <param name="playerCount"></param>
+//void UiManager::Draw(ThirdStage::State state, int playerCount)
+//{
+//	switch (state)
+//	{
+//	case ThirdStage::State::START:
+//
+//		break;
+//
+//	case ThirdStage::State::GAME:
+//
+//		StartGameDraw(STAGE3);
+//		PlayerHpDraw(playerCount);
+//		break;
+//
+//	case ThirdStage::State::GOAL:
+//		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
+//		break;
+//	}
+//}
+//
+///// <summary>
+///// FourthStageのUI描画処理
+///// </summary>
+///// <param name="state"></param>
+///// <param name="playerCount"></param>
+//void UiManager::Draw(FourthStage::State state, int playerCount)
+//{
+//	switch (state)
+//	{
+//	case FourthStage::State::START:
+//
+//		break;
+//
+//	case FourthStage::State::GAME:
+//
+//		StartGameDraw(STAGE4);
+//		PlayerHpDraw(playerCount);
+//		break;
+//
+//	case FourthStage::State::GOAL:
+//		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
+//		break;
+//	}
+//}
+//
+///// <summary>
+///// FifthStageのUI描画処理
+///// </summary>
+///// <param name="state"></param>
+///// <param name="playerCount"></param>
+//void UiManager::Draw(FifthStage::State state, int playerCount)
+//{
+//	switch (state)
+//	{
+//	case FifthStage::State::START:
+//
+//		break;
+//
+//	case FifthStage::State::GAME:
+//
+//		StartGameDraw(STAGE5);
+//		PlayerHpDraw(playerCount);
+//		break;
+//
+//	case FifthStage::State::GOAL:
+//		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
+//		break;
+//	}
+//}
 
 /// <summary>
 /// ゲーム開始UI

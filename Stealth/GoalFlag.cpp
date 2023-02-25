@@ -2,9 +2,6 @@
 #include "ModelManager.h"
 
 
-const VECTOR GoalFlag::SIZE = { 1.0f, 1.0f, 1.0f };		//モデルの倍率
-const VECTOR GoalFlag::ROTATE_SPEED = { 0.0f, 3.0f, 0.0f };	//モデルの回転スピード
-
 using namespace Math3d;
 
 /// <summary>
@@ -13,6 +10,8 @@ using namespace Math3d;
 /// <param name="pos"></param>
 GoalFlag::GoalFlag(VECTOR pos) : ObjectBase()
 	, rotate()
+	, SIZE({ 1.0f, 1.0f, 1.0f })
+	, ROTATE_SPEED({ 0.0f, 3.0f, 0.0f })
 {
 	position = pos;
 	Initialize();

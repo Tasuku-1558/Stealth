@@ -12,24 +12,20 @@ class ModelManager final
 {
 public:
 
-	ModelManager();
-	virtual ~ModelManager();
-
 	//モデルの種類
 	enum ModelType
 	{
 		PLAYER,			//プレイヤーモデル
 		ENEMY,			//エネミーモデル
 		ENEMY_VISUAL,	//エネミーの視野モデル
-		WALL,			//壁モデル
 		CAKE,			//ケーキモデル
+		CAKE_HALF,		//ケーキが半分のモデル
 		STAGE1,			//ステージ1モデル
 		STAGE2,			//ステージ2モデル
 		STAGE3,			//ステージ3モデル
 		STAGE4,			//ステージ4モデル
 		STAGE5,			//ステージ5モデル
 		GOAL,			//ゴールフラッグモデル
-		CAKE_HALF,		//ケーキが半分のモデル
 		MODEL_AMOUNT	//モデルの個数
 	};
 
@@ -38,30 +34,30 @@ public:
 	const int& GetModelHandle(ModelType modelType) const; //モデルハンドルの参照を返す
 
 private:
+	ModelManager();
+	ModelManager(const ModelManager&);			//コピーコンストラクタ
+	virtual ~ModelManager();
 
-	 ModelManager(const ModelManager&);			//コピーコンストラクタ
+	string InputPath(string folderPath,			//モデルのパスを入力
+					 string modelPath);
 
-	 string InputPath(string folderPath,	//モデルのパスを入力
-					  string modelPath);
+	void LoadAllModel();						//全てのモデルの読み込み
+	void DeleteAllModel();						//全てのモデルの削除
 
-	 void LoadAllModel();						//全てのモデルの読み込み
-	 void DeleteAllModel();						//全てのモデルの削除
+	int modelHandle[MODEL_AMOUNT];				//モデルハンドル
 
-	 int modelHandle[MODEL_AMOUNT];				//モデルハンドル
-
-	 //静的定数
-	 static const string MODEL_FOLDER_PATH;		//modelフォルダまでのパス
-	 static const string PLAYER_PATH;			//playerモデルファイルのパス
-	 static const string ENEMY_PATH;			//enemyモデルファイルのパス
-	 static const string ENEMY_VISUAL_PATH;		//enemy_visualモデルファイルのパス
-	 static const string WALL_PATH;				//wallモデルファイルのパス
-	 static const string CAKE_PATH;				//cakeモデルファイルのパス
-	 static const string STAGE1_PATH;			//stage1モデルファイルのパス
-	 static const string STAGE2_PATH;			//stage2モデルファイルのパス
-	 static const string STAGE3_PATH;			//stage3モデルファイルのパス
-	 static const string STAGE4_PATH;			//stage4モデルファイルのパス
-	 static const string STAGE5_PATH;			//stage5モデルファイルのパス
-	 static const string GOAL_FLAG_PATH;		//goal_flagモデルファイルのパス
-	 static const string CAKE_HALF_PATH;		//cake_halfモデルファイルのパス
+	//定数
+	const string MODEL_FOLDER_PATH;	//modelフォルダまでのパス
+	const string PLAYER_PATH;		//playerモデルファイルのパス
+	const string ENEMY_PATH;		//enemyモデルファイルのパス
+	const string ENEMY_VISUAL_PATH;	//enemy_visualモデルファイルのパス
+	const string CAKE_PATH;			//cakeモデルファイルのパス
+	const string CAKE_HALF_PATH;	//cake_halfモデルファイルのパス
+	const string STAGE1_PATH;		//stage1モデルファイルのパス
+	const string STAGE2_PATH;		//stage2モデルファイルのパス
+	const string STAGE3_PATH;		//stage3モデルファイルのパス
+	const string STAGE4_PATH;		//stage4モデルファイルのパス
+	const string STAGE5_PATH;		//stage5モデルファイルのパス
+	const string GOAL_FLAG_PATH;	//goal_flagモデルファイルのパス
 
 };

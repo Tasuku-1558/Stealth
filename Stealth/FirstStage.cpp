@@ -12,16 +12,16 @@
 #include "CakeBullet.h"
 #include "GoalFlag.h"
 #include "HitChecker.h"
-#include "CakeRepopEffect.h"
+#include "RepopEffect.h"
 #include "CakeParticle.h"
 #include "UiManager.h"
 #include "FadeManager.h"
 #include "Set.h"
+#include "ResultScene.h"
 
 //デバック用
 #define DEBUG
 
-const int FirstStage::PARTICLE_NUMBER = 500;	//パーティクルの数
 
 /// <summary>
 /// コンストラクタ
@@ -50,6 +50,7 @@ FirstStage::FirstStage(SceneManager* const sceneManager)
 	, particleInterval(0.0f)
 	, clear(true)
 	, stageNo(0)
+	, PARTICLE_NUMBER(500)
 {
 	//処理なし
 }
@@ -101,13 +102,31 @@ void FirstStage::Initialize()
 		goalFlag = new GoalFlag({ -4000.0f ,0.0f,0.0f });
 		goalFlag->Initialize();
 	}
+	if (stageMap->GetStage() == 2)
+	{
+		//マップモデルの種類、サイズ、回転値、位置を入力する
+		stageMap->Initialize(ModelManager::STAGE2, { 80.0f, 60.0f, 80.0f },
+						{ 0.0f, 0.0f, 0.0f }, { -7000.0f, -100.0f, -2900.0f });
+		//エネミークラス
+		//エネミーに行動パターンのリストとスピードを設定
+		enemy = new Enemy(stageMap->GetMap(0), 1000.0f);
+		enemy->Initialize();
+
+		//ケーキバレット管理クラス
+		//ケーキの初期位置を設定
+		cakeBullet = new CakeBullet({ -1500.0f,30.0f,0.0f });
+
+		//ゴールフラッグクラス
+		goalFlag = new GoalFlag({ -4000.0f ,0.0f,0.0f });
+		goalFlag->Initialize();
+	}
 
 	//プレイヤークラス
 	player = new Player();
 	player->Initialize();
 
 	//ケーキの再出現エフェクトクラス
-	cakeEffect = new CakeRepopEffect();
+	cakeEffect = new RepopEffect();
 	cakeEffect->Initialize();
 
 	//ヒットチェッカークラス
@@ -200,6 +219,9 @@ void FirstStage::Update(float deltaTime)
 	{
 		(this->*pUpdate)(deltaTime);		//状態ごとに更新
 	}
+	
+
+	//return retScene;
 }
 
 /// <summary>
@@ -255,7 +277,11 @@ void FirstStage::CakeParticlePop()
 /// <param name="deltaTime"></param>
 void FirstStage::UpdateStart(float deltaTime)
 {
+	backGround->Update();
+
 	camera->Update(player->GetPosition());
+
+	cakeEffect->Update(player->GetPosition());
 
 	frame += deltaTime;
 
@@ -265,8 +291,6 @@ void FirstStage::UpdateStart(float deltaTime)
 		state = State::GAME;
 		pUpdate = &FirstStage::UpdateGame;
 	}
-
-	cakeEffect->Update(player->GetPosition().x, player->GetPosition().y - 100.0f, player->GetPosition().z);
 }
 
 /// <summary>
@@ -275,6 +299,8 @@ void FirstStage::UpdateStart(float deltaTime)
 /// <param name="deltaTime"></param>
 void FirstStage::UpdateGame(float deltaTime)
 {
+	backGround->Update();
+
 	camera->Update(player->GetPosition());
 
 	enemy->Update(deltaTime, player, hitChecker);
@@ -307,6 +333,8 @@ void FirstStage::UpdateGame(float deltaTime)
 	}
 	
 	hitChecker->Check(stageMap->GetModelHandle(), player, goalFlag->GetPosition());
+
+	hitChecker->EnemyAndPlayer(player->GetPosition(), enemy->GetPosition());
 
 	for (auto particlePtr : cakeParticle)
 	{
@@ -355,6 +383,7 @@ void FirstStage::UpdateGoal(float deltaTime)
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
+		//retScene = new ResultScene();
 	}
 }
 
@@ -376,6 +405,8 @@ void FirstStage::UpdateOver(float deltaTime)
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
+
+		//retScene = new ResultScene();
 	}
 }
 
@@ -390,8 +421,8 @@ void FirstStage::Draw()
 	//マップ描画
 	stageMap->Draw();
 
-	//ゲーム状態がゲームとゴールとオーバーの時だけ描画する
-	if (state == State::GAME || state == State::GOAL || state == State::OVER)
+	//ゲーム状態がスタートではないならば
+	if (state != State::START)
 	{
 		//エネミー描画
 		enemy->Draw();
@@ -428,7 +459,6 @@ void FirstStage::Draw()
 #ifdef DEBUG
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %.0f", player->GetPosition().z);
-	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), font, "Speed : %d", player->GetSpeed());
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->GetPlayerCount());
 	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "CakeAlive : %d\n(1:true 0:false)", cakeBullet->cake->GetAlive());
 	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());

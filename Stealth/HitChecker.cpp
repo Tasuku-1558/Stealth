@@ -5,8 +5,6 @@
 #include "Cake.h"
 
 
-const VECTOR HitChecker::UI_POSITION = { -800.0f, 30.0f, 0.0f };	//UI画像の位置
-
 using namespace Math3d;
 
 /// <summary>
@@ -20,6 +18,7 @@ HitChecker::HitChecker()
 	, pushBack()
 	, mapHit(false)
 	, enemyHit(false)
+	, UI_POSITION({ -800.0f, 30.0f, 0.0f })
 {
 	uiPosition = UI_POSITION;
 }
@@ -49,7 +48,7 @@ void HitChecker::Check(int model, Player* player, VECTOR flagPos)
 /// </summary>
 /// <param name="playerPos"></param>
 /// <param name="cake"></param>
-void HitChecker::BallAndPlayer(VECTOR playerPos, Cake* cake)
+void HitChecker::CakeAndPlayer(VECTOR playerPos, Cake* cake)
 {
 	//プレイヤーからケーキの座標を引いた値を取得
 	VECTOR sub = playerPos - cake->GetPosition();
@@ -132,7 +131,7 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 
 	VECTOR moveVec = VGet(0, 0, 0);    //移動ベクトル
 	float  moveLengh = 0.0f;           //移動量
-	VECTOR planeNormal{};                    //ポリゴン平面法線
+	VECTOR planeNormal = VGet(0, 0, 0);    //ポリゴン平面法線
 
 	VECTOR newCenter = player->GetPosition(); //移動候補
 	

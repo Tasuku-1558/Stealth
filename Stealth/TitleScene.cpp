@@ -1,17 +1,11 @@
 #include "TitleScene.h"
 #include "DxLib.h"
 #include "SceneManager.h"
+#include "KeyManager.h"
+#include "SoundManager.h"
+#include "FadeManager.h"
+#include "StageSelection.h"
 
-
-const string TitleScene::VIDEO_FOLDER_PATH = "data/video/";		//videoフォルダまでのパス
-const string TitleScene::IMAGE_FOLDER_PATH = "data/image/";		//imageフォルダまでのパス
-const string TitleScene::SOUND_FOLDER_PATH = "data/sound/";		//soundフォルダまでのパス
-const string TitleScene::TITLE_BGM_PATH	   = "titleBgm.mp3";	//タイトル画面のBGM音のパス
-const string TitleScene::PLAY_VIDEO_PATH   = "PlayVideo.mp4";	//タイトル動画のパス
-const string TitleScene::TITLENAME_PATH	   = "titleName.png";	//タイトル名の画像のパス
-const string TitleScene::TITLE_UI_PATH	   = "titleUi.png";		//ステージ選択シーンへ遷移キーのUIのパス
-
-using namespace std;
 
 /// <summary>
 /// コンストラクタ
@@ -25,7 +19,12 @@ TitleScene::TitleScene(SceneManager* const sceneManager)
 	, alpha(0)
 	, inc(0)
 	, frame(0.0f)
-	, titleBgm(0)
+	, fadeManager(nullptr)
+	, VIDEO_FOLDER_PATH("data/video/")
+	, IMAGE_FOLDER_PATH("data/image/")
+	, PLAY_VIDEO_PATH("PlayVideo.mp4")
+	, TITLENAME_PATH("titleName.png")
+	, TITLE_UI_PATH("titleUi.png")
 {
 	//処理なし
 }
@@ -50,12 +49,6 @@ void TitleScene::Initialize()
 	titleName = LoadGraph(InputPath(IMAGE_FOLDER_PATH, TITLENAME_PATH).c_str());
 
 	titleUi = LoadGraph(InputPath(IMAGE_FOLDER_PATH, TITLE_UI_PATH).c_str());
-
-	//タイトルBGMの読み込み
-	titleBgm = LoadSoundMem(InputPath(SOUND_FOLDER_PATH, TITLE_BGM_PATH).c_str());
-
-	alpha = 255;
-	inc = -3;
 }
 
 /// <summary>
@@ -74,13 +67,13 @@ string TitleScene::InputPath(string folderPath, string path)
 /// </summary>
 void TitleScene::Finalize()
 {
+	PauseMovieToGraph(backGroundHandle);
+
 	DeleteGraph(backGroundHandle);
 
 	DeleteGraph(titleName);
 
 	DeleteGraph(titleUi);
-
-	DeleteSoundMem(titleBgm);
 }
 
 /// <summary>
@@ -88,7 +81,8 @@ void TitleScene::Finalize()
 /// </summary>
 void TitleScene::Activate()
 {
-	//PlaySoundMem(titleBgm, DX_PLAYTYPE_LOOP);					//タイトル曲を流す
+	alpha = 255;
+	inc = -3;
 }
 
 /// <summary>
@@ -97,14 +91,30 @@ void TitleScene::Activate()
 /// <param name="deltaTime"></param>
 void TitleScene::Update(float deltaTime)
 {
-	//次のシーンへ
-	if (CheckHitKey(KEY_INPUT_SPACE))
+	//タイトルBGMを再生
+	SoundManager::GetInstance().PlayBgm(SoundManager::TITLE);
+
+	//デモ動画を再生
+	if (!GetMovieStateToGraph(backGroundHandle))
 	{
-		//StopSoundMem(titleBgm);									//タイトル曲を止める	
+		SeekMovieToGraph(backGroundHandle, 0);
+
+		PlayMovieToGraph(backGroundHandle);
+	}
+
+	//ステージ選択画面へ
+	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_SPACE))
+	{
+		//タイトルBGMを停止
+		SoundManager::GetInstance().StopBgm();
 
 		parent->SetNextScene(SceneManager::SELECTION);
 		return;
+		//retScene = new StageSelection();
+
 	}
+
+	//return retScene;
 }
 
 /// <summary>
@@ -137,13 +147,6 @@ void TitleScene::Blink()
 void TitleScene::Draw()
 {
 	DrawGraph(0, 0, backGroundHandle, FALSE);
-
-	if (GetMovieStateToGraph(backGroundHandle) == 0)
-	{
-		SeekMovieToGraph(backGroundHandle, 0);
-
-		PlayMovieToGraph(backGroundHandle);
-	}
 
 	DrawRotaGraph(950, 450, 0.5f, 0, titleName, TRUE);
 

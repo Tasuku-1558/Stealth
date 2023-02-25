@@ -5,10 +5,11 @@
 #include "Light.h"
 #include "Camera.h"
 #include "SelectionUi.h"
+#include "KeyManager.h"
 #include "FadeManager.h"
 #include "Set.h"
-
-const float StageSelection::PUSH_INTERVAL = 0.2f;		//切り替えカウントのインターバル
+#include "FirstStage.h"
+#include "TitleScene.h"
 
 
 /// <summary>
@@ -29,6 +30,7 @@ StageSelection::StageSelection(SceneManager* const sceneManager)
 	, maxTime(0)
 	, pushCount(0.0f)
 	, frame(0.0f)
+	, PUSH_INTERVAL(0.2f)
 {
 	//処理なし
 }
@@ -143,10 +145,13 @@ int StageSelection::StageCreator(int stageNumber)
 	if (stageNumber == 1)
 	{
 		parent->SetNextScene(SceneManager::STAGE1);
+		//retScene = new FirstStage();
 	}
 	if (stageNumber == 6)
 	{
 		parent->SetNextScene(SceneManager::TITLE);
+		//retScene = new TitleScene();
+
 	}
 }
 
@@ -156,9 +161,11 @@ int StageSelection::StageCreator(int stageNumber)
 /// <param name="deltaTime"></param>
 void StageSelection::Update(float deltaTime)
 {
-	camera->SelectionCamera();
+	camera->SelectionAndResultCamera();
 
 	KeyMove(deltaTime);
+
+	//return retScene;
 }
 
 /// <summary>
@@ -169,20 +176,20 @@ void StageSelection::KeyMove(float deltaTime)
 {
 	pushCount -= deltaTime;
 
-	//キー操作
-	if (CheckHitKey(KEY_INPUT_UP) && pushCount < 0.0f)
+	//矢印キー操作
+	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_UP) && pushCount < 0.0f)
 	{
 		stageNo = stageDecrement(stageNo);
 		pushCount = PUSH_INTERVAL;
 	}
-	if (CheckHitKey(KEY_INPUT_DOWN) && pushCount < 0.0f)
+	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_DOWN) && pushCount < 0.0f)
 	{
 		stageNo = stageIncrement(stageNo);
 		pushCount = PUSH_INTERVAL;
 	}
 
 	//リターンキーを押したならば
-	if (CheckHitKey(KEY_INPUT_RETURN))
+	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_RETURN))
 	{
 		changeScene = true;
 	}
@@ -203,6 +210,7 @@ void StageSelection::KeyMove(float deltaTime)
 			if (frame > 3.5f)
 			{
 				StageCreator(stageNo);
+				Set::GetInstance().SetStage(stageNo);
 			}
 		}
 	}

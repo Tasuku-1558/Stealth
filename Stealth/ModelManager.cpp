@@ -2,26 +2,23 @@
 #include "DxLib.h"
 
 
-const string ModelManager::MODEL_FOLDER_PATH = "data/model/";    //modelフォルダまでのパス
-const string ModelManager::PLAYER_PATH       = "player.mv1";     //playerモデルファイルのパス
-const string ModelManager::ENEMY_PATH        = "enemy.mv1";      //enemyモデルファイルのパス
-const string ModelManager::ENEMY_VISUAL_PATH = "enemyAngle.mv1"; //enemy_visualモデルファイルのパス
-const string ModelManager::WALL_PATH         = "wall.mv1";       //wallモデルファイルのパス
-const string ModelManager::CAKE_PATH         = "cakeHalf.mv1";       //cakeモデルファイルのパス
-const string ModelManager::STAGE1_PATH       = "stage1.mv1";     //stage1モデルファイルのパス
-const string ModelManager::STAGE2_PATH       = "stage2.mv1";     //stage2モデルファイルのパス
-const string ModelManager::STAGE3_PATH       = "stage3.mv1";     //stage3モデルファイルのパス
-const string ModelManager::STAGE4_PATH       = "stage4.mv1";     //stage4モデルファイルのパス
-const string ModelManager::STAGE5_PATH       = "stage5.mv1";     //stage5モデルファイルのパス
-const string ModelManager::GOAL_FLAG_PATH    = "goal.mv1";       //goal_flagモデルファイルのパス
-const string ModelManager::CAKE_HALF_PATH    = "cakeHalf.mv1";   //cake_halfモデルファイルのパス
-
-
 /// <summary>
 /// コンストラクタ
 /// </summary>
 ModelManager::ModelManager()
     : modelHandle()
+    , MODEL_FOLDER_PATH("data/model/")
+    , PLAYER_PATH("player.mv1")
+    , ENEMY_PATH("enemy.mv1")
+    , ENEMY_VISUAL_PATH("enemyAngle.mv1")
+    , CAKE_PATH("cake.mv1")
+    , CAKE_HALF_PATH("cakeHalf.mv1")
+    , STAGE1_PATH("stage1.mv1")
+    , STAGE2_PATH("stage2.mv1")
+    , STAGE3_PATH("stage3.mv1")
+    , STAGE4_PATH("stage4.mv1")
+    , STAGE5_PATH("stage5.mv1")
+    , GOAL_FLAG_PATH("goal.mv1")
 {
     LoadAllModel();
 }
@@ -40,8 +37,8 @@ ModelManager::~ModelManager()
 /// <returns></returns>
 ModelManager& ModelManager::GetInstance()
 {
-    static ModelManager ModelManager;
-    return ModelManager;
+    static ModelManager modelManager;
+    return modelManager;
 }
 
 /// <summary>
@@ -55,9 +52,9 @@ void ModelManager::LoadAllModel()
 
     modelHandle[ENEMY_VISUAL] = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, ENEMY_VISUAL_PATH).c_str());
 
-    modelHandle[WALL]         = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, WALL_PATH).c_str());
-
     modelHandle[CAKE]         = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, CAKE_PATH).c_str());
+
+    modelHandle[CAKE_HALF]    = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, CAKE_HALF_PATH).c_str());
 
     modelHandle[STAGE1]       = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, STAGE1_PATH).c_str());
 
@@ -71,12 +68,13 @@ void ModelManager::LoadAllModel()
 
     modelHandle[GOAL]         = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, GOAL_FLAG_PATH).c_str());
 
+
     //読み込み失敗ならエラー
     for (int i = 0; i < MODEL_AMOUNT; ++i)
     {
         if (modelHandle[i] < 0)
         {
-            printfDx("モデルデータ読み込み失敗\n", i);
+            printfDx("モデルデータ読み込み失敗[%d]\n", i);
         }
     }
 }
@@ -85,7 +83,7 @@ void ModelManager::LoadAllModel()
 /// モデルのパスを入力
 /// </summary>
 /// <param name="folderPath"></param>
-/// <param name="path"></param>
+/// <param name="modelPath"></param>
 /// <returns></returns>
 string ModelManager::InputPath(string folderPath, string modelPath)
 {

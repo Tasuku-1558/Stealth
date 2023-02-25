@@ -11,13 +11,15 @@ class Player;
 class Bullet;
 class HitChecker;
 
+using namespace std;
+
 /// <summary>
 /// エネミークラス(赤色)
 /// </summary>
 class Enemy final : public EnemyBase
 {
 public:
-	 Enemy(std::vector<VECTOR>& id, float enemySpeed);
+	 Enemy(vector<VECTOR>& id, float enemySpeed);
 	 virtual ~Enemy();
 
 	void Initialize();									//初期化処理
@@ -26,8 +28,6 @@ public:
 	void Draw();										//描画処理
 
 	void VisualAngleCake(Bullet* bullet, float deltaTime);	//エネミーの視野にケーキが入った場合
-	void VisualAngleWall(VECTOR wallPos);					//エネミーの視野に壁が入った場合
-
 
 	const bool Spotted() { return playerSpotted; }			//プレイヤーを見つけたかどうかを返す
 	const bool CakeFlag() { return cakeFlag; }				//ケーキを見つけたかどうかを返す
@@ -37,12 +37,21 @@ public:
 	{
 		CRAWL,			//巡回中
 		ARRIVAL,		//目的地に到着
+		ROTATION,
+	};
+
+	//オブジェクトごとのエネミーの反応
+	enum class EnemyReaction
+	{
+		PLAYER,
+		CAKE,
 	};
 
 private:
 	Enemy(const Enemy&);						//コピーコンストラクタ
 
-	void Position(std::vector<VECTOR>& id);		//エネミー位置設定
+	void Move(float deltaTime);					//移動処理
+	void Position(vector<VECTOR>& id);			//エネミー位置設定
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 	void eUpdate(float deltaTime);				//エネミーの状態変化
 	void SetTargetPosition();					//目的地まで移動処理
@@ -53,24 +62,24 @@ private:
 	void ReactionDraw();						//リアクション画像の描画処理
 	void Finalize();							//終了処理
 
-	std::string InputPath(std::string folderPath, //画像のパスを入力
-						  std::string imagePath);
+	string InputPath(string folderPath,			//画像のパスを入力
+					 string imagePath);
 
 	EnemyState enemyState;						//エネミーの状態
+	EnemyReaction enemyReaction;				//オブジェクトごとのエネミーの反応
 
-	std::vector<VECTOR>::iterator itr;
-	std::vector<VECTOR> pointList;
+	vector<VECTOR>::iterator itr;
+	vector<VECTOR> pointList;
 
 	float cakeCount;		//エネミーのケーキの反応カウント
 	bool cakeFindFlag;		//エネミーがケーキを見つけたかどうか
 	bool cakeEatFlag;		//エネミーがケーキに近づいて食べているかどうか
 	bool cakeHalfFlag;		//ケーキが半分になっているかどうか
 
-	float angle;
-	//静的定数
-	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
-	static const std::string PLAYER_FIND_PATH;	//プレイヤーを見つけた画像のパス
-	static const std::string MARK_PATH;			//ビックリマーク画像のパス
-	static const std::string CAKE_PATH;			//ケーキ画像のパス
-	static const std::string CAKE_HALF_PATH;	//ケーキが半分の画像のパス
+
+	//定数
+	const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
+	const string MARK_PATH;			//ビックリマーク画像のパス
+	const string CAKE_PATH;			//ケーキ画像のパス
+	const string CAKE_HALF_PATH;	//ケーキが半分の画像のパス
 };

@@ -5,6 +5,8 @@
 
 using namespace std;
 
+class FadeManager;
+
 /// <summary>
 /// タイトルシーンクラス
 /// </summary>
@@ -14,10 +16,10 @@ public:
 	 TitleScene(SceneManager* const sceneManager);
 	 virtual ~TitleScene();
 
-	void Initialize();					//初期化処理
-	void Activate();					//活性化処理
-	void Update(float deltaTime);		//更新処理
-	void Draw();						//描画処理
+	void Initialize()override;					//初期化処理
+	void Activate()override;					//活性化処理
+	void Update(float deltaTime)override;		//更新処理
+	void Draw()override;						//描画処理
 
 private:
 
@@ -27,23 +29,24 @@ private:
 					 string path);
 
 	void Blink();						//文字の点滅処理
-	void Finalize();					//終了処理
+	void Finalize()override;			//終了処理
 
 	int backGroundHandle;				//タイトル動画の格納用
 	int titleName;						//タイトル名の画像格納用
 	int titleUi;						//ステージ選択シーンへ遷移キーのUI格納用
-	int titleBgm;						//タイトル画面のBGM
-	int alpha;
+	int alpha;							//透過度
 	int inc;
-	float frame;
+	float frame;						//フレーム数
 
-	//静的定数
-	static const string VIDEO_FOLDER_PATH;	//videoフォルダまでのパス
-	static const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
-	static const string SOUND_FOLDER_PATH;	//soundフォルダまでのパス
-	static const string TITLE_BGM_PATH;		//タイトル画面のBGM音のパス
-	static const string PLAY_VIDEO_PATH;	//タイトル動画のパス
-	static const string TITLENAME_PATH;		//タイトル名の画像のパス
-	static const string TITLE_UI_PATH;		//ステージ選択シーンへ遷移キーのUIのパス
+	FadeManager* fadeManager;			//フェードマネージャークラスのポインタ
+
+	//定数
+	const string VIDEO_FOLDER_PATH;	//videoフォルダまでのパス
+	const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
+	const string PLAY_VIDEO_PATH;	//タイトル動画のパス
+	const string TITLENAME_PATH;	//タイトル名の画像のパス
+	const string TITLE_UI_PATH;		//ステージ選択シーンへ遷移キーのUIのパス
+
+	//SceneBase* retScene = this;
 
 };

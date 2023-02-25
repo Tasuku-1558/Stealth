@@ -88,13 +88,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\takum\OneDrive\デスクトップ\Stealth\Effect_h</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\takum\Desktop\Stealth\Effect_h</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\takum\OneDrive\デスクトップ\Stealth\Effect_h</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\takum\Desktop\Stealth\Effect_h</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,13 +122,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\takum\OneDrive\デスクトップ\Stealth\Effect_h</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\takum\Desktop\Stealth\Effect_h</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\takum\OneDrive\デスクトップ\Stealth\Effect_h</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\takum\Desktop\Stealth\Effect_h</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -154,11 +154,14 @@
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="CakeBullet.cpp" />
     <ClCompile Include="CakeParticle.cpp" />
-    <ClCompile Include="CakeRepopEffect.cpp" />
+    <ClCompile Include="RepopEffect.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="FifthStage.cpp" />
     <ClCompile Include="FireWorksParticle.cpp" />
     <ClCompile Include="FourthStage.cpp" />
     <ClCompile Include="GoalFlag.cpp" />
+    <ClCompile Include="KeyManager.cpp" />
+    <ClCompile Include="ParticleBase.cpp" />
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="DeltaTime.cpp" />
     <ClCompile Include="FadeManager.cpp" />
@@ -177,27 +180,31 @@
     <ClCompile Include="PlayerBase.cpp" />
     <ClCompile Include="FirstStage.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SecondStage.cpp" />
     <ClCompile Include="SelectionUi.cpp" />
     <ClCompile Include="Set.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="StageBase.cpp" />
     <ClCompile Include="StageMap.cpp" />
     <ClCompile Include="StageSelection.cpp" />
     <ClCompile Include="ThirdStage.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="UiManager.cpp" />
-    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="CakeBullet.h" />
     <ClInclude Include="CakeParticle.h" />
-    <ClInclude Include="CakeRepopEffect.h" />
+    <ClInclude Include="RepopEffect.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="FifthStage.h" />
     <ClInclude Include="FireWorksParticle.h" />
     <ClInclude Include="FourthStage.h" />
     <ClInclude Include="GoalFlag.h" />
+    <ClInclude Include="KeyManager.h" />
+    <ClInclude Include="ParticleBase.h" />
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="DeltaTime.h" />
     <ClInclude Include="EffectBase.h" />
@@ -222,13 +229,13 @@
     <ClInclude Include="SecondStage.h" />
     <ClInclude Include="SelectionUi.h" />
     <ClInclude Include="Set.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="StageBase.h" />
     <ClInclude Include="StageMap.h" />
     <ClInclude Include="StageSelection.h" />
     <ClInclude Include="ThirdStage.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="UiManager.h" />
-    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

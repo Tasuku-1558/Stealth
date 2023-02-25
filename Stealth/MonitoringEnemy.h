@@ -11,6 +11,8 @@ class Player;
 class Bullet;
 class HitChecker;
 
+using namespace std;
+
 /// <summary>
 /// 監視エネミークラス
 /// </summary>
@@ -36,15 +38,14 @@ private:
 	void ReactionDraw();						//リアクション画像の描画処理
 	void Finalize();							//終了処理
 
-	std::string InputPath(std::string folderPath, //画像のパスを入力
-						  std::string imagePath);
+	string InputPath(string folderPath,			//画像のパスを入力
+					 string imagePath);
 
 	float dirCount;			//向き変更カウント
 	VECTOR anotherDir;		//別の向き
 	VECTOR initialDir;		//初期の向き
 
-	//静的定数
-	static const std::string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
-	static const std::string PLAYER_FIND_PATH;	//プレイヤーを見つけた画像のパス
-	static const std::string MARK_PATH;			//ビックリマーク画像のパス
+	//定数
+	const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
+	const string MARK_PATH;			//ビックリマーク画像のパス
 };

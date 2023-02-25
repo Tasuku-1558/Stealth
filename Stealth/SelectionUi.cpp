@@ -1,34 +1,6 @@
 #include "SelectionUi.h"
 
 
-const string SelectionUi::IMAGE_FOLDER_PATH		  = "data/image/";				//imageフォルダまでのパス
-const string SelectionUi::SELECTION_KEY_PATH	  = "selection_key.png";		//ステージセレクションUI画像のパス
-const string SelectionUi::SELECTION_TITLE_PATH	  = "selection_Ui.png";			//ステージセレクションからタイトルへ遷移のUI画像
-const string SelectionUi::STAGE_DESCRIPTION_PATH  = "stage_description.png";	//ステージの説明画像のパス
-const string SelectionUi::OPERATION_METHOD_PATH	  = "operation_method.png";		//操作方法説明画像のパス
-const int	 SelectionUi::STAGE_NUMBER			  = 5;							//ステージ数
-
-const VECTOR SelectionUi::STAGE1_POSITION		  = { 500.0f, 700.0f, 250.0f };		//ステージ1モデルの位置
-const VECTOR SelectionUi::STAGE1_SIZE			  = { 14.0f, 14.0f, 14.0f };		//ステージ1モデルの倍率
-const VECTOR SelectionUi::STAGE1_ROTATE = { 0.0f, 180.0f * DX_PI_F / 180.0f, 15.0f * DX_PI_F / 180.0f }; //ステージ1モデルの回転値
-
-const VECTOR SelectionUi::STAGE2_POSITION		  = { -100.0f, 800.0f, 600.0f };	//ステージ2モデルの位置
-const VECTOR SelectionUi::STAGE2_SIZE			  = { 11.0f, 11.0f, 11.0f };		//ステージ2モデルの倍率
-const VECTOR SelectionUi::STAGE2_ROTATE = { 80.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f }; //ステージ2モデルの回転値
-
-const VECTOR SelectionUi::STAGE3_POSITION		  = { 500.0f, 800.0f, 300.0f };		//ステージ3モデルの位置
-const VECTOR SelectionUi::STAGE3_SIZE			  = { 10.0f, 10.0f, 10.0f };		//ステージ3モデルの倍率
-const VECTOR SelectionUi::STAGE3_ROTATE = { 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f };//ステージ3モデルの回転値
-
-const VECTOR SelectionUi::STAGE4_POSITION		  = { 300.0f, 500.0f, 500.0f };		//ステージ4モデルの位置
-const VECTOR SelectionUi::STAGE4_SIZE			  = { 11.0f, 11.0f, 11.0f };		//ステージ4モデルの倍率
-const VECTOR SelectionUi::STAGE4_ROTATE = { 0.0f, 180.0f * DX_PI_F / 180.0f, 5.0f * DX_PI_F / 180.0f };//ステージ4モデルの回転値
-
-const VECTOR SelectionUi::STAGE5_POSITION		  = { -200.0f, 800.0f, 600.0f };	//ステージ5モデルの位置
-const VECTOR SelectionUi::STAGE5_SIZE			  = { 13.0f, 13.0f, 13.0f };		//ステージ5モデルの倍率
-const VECTOR SelectionUi::STAGE5_ROTATE = { 0.0f, 180.0f * DX_PI_F / 180.0f, 5.0f * DX_PI_F / 180.0f }; //ステージ5モデルの回転値
-
-
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -40,6 +12,32 @@ SelectionUi::SelectionUi()
 	, operationMethod(0)
 	, modelHandle()
 	, position()
+	, IMAGE_FOLDER_PATH("data/image/")
+	, SELECTION_KEY_PATH("selection_key.png")
+	, SELECTION_TITLE_PATH("selection_Ui.png")
+	, STAGE_DESCRIPTION_PATH("stage_description.png")
+	, OPERATION_METHOD_PATH("operation_method.png")
+	, STAGE_NUMBER(5)
+
+	, STAGE1_POSITION({ 500.0f, 700.0f, 250.0f })
+	, STAGE1_SIZE({ 14.0f, 14.0f, 14.0f })
+	, STAGE1_ROTATE({ 0.0f, 180.0f * DX_PI_F / 180.0f, 15.0f * DX_PI_F / 180.0f })
+
+	, STAGE2_POSITION({ -100.0f, 800.0f, 600.0f })
+	, STAGE2_SIZE({ 11.0f, 11.0f, 11.0f })
+	, STAGE2_ROTATE({ 80.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f })
+
+	, STAGE3_POSITION({ 500.0f, 800.0f, 300.0f })
+	, STAGE3_SIZE({ 10.0f, 10.0f, 10.0f })
+	, STAGE3_ROTATE({ 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f })
+
+	, STAGE4_POSITION({ 300.0f, 500.0f, 500.0f })
+	, STAGE4_SIZE({ 11.0f, 11.0f, 11.0f })
+	, STAGE4_ROTATE({ 0.0f, 180.0f * DX_PI_F / 180.0f, 5.0f * DX_PI_F / 180.0f })
+
+	, STAGE5_POSITION({ -200.0f, 800.0f, 600.0f })
+	, STAGE5_SIZE({ 13.0f, 13.0f, 13.0f })
+	, STAGE5_ROTATE({ 0.0f, 180.0f * DX_PI_F / 180.0f, 5.0f * DX_PI_F / 180.0f })
 {
 	//処理なし
 }
@@ -57,7 +55,7 @@ SelectionUi::~SelectionUi()
 /// </summary>
 void SelectionUi::Initialize()
 {
-	//マップモデル読み込み
+	//マップモデルの読み込み
 	MapInput(0, ModelManager::STAGE1, STAGE1_POSITION, STAGE1_SIZE, STAGE1_ROTATE);
 
 	MapInput(1, ModelManager::STAGE2, STAGE2_POSITION, STAGE2_SIZE, STAGE2_ROTATE);
@@ -69,7 +67,7 @@ void SelectionUi::Initialize()
 	MapInput(4, ModelManager::STAGE5, STAGE5_POSITION, STAGE5_SIZE, STAGE5_ROTATE);
 
 
-	//画像読み込み
+	//画像の読み込み
 	stageDescription = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE_DESCRIPTION_PATH).c_str());
 
 	selectionKeyImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_KEY_PATH).c_str());

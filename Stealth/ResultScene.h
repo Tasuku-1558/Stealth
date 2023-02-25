@@ -21,10 +21,10 @@ public:
 	ResultScene(SceneManager* const sceneManager);
 	virtual ~ResultScene();
 
-	void Initialize();					//初期化処理
-	void Activate();					//活性化処理
-	void Update(float deltaTime);		//更新処理
-	void Draw();						//描画処理
+	void Initialize()override;					//初期化処理
+	void Activate()override;					//活性化処理
+	void Update(float deltaTime)override;		//更新処理
+	void Draw()override;						//描画処理
 
 private:
 	ResultScene(const ResultScene&);	//コピーコンストラクタ
@@ -63,10 +63,13 @@ private:
 	int backGroundY;		//背景のY座標
 
 
-	//静的定数
-	static const string IMAGE_FOLDER_PATH;		//imageフォルダまでのパス
-	static const string RESULT_UI_PATH;			//リザルト画面のUIのパス
-	static const string RESULT_BACKGROUND_PATH;	//リザルト画面の背景画像のパス
-	static const int    PARTICLE_NUMBER;		//パーティクルの数
+	//定数
+	const string IMAGE_FOLDER_PATH;			//imageフォルダまでのパス
+	const string RESULT_UI_PATH;			//リザルト画面のUIのパス
+	const string RESULT_BACKGROUND_PATH;	//リザルト画面の背景画像のパス
+	const int    PARTICLE_NUMBER;			//パーティクルの数
+
+	//SceneBase* retScene = this;
+
 
 };

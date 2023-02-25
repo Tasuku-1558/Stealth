@@ -1,14 +1,13 @@
 #include "BackGround.h"
 
-const string BackGround::VIDEO_FOLDER_PATH		= "data/video/";		//videoフォルダまでのパス
-const string BackGround::BACK_GROUND_VIDEO_PATH = "BackGround.mp4";		//背景動画のパス
-
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 BackGround::BackGround()
 	: backGroundHandle(0)
+	, VIDEO_FOLDER_PATH("data/video/")
+	, BACK_GROUND_VIDEO_PATH("BackGround.mp4")
 {
 	//処理なし
 }
@@ -35,6 +34,8 @@ void BackGround::Initialize()
 /// </summary>
 void BackGround::Finalize()
 {
+	PauseMovieToGraph(backGroundHandle);
+
 	DeleteGraph(backGroundHandle);
 }
 
@@ -43,6 +44,21 @@ void BackGround::Finalize()
 /// </summary>
 void BackGround::Activate()
 {
+	//処理なし
+}
+
+/// <summary>
+/// 更新処理
+/// </summary>
+void BackGround::Update()
+{
+	//背景動画を再生
+	if (!GetMovieStateToGraph(backGroundHandle))
+	{
+		SeekMovieToGraph(backGroundHandle, 0);
+
+		PlayMovieToGraph(backGroundHandle);
+	}
 }
 
 /// <summary>
@@ -51,11 +67,4 @@ void BackGround::Activate()
 void BackGround::Draw()
 {
 	DrawGraph(0, 0, backGroundHandle, FALSE);
-
-	if (GetMovieStateToGraph(backGroundHandle) == 0)
-	{
-		SeekMovieToGraph(backGroundHandle, 0);
-
-		PlayMovieToGraph(backGroundHandle);
-	}
 }
