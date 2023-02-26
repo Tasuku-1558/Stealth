@@ -17,8 +17,8 @@ public:
 	enum Bgm
 	{
 		TITLE,
-		PLAY,
-		RESULT,
+		/*PLAY,
+		RESULT,*/
 		BGM_AMOUNT
 	};
 

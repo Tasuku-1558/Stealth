@@ -14,7 +14,7 @@ SoundManager::SoundManager()
 	, SE_PATH("se")
 	, SOUND_FILENAME_EXTENSION(".mp3")
 	, BGM_VOLUME(255 * 50 / 100)
-	, SE_VOLUME(255 * 40 / 100)
+	, SE_VOLUME(255 * 50 / 100)
 {
 	LoadAllSound();
 	VolumeAdjustment();

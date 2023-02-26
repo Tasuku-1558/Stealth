@@ -129,7 +129,6 @@ void Enemy::Update(float deltaTime, Player* player, HitChecker* hitChecker)
 
 	VisualAnglePlayer(player);
 
-	
 	//エネミーにプレイヤーが衝突したならば
 	if (hitChecker->EnemyHit())
 	{
@@ -369,8 +368,8 @@ void Enemy::eUpdate(float deltaTime)
 	case EnemyState::ROTATION:
 
 		speed = 0.0f;
-		dir += VGet(2.0f, 0.0f, 0.0f);
-		position += dir;
+
+		
 		
 		if (CheckHitKey(KEY_INPUT_G))
 		{

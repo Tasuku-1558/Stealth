@@ -43,9 +43,7 @@ private:
 	VECTOR pastPosition[12];	//プレイヤーの過去の位置
 
 	//定数
-	const string SOUND_FOLDER_PATH;		//soundフォルダまでのパス
 	const string IMAGE_FOLDER_PATH;		//imageフォルダまでのパス
 	const string PLAYER_FIND_PATH;		//エネミーに見つかった時の画像のパス
-	const string SPOTTED_SE_PATH;		//エネミーに見つかった時のSE音のパス
 	const int	 AFTER_IMAGE_NUMBER;	//プレイヤーの残像枚数
 };

@@ -23,7 +23,6 @@ protected:
 	int	   playerFindCount;			//エネミーに見つかった回数を数える
 	int	   playerFindImage;			//エネミーに見つかった画像格納用
 	bool   findImageFlag;			//エネミーに見つかった画像を表示するかしないか
-	int	   spottedSe;				//エネミーに見つかった時のSE音格納用
 	bool   spottedSeFlag;			//エネミーに見つかった時のSE音を流すか流さないか
 
 

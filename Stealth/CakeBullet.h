@@ -42,10 +42,5 @@ private:
 
     float bulletCount;                                               //弾の効果時間
     bool cakeGet;                                                    //ケーキを所持しているかいないか
-    int	locateSe;				                                     //ケーキを置いた時のSE音格納用
-
-    //定数
-    const string SOUND_FOLDER_PATH;		//soundフォルダまでのパス
-    const string LOCATE_SE_PATH;		//ケーキを置いた時のSE音のパス
 
 };

@@ -2,6 +2,7 @@
 #include "PreCompiledHeader.h"
 #include "ModelManager.h"
 #include "KeyManager.h"
+#include "SoundManager.h"
 
 using namespace Math3d;
 
@@ -12,10 +13,8 @@ Player::Player() : PlayerBase()
 	, initialCount(0.0f)
 	, pastPosition()
 	, emptyModel()
-	, SOUND_FOLDER_PATH("data/sound/")
 	, IMAGE_FOLDER_PATH("data/image/")
 	, PLAYER_FIND_PATH("playerFind.png")
-	, SPOTTED_SE_PATH("spotted.mp3")
 	, AFTER_IMAGE_NUMBER(12)
 {
 	//処理なし
@@ -45,9 +44,8 @@ void Player::Initialize()
 		MV1SetMaterialEmiColor(emptyModel[i], 0, GetColorF(0.0f, 0.0f, 1.0f, 1.0f));
 	}
 
+	//画像の読み込み
 	playerFindImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
-
-	spottedSe = LoadSoundMem(InputPath(SOUND_FOLDER_PATH, SPOTTED_SE_PATH).c_str());
 }
 
 /// <summary>
@@ -74,9 +72,6 @@ void Player::Finalize()
 	}
 
 	DeleteGraph(playerFindImage);
-
-	//サウンドリソースを削除
-	InitSoundMem();
 }
 
 /// <summary>
@@ -151,7 +146,7 @@ void Player::Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 	if (inputFlag)
 	{
 
-		// 左右・上下同時押しなどで入力ベクトルが0の時
+		//左右・上下同時押しなどで入力ベクトルが0の時
 		if (VSquareSize(inputDirection) < 0.5f)
 		{
 			return;
@@ -241,8 +236,7 @@ void Player::FoundEnemy(float deltaTime, bool spotted)
 		if (!spottedSeFlag)
 		{
 			//エネミーに見つかった時のSE音を再生
-			PlaySoundMem(spottedSe, DX_PLAYTYPE_BACK);
-
+			SoundManager::GetInstance().SePlayFlag(SoundManager::ENEMY_FIND);
 			spottedSeFlag = true;
 		}
 	}

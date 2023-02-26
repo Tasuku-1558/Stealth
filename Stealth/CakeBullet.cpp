@@ -1,5 +1,6 @@
 #include "CakeBullet.h"
 #include "RepopEffect.h"
+#include "SoundManager.h"
 
 
 /// <summary>
@@ -11,9 +12,6 @@ CakeBullet::CakeBullet(const VECTOR& cakePos)
     , bullet(nullptr)
     , bulletCount(0.0f)
     , cakeGet(false)
-    , locateSe(0)
-    , SOUND_FOLDER_PATH("data/sound/")
-    , LOCATE_SE_PATH("locate.mp3")
 {
     cake = new Cake(cakePos);
     bullet = new Bullet();
@@ -37,10 +35,6 @@ void CakeBullet::Initialize()
 {
     cake->Initialize();
     bullet->Initialize();
-
-    //SE音の読み込み
-    string failePath = SOUND_FOLDER_PATH + LOCATE_SE_PATH;
-    locateSe = LoadSoundMem(failePath.c_str());
 }
 
 /// <summary>
@@ -53,7 +47,6 @@ void CakeBullet::Activate()
 
     bulletCount = 0.0f;
     cakeGet = false;
-
 }
 
 /// <summary>
@@ -63,9 +56,6 @@ void CakeBullet::Finalize()
 {
     cake->Finalize();
     bullet->Finalize();
-
-    //サウンドリソースを削除
-    InitSoundMem();
 }
 
 /// <summary>
@@ -109,7 +99,7 @@ void CakeBullet::Shoot(float deltaTime, const VECTOR& playerPos)
 		bullet->BulletAlive();
 
         //ケーキを置いた時のSE音を再生
-        PlaySoundMem(locateSe, DX_PLAYTYPE_BACK);
+        SoundManager::GetInstance().SePlayFlag(SoundManager::CAKE_SHOOT);
 	}
 
 	bullet->MouseMove(cake, playerPos);
