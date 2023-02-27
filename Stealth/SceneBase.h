@@ -8,8 +8,8 @@ class SceneManager;
 class SceneBase
 {
 public:
-	SceneBase(SceneManager* const sceneManager) : parent(sceneManager){};
-	virtual ~SceneBase(){};
+	SceneBase(SceneManager* const sceneManager) : parent(sceneManager){/*処理なし*/};
+	virtual ~SceneBase(){/*処理なし*/};
 
 	virtual void Initialize() = 0;				//初期化処理
 	virtual void Finalize() = 0;				//終了処理
@@ -20,14 +20,6 @@ public:
 protected:
 	SceneManager* const parent;
 
-	//シーンの状態
-	//enum Scene
-	//{
-	//	TITLE,		//タイトル画面
-	//	SELECTION,	//選択画面
-	//	PLAY,		//ゲーム画面
-	//	RESULT,		//リザルト画面
-	//};
 
 private:
 	SceneBase(const SceneBase&);				//コピーコンストラクタ

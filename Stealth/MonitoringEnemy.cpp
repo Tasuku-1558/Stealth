@@ -121,14 +121,6 @@ void MonitoringEnemy::Update(float deltaTime, Player* player, HitChecker* hitChe
 	{
 		playerSpotted = true;
 	}
-
-	////zŽ²‚ª‹t‚ðŒü‚¢‚Ä‚¢‚é‚Ì‚Ådir‚ð180“x‰ñ“]‚³‚¹‚é
-	//MATRIX rotYMat = MGetRotY(180.0f * (float)(DX_PI / 180.0f));
-	//VECTOR negativeVec = VTransform(dir, rotYMat);
-
-	////ƒ‚ƒfƒ‹‚É‰ñ“]‚ðƒZƒbƒg
-	//MV1SetRotationZYAxis(modelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
-	//MV1SetRotationZYAxis(visualModelHandle, negativeVec, VGet(0.0f, 1.0f, 0.0f), 0.0f);
 }
 
 /// <summary>

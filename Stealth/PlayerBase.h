@@ -12,7 +12,7 @@ class PlayerBase : public ObjectBase
 {
 public:
 	PlayerBase();
-	 virtual ~PlayerBase();
+	virtual ~PlayerBase();
 
 protected:
 

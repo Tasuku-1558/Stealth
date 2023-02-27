@@ -9,6 +9,7 @@
 /// <param name="changeColor"></param>
 FireWorksParticle::FireWorksParticle(const VECTOR pos, unsigned int changeColor)
 	: ParticleBase()
+	, particlePopTime(3.0f)
 	, color(0)
 {
 	position = pos;

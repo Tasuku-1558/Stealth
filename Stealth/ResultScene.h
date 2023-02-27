@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneBase.h"
+#include "SceneManager.h"
 #include <vector>
 #include <string>
 
@@ -30,10 +31,12 @@ private:
 	ResultScene(const ResultScene&);	//コピーコンストラクタ
 	
 	void Finalize();								//終了処理
-	void SceneChange();								//シーン切り替え
+	void SceneChange(float deltaTime);				//シーン切り替え
 	void Blink();									//文字の点滅処理
 	void BackGroundMove();							//背景画像の動き
 	void ReturnScreen(float deltaTime);				//画面を遷移する
+	void InputScene(float deltaTime, 
+					SceneManager::Scene scene);		//シーンを入力
 
 	string InputPath(string folderPath,	//画像のパスを入力
 					 string path);
@@ -53,11 +56,11 @@ private:
 	bool  particleFlag;		//パーティクルを出したら
 	int resultUiImage;		//リザルト画面のUI画像格納用
 	bool clear;
-	int alpha;
+	int alpha;				//透過度
 	int inc;
 	int prevAlpha;
-	bool title;				//タイトル画面へ遷移するかしないか
-	bool selection;			//ステージセレクション画面へ遷移するかしないか
+	bool titleFlag;			//タイトル画面へ遷移するかしないか
+	bool selectionFlag;		//ステージセレクション画面へ遷移するかしないか
 	int backGroundImage;	//リザルト画面の背景格納用
 	int backGroundX;		//背景のX座標
 	int backGroundY;		//背景のY座標
@@ -68,8 +71,4 @@ private:
 	const string RESULT_UI_PATH;			//リザルト画面のUIのパス
 	const string RESULT_BACKGROUND_PATH;	//リザルト画面の背景画像のパス
 	const int    PARTICLE_NUMBER;			//パーティクルの数
-
-	//SceneBase* retScene = this;
-
-
 };

@@ -24,7 +24,6 @@ protected:
 	VECTOR position;		//パーティクルの位置
 	float radius;			//パーティクルの半径
 	float particleCount;	//パーティクルカウント
-	float particlePopTime;	//パーティクルの出現時間
 	bool endFlag;			//パーティクルを消すか消さないか
 	float xPower;			//横方向の力
 	float zPower;			//縦方向の力

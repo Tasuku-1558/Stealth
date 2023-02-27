@@ -153,10 +153,7 @@ void Player::Move(float deltaTime, Camera* camera, VECTOR back, bool mapHit)
 		}
 
 		//十字キーの入力方向を正規化
-		inputDirection = VNorm(inputDirection);
-
-		//十字キーの入力方向をキャラの向きとする
-		dir = inputDirection;
+		dir = VNorm(inputDirection);
 		
 		//十字キーの移動方向に移動
 		previewPosition += dir * speed * deltaTime;

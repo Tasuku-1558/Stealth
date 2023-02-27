@@ -5,6 +5,7 @@
 
 using namespace std;
 
+class Camera;
 class FadeManager;
 
 /// <summary>
@@ -13,8 +14,8 @@ class FadeManager;
 class TitleScene final : public SceneBase
 {
 public:
-	 TitleScene(SceneManager* const sceneManager);
-	 virtual ~TitleScene();
+	TitleScene(SceneManager* const sceneManager);
+	virtual ~TitleScene();
 
 	void Initialize()override;					//初期化処理
 	void Activate()override;					//活性化処理
@@ -30,14 +31,26 @@ private:
 
 	void Blink();						//文字の点滅処理
 	void Finalize()override;			//終了処理
+	void ChangeState();					//タイトルの状態の変更
 
-	int backGroundHandle;				//タイトル動画の格納用
+	//タイトルの状態
+	enum class SelectState
+	{
+		START,	//ゲームを始める
+		EXIT,	//ゲームを終了する
+	};
+
+	SelectState selectState;			//タイトルの状態
+
+	int titleMovie;						//タイトル動画の格納用
 	int titleName;						//タイトル名の画像格納用
 	int titleUi;						//ステージ選択シーンへ遷移キーのUI格納用
 	int alpha;							//透過度
 	int inc;
 	float frame;						//フレーム数
+	float sphereZ;						//選択状態の目印球
 
+	Camera* camera;						//カメラクラスのポインタ
 	FadeManager* fadeManager;			//フェードマネージャークラスのポインタ
 
 	//定数
@@ -46,7 +59,5 @@ private:
 	const string PLAY_VIDEO_PATH;	//タイトル動画のパス
 	const string TITLENAME_PATH;	//タイトル名の画像のパス
 	const string TITLE_UI_PATH;		//ステージ選択シーンへ遷移キーのUIのパス
-
-	//SceneBase* retScene = this;
 
 };

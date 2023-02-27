@@ -10,8 +10,8 @@
 class Camera final
 {
 public:
-	 Camera();
-	 virtual ~Camera();
+	Camera();
+	virtual ~Camera();
 
 	void Initialize();							//‰Šú‰»ˆ—
 	void Update(VECTOR playerPos);				//XVˆ—

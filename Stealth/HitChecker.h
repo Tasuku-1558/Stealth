@@ -12,8 +12,8 @@ class Cake;
 class HitChecker final
 {
 public:
-	 HitChecker();
-	 virtual ~HitChecker();
+	HitChecker();
+	virtual ~HitChecker();
 
 	void Check(int model, Player* player, VECTOR flagPos);	//衝突判定
 	void CakeAndPlayer(VECTOR playerPos, Cake* cake);		//ケーキとプレイヤーの当たり判定

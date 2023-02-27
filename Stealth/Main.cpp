@@ -6,42 +6,39 @@
 #include "DeltaTime.h"
 #include "KeyManager.h"
 #include "SoundManager.h"
-//#include "SceneBase.h"
-//#include "TitleScene.h"
-//#include "FirstStage.h"
 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	SetOutApplicationLogValidFlag(FALSE);			// ログファイルを出力しない
-	ChangeWindowMode(IS_WINDOW_MODE);				// ウィンドウモードにするか
-	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, 16);	// 画面モードのセット
-	SetUseDirect3DVersion(DX_DIRECT3D_11);			// DirectX11を使用するようにする
+	SetOutApplicationLogValidFlag(FALSE);			//ログファイルを出力しない
+	ChangeWindowMode(IS_WINDOW_MODE);				//ウィンドウモードにするか
+	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, 16);	//画面モードのセット
+	SetUseDirect3DVersion(DX_DIRECT3D_11);			//DirectX11を使用するようにする
 	
-	// Dxlibの初期化処理
+	//Dxlibの初期化処理
 	if (DxLib_Init() == -1)		
 	{
-		return -1;			// エラーが起きたら直ちに終了
+		return -1;			//エラーが起きたら直ちに終了
 	}
 
-	// Effekseerの初期化処理
+	//Effekseerの初期化処理
 	if (Effekseer_Init(8000) == -1)
 	{
 		DxLib_End();
 		return -1;
 	}
 
-	SetDrawScreen(DX_SCREEN_BACK);  // 描画先画面を裏画面にセット
+	SetDrawScreen(DX_SCREEN_BACK);  //描画先画面を裏画面にセット
 	
-	// フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ
+	//フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ
 	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
 
 	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
 
-	// Zバッファを有効にする
+	//Zバッファを有効にする
 	SetUseZBuffer3D(TRUE);
 
-	// Zバッファへの書き込みを有効にする
+	//Zバッファへの書き込みを有効にする
 	SetWriteZBuffer3D(TRUE);
 
 	//// シャドウマップハンドルの作成
@@ -53,13 +50,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//// シャドウマップに描画する範囲を設定
 	//SetShadowMapDrawArea(shadowMapHandle, SHADOWMAP_MINPOSITION, SHADOUMAP_MAXPOSITION);
 	
-	// フォント変更
+	//フォントの読み込み
 	LPCSTR fontPath = "data/font/Oranienbaum.ttf";
 
 	if (AddFontResourceEx(fontPath, FR_PRIVATE, NULL) > 0) {}
 	else { MessageBox(NULL, "フォント読込失敗", "", MB_OK); }
 
-	// 時間計測
+	//時間計測
 	LONGLONG nowTime;
 	LONGLONG prevTime = nowTime = GetNowHiPerformanceCount();
 
@@ -73,15 +70,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SoundManager::GetInstance();
 
 	SceneManager* sceneManager = new SceneManager();
-	/*SceneBase* nowScene = nullptr;
-
-	nowScene = new TitleScene();*/
 
 	sceneManager->Initialize();
-	/*nowScene->Initialize();
-	nowScene->Activate();*/
 	
-	// エスケープキーが押されるかウインドウが閉じられるまでループ
+	//エスケープキーが押されるかウインドウが閉じられるまでループ
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
 		//前フレームと現在のフレームの差分
@@ -92,10 +84,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		deltaTime = (nowTime - prevTime) / 1000000.0f;
 
-		/*SceneBase* tmpScene;
-
-		tmpScene = nowScene->Update(deltaTime);*/
-
 		// DxlibのカメラとEffekseerのカメラを同期
 		Effekseer_Sync3DSetting();
 
@@ -105,10 +93,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		sceneManager->Update(deltaTime);
 
-		// 画面を初期化する
+		//画面を初期化する
 		ClearDrawScreen();
-
-		//nowScene->Draw();
 
 		//// シャドウマップへの描画の準備
 		//ShadowMap_DrawSetup(shadowMapHandle);
@@ -133,23 +119,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//裏画面の内容を表画面に反映させる
 		ScreenFlip();
 
-		// 次のシーンがENDなら
+		//次のシーンがENDなら
 		if (sceneManager->GetNextScene() == SceneManager::END)
 		{
 			break;
 		}
-		/*if (nowScene != tmpScene)
-		{
-			nowScene->Finalize();
-			delete nowScene;
-
-			nowScene = tmpScene;
-		}
-
-		if (!tmpScene)
-		{
-			break;
-		}*/
 
 		//60fps制御用ループ
 		while (GetNowHiPerformanceCount() - nowTime < waitFrameTime);
@@ -164,11 +138,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//DeleteShadowMap(shadowMapHandle);	// シャドウマップの削除
 
-	SafeDelete(sceneManager);	// シーンマネージャーの解放
+	SafeDelete(sceneManager);	//シーンマネージャーの解放
 
-	Effkseer_End();				// Effekseerの終了処理
+	Effkseer_End();				//Effekseerの終了処理
 
-	DxLib_End();				// Dxlibの終了処理
+	DxLib_End();				//Dxlibの終了処理
 
-	return 0;					// ソフトの終了 
+	return 0;					//ソフトの終了 
 }

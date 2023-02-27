@@ -13,8 +13,8 @@ using namespace std;
 class Player final : public PlayerBase
 {
 public:
-	 Player();
-	 virtual ~Player();
+	Player();
+	virtual ~Player();
 
 	void Initialize();															//‰Šú‰»ˆ—
 	void Activate();															//Šˆ«‰»ˆ—

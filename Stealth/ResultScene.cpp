@@ -1,14 +1,11 @@
 #include "ResultScene.h"
 #include "DxLib.h"
-#include "SceneManager.h"
 #include "PreCompiledHeader.h"
 #include "Camera.h"
 #include "FireWorksParticle.h"
 #include "FadeManager.h"
 #include "KeyManager.h"
 #include "Set.h"
-#include "TitleScene.h"
-#include "StageSelection.h"
 
 
 char gameClear[] = { "GAME CLEAR" };
@@ -33,8 +30,8 @@ ResultScene::ResultScene(SceneManager* const sceneManager)
 	, alpha(0)
 	, inc(0)
 	, prevAlpha(0)
-	, title(false)
-	, selection(false)
+	, titleFlag(false)
+	, selectionFlag(false)
 	, backGroundImage(0)
 	, backGroundX(0)
 	, backGroundY(0)
@@ -173,8 +170,8 @@ void ResultScene::Activate()
 
 	clear = Set::GetInstance().GetResult();
 
-	title = false;
-	selection = false;
+	titleFlag = false;
+	selectionFlag = false;
 
 	font = CreateFontToHandle("Oranienbaum", 150, 1);
 
@@ -218,7 +215,7 @@ void ResultScene::Update(float deltaTime)
 
 	BackGroundMove();
 	
-	SceneChange();
+	SceneChange(deltaTime);
 
 	ReturnScreen(deltaTime);
 
@@ -230,22 +227,39 @@ void ResultScene::Update(float deltaTime)
 			DeleteFireWorksParticle(fireWorksParticlePtr);
 		}
 	}
-
-	//return retScene;
 }
 
 /// <summary>
 /// シーン切り替え
 /// </summary>
-void ResultScene::SceneChange()
+void ResultScene::SceneChange(float deltaTime)
 {
 	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_BACK))
 	{
-		title = true;
+		titleFlag = true;
 	}
 	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_SPACE))
 	{
-		selection = true;
+		selectionFlag = true;
+	}
+}
+
+/// <summary>
+/// シーンを入力
+/// </summary>
+/// <param name="deltaTime"></param>
+/// <param name="scene"></param>
+void ResultScene::InputScene(float deltaTime, SceneManager::Scene scene)
+{
+	frame += deltaTime;
+
+	fadeManager->FadeMove();
+
+	//フレーム数が2.2秒経過したら
+	if (frame > 2.2f)
+	{
+		parent->SetNextScene(scene);
+		return;
 	}
 }
 
@@ -255,39 +269,16 @@ void ResultScene::SceneChange()
 /// <param name="deltaTime"></param>
 void ResultScene::ReturnScreen(float deltaTime)
 {
-	//タイトル画面なら
-	if (title)
+	if (titleFlag)
 	{
-		frame += deltaTime;
-
-		fadeManager->FadeMove();
-
-		//フレーム数が2.2秒経過したら
-		if (frame > 2.2f)
-		{
-			//タイトル画面へ遷移
-			parent->SetNextScene(SceneManager::TITLE);
-			return;
-			//retScene = new TitleScene();
-		}
+		//タイトル画面へ遷移
+		InputScene(deltaTime, SceneManager::TITLE);
 	}
 
-	//セレクション画面なら
-	if (selection)
+	if (selectionFlag)
 	{
-		frame += deltaTime;
-
-		fadeManager->FadeMove();
-
-		//フレーム数が2.2秒経過したら
-		if (frame > 2.2f)
-		{
-			//ステージ選択画面へ遷移
-			parent->SetNextScene(SceneManager::SELECTION);
-			return;
-			//retScene = new StageSelection();
-
-		}
+		//ステージ選択画面へ遷移
+		InputScene(deltaTime, SceneManager::SELECTION);
 	}
 }
 
@@ -339,9 +330,10 @@ void ResultScene::Draw()
 
 	DrawGraph(backGroundX, backGroundY -1080, backGroundImage, TRUE);
 
-	//ステージクリアならば
+	//ゲームクリアならば
 	if (clear)
 	{
+		//パーティクルを描画
 		for (auto fireWorksParticlePtr : fireWorksParticle)
 		{
 			fireWorksParticlePtr->Draw();

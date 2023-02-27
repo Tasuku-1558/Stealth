@@ -22,7 +22,7 @@ public:
 	{
 		TITLE,			//タイトル画面
 		SELECTION,		//ステージ選択画面
-		STAGE1,			//ステージ1画面
+		STAGE1,			//プレイ画面
 		//STAGE2,			//ステージ2画面
 		//STAGE3,			//ステージ3画面
 		//STAGE4,			//ステージ4画面

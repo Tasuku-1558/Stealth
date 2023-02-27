@@ -14,13 +14,13 @@ class HitChecker;
 using namespace std;
 
 /// <summary>
-/// エネミークラス(赤色)
+/// ケーキが効くエネミー (赤色)
 /// </summary>
 class Enemy final : public EnemyBase
 {
 public:
-	 Enemy(vector<VECTOR>& id, float enemySpeed);
-	 virtual ~Enemy();
+	Enemy(vector<VECTOR>& id, float enemySpeed);
+	virtual ~Enemy();
 
 	void Initialize();									//初期化処理
 	void Activate();									//活性化処理
@@ -31,21 +31,6 @@ public:
 
 	const bool Spotted() { return playerSpotted; }			//プレイヤーを見つけたかどうかを返す
 	const bool CakeFlag() { return cakeFlag; }				//ケーキを見つけたかどうかを返す
-
-	//エネミーの状態
-	enum class EnemyState
-	{
-		CRAWL,			//巡回中
-		ARRIVAL,		//目的地に到着
-		ROTATION,
-	};
-
-	//オブジェクトごとのエネミーの反応
-	enum class EnemyReaction
-	{
-		PLAYER,
-		CAKE,
-	};
 
 private:
 	Enemy(const Enemy&);						//コピーコンストラクタ
@@ -65,6 +50,21 @@ private:
 	string InputPath(string folderPath,			//画像のパスを入力
 					 string imagePath);
 
+	//エネミーの状態
+	enum class EnemyState
+	{
+		CRAWL,			//巡回中
+		ARRIVAL,		//目的地に到着
+		ROTATION,		//方向転換
+	};
+
+	//オブジェクトごとのエネミーの反応
+	enum class EnemyReaction
+	{
+		PLAYER,
+		CAKE,
+	};
+
 	EnemyState enemyState;						//エネミーの状態
 	EnemyReaction enemyReaction;				//オブジェクトごとのエネミーの反応
 
@@ -75,6 +75,8 @@ private:
 	bool cakeFindFlag;		//エネミーがケーキを見つけたかどうか
 	bool cakeEatFlag;		//エネミーがケーキに近づいて食べているかどうか
 	bool cakeHalfFlag;		//ケーキが半分になっているかどうか
+
+	VECTOR dira;
 
 
 	//定数

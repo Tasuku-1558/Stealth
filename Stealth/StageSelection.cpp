@@ -8,8 +8,6 @@
 #include "KeyManager.h"
 #include "FadeManager.h"
 #include "Set.h"
-#include "FirstStage.h"
-#include "TitleScene.h"
 
 
 /// <summary>
@@ -145,13 +143,10 @@ int StageSelection::StageCreator(int stageNumber)
 	if (stageNumber == 1)
 	{
 		parent->SetNextScene(SceneManager::STAGE1);
-		//retScene = new FirstStage();
 	}
 	if (stageNumber == 6)
 	{
 		parent->SetNextScene(SceneManager::TITLE);
-		//retScene = new TitleScene();
-
 	}
 }
 
@@ -164,8 +159,6 @@ void StageSelection::Update(float deltaTime)
 	camera->SelectionAndResultCamera();
 
 	KeyMove(deltaTime);
-
-	//return retScene;
 }
 
 /// <summary>

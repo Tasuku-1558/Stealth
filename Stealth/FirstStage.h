@@ -23,8 +23,8 @@ class FadeManager;
 class FirstStage final : public SceneBase
 {
 public:
-	 FirstStage(SceneManager* const sceneManager);
-	 virtual ~FirstStage();
+	FirstStage(SceneManager* const sceneManager);
+	virtual ~FirstStage();
 
 	void Initialize()override;				//初期化処理
 	void Finalize()override;				//終了処理
@@ -92,5 +92,4 @@ private:
 	//定数
 	const int PARTICLE_NUMBER;			//パーティクルの数
 
-	//SceneBase* retScene = this;
 };

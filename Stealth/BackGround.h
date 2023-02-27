@@ -11,8 +11,8 @@ using namespace std;
 class BackGround final
 {
 public:
-     BackGround();
-     virtual ~BackGround();
+    BackGround();
+    virtual ~BackGround();
 
     void Initialize();          //‰Šú‰»ˆ—
     void Finalize();            //I—¹ˆ—

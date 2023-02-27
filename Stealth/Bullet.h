@@ -14,8 +14,8 @@ using namespace std;
 class Bullet final : public ObjectBase
 {
 public:
-	 Bullet();
-	 virtual ~Bullet();
+	Bullet();
+	virtual ~Bullet();
 
 	void Initialize();									//‰Šú‰»ˆ—
 	void Activate();									//Šˆ«‰»ˆ—

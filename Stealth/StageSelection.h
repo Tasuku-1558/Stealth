@@ -16,8 +16,8 @@ class FadeManager;
 class StageSelection final : public SceneBase
 {
 public:
-	 StageSelection(SceneManager* const sceneManager);
-	 virtual ~StageSelection();
+	StageSelection(SceneManager* const sceneManager);
+	virtual ~StageSelection();
 
 	void Initialize()override;								//初期化処理
 	void Finalize()override;								//終了処理
@@ -52,7 +52,5 @@ private:
 
 	//定数
 	const float PUSH_INTERVAL;						//切り替えカウントのインターバル
-
-	//SceneBase* retScene = this;
 
 };

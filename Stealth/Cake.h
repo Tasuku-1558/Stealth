@@ -10,8 +10,8 @@ class HitChecker;
 class Cake final : public ObjectBase
 {
 public:
-	 Cake(const VECTOR& pos);
-	 virtual ~Cake();
+	Cake(const VECTOR& pos);
+	virtual ~Cake();
 
 	void Initialize();					//‰Šú‰»ˆ—
 	void Activate();					//Šˆ«‰»ˆ—

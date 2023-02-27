@@ -9,8 +9,8 @@ class Light final
 {
 public:
 
-	 Light();
-	 virtual ~Light();
+	Light();
+	virtual ~Light();
 
 	void Initialize();				//‰Šú‰»ˆ—
 

@@ -17,7 +17,6 @@
 #include "UiManager.h"
 #include "FadeManager.h"
 #include "Set.h"
-#include "ResultScene.h"
 
 //デバック用
 #define DEBUG
@@ -219,9 +218,6 @@ void FirstStage::Update(float deltaTime)
 	{
 		(this->*pUpdate)(deltaTime);		//状態ごとに更新
 	}
-	
-
-	//return retScene;
 }
 
 /// <summary>
@@ -383,7 +379,6 @@ void FirstStage::UpdateGoal(float deltaTime)
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
-		//retScene = new ResultScene();
 	}
 }
 
@@ -405,8 +400,6 @@ void FirstStage::UpdateOver(float deltaTime)
 		//ステージ選択画面へ遷移
 		parent->SetNextScene(SceneManager::RESULT);
 		return;
-
-		//retScene = new ResultScene();
 	}
 }
 

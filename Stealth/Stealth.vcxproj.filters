@@ -145,9 +145,6 @@
     <ClCompile Include="ParticleBase.cpp">
       <Filter>ソース ファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="SceneBase.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="EffectManager.cpp">
       <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>

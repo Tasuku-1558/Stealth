@@ -18,8 +18,8 @@ using namespace std;
 class UiManager final
 {
 public:
-	 UiManager();
-	 virtual ~UiManager();
+	UiManager();
+	virtual ~UiManager();
 
 	void Initialize();		//‰Šú‰»ˆ—
 	void Activate();		//Šˆ«‰»ˆ—

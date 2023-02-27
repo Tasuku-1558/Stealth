@@ -21,8 +21,9 @@ Enemy::Enemy(vector<VECTOR>& id, float enemySpeed) : EnemyBase()
 	, MARK_PATH("mark.png")
 	, CAKE_PATH("ui8.png")
 	, CAKE_HALF_PATH("cakeHalf.png")
+	, dira()
 {
-	enemyState = EnemyState::CRAWL;
+	//enemyState = EnemyState::CRAWL;
 
 	Position(id);
 
@@ -76,6 +77,7 @@ void Enemy::Activate()
 {
 	speed = changeSpeed;
 	dir = ZERO_VECTOR;
+	dira = ZERO_VECTOR;
 	playerSpotted = false;
 	cakeFlag = false;
 	cakeFindFlag = false;
@@ -142,8 +144,25 @@ void Enemy::Update(float deltaTime, Player* player, HitChecker* hitChecker)
 /// <param name="deltaTime"></param>
 void Enemy::Move(float deltaTime)
 {
-	//ベクトルの正規化
-	dir = VNorm(targetPosition - position);
+	if (enemyState == EnemyState::CRAWL || enemyState == EnemyState::ARRIVAL)
+	{
+		//ベクトルの正規化
+		dir = VNorm(targetPosition - position);
+	}
+	
+	if (enemyState == EnemyState::ROTATION)
+	{
+		//ベクトルの正規化
+		dir = VNorm(dir);
+
+		dira = VNorm(targetPosition - position);
+
+		if (dira.x != dir.x || dira.z != dira.z)
+		{
+			dir += dira;
+		}
+
+	}
 
 	position += dir * speed * deltaTime;
 
@@ -215,10 +234,13 @@ void Enemy::VisualAnglePlayer(Player* player)
 
 			//視野範囲内ならば
 			Reaction();
+
+			dir = sub;
 		}
 	}
 	else
 	{
+		dir = dir;
 		playerSpotted = false;
 	}
 }
@@ -258,6 +280,8 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 			//視野範囲内ならば
 			Reaction();
 
+			dir = sub;
+
 			CakeEatCount(deltaTime);
 		}
 	}
@@ -276,6 +300,8 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 
 		//カウントの初期化
 		cakeCount = 0.0f;
+
+		dir = dir;
 	}
 }
 
@@ -298,7 +324,7 @@ void Enemy::CakeEatCount(float deltaTime)
 
 	//ビックリマーク画像が非表示になったら
 	//ケーキの画像を表示する
-	if (!cakeFindFlag)
+	if (230.0f > bulletDirection)
 	{
 		speed = 0.0f;
 		cakeEatFlag = true;
@@ -367,9 +393,9 @@ void Enemy::eUpdate(float deltaTime)
 
 	case EnemyState::ROTATION:
 
+		//エネミーの動きを止める
 		speed = 0.0f;
 
-		
 		
 		if (CheckHitKey(KEY_INPUT_G))
 		{
