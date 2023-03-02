@@ -48,22 +48,22 @@ void Camera::Initialize()
 void Camera::Update(VECTOR playerPos)
 {
 	//カメラの視点を設定
-	position = VGet(radius * cosf(yaw) + playerPos.x,
-					angleY,
-					radius * sinf(yaw) + playerPos.z);
+	position = { radius * cosf(yaw) + playerPos.x,
+				 angleY,
+				 radius * sinf(yaw) + playerPos.z };
 
 	//カメラの視点、注視点を設定
 	SetCameraPositionAndTarget_UpVecY(position, playerPos);
 
-
 	//カメラの正面方向のベクトルを計算
-	front = playerPos - position;
-	front.y = 0.0f;
+	front = { playerPos.x - position.x,
+			  0.0f,
+			  playerPos.z - position.z };
 
 	//ベクトルを正規化
 	front = VNorm(front);
 
-	VECTOR yaxis = { 0,1,0 };
+	VECTOR yaxis = { 0.0f,1.0f,0.0f };
 
 	up	  = front;
 	down  = VScale(front, -1.0f);

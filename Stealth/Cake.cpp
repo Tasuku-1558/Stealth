@@ -53,7 +53,7 @@ void Cake::Finalize()
 /// <summary>
 /// XVˆ—
 /// </summary>
-void Cake::Update()
+void Cake::Update(float deltaTime)
 {
 	//ˆ—‚È‚µ
 }

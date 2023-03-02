@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include "PreCompiledHeader.h"
 #include "SceneManager.h"
+#include "Light.h"
 #include "Camera.h"
 #include "KeyManager.h"
 #include "SoundManager.h"
@@ -20,6 +21,7 @@ TitleScene::TitleScene(SceneManager* const sceneManager)
 	, inc(0)
 	, frame(0.0f)
 	, sphereZ(0.0f)
+	, light(nullptr)
 	, camera(nullptr)
 	, fadeManager(nullptr)
 	, VIDEO_FOLDER_PATH("data/video/")
@@ -27,9 +29,9 @@ TitleScene::TitleScene(SceneManager* const sceneManager)
 	, PLAY_VIDEO_PATH("PlayVideo.mp4")
 	, TITLENAME_PATH("titleName.png")
 	, TITLE_UI_PATH("titleUi.png")
+	, selectState(SelectState::START)
 {
 	//処理なし
-	selectState = SelectState::START;
 }
 
 /// <summary>
@@ -47,6 +49,10 @@ void TitleScene::Initialize()
 {
 	camera = new Camera;
 	camera->Initialize();
+	camera->SelectionAndResultCamera();
+
+	light = new Light;
+	light->Initialize();
 
 	//動画データの読み込み
 	titleMovie = LoadGraph(InputPath(VIDEO_FOLDER_PATH, PLAY_VIDEO_PATH).c_str());
@@ -82,6 +88,8 @@ void TitleScene::Finalize()
 	DeleteGraph(titleUi);
 
 	SafeDelete(camera);
+
+	SafeDelete(light);
 }
 
 /// <summary>
@@ -89,8 +97,6 @@ void TitleScene::Finalize()
 /// </summary>
 void TitleScene::Activate()
 {
-	selectState = SelectState::START;
-
 	alpha = 255;
 	inc = -3;
 
@@ -119,7 +125,6 @@ void TitleScene::ChangeState()
 		{
 			selectState = SelectState::EXIT;
 		}
-
 	}
 
 	//終了状態なら
@@ -147,8 +152,6 @@ void TitleScene::ChangeState()
 /// <param name="deltaTime"></param>
 void TitleScene::Update(float deltaTime)
 {
-	camera->SelectionAndResultCamera();
-
 	//デモ動画を再生
 	if (!GetMovieStateToGraph(titleMovie))
 	{
@@ -177,13 +180,27 @@ void TitleScene::Blink()
 		
 	alpha += inc;
 
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+	if (selectState == SelectState::START)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 
-	DrawGraph(400, 700, titleUi, TRUE);
+		DrawGraph(400, 700, titleUi, TRUE);
 
-	DrawGraph(400, 850, titleUi, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
 
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
+		DrawGraph(400, 850, titleUi, TRUE);
+	}
+
+	if (selectState == SelectState::EXIT)
+	{
+		DrawGraph(400, 700, titleUi, TRUE);
+
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+
+		DrawGraph(400, 850, titleUi, TRUE);
+
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
+	}
 }
 
 /// <summary>
@@ -195,8 +212,9 @@ void TitleScene::Draw()
 
 	DrawRotaGraph(950, 450, 0.5f, 0, titleName, TRUE);
 
-	//Blink();
+	Blink();
 
+	//タイトルの状態によって球の位置を変える
 	if (selectState == SelectState::START)
 	{
 		sphereZ = -400.0f;
@@ -207,5 +225,5 @@ void TitleScene::Draw()
 		sphereZ = -720.0f;
 	}
 
-	DrawSphere3D(VGet(-1250.0f, 0.0f, sphereZ), 30.0f, 16, GetColor(255, 255, 0), GetColor(0, 0, 0), TRUE);
+	DrawSphere3D({ -1250.0f, 0.0f, sphereZ }, 30.0f, 16, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
 }

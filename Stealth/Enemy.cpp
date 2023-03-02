@@ -21,10 +21,10 @@ Enemy::Enemy(vector<VECTOR>& id, float enemySpeed) : EnemyBase()
 	, MARK_PATH("mark.png")
 	, CAKE_PATH("ui8.png")
 	, CAKE_HALF_PATH("cakeHalf.png")
-	, dira()
+	, enemyState(EnemyState::CRAWL)
+	, futureDir()
+	, sita(0.0f)
 {
-	//enemyState = EnemyState::CRAWL;
-
 	Position(id);
 
 	changeSpeed = enemySpeed;
@@ -77,7 +77,7 @@ void Enemy::Activate()
 {
 	speed = changeSpeed;
 	dir = ZERO_VECTOR;
-	dira = ZERO_VECTOR;
+	futureDir = ZERO_VECTOR;
 	playerSpotted = false;
 	cakeFlag = false;
 	cakeFindFlag = false;
@@ -155,11 +155,28 @@ void Enemy::Move(float deltaTime)
 		//ベクトルの正規化
 		dir = VNorm(dir);
 
-		dira = VNorm(targetPosition - position);
+		futureDir = VNorm(targetPosition - position);
 
-		if (dira.x != dir.x || dira.z != dira.z)
+		double a = pow((dir.x, 2) + (dir.y, 2) + (dir.z, 2), 1.0);
+
+		double b = pow((futureDir.x, 2) + (futureDir.y, 2) + (futureDir.z, 2), 1.0);
+
+		double cos = VDot(dir, futureDir) / (a * b);
+
+		sita = acos(cos);
+
+		sita = sita * 180.0f / DX_PI;
+
+		double s = 0.05f;
+
+		if (dir.x < sita)
 		{
-			dir += dira;
+			dir.x += s;
+		}
+
+		if (dir.z < sita)
+		{
+			dir.z += s;
 		}
 
 	}
@@ -235,12 +252,11 @@ void Enemy::VisualAnglePlayer(Player* player)
 			//視野範囲内ならば
 			Reaction();
 
-			dir = sub;
+			//dir = sub;
 		}
 	}
 	else
 	{
-		dir = dir;
 		playerSpotted = false;
 	}
 }
@@ -280,7 +296,7 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 			//視野範囲内ならば
 			Reaction();
 
-			dir = sub;
+			//dir = sub;
 
 			CakeEatCount(deltaTime);
 		}
@@ -300,8 +316,6 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 
 		//カウントの初期化
 		cakeCount = 0.0f;
-
-		dir = dir;
 	}
 }
 
@@ -378,10 +392,9 @@ void Enemy::eUpdate(float deltaTime)
 	{
 	case EnemyState::CRAWL:
 
+		//目的地にたどり着いたならば
 		if (IsGoal(deltaTime))
 		{
-			//enemyState = EnemyState::ARRIVAL;
-
 			enemyState = EnemyState::ROTATION;
 		}
 			

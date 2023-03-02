@@ -27,8 +27,8 @@ ResultScene::ResultScene(SceneManager* const sceneManager)
 	, fadeManager(nullptr)
 	, clear(false)
 	, resultUiImage(0)
-	, alpha(0)
-	, inc(0)
+	, alpha(255)
+	, inc(-3)
 	, prevAlpha(0)
 	, titleFlag(false)
 	, selectionFlag(false)
@@ -57,6 +57,7 @@ ResultScene::~ResultScene()
 /// </summary>
 void ResultScene::Initialize()
 {
+	//カメラクラス
 	camera = new Camera();
 	camera->Initialize();
 
@@ -66,9 +67,6 @@ void ResultScene::Initialize()
 	resultUiImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, RESULT_UI_PATH).c_str());
 
 	backGroundImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, RESULT_BACKGROUND_PATH).c_str());
-
-	alpha = 255;
-	inc = -3;
 }
 
 /// <summary>
@@ -128,7 +126,6 @@ void ResultScene::DeleteFireWorksParticle(FireWorksParticle* deleteFireWorksPart
 		//花火のパーティクルオブジェクトを最後尾に移動してデータを消す
 		std::iter_swap(iter, fireWorksParticle.end() - 1);
 		fireWorksParticle.pop_back();
-
 		return;
 	}
 }

@@ -22,6 +22,8 @@ public:
 
 private:
 
+    BackGround(const BackGround&);      //コピーコンストラクタ
+
     int backGroundHandle;       //背景動画格納用
 
     //定数

@@ -5,6 +5,7 @@
 
 using namespace std;
 
+class Light;
 class Camera;
 class FadeManager;
 
@@ -40,8 +41,8 @@ private:
 		EXIT,	//ゲームを終了する
 	};
 
-	SelectState selectState;			//タイトルの状態
 
+	SelectState selectState;			//タイトルの状態
 	int titleMovie;						//タイトル動画の格納用
 	int titleName;						//タイトル名の画像格納用
 	int titleUi;						//ステージ選択シーンへ遷移キーのUI格納用
@@ -50,6 +51,7 @@ private:
 	float frame;						//フレーム数
 	float sphereZ;						//選択状態の目印球
 
+	Light* light;
 	Camera* camera;						//カメラクラスのポインタ
 	FadeManager* fadeManager;			//フェードマネージャークラスのポインタ
 

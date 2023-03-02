@@ -28,7 +28,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return -1;
 	}
 
-	SetDrawScreen(DX_SCREEN_BACK);  //描画先画面を裏画面にセット
+	//描画先画面を裏画面にセット
+	SetDrawScreen(DX_SCREEN_BACK);
 	
 	//フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ
 	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);

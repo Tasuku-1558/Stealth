@@ -76,8 +76,8 @@ private:
 	bool cakeEatFlag;		//エネミーがケーキに近づいて食べているかどうか
 	bool cakeHalfFlag;		//ケーキが半分になっているかどうか
 
-	VECTOR dira;
-
+	VECTOR futureDir;		//回転したい向き
+	double sita;
 
 	//定数
 	const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス

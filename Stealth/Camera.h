@@ -5,7 +5,7 @@
 
 
 /// <summary>
-/// カメラクラス(固定型カメラ)
+/// カメラクラス
 /// </summary>
 class Camera final
 {
@@ -23,6 +23,7 @@ public:
 	const VECTOR GetLeft()  { return left; }	//カメラの左方向を返す
 	
 private:
+	Camera(const Camera&);						//コピーコンストラクタ
 
 	VECTOR position;		//カメラの位置
 	VECTOR front;

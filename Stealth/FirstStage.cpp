@@ -170,8 +170,8 @@ void FirstStage::Finalize()
 
 	for (auto particlePtr : cakeParticle)
 	{
-		SafeDelete(particlePtr);
 		DeleteCakeParticle(particlePtr);
+		SafeDelete(particlePtr);
 	}
 
 	//作成したフォントデータの削除
@@ -371,8 +371,8 @@ void FirstStage::UpdateGoal(float deltaTime)
 
 	fadeManager->FadeMove();
 
-	//フレーム数が3.0秒経過したら
-	if (frame > 2.8f)
+	//フレーム数が3.4秒経過したら
+	if (frame > 3.4f)
 	{
 		Set::GetInstance().SetResult(clear);
 
