@@ -1,20 +1,52 @@
 #include "DxLib.h"
 #include "EffekseerForDXLib.h"
 #include "PreCompiledHeader.h"
-#include "SceneManager.h"
 #include "ModelManager.h"
 #include "DeltaTime.h"
 #include "KeyManager.h"
 #include "SoundManager.h"
 
+#include "TitleScene.h"
+#include "StageSelection.h"
+#include "FirstStage.h"
+#include "ResultScene.h"
 
+
+//新しいシーンを生成する
+SceneBase* CreateScene(SceneType nowScene)
+{
+	SceneBase* retScene = nullptr;
+
+	switch (nowScene)
+	{
+	case SceneType::TITLE:
+		retScene = new TitleScene;
+		break;
+
+	case SceneType::SELECTION:
+		retScene = new StageSelection;
+		break;
+
+	case SceneType::PLAY:
+		retScene = new FirstStage;
+		break;
+
+	case SceneType::RESULT:
+		retScene = new ResultScene;
+		break;
+	}
+
+	return retScene;
+}
+
+//メインプログラム
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	SetOutApplicationLogValidFlag(FALSE);			//ログファイルを出力しない
-	ChangeWindowMode(IS_WINDOW_MODE);				//ウィンドウモードにするか
-	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, 16);	//画面モードのセット
-	SetUseDirect3DVersion(DX_DIRECT3D_11);			//DirectX11を使用するようにする
-	
+	ChangeWindowMode(IS_WINDOW_MODE);						//ウィンドウモードにするか
+	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, COLOR_BIT);	//画面モードのセット
+	SetUseDirect3DVersion(DX_DIRECT3D_11);					//DirectX11を使用するようにする
+	SetOutApplicationLogValidFlag(FALSE);					//ログファイルを出力しない
+
 	//Dxlibの初期化処理
 	if (DxLib_Init() == -1)		
 	{
@@ -34,6 +66,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ
 	SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
 
+	//Dxlibがデバイスロストした時のコールバックを設定する
 	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
 
 	//Zバッファを有効にする
@@ -52,7 +85,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//SetShadowMapDrawArea(shadowMapHandle, SHADOWMAP_MINPOSITION, SHADOUMAP_MAXPOSITION);
 	
 	//フォントの読み込み
-	LPCSTR fontPath = "data/font/Oranienbaum.ttf";
+	LPCSTR fontPath = "Data/Font/Oranienbaum.ttf";
 
 	if (AddFontResourceEx(fontPath, FR_PRIVATE, NULL) > 0) {}
 	else { MessageBox(NULL, "フォント読込失敗", "", MB_OK); }
@@ -70,11 +103,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//サウンド管理クラスの生成
 	SoundManager::GetInstance();
 
-	SceneManager* sceneManager = new SceneManager();
+	// ひとつ前のシーン
+	SceneType prevSceneType = SceneType::TITLE;
+	// 今のシーン
+	SceneType nowSceneType = SceneType::TITLE;
 
-	sceneManager->Initialize();
+	// シーンを生成
+	SceneBase* sceneBase = new TitleScene();
 	
-	//エスケープキーが押されるかウインドウが閉じられるまでループ
+	//メインループ
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
 		//前フレームと現在のフレームの差分
@@ -83,27 +120,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//現在のフレームを更新
 		nowTime = GetNowHiPerformanceCount();
 
+		//差分を100万分の1にして保存する(マイクロ秒換算)
 		deltaTime = (nowTime - prevTime) / 1000000.0f;
 
-		// DxlibのカメラとEffekseerのカメラを同期
+		//DxlibのカメラとEffekseerのカメラを同期
 		Effekseer_Sync3DSetting();
 
 		KeyManager::GetInstance().Update();
 
 		SoundManager::GetInstance().SeUpdate();
 
-		sceneManager->Update(deltaTime);
+		nowSceneType = sceneBase->Update(deltaTime);		//各シーンの更新処理
 
 		//画面を初期化する
 		ClearDrawScreen();
 
 		//// シャドウマップへの描画の準備
 		//ShadowMap_DrawSetup(shadowMapHandle);
-
-		sceneManager->Draw();
-
-		//デバック用　デルタタイム計測
-		DrawFormatString(0, 500, GetColor(255, 255, 255),"%f", deltaTime, TRUE);
 
 		//// シャドウマップへの描画を終了
 		//ShadowMap_DrawEnd();
@@ -112,19 +145,31 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//// 描画に使用するシャドウマップを設定
 		//SetUseShadowMap(0, shadowMapHandle);
 
-		//sceneManager->Draw();
-
 		//// 描画に使用するシャドウマップの設定を解除
 		//SetUseShadowMap(0, -1);
+
+		sceneBase->Draw();     //各シーンの描画処理
+
+		//デバック用　デルタタイム計測
+		DrawFormatString(0, 500, GetColor(255, 255, 255), "%f", deltaTime, TRUE);
 
 		//裏画面の内容を表画面に反映させる
 		ScreenFlip();
 
 		//次のシーンがENDなら
-		if (sceneManager->GetNextScene() == SceneManager::END)
+		if (nowSceneType == SceneType::END)
 		{
 			break;
 		}
+
+		if (nowSceneType != prevSceneType)
+		{
+			delete sceneBase; //シーンの解放
+			sceneBase = CreateScene(nowSceneType);	//シーンの生成
+		}
+
+		//直前のシーンを記録
+		prevSceneType = nowSceneType;
 
 		//60fps制御用ループ
 		while (GetNowHiPerformanceCount() - nowTime < waitFrameTime);
@@ -137,9 +182,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (RemoveFontResourceEx(fontPath, FR_PRIVATE, NULL)) {}
 	else { MessageBox(NULL, "remove failure", "", MB_OK); }
 
-	//DeleteShadowMap(shadowMapHandle);	// シャドウマップの削除
+	//DeleteShadowMap(shadowMapHandle);	//シャドウマップの削除
 
-	SafeDelete(sceneManager);	//シーンマネージャーの解放
+	delete sceneBase;
 
 	Effkseer_End();				//Effekseerの終了処理
 

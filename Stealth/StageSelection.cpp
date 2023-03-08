@@ -7,30 +7,31 @@
 #include "SelectionUi.h"
 #include "KeyManager.h"
 #include "FadeManager.h"
-#include "Set.h"
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="sceneManager"></param>
-StageSelection::StageSelection(SceneManager* const sceneManager)
-	: SceneBase(sceneManager)
+StageSelection::StageSelection()
+	: SceneBase(SceneType::SELECTION)
 	, font(0)
 	, stageMax(0)
 	, stageNo(0)
+	, changeTimeCount(0)
 	, light(nullptr)
 	, camera(nullptr)
 	, selectionUi(nullptr)
 	, fadeManager(nullptr)
-	, changeScene(false)
-	, changeTimeCount(0)
-	, maxTime(0)
 	, pushCount(0.0f)
 	, frame(0.0f)
+	, changeScene(false)
+	, STAGE_NUMBER(6)
+	, MAX_TIME(80)
+	, FIRST_STAGE_NUMBER(1)
 	, PUSH_INTERVAL(0.2f)
 {
-	//処理なし
+	Initialize();
+	Activate();
 }
 
 /// <summary>
@@ -38,7 +39,7 @@ StageSelection::StageSelection(SceneManager* const sceneManager)
 /// </summary>
 StageSelection::~StageSelection()
 {
-	//処理なし
+	Finalize();
 }
 
 /// <summary>
@@ -47,18 +48,12 @@ StageSelection::~StageSelection()
 void StageSelection::Initialize()
 {
 	light = new Light();
-	light->Initialize();
 
 	camera = new Camera();
-	camera->Initialize();
 	
 	selectionUi = new SelectionUi();
-	selectionUi->Initialize();
 
 	fadeManager = new FadeManager();
-
-	stageMax = sizeof(char[6][32]) / sizeof(char[32]);
-
 }
 
 /// <summary>
@@ -83,14 +78,9 @@ void StageSelection::Finalize()
 /// </summary>
 void StageSelection::Activate()
 {
-	stageNo = 1;
-	frame = 0.0f;
-	changeScene = false;
-	changeTimeCount = 0;
-	maxTime = 80;
-	pushCount = 0.0f;
+	stageNo = FIRST_STAGE_NUMBER;
 
-	fadeManager->Activate();
+	stageMax = STAGE_NUMBER;
 
 	//フォントデータの作成
 	font = CreateFontToHandle("Oranienbaum", 120, 1);
@@ -114,7 +104,7 @@ int StageSelection::stageIncrement(int stageNumber)
 /// <summary>
 /// 選択ステージを1つ前に持っていく
 /// </summary>
-/// <param name="stageNum"></param>
+/// <param name="stageNumber"></param>
 /// <returns></returns>
 int StageSelection::stageDecrement(int stageNumber)
 {
@@ -131,22 +121,20 @@ int StageSelection::stageDecrement(int stageNumber)
 /// 各シーンへ遷移
 /// </summary>
 /// <param name="stageNumber"></param>
-/// <returns></returns>
-int StageSelection::StageCreator(int stageNumber)
+void StageSelection::StageCreator(int stageNumber)
 {
-	if (stageNumber < 0)
-	{
-		return NULL;
-	}
-
 	//各シーン
 	if (stageNumber == 1)
 	{
-		parent->SetNextScene(SceneManager::STAGE1);
+		nowSceneType = SceneType::PLAY;
+	}
+	if (stageNumber == 2)
+	{
+		nowSceneType = SceneType::PLAY;
 	}
 	if (stageNumber == 6)
 	{
-		parent->SetNextScene(SceneManager::TITLE);
+		nowSceneType = SceneType::TITLE;
 	}
 }
 
@@ -154,11 +142,13 @@ int StageSelection::StageCreator(int stageNumber)
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime"></param>
-void StageSelection::Update(float deltaTime)
+SceneType StageSelection::Update(float deltaTime)
 {
 	camera->SelectionAndResultCamera();
 
 	KeyMove(deltaTime);
+
+	return nowSceneType;
 }
 
 /// <summary>
@@ -190,11 +180,12 @@ void StageSelection::KeyMove(float deltaTime)
 	//リターンキーを押したならば
 	if (changeScene)
 	{
+		//ステージ遷移のカウントを開始する
 		changeTimeCount++;
 
 		frame += deltaTime;
 
-		if (changeTimeCount > maxTime)
+		if (changeTimeCount > MAX_TIME)
 		{
 			//画面効果処理を行う
 			fadeManager->FadeMove();
@@ -202,8 +193,10 @@ void StageSelection::KeyMove(float deltaTime)
 			//フレームが3.5秒経過したら画面を遷移する
 			if (frame > 3.5f)
 			{
+				changeTimeCount = 0;
+				changeScene = false;
+
 				StageCreator(stageNo);
-				Set::GetInstance().SetStage(stageNo);
 			}
 		}
 	}

@@ -1,27 +1,33 @@
 #include "PlayerBase.h"
 
 
-//const VECTOR PlayerBase::UP	  = { 1, 0, 0};					//上方向
-//const VECTOR PlayerBase::DOWN	  = {-1, 0, 0};					//下方向
-//const VECTOR PlayerBase::LEFT	  = { 0, 0, -1};				//左方向
-//const VECTOR PlayerBase::RIGHT  = { 0, 0,1};					//右方向
-
-
 /// <summary>
 /// コンストラクタ
 /// </summary>
 PlayerBase::PlayerBase()
-	: inputDirection()
-	, inputFlag(false)
-	, speed(0.0f)
-	, previewPosition()
+	: ObjectBase()
+	, inputDirection()
+	, nextPosition()
 	, playerFindCount(0)
 	, playerFindImage(0)
+	, findImageX(50)
+	, findImageY(-100)
+	, speed(0.0f)
+	, initialTime(0.8f)
+	, inputFlag(false)
 	, findImageFlag(false)
 	, spottedSeFlag(false)
 	, SPEED(450.0f)
+	, OPACITY(0.05f)
+	, RADIUS(100.0f)
 	, POSITION({ 0.0f, 0.0f, 0.0f })
-	, DIR({ -1.0f,0.0f,0.0f })
+	, DIRECTION({ 0.0f,0.0f,1.0f })
+	, UP({ 0.0f, 0.0f, 1.0f })
+	, DOWN({ 0.0f, 0.0f, -1.0f })
+	, LEFT({ -1.0f, 0.0f, 0.0f })
+	, RIGHT({ 1.0f, 0.0f, 0.0f })
+	, AFTER_IMAGE_ADJUSTMENT({ 0.0f,10.0f,0.0f })
+	, AFTER_IMAGE_COLOR(GetColorF(0.0f, 0.0f, 1.0f, 1.0f))
 {
 	//処理なし
 }

@@ -5,19 +5,20 @@
 /// コンストラクタ
 /// </summary>
 EnemyBase::EnemyBase()
-	: speed(0.0f)
+	: targetPosition()
+	, visualPosition()
+	, visualDir()
+	, markImage(0)
+	, cakeImage()
+	, visualModelHandle(0)
+	, speed(0.0f)
 	, changeSpeed(0.0f)
-	, targetPosition()
 	, length(900.0f)
 	, bulletDirection(0.0f)
 	, playerSpotted(false)
 	, cakeFlag(false)
-	, markImage(0)
-	, cakeImage()
-	, visualModelHandle(0)
-	, visualPosition()
-	, visualDir()
 	, RANGE_DEGREE(27.0f)
+	, RADIUS(100.0f)
 	, CAKE_IMAGE_NUMBER(2)
 {
 	//処理なし

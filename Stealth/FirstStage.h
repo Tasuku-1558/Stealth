@@ -23,13 +23,10 @@ class FadeManager;
 class FirstStage final : public SceneBase
 {
 public:
-	FirstStage(SceneManager* const sceneManager);
+	FirstStage();
 	virtual ~FirstStage();
 
-	void Initialize()override;				//初期化処理
-	void Finalize()override;				//終了処理
-	void Activate()override;				//活性化処理
-	void Update(float deltaTime)override;	//更新処理
+	SceneType Update(float deltaTime)override;	//更新処理
 	void Draw()override;					//描画処理
 
 	//ゲームの状態
@@ -58,13 +55,13 @@ private:
 	UiManager* uiManager;
 	FadeManager* fadeManager;
 
+	void Initialize()override;				//初期化処理
+	void Activate()override;				//活性化処理
+	void Finalize()override;				//終了処理
+
 	void EntryEnemy(Enemy* newEnemy);								//エネミーを登録
 	void DeleteEnemy(Enemy* deleteEnemy);							//エネミーを削除
 	void EnemyPop();												//エネミーの出現
-
-	//void EntryMonitoringEnemy(MonitoringEnemy* newMonitoringEnemy);			//監視エネミーを登録
-	//void DeleteMonitoringEnemy(MonitoringEnemy* deleteMonitoringEnemy);		//監視エネミーを削除
-	//void MonitoringEnemyPop();												//監視エネミーの出現
 
 	//void EntryCakeBullet(CakeBullet* newCakeBullet);		//ケーキバレットを登録
 	//void DeleteCakeBullet(CakeBullet* deleteCakeBullet);	//ケーキバレットを削除
@@ -80,6 +77,7 @@ private:
 	void UpdateOver(float deltaTime);				//ゲームオーバー
 	void (FirstStage::* pUpdate)(float deltaTime);	//Update関数ポインタ
 
+
 	State state;			//ゲーム状態
 	int	  font;				//ゲームフォント
 	float frame;			//フレーム数
@@ -91,5 +89,6 @@ private:
 
 	//定数
 	const int PARTICLE_NUMBER;			//パーティクルの数
+	const int PLAYER_HP;				//プレイヤーのHP数
 
 };

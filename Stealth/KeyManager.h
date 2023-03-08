@@ -1,7 +1,7 @@
 #pragma once
 
 /// <summary>
-/// キー管理クラス
+/// キー入力管理クラス
 /// シングルトン
 /// </summary>
 class KeyManager final

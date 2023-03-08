@@ -1,6 +1,4 @@
 #include "CakeParticle.h"
-#include <math.h>
-
 
 /// <summary>
 /// コンストラクタ
@@ -10,11 +8,11 @@ CakeParticle::CakeParticle(const VECTOR& pos)
 	: ParticleBase()
 	, particlePopTime(2.0f)
 	, PINK(GetColor(224, 148, 171))
+	, POS_Y(0.0f)
 {
 	position = pos;
 
 	Initialize();
-	Activate();
 }
 
 /// <summary>
@@ -30,7 +28,7 @@ CakeParticle::~CakeParticle()
 /// </summary>
 void CakeParticle::Initialize()
 {
-	//パーティクルを飛ばす力をランダム値に
+	//パーティクルを飛ばす力をランダム値にする
 	float rad = (float)(rand() % 200) / 100.0f;
 	float tmpRadius = (float)(rand() % 100) / 10.0f;
 
@@ -39,24 +37,20 @@ void CakeParticle::Initialize()
 }
 
 /// <summary>
-/// 活性化処理
-/// </summary>
-void CakeParticle::Activate()
-{
-	particleCount = 0.0f;
-}
-
-/// <summary>
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime"></param>
 void CakeParticle::Update(float deltaTime)
 {
+	//パーティクルの半径を調整する
 	radius = ((particlePopTime - particleCount) / particlePopTime) * radius;
+
+	//パーティクルに飛ばす力を加える
 	position.x += xPower;
-	position.y = 0.0f;
+	position.y = POS_Y;
 	position.z += zPower;
 	
+	//パーティクルを出したらカウントを開始する
 	particleCount += deltaTime;
 
 	//パーティクルの出現時間を超えたらパーティクルを消す
@@ -74,6 +68,6 @@ void CakeParticle::Update(float deltaTime)
 void CakeParticle::Draw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-	DrawSphere3D(position, radius, 8, PINK, PINK, FALSE);
+	DrawSphere3D(position, radius, DIVNUM, PINK, PINK, FALSE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }

@@ -7,18 +7,19 @@
 /// </summary>
 ModelManager::ModelManager()
     : modelHandle()
-    , MODEL_FOLDER_PATH("data/model/")
-    , PLAYER_PATH("player.mv1")
-    , ENEMY_PATH("enemy.mv1")
-    , ENEMY_VISUAL_PATH("enemyAngle.mv1")
-    , CAKE_PATH("cake.mv1")
-    , CAKE_HALF_PATH("cakeHalf.mv1")
-    , STAGE1_PATH("stage1.mv1")
-    , STAGE2_PATH("stage2.mv1")
-    , STAGE3_PATH("stage3.mv1")
-    , STAGE4_PATH("stage4.mv1")
-    , STAGE5_PATH("stage5.mv1")
-    , GOAL_FLAG_PATH("goal.mv1")
+    , MODEL_FOLDER_PATH("Data/Model/")
+    , PLAYER_PATH("Player/player.mv1")
+    , ENEMY_PATH("Enemy/enemy.mv1")
+    , ENEMY_VISUAL_PATH("Enemy/enemyAngle.mv1")
+    , CAKE_PATH("Cake/cake.mv1")
+    , CAKE_HALF_PATH("Cake/cakeHalf.mv1")
+    , STONE_PATH("Stone/stone.mv1")
+    , STAGE1_PATH("Stage/stage1.mv1")
+    , STAGE2_PATH("Stage/stage2.mv1")
+    , STAGE3_PATH("Stage/stage3.mv1")
+    , STAGE4_PATH("Stage/stage4.mv1")
+    , STAGE5_PATH("Stage/stage5.mv1")
+    , GOAL_FLAG_PATH("Goal/goal.mv1")
 {
     LoadAllModel();
 }
@@ -55,6 +56,8 @@ void ModelManager::LoadAllModel()
     modelHandle[CAKE]         = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, CAKE_PATH).c_str());
 
     modelHandle[CAKE_HALF]    = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, CAKE_HALF_PATH).c_str());
+
+    modelHandle[STONE]        = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, STONE_PATH).c_str());
 
     modelHandle[STAGE1]       = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, STAGE1_PATH).c_str());
 

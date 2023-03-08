@@ -2,20 +2,13 @@
 
 #include "DxLib.h"
 
-//-----------------------------------------------------------------------------
-// 共通の定数などの宣言
-//-----------------------------------------------------------------------------
-const bool IS_WINDOW_MODE = true;					//ウィンドウモードにするか
+const bool IS_WINDOW_MODE = false;					//ウィンドウモードにするかしないか
 
 const int  SCREEN_WIDTH   = 1920;					//ウィンドウの幅
 const int  SCREEN_HEIGHT  = 1080;					//ウィンドウの高さ
+const int  COLOR_BIT      = 32;                     //カラービット数
 
 const VECTOR ZERO_VECTOR  = { 0.0f, 0.0f, 0.0f };	//ゼロベクトル
-
-const float PLAYER_RADIUS = 100.0f;                 //プレイヤーの半径
-const float ENEMY_RADIUS  = 100.0f;                 //エネミーの半径
-const float CAKE_RADIUS   = 50.0f;                  //ケーキの半径
-const float BULLET_RADIUS = 50.0f;                  //バレットの半径
 
 ////シャドウマップのサイズ
 //const int  SHADOWMAP_SIZE_X = 1920;

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "SceneBase.h"
-#include "SceneManager.h"
 #include <vector>
 #include <string>
 
@@ -19,24 +18,23 @@ class ResultScene final : public SceneBase
 {
 public:
 
-	ResultScene(SceneManager* const sceneManager);
+	ResultScene();
 	virtual ~ResultScene();
 
-	void Initialize()override;					//初期化処理
-	void Activate()override;					//活性化処理
-	void Update(float deltaTime)override;		//更新処理
+	SceneType Update(float deltaTime)override;		//更新処理
 	void Draw()override;						//描画処理
 
 private:
 	ResultScene(const ResultScene&);	//コピーコンストラクタ
 	
-	void Finalize();								//終了処理
-	void SceneChange(float deltaTime);				//シーン切り替え
-	void Blink();									//文字の点滅処理
-	void BackGroundMove();							//背景画像の動き
-	void ReturnScreen(float deltaTime);				//画面を遷移する
-	void InputScene(float deltaTime, 
-					SceneManager::Scene scene);		//シーンを入力
+	void Initialize()override;					//初期化処理
+	void Activate()override;					//活性化処理
+	void Finalize();							//終了処理
+	void SceneChange(float deltaTime);			//シーン切り替え
+	void Blink();								//文字の点滅処理
+	void BackGroundMove();						//背景画像の動き
+	void ReturnScreen(float deltaTime);			//画面を遷移する
+	void InputScene(float deltaTime, SceneType);		//シーンを入力
 
 	string InputPath(string folderPath,	//画像のパスを入力
 					 string path);

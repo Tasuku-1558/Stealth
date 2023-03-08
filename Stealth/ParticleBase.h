@@ -1,6 +1,10 @@
 #pragma once
 
 #include "DxLib.h"
+#include "Math3D.h"
+#include <math.h>
+
+using namespace Math3d;		//VECTORの計算に使用
 
 /// <summary>
 /// パーティクルベースクラス
@@ -13,7 +17,6 @@ public:
 	virtual ~ParticleBase();
 
 	virtual void Initialize() = 0;				//初期化処理
-	virtual void Activate() = 0;				//活性化処理
 	virtual void Update(float deltaTime) = 0;	//更新処理
 	virtual void Draw() = 0;					//描画処理
 
@@ -22,9 +25,12 @@ public:
 protected:
 
 	VECTOR position;		//パーティクルの位置
-	float radius;			//パーティクルの半径
-	float particleCount;	//パーティクルカウント
-	bool endFlag;			//パーティクルを消すか消さないか
-	float xPower;			//横方向の力
-	float zPower;			//縦方向の力
+	float  radius;			//パーティクルの半径
+	float  particleCount;	//パーティクルカウント
+	float  xPower;			//横方向の力
+	float  zPower;			//縦方向の力
+	bool   endFlag;			//パーティクルを消すか消さないか
+
+	//定数
+	const int DIVNUM;		//パーティクルのポリゴンの細かさ
 };

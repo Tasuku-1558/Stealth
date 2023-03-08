@@ -20,13 +20,14 @@ public:
 		ENEMY_VISUAL,	//エネミーの視野モデル
 		CAKE,			//ケーキモデル
 		CAKE_HALF,		//ケーキが半分のモデル
+		STONE,			//小石モデル
 		STAGE1,			//ステージ1モデル
 		STAGE2,			//ステージ2モデル
 		STAGE3,			//ステージ3モデル
 		STAGE4,			//ステージ4モデル
 		STAGE5,			//ステージ5モデル
 		GOAL,			//ゴールフラッグモデル
-		MODEL_AMOUNT	//モデルの個数
+		MODEL_AMOUNT	//モデルの数
 	};
 
 	static ModelManager& GetInstance();					  //アドレスを返す
@@ -53,6 +54,7 @@ private:
 	const string ENEMY_VISUAL_PATH;	//enemy_visualモデルファイルのパス
 	const string CAKE_PATH;			//cakeモデルファイルのパス
 	const string CAKE_HALF_PATH;	//cake_halfモデルファイルのパス
+	const string STONE_PATH;		//stoneモデルファイルのパス
 	const string STAGE1_PATH;		//stage1モデルファイルのパス
 	const string STAGE2_PATH;		//stage2モデルファイルのパス
 	const string STAGE3_PATH;		//stage3モデルファイルのパス

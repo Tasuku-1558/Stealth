@@ -29,11 +29,14 @@
     <Filter Include="ソース ファイル\Scene\StageSelection">
       <UniqueIdentifier>{60442f97-7011-45fc-9164-87af64412f18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Cake">
-      <UniqueIdentifier>{67df388f-c401-4ff2-8ea9-58dd3a065616}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Particle">
       <UniqueIdentifier>{1de4d3ce-2e7b-41bb-a6ea-84c61d2e3a88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Item">
+      <UniqueIdentifier>{67df388f-c401-4ff2-8ea9-58dd3a065616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Collision">
+      <UniqueIdentifier>{4669bcea-c662-4ad4-82c9-7f5bddb84220}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -67,9 +70,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>ソース ファイル\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="HitChecker.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="UiManager.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
@@ -77,9 +77,6 @@
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
     <ClCompile Include="SecondStage.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="TitleScene.cpp">
@@ -119,13 +116,13 @@
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>ソース ファイル\Cake</Filter>
+      <Filter>ソース ファイル\Item</Filter>
     </ClCompile>
     <ClCompile Include="Cake.cpp">
-      <Filter>ソース ファイル\Cake</Filter>
+      <Filter>ソース ファイル\Item</Filter>
     </ClCompile>
     <ClCompile Include="CakeBullet.cpp">
-      <Filter>ソース ファイル\Cake</Filter>
+      <Filter>ソース ファイル\Item</Filter>
     </ClCompile>
     <ClCompile Include="Set.cpp">
       <Filter>ソース ファイル\System</Filter>
@@ -156,6 +153,18 @@
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Stone.cpp">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="HitChecker.cpp">
+      <Filter>ソース ファイル\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>ソース ファイル\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectBase.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -192,9 +201,6 @@
     <ClInclude Include="Enemy.h">
       <Filter>ソース ファイル\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="HitChecker.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="UiManager.h">
       <Filter>ソース ファイル\System</Filter>
     </ClInclude>
@@ -202,9 +208,6 @@
       <Filter>ソース ファイル\System</Filter>
     </ClInclude>
     <ClInclude Include="SecondStage.h">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="TitleScene.h">
@@ -250,13 +253,13 @@
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>ソース ファイル\Cake</Filter>
+      <Filter>ソース ファイル\Item</Filter>
     </ClInclude>
     <ClInclude Include="Cake.h">
-      <Filter>ソース ファイル\Cake</Filter>
+      <Filter>ソース ファイル\Item</Filter>
     </ClInclude>
     <ClInclude Include="CakeBullet.h">
-      <Filter>ソース ファイル\Cake</Filter>
+      <Filter>ソース ファイル\Item</Filter>
     </ClInclude>
     <ClInclude Include="Set.h">
       <Filter>ソース ファイル\System</Filter>
@@ -284,6 +287,15 @@
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>ソース ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Stone.h">
+      <Filter>ソース ファイル\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="HitChecker.h">
+      <Filter>ソース ファイル\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>ソース ファイル\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

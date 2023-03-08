@@ -6,10 +6,10 @@
 /// </summary>
 BackGround::BackGround()
 	: backGroundHandle(0)
-	, VIDEO_FOLDER_PATH("data/video/")
+	, VIDEO_FOLDER_PATH("Data/Video/")
 	, BACK_GROUND_VIDEO_PATH("BackGround.mp4")
 {
-	//ˆ—‚È‚µ
+	Initialize();
 }
 
 /// <summary>
@@ -40,23 +40,17 @@ void BackGround::Finalize()
 }
 
 /// <summary>
-/// Šˆ«‰»ˆ—
-/// </summary>
-void BackGround::Activate()
-{
-	//ˆ—‚È‚µ
-}
-
-/// <summary>
 /// XVˆ—
 /// </summary>
 void BackGround::Update()
 {
-	//”wŒi“®‰æ‚ğÄ¶
+	//”wŒi“®‰æ‚ğÄ¶’†
 	if (!GetMovieStateToGraph(backGroundHandle))
 	{
+		//“®‰æ‚ªI—¹‚µ‚½‚ç0•b‚ÌŠ‚©‚ç‚Ü‚½Ä¶‚·‚é
 		SeekMovieToGraph(backGroundHandle, 0);
 
+		//“®‰æ‚ğÄ¶‚·‚é
 		PlayMovieToGraph(backGroundHandle);
 	}
 }

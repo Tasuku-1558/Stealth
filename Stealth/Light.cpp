@@ -7,7 +7,7 @@
 Light::Light()
 	: DIRECTION({ 0.0f,-0.5f,0.0f })
 {
-	//ˆ—‚È‚µ
+	Initialize();
 }
 
 /// <summary>

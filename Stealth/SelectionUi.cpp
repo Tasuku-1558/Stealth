@@ -12,7 +12,7 @@ SelectionUi::SelectionUi()
 	, operationMethod(0)
 	, modelHandle()
 	, position()
-	, IMAGE_FOLDER_PATH("data/image/")
+	, IMAGE_FOLDER_PATH("Data/image/")
 	, SELECTION_KEY_PATH("selection_key.png")
 	, SELECTION_TITLE_PATH("selection_Ui.png")
 	, STAGE_DESCRIPTION_PATH("stage_description.png")
@@ -39,7 +39,7 @@ SelectionUi::SelectionUi()
 	, STAGE5_SIZE({ 13.0f, 13.0f, 13.0f })
 	, STAGE5_ROTATE({ 0.0f, 180.0f * DX_PI_F / 180.0f, 5.0f * DX_PI_F / 180.0f })
 {
-	//èàóùÇ»Çµ
+	Initialize();
 }
 
 /// <summary>

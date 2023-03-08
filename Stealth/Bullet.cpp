@@ -1,8 +1,8 @@
 #include "Bullet.h"
 #include "ModelManager.h"
+#include "Player.h"
 
-
-using namespace Math3d;
+using namespace Math3d;		//VECTORの計算に使用
 
 /// <summary>
 /// コンストラクタ
@@ -15,11 +15,13 @@ Bullet::Bullet() : ObjectBase()
 	, worldMouseY(30.0f)
 	, worldMouseZ(0.0f)
 	, alive(false)
-	, IMAGE_FOLDER_PATH("data/image/")
+	, IMAGE_FOLDER_PATH("Data/image/")
 	, CURSOR_PATH("pointer.png")
 	, SIZE({ 20.0f, 20.0f, 20.0f })
 	, POSITION({ 0.0f, 30.0f, 0.0f })
+	, ROTATE({ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f })
 	, SCALE(0.4f)
+	, RADIUS(50.0f)
 {
 	//処理なし
 }
@@ -29,7 +31,7 @@ Bullet::Bullet() : ObjectBase()
 /// </summary>
 Bullet::~Bullet()
 {
-	Finalize();
+	//処理なし
 }
 
 /// <summary>
@@ -37,8 +39,12 @@ Bullet::~Bullet()
 /// </summary>
 void Bullet::Initialize()
 {
+	//ケーキのモデルの読み込み
 	modelHandle = ModelManager::GetInstance().GetModelHandle(ModelManager::CAKE);
+
+	//モデルのサイズと回転値を設定
 	MV1SetScale(modelHandle, SIZE);
+	MV1SetRotationXYZ(modelHandle, ROTATE);
 
 	//マウスカーソルを表示しない
 	SetMouseDispFlag(FALSE);
@@ -55,6 +61,11 @@ void Bullet::Activate()
 	position = POSITION;
 
 	BulletDead();
+
+	//当たり判定球の情報設定
+	collisionSphere.localCenter = ZERO_VECTOR;
+	collisionSphere.worldCenter = position;
+	collisionSphere.radius = RADIUS;
 }
 
 /// <summary>
@@ -74,16 +85,20 @@ void Bullet::Finalize()
 void Bullet::Update(float deltaTime)
 {
 	OnShot();
+
+	//当たり判定球の移動処理
+	collisionSphere.Move(position);
 }
 
 /// <summary>
 /// マウスカーソルの移動
 /// </summary>
 /// <param name="cake"></param>
-/// <param name="playerPos"></param>
-void Bullet::MouseMove(Cake* cake, VECTOR playerPos)
+/// <param name="player">プレイヤーの位置</param>
+void Bullet::MouseMove(Cake* cake, Player* player)
 {
-	GetMousePoint(&mouseX, &mouseZ);       //マウスの座標取得
+	//マウスの座標取得
+	GetMousePoint(&mouseX, &mouseZ);
 	mouseX -= 960;
 	mouseZ -= 540;
 
@@ -91,8 +106,8 @@ void Bullet::MouseMove(Cake* cake, VECTOR playerPos)
 	if (!cake->GetAlive())
 	{
 		//マウスのX,Z座標のワールド座標を計算
-		worldMouseX = (float)mouseX * (3000.0f / 1920.0f) * 1.6f + playerPos.z;
-		worldMouseZ = (float)mouseZ * (1900.0f / 1080.0f) * 1.5f + playerPos.x;
+		worldMouseX = (float)mouseZ * (-3000.0f / 1920.0f) * 1.7f + player->GetPosition().z;
+		worldMouseZ = (float)mouseX * (1900.0f / 1080.0f) * 1.5f + player->GetPosition().x;
 	}
 }
 
@@ -118,6 +133,7 @@ void Bullet::BulletAlive()
 /// </summary>
 void Bullet::OnShot()
 {
+	//モデルの位置を設定
 	position = VGet(worldMouseZ, worldMouseY, worldMouseX);
 
 	MV1SetPosition(modelHandle, position);

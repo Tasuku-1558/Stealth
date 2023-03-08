@@ -1,6 +1,5 @@
 #pragma once
 
-#include "DxLib.h"
 #include "ParticleBase.h"
 
 /// <summary>
@@ -13,15 +12,17 @@ public:
 	FireWorksParticle(const VECTOR pos, unsigned int changeColor);
 	virtual ~FireWorksParticle();
 
-	void Initialize()override;				//初期化処理
-	void Activate()override;				//活性化処理
 	void Update(float deltaTime)override;	//更新処理
 	void Draw()override;					//描画処理
 
 private:
 	FireWorksParticle(const FireWorksParticle&);	//コピーコンストラクタ
 
+	void Initialize()override;				//初期化処理
 
 	float particlePopTime;				//パーティクルの出現時間
 	unsigned int color;					//パーティクルの色
+
+	//定数
+	const float POS_Y;					//エフェクトのY座標
 };

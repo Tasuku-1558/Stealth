@@ -6,7 +6,7 @@ using namespace std;
 
 /// <summary>
 /// サウンド管理クラス
-/// BGMとSEの再生と停止
+/// BGMとSEの再生と停止を行う
 /// シングルトン
 /// </summary>
 class SoundManager final
@@ -16,18 +16,18 @@ public:
 	//BGMの種類
 	enum Bgm
 	{
-		TITLE,
+		TITLE,		//タイトル曲
 		/*PLAY,
 		RESULT,*/
-		BGM_AMOUNT
+		BGM_AMOUNT	//BGMの数
 	};
 
 	//SEの種類
 	enum Se
 	{
-		ENEMY_FIND,
-		CAKE_SHOOT,
-		SE_AMOUNT
+		ENEMY_FIND,	//エネミーに見つかった時のSE
+		CAKE_SHOOT,	//ケーキを発射した時のSE
+		SE_AMOUNT	//SEの数
 	};
 
 	static SoundManager& GetInstance();		//アドレスを返す

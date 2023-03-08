@@ -5,14 +5,14 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-RepopEffect::RepopEffect() : EffectBase()
-	, effectHandle(0)
-	, effectTime(0)
-	, playingEffectHandle(0)
-	, EFFECT_FOLDER_PATH("data/effect/")
+RepopEffect::RepopEffect(/*string effectPath, float effectSize*/)
+	: EffectBase()
+	, EFFECT_FOLDER_PATH("Data/effect/")
 	, CAKE_PATH("cake.efkefc")
+	, MAGNIFICATION(30.0f)
 {
-	//処理なし
+	string failePath = EFFECT_FOLDER_PATH + CAKE_PATH;
+	effectHandle = LoadEffekseerEffect(failePath.c_str(), MAGNIFICATION);
 }
 
 /// <summary>
@@ -20,34 +20,8 @@ RepopEffect::RepopEffect() : EffectBase()
 /// </summary>
 RepopEffect::~RepopEffect()
 {
-	Finalize();
-}
-
-/// <summary>
-/// 初期化処理
-/// </summary>
-void RepopEffect::Initialize()
-{
-	string failePath = EFFECT_FOLDER_PATH + CAKE_PATH;
-	effectHandle = LoadEffekseerEffect(failePath.c_str(), 30.0f);
-}
-
-/// <summary>
-/// 終了処理
-/// </summary>
-void RepopEffect::Finalize()
-{
 	//エフェクトリソースを削除
 	DeleteEffekseerEffect(effectHandle);
-}
-
-/// <summary>
-/// 活性化処理
-/// </summary>
-void RepopEffect::Activate()
-{
-	//エフェクトを停止する
-	StopEffekseer3DEffect(playingEffectHandle);
 }
 
 /// <summary>

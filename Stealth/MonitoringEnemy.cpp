@@ -18,7 +18,7 @@ MonitoringEnemy::MonitoringEnemy(const VECTOR& pos, VECTOR changeDir, VECTOR cur
 	, dirCount(0.0f)
 	, anotherDir()
 	, initialDir()
-	, IMAGE_FOLDER_PATH("data/image/")
+	, IMAGE_FOLDER_PATH("Data/image/")
 	, MARK_PATH("mark.png")
 {
 	position = pos;
@@ -49,7 +49,7 @@ void MonitoringEnemy::Initialize()
 	visualModelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY_VISUAL));
 
 	//画像の読み込み
-	markImage		= LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
+	markImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
 }
 
 /// <summary>
@@ -68,9 +68,7 @@ std::string MonitoringEnemy::InputPath(string folderPath, string imagePath)
 /// </summary>
 void MonitoringEnemy::Activate()
 {
-	dir = ZERO_VECTOR;
-	playerSpotted = false;
-	cakeFlag = false;
+	direction = ZERO_VECTOR;
 }
 
 /// <summary>
@@ -98,29 +96,22 @@ void MonitoringEnemy::Finalize()
 void MonitoringEnemy::Update(float deltaTime, Player* player, HitChecker* hitChecker)
 {
 	//ベクトルの正規化
-	dir = VNorm(dir);
+	direction = VNorm(direction);
 
 	DirMove(deltaTime);
 
-	position += dir * deltaTime;
+	position += direction * deltaTime;
 
 	//エネミーの位置と向きをセット
 	MV1SetPosition(modelHandle, position);
-	MV1SetRotationYUseDir(modelHandle, dir, 0.0f);
+	MV1SetRotationYUseDir(modelHandle, direction, 0.0f);
 
 	//エネミーの視野モデルの位置と向きをセット
 	MV1SetPosition(visualModelHandle, position);
-	MV1SetRotationYUseDir(visualModelHandle, dir, 0.0f);
+	MV1SetRotationYUseDir(visualModelHandle, direction, 0.0f);
 
 
 	VisualAnglePlayer(player);
-
-	hitChecker->EnemyAndPlayer(player->GetPosition(), position);
-
-	if (hitChecker->EnemyHit())
-	{
-		playerSpotted = true;
-	}
 }
 
 /// <summary>
@@ -134,11 +125,11 @@ void MonitoringEnemy::DirMove(float deltaTime)
 	//2秒経過したらエネミーの向きを変更する
 	if (dirCount > 2.0f)
 	{
-		dir = anotherDir;
+		direction = anotherDir;
 	}
 	else
 	{
-		dir = initialDir;
+		direction = initialDir;
 	}
 
 	//4秒経過したらカウントを0にする
@@ -158,21 +149,21 @@ void MonitoringEnemy::VisualAnglePlayer(Player* player)
 	VECTOR sub = player->GetPosition() - position;
 
 	//プレイヤーとエネミーの2点間の距離を計算
-	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
+	float playerDirection = VSize(sub);
 
 	//ベクトルの正規化
 	sub = VNorm(sub);
 
 	//内積計算
-	float dot = VDot(sub, dir);
+	float dot = VDot(sub, direction);
 
-	float range = RANGE_DEGREE * (float)(DX_PI / 180.0f);
+	float range = RANGE_DEGREE * (DX_PI_F / 180.0f);
 
 	//エネミーの視野をcosにする
 	float radian = cosf(range / 2.0f);
 
 	//ベクトルとエネミーの長さの比較
-	if (length > direction)
+	if (length > playerDirection)
 	{
 		//プレイヤーがエネミーの視野範囲内にいるならば
 		if (radian <= dot)

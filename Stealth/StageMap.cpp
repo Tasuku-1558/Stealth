@@ -1,5 +1,4 @@
 #include "StageMap.h"
-#include "Set.h"
 
 using namespace std;
 
@@ -74,8 +73,8 @@ void StageMap::Draw()
 /// </summary>
 void StageMap::MapList()
 {
-	positionList[0].push_back({ -3200.0f, 0.0f, 1000.0f });
-	positionList[0].push_back({ -3200.0f, 0.0f, -1000.0f });
+	positionList[0].push_back({ 1000.0f, 0.0f, 2900.0f });
+	positionList[0].push_back({ -1000.0f, 0.0f, 2900.0f });
 
 	itr[0] = positionList[0].begin();   //イテレータを先頭に設定
 }
@@ -88,14 +87,8 @@ void StageMap::MapList2()
 {
 	positionList[1].push_back({ -2200.0f, 0.0f, 600.0f });
 	positionList[1].push_back({ -2200.0f, 0.0f, -700.0f });
-
-	//positionList[1].push_back({ -2100.0f, 0.0f, -800.0f });
-
 	positionList[1].push_back({ -1400.0f, 0.0f, -700.0f });
 	positionList[1].push_back({ -1400.0f, 0.0f, 600.0f });
-
-	/*positionList[1].push_back({ -1400.0f, 0.0f, -700.0f });
-	positionList[1].push_back({ -1400.0f, 0.0f, 600.0f });*/
 
 	itr[1] = positionList[1].begin();	//イテレータを先頭に設定
 }

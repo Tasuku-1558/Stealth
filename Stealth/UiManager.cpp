@@ -9,11 +9,12 @@ UiManager::UiManager()
 	, stageCount(0)
 	, alpha(0)
 	, inc(0)
-	, IMAGE_FOLDER_PATH("data/image/")
+	, IMAGE_FOLDER_PATH("Data/image/")
 	, UI_GRAPHIC_PATH("ui")
 	, IMAGE_FILENAME_EXTENSION(".png")
 {
-	//処理なし
+	Initialize();
+	Activate();
 }
 
 /// <summary>
@@ -54,7 +55,6 @@ void UiManager::Initialize()
 /// </summary>
 void UiManager::Activate()
 {
-	stageCount = 0;
 	alpha = 255;
 	inc = -3;
 }
@@ -92,7 +92,7 @@ void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 		OperationMethodDraw(hitUi);
 
 		//吹き出し画像描画
-		DrawBillboard3D(VGet(-800.0f, 0.0f, 0.0f), 0.5f, 0.5f, 200.0f, 0.0f, uiHandle[BALLOON], TRUE);
+		DrawBillboard3D(VGet(0.0f, 0.0f, 800.0f), 0.5f, 0.5f, 200.0f, 0.0f, uiHandle[BALLOON], TRUE);
 		break;
 
 	case FirstStage::State::GOAL:
@@ -100,106 +100,6 @@ void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 		break;
 	}
 }
-
-/// <summary>
-/// SecondStageのUI描画処理
-/// </summary>
-/// <param name="state"></param>
-/// <param name="playerCount"></param>
-//void UiManager::Draw(SecondStage::State state, int playerCount)
-//{
-//	switch (state)
-//	{
-//	case SecondStage::State::START:
-//		
-//		break;
-//
-//	case SecondStage::State::GAME:
-//		
-//		StartGameDraw(STAGE2);
-//		PlayerHpDraw(playerCount);
-//		break;
-//
-//	case SecondStage::State::GOAL:
-//		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
-//		break;
-//	}
-//}
-//
-///// <summary>
-///// ThirdStageのUI描画処理
-///// </summary>
-///// <param name="state"></param>
-///// <param name="playerCount"></param>
-//void UiManager::Draw(ThirdStage::State state, int playerCount)
-//{
-//	switch (state)
-//	{
-//	case ThirdStage::State::START:
-//
-//		break;
-//
-//	case ThirdStage::State::GAME:
-//
-//		StartGameDraw(STAGE3);
-//		PlayerHpDraw(playerCount);
-//		break;
-//
-//	case ThirdStage::State::GOAL:
-//		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
-//		break;
-//	}
-//}
-//
-///// <summary>
-///// FourthStageのUI描画処理
-///// </summary>
-///// <param name="state"></param>
-///// <param name="playerCount"></param>
-//void UiManager::Draw(FourthStage::State state, int playerCount)
-//{
-//	switch (state)
-//	{
-//	case FourthStage::State::START:
-//
-//		break;
-//
-//	case FourthStage::State::GAME:
-//
-//		StartGameDraw(STAGE4);
-//		PlayerHpDraw(playerCount);
-//		break;
-//
-//	case FourthStage::State::GOAL:
-//		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
-//		break;
-//	}
-//}
-//
-///// <summary>
-///// FifthStageのUI描画処理
-///// </summary>
-///// <param name="state"></param>
-///// <param name="playerCount"></param>
-//void UiManager::Draw(FifthStage::State state, int playerCount)
-//{
-//	switch (state)
-//	{
-//	case FifthStage::State::START:
-//
-//		break;
-//
-//	case FifthStage::State::GAME:
-//
-//		StartGameDraw(STAGE5);
-//		PlayerHpDraw(playerCount);
-//		break;
-//
-//	case FifthStage::State::GOAL:
-//		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
-//		break;
-//	}
-//}
 
 /// <summary>
 /// ゲーム開始UI
@@ -226,6 +126,8 @@ void UiManager::StartGameDraw(Graphic graphic)
 		DrawGraph(0, -100, uiHandle[graphic], TRUE);
 
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
+
+		stageCount = 0;
 	}
 }
 
@@ -264,20 +166,15 @@ void UiManager::PlayerHpDraw(int playerCount)
 	DrawRotaGraph(515, 150, 0.7f, 0, uiHandle[FRAME], TRUE);
 
 	DrawRotaGraph(205, 70, 0.5f, 0, uiHandle[PLAYER_HP_FRAME], TRUE);
-	DrawRotaGraph(310, 70, 0.5f, 0, uiHandle[PLAYER_HP_FRAME], TRUE);
 
+	//プレイヤーのHPが2の場合
 	if (playerCount == 0)
 	{
 		DrawRotaGraph(100, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
 		DrawRotaGraph(205, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
-		DrawRotaGraph(310, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
 	}
-	else if (playerCount == 1)
-	{
-		DrawRotaGraph(100, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
-		DrawRotaGraph(205, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
-	}
-	else if (playerCount == 2)
+	//プレイヤーのHPが1の場合
+	else
 	{
 		DrawRotaGraph(100, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
 	}

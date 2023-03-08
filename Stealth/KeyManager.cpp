@@ -2,13 +2,14 @@
 #include "DxLib.h"
 #include <chrono>
 
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
 KeyManager::KeyManager()
     : currentKeyState()
     , prevKeyState()
-    , keyReleaseCount()
+    , keyReleaseCount(0)
 {
     //処理なし
 }

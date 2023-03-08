@@ -1,8 +1,7 @@
 #pragma once
 
 #include "ObjectBase.h"
-
-class HitChecker;
+#include "Collision.h"
 
 /// <summary>
 /// ケーキクラス
@@ -19,9 +18,10 @@ public:
 	void Update(float deltaTime);		//更新処理
 	void CakeAlive();					//ケーキをアクティブ化
 	void Draw();						//描画処理
-	void IsAlive(HitChecker* hitChecker);			//ケーキが生きてるか死んでいるかを判定
+	void HitCake();						//ケーキに衝突した
 
 	const bool GetAlive() { return alive; }			//ケーキが生きてるか死んでるかを返す
+	const float GetCollideRadius() { return collisionSphere.radius; }		//当たり判定球の半径を返す
 
 private:
 
@@ -29,8 +29,11 @@ private:
 
 	bool alive;					//ケーキが生きてるか死んでいるか
 
+	My3dLib::Sphere collisionSphere;	//当たり判定球
 
 	//定数
-	const VECTOR SIZE;           //モデルの倍率
+	const VECTOR SIZE;          //モデルの倍率
+	const VECTOR ROTATE;		//モデルの回転値
+	const float  RADIUS;		//ケーキの半径
 
 };

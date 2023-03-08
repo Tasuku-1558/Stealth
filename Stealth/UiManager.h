@@ -4,10 +4,6 @@
 
 #include "DxLib.h"
 #include "FirstStage.h"
-#include "SecondStage.h"
-#include "ThirdStage.h"
-#include "FourthStage.h"
-#include "FifthStage.h"
 
 
 using namespace std;
@@ -21,24 +17,8 @@ public:
 	UiManager();
 	virtual ~UiManager();
 
-	void Initialize();		//初期化処理
-	void Activate();		//活性化処理
-	void Finalize();		//終了処理
-
 	void Draw(FirstStage::State state,
-			  int playerCount, bool hitUi);	//FirstStageのUI描画処理
-
-	//void Draw(SecondStage::State state, 
-	//		  int playerCount);				//SecondStageのUI描画処理
-
-	//void Draw(ThirdStage::State state,
-	//		  int playerCount);				//ThirdStageの描画処理
-
-	//void Draw(FourthStage::State state,
-	//		  int playerCount);				//FourthStageの描画処理
-
-	//void Draw(FifthStage::State state,
-	//	int playerCount);					//FifthStageの描画処理
+			  int playerCount, bool hitUi);	//描画処理
 
 	void CakeGetDraw(bool cakeGet);			//ケーキを持っているかのUI
 
@@ -63,6 +43,9 @@ private:
 		GRAPHIC_AMOUNT		//画像の数
 	};
 
+	void Initialize();								//初期化処理
+	void Activate();								//活性化処理
+	void Finalize();								//終了処理
 	void StartGameDraw(UiManager::Graphic graphic);	//ゲーム開始UI
 	void PlayerHpDraw(int playerCount);				//プレイヤーHPUI
 	void OperationMethodDraw(bool hitUi);			//操作方法説明UI

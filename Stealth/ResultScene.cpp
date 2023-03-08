@@ -15,9 +15,8 @@ char gameOver[] = { "GAME OVER" };
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="sceneManager"></param>
-ResultScene::ResultScene(SceneManager* const sceneManager)
-	: SceneBase(sceneManager)
+ResultScene::ResultScene()
+	: SceneBase(SceneType::RESULT)
 	, font(0)
 	, frame(0.0f)
 	, fireWorksParticle()
@@ -35,7 +34,7 @@ ResultScene::ResultScene(SceneManager* const sceneManager)
 	, backGroundImage(0)
 	, backGroundX(0)
 	, backGroundY(0)
-	, IMAGE_FOLDER_PATH("data/image/")
+	, IMAGE_FOLDER_PATH("Data/image/")
 	, RESULT_UI_PATH("resultUi.png")
 	, RESULT_BACKGROUND_PATH("resultBackGround.png")
 	, PARTICLE_NUMBER(500)
@@ -49,7 +48,7 @@ ResultScene::ResultScene(SceneManager* const sceneManager)
 /// </summary>
 ResultScene::~ResultScene()
 {
-	//処理なし
+	Finalize();
 }
 
 /// <summary>
@@ -57,13 +56,11 @@ ResultScene::~ResultScene()
 /// </summary>
 void ResultScene::Initialize()
 {
-	//カメラクラス
 	camera = new Camera();
-	camera->Initialize();
 
-	//画面効果クラス
 	fadeManager = new FadeManager();
 
+	//リザルトUI画像の読み込み
 	resultUiImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, RESULT_UI_PATH).c_str());
 
 	backGroundImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, RESULT_BACKGROUND_PATH).c_str());
@@ -152,6 +149,7 @@ void ResultScene::FireWorksParticlePop()
 
 			/*FireWorksParticle* newFireWorksParticle4 = new FireWorksParticle({ 50.0f,0.0f,-200.0f }, GetColor(128, 0, 128));
 			EntryFireWorksParticle(newFireWorksParticle4);*/
+
 		}
 
 		particleFlag = true;
@@ -163,29 +161,16 @@ void ResultScene::FireWorksParticlePop()
 /// </summary>
 void ResultScene::Activate()
 {
-	frame = 0.0f;
-
 	clear = Set::GetInstance().GetResult();
 
-	titleFlag = false;
-	selectionFlag = false;
-
 	font = CreateFontToHandle("Oranienbaum", 150, 1);
-
-	for (auto fireWorksParticlePtr : fireWorksParticle)
-	{
-		DeleteFireWorksParticle(fireWorksParticlePtr);
-		fireWorksParticlePtr->Activate();
-	}
-
-	fadeManager->Activate();
 }
 
 /// <summary>
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime"></param>
-void ResultScene::Update(float deltaTime)
+SceneType ResultScene::Update(float deltaTime)
 {
 	camera->SelectionAndResultCamera();
 
@@ -224,6 +209,8 @@ void ResultScene::Update(float deltaTime)
 			DeleteFireWorksParticle(fireWorksParticlePtr);
 		}
 	}
+
+	return nowSceneType;
 }
 
 /// <summary>
@@ -245,8 +232,8 @@ void ResultScene::SceneChange(float deltaTime)
 /// シーンを入力
 /// </summary>
 /// <param name="deltaTime"></param>
-/// <param name="scene"></param>
-void ResultScene::InputScene(float deltaTime, SceneManager::Scene scene)
+/// <param name="sceneType"></param>
+void ResultScene::InputScene(float deltaTime, SceneType sceneType)
 {
 	frame += deltaTime;
 
@@ -255,8 +242,7 @@ void ResultScene::InputScene(float deltaTime, SceneManager::Scene scene)
 	//フレーム数が2.2秒経過したら
 	if (frame > 2.2f)
 	{
-		parent->SetNextScene(scene);
-		return;
+		nowSceneType = sceneType;
 	}
 }
 
@@ -269,13 +255,13 @@ void ResultScene::ReturnScreen(float deltaTime)
 	if (titleFlag)
 	{
 		//タイトル画面へ遷移
-		InputScene(deltaTime, SceneManager::TITLE);
+		InputScene(deltaTime, SceneType::TITLE);
 	}
 
 	if (selectionFlag)
 	{
 		//ステージ選択画面へ遷移
-		InputScene(deltaTime, SceneManager::SELECTION);
+		InputScene(deltaTime, SceneType::SELECTION);
 	}
 }
 
@@ -311,7 +297,7 @@ void ResultScene::BackGroundMove()
 	backGroundY += 2;
 
 	//Y座標が端になったら
-	if (backGroundY == 1080)
+	if (backGroundY == SCREEN_HEIGHT)
 	{
 		backGroundY = 0;
 	}
@@ -322,15 +308,13 @@ void ResultScene::BackGroundMove()
 /// </summary>
 void ResultScene::Draw()
 {
-	//背景描画
 	DrawGraph(backGroundX, backGroundY,  backGroundImage, TRUE);
 
-	DrawGraph(backGroundX, backGroundY -1080, backGroundImage, TRUE);
+	DrawGraph(backGroundX, backGroundY - SCREEN_HEIGHT, backGroundImage, TRUE);
 
 	//ゲームクリアならば
 	if (clear)
 	{
-		//パーティクルを描画
 		for (auto fireWorksParticlePtr : fireWorksParticle)
 		{
 			fireWorksParticlePtr->Draw();

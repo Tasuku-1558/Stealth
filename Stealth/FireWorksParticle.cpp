@@ -1,5 +1,4 @@
 #include "FireWorksParticle.h"
-#include <math.h>
 
 
 /// <summary>
@@ -11,13 +10,13 @@ FireWorksParticle::FireWorksParticle(const VECTOR pos, unsigned int changeColor)
 	: ParticleBase()
 	, particlePopTime(3.0f)
 	, color(0)
+	, POS_Y(1000.0f)
 {
 	position = pos;
 
 	color = changeColor;
 
 	Initialize();
-	Activate();
 }
 
 /// <summary>
@@ -33,7 +32,7 @@ FireWorksParticle::~FireWorksParticle()
 /// </summary>
 void FireWorksParticle::Initialize()
 {
-	//パーティクルを飛ばす力をランダム値に
+	//パーティクルを飛ばす力をランダム値にする
 	float rad = (float)(rand() % 200) / 100.0f;
 	float tmpRadius = (float)(rand() % 100) / 10.0f;
 
@@ -42,24 +41,20 @@ void FireWorksParticle::Initialize()
 }
 
 /// <summary>
-/// 活性化処理
-/// </summary>
-void FireWorksParticle::Activate()
-{
-	particleCount = 0.0f;
-}
-
-/// <summary>
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime"></param>
 void FireWorksParticle::Update(float deltaTime)
 {
+	//パーティクルの半径を調整する
 	radius = ((particlePopTime - particleCount) / particlePopTime) * radius;
+
+	//パーティクルに飛ばす力を加える
 	position.x += xPower;
-	position.y = 1000.0f;
+	position.y = POS_Y;
 	position.z += zPower;
 
+	//パーティクルを出したらカウントを開始する
 	particleCount += deltaTime;
 
 	//パーティクルの出現時間を超えたらパーティクルを消す
@@ -77,6 +72,6 @@ void FireWorksParticle::Update(float deltaTime)
 void FireWorksParticle::Draw()
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-	DrawSphere3D(position, radius, 8, color, color, FALSE);
+	DrawSphere3D(position, radius, DIVNUM, color, color, FALSE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }

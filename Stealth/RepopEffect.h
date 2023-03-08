@@ -8,30 +8,23 @@ using namespace std;
 
 /// <summary>
 /// リスポーンエフェクトクラス
-/// ケーキ再スポーン時のエフェクトとプレイヤーリスポーン時のエフェクト
+/// ケーキ再スポーン時のエフェクトとプレイヤーリスポーン時のエフェクトに使用している
 /// </summary>
 class RepopEffect final : public EffectBase
 {
 public:
-	RepopEffect();
+	RepopEffect(/*string effectPath, float effectSize*/);
 	virtual ~RepopEffect();
 
-	void Initialize();			//初期化処理
-	void Activate();			//活性化処理
-	void Update(VECTOR pos);	//更新処理
-	void Draw();				//描画処理
+	void Update(VECTOR pos)override;	//更新処理
+	void Draw()override;				//描画処理
 
 private:
 
-	RepopEffect(const RepopEffect&);		//コピーコンストラクタ
-	void Finalize();								//終了処理
-
-	int effectHandle;					//ケーキ再スポーン時エフェクト格納用
-	int effectTime;						//エフェクト時間
-
-	int playingEffectHandle;			//再生中のエフェクトのハンドルを初期化
+	RepopEffect(const RepopEffect&);	//コピーコンストラクタ
 
 	//定数
 	const string EFFECT_FOLDER_PATH;	//effectフォルダまでのパス
 	const string CAKE_PATH;				//ケーキ再スポーン時エフェクトのパス
+	const float  MAGNIFICATION;			//エフェクトの拡大率
 };

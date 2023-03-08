@@ -16,10 +16,8 @@ public:
 	SelectionUi();
 	virtual ~SelectionUi();
 
-	void Initialize();								//初期化処理
 	void Draw();									//描画処理
-	void StageUiDraw(int mapNumber,
-					 int enemyNumber, 
+	void StageUiDraw(int mapNumber, int enemyNumber, 
 					 int cakeNumber);				//ステージのUI描画処理
 
 	void TitleUiDraw();								//タイトルへ遷移するUI描画処理
@@ -27,6 +25,7 @@ public:
 private:
 	SelectionUi(const SelectionUi&);				//コピーコンストラクタ
 
+	void Initialize();								//初期化処理
 	void Finalize();								//終了処理
 
 	void MapInput(int number, ModelManager::ModelType modelType, 
@@ -49,7 +48,7 @@ private:
 	const string SELECTION_TITLE_PATH;		//ステージセレクションからタイトルへ遷移のUI画像
 	const string STAGE_DESCRIPTION_PATH;	//ステージの説明画像のパス
 	const string OPERATION_METHOD_PATH;		//操作方法説明画像のパス
-	const int	STAGE_NUMBER;				//ステージ数
+	const int	 STAGE_NUMBER;				//ステージ数
 
 	const VECTOR STAGE1_POSITION;			//ステージ1モデルの位置
 	const VECTOR STAGE1_SIZE;				//ステージ1モデルの倍率

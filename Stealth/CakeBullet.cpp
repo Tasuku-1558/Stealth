@@ -1,5 +1,6 @@
 #include "CakeBullet.h"
 #include "RepopEffect.h"
+#include "Player.h"
 #include "SoundManager.h"
 
 
@@ -44,9 +45,6 @@ void CakeBullet::Activate()
 {
     cake->Activate();
     bullet->Activate();
-
-    bulletCount = 0.0f;
-    cakeGet = false;
 }
 
 /// <summary>
@@ -62,26 +60,17 @@ void CakeBullet::Finalize()
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime"></param>
-/// <param name="hit"></param>
-/// <param name="playerPos"></param>
-/// <param name="hitChecker"></param>
+/// <param name="player"></param>
 /// <param name="cakeEffect"></param>
-void CakeBullet::Update(float deltaTime, const VECTOR& playerPos, HitChecker* hitChecker, RepopEffect* cakeEffect)
+void CakeBullet::Update(float deltaTime, Player* player, RepopEffect* cakeEffect)
 {
-    //ケーキが生きてるならば
-    if (cake->GetAlive())
-    {
-        //判定処理を行う
-        hitChecker->CakeAndPlayer(playerPos, cake);
-        cake->IsAlive(hitChecker);
-    }
-    else
+    //ケーキが生きていないならば
+    if (!cake->GetAlive())
     {
         cakeGet = true;
     }
 
-    
-    Shoot(deltaTime, playerPos);
+    Shoot(deltaTime, player);
     BulletReuse(deltaTime, cakeEffect);
 }
 
@@ -89,20 +78,20 @@ void CakeBullet::Update(float deltaTime, const VECTOR& playerPos, HitChecker* hi
 /// バレット発射処理
 /// </summary>
 /// <param name="deltaTime"></param>
-/// <param name="playerPos"></param>
-void CakeBullet::Shoot(float deltaTime, const VECTOR& playerPos)
+/// <param name="player"></param>
+void CakeBullet::Shoot(float deltaTime, Player* player)
 {
     //マウスカーソルを左クリックし、且つケーキとバレットが非アクティブならば
 	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && !bullet->GetAlive() && !cake->GetAlive())
 	{
-		bullet->Update(deltaTime);
+        bullet->Update(deltaTime);
 		bullet->BulletAlive();
 
         //ケーキを置いた時のSE音を再生
         SoundManager::GetInstance().SePlayFlag(SoundManager::CAKE_SHOOT);
 	}
 
-	bullet->MouseMove(cake, playerPos);
+	bullet->MouseMove(cake, player);
 }
 
 /// <summary>

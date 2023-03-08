@@ -2,23 +2,23 @@
 #include "PreCompiledHeader.h"
 
 #include "Player.h"
+#include "Enemy.h"
 #include "Cake.h"
+#include "GoalFlag.h"
 
-
-using namespace Math3d;
+using namespace Math3d;		//VECTORの計算に使用
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 HitChecker::HitChecker()
-	: cakeHit(false)
-	, hitPolyDim()
+	: hitPolyDim()
 	, uiPosition()
-	, uiDraw(false)
+	, uiHit(false)
 	, pushBack()
 	, mapHit(false)
-	, enemyHit(false)
-	, UI_POSITION({ -800.0f, 30.0f, 0.0f })
+	, flagHit(false)
+	, UI_POSITION({ 0.0f, 30.0f, 800.0f })
 {
 	uiPosition = UI_POSITION;
 }
@@ -36,58 +36,54 @@ HitChecker::~HitChecker()
 /// </summary>
 /// <param name="model"></param>
 /// <param name="player"></param>
-void HitChecker::Check(int model, Player* player, VECTOR flagPos)
+void HitChecker::Check(int model, Player* player, GoalFlag* goalFlag)
 {
 	PlayerAndUI(player);
 	MapAndPlayer(model, player);
-	FlagAndPlayer(flagPos, player);
+	FlagAndPlayer(goalFlag, player);
 }
 
 /// <summary>
 /// ケーキとプレイヤーの当たり判定
 /// </summary>
-/// <param name="playerPos"></param>
+/// <param name="player"></param>
 /// <param name="cake"></param>
-void HitChecker::CakeAndPlayer(VECTOR playerPos, Cake* cake)
+void HitChecker::CakeAndPlayer(Player* player, Cake* cake)
 {
 	//プレイヤーからケーキの座標を引いた値を取得
-	VECTOR sub = playerPos - cake->GetPosition();
+	VECTOR sub = player->GetPosition() - cake->GetPosition();
 
-	//プレイヤーとケーキの2点間の距離を計算
-	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
+	//プレイヤーとケーキの距離を計算
+	float direction = VSize(sub);
+	float radius = player->GetCollide().radius + cake->GetCollideRadius();
 	
 	//衝突しているならば
-	if (direction < PLAYER_RADIUS + CAKE_RADIUS)
+	if (direction < radius)
 	{
-		cakeHit = true;
-	}
-	else
-	{
-		cakeHit = false;
+		//ケーキの反応
+		cake->HitCake();
 	}
 }
 
 /// <summary>
 /// エネミーとプレイヤーの当たり判定
 /// </summary>
-/// <param name="playerPos"></param>
-/// <param name="monitoringEnemy"></param>
-void HitChecker::EnemyAndPlayer(VECTOR playerPos, VECTOR enemyPos)
+/// <param name="player"></param>
+/// <param name="enemy"></param>
+void HitChecker::EnemyAndPlayer(Player* player, Enemy* enemy)
 {
-	//プレイヤーからケーキの座標を引いた値を取得
-	VECTOR sub = playerPos - enemyPos;
+	//プレイヤーからエネミーの座標を引いた値を取得
+	VECTOR sub = player->GetPosition() - enemy->GetPosition();
 
-	//プレイヤーとケーキの2点間の距離を計算
-	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
+	//プレイヤーとエネミーの距離を計算
+	float direction = VSize(sub);
+	float radius = player->GetCollide().radius + enemy->GetCollideRadius();
 
 	//衝突しているならば
-	if (direction < PLAYER_RADIUS + ENEMY_RADIUS)
+	if (direction < radius)
 	{
-		enemyHit = true;
-	}
-	else
-	{
-		enemyHit = false;
+		//エネミーの反応
+		enemy->HitPlayer();
 	}
 }
 
@@ -100,17 +96,17 @@ void HitChecker::PlayerAndUI(Player* player)
 	//プレイヤーからUI画像の座標を引いた値を取得
 	VECTOR sub = player->GetPosition() - uiPosition;
 
-	//プレイヤーとUI画像の2点間の距離を計算
-	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
+	//プレイヤーとUI画像の距離を計算
+	float direction = VSize(sub);
 
 	//衝突しているならば
-	if (direction < PLAYER_RADIUS + 50.0f)
+	if (direction < player->GetCollide().radius + 50.0f)
 	{
-		uiDraw = true;
+		uiHit = true;
 	}
 	else
 	{
-		uiDraw = false;
+		uiHit = false;
 	}
 }
 
@@ -125,16 +121,13 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 	MV1SetupCollInfo(model, 0, 8, 8, 8);
 
 	//マップモデルとプレイヤーの当たり判定
-	hitPolyDim = MV1CollCheck_Sphere(model, -1, player->GetPosition(), 100.0f);
+	hitPolyDim = MV1CollCheck_Sphere(model, -1, player->GetCollide().worldCenter, player->GetCollide().radius);
 
-	VECTOR moveCandidate = player->GetPosition(); //球中心候補
-
-	VECTOR moveVec = VGet(0, 0, 0);    //移動ベクトル
-	float  moveLengh = 0.0f;           //移動量
-	VECTOR planeNormal = VGet(0, 0, 0);    //ポリゴン平面法線
-
-	VECTOR newCenter = player->GetPosition(); //移動候補
-	
+	VECTOR moveCandidate = player->GetCollide().worldCenter;	//球中心候補
+	VECTOR moveVec = VGet(0.0f, 0.0f, 0.0f);					//移動ベクトル
+	VECTOR planeNormal = VGet(0.0f, 0.0f, 0.0f);				//ポリゴン平面法線
+	VECTOR newCenter = player->GetCollide().worldCenter;		//移動候補
+	float  moveLengh = 0.0f;									//移動量
 
 	//プレイヤーがマップに当たったかどうか
 	if (hitPolyDim.HitNum)
@@ -152,26 +145,26 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 			planeNormal = VCross(edge1, edge2);
 			planeNormal = VNorm(planeNormal);
 
-			//球中心に最も近いポリゴン平面の点を求める
+			//プレイヤー中心に最も近いポリゴン平面の点を求める
 			VECTOR tmp = moveCandidate - hitPolyDim.Dim[i].Position[0];
 			float  dot = VDot(planeNormal, tmp);
 
 			//衝突点
 			VECTOR hitPos = moveCandidate - planeNormal * dot;
 
-			//球がどれくらいめり込んでいるかを算出
+			//プレイヤーがどれくらいめり込んでいるかを算出
 			VECTOR tmp2 = moveCandidate - hitPos;
 			float  len = VSize(tmp2);
 
-			//めり込んでいる場合は球の中心を押し戻し
-			if (HitCheck_Sphere_Triangle(moveCandidate, PLAYER_RADIUS,
+			//めり込んでいる場合はプレイヤーの中心を押し戻し
+			if (HitCheck_Sphere_Triangle(moveCandidate, player->GetCollide().radius,
 				hitPolyDim.Dim[i].Position[0],
 				hitPolyDim.Dim[i].Position[1],
 				hitPolyDim.Dim[i].Position[2]))
 			{
 				//めり込み解消する位置まで移動
 				VECTOR moveVec;
-				len = PLAYER_RADIUS - len;
+				len = player->GetCollide().radius - len;
 				moveVec = planeNormal * len;
 				moveCandidate += moveVec;
 			}
@@ -179,7 +172,9 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 			//移動候補を移動位置にする
 			newCenter = moveCandidate;
 
-			pushBack = newCenter - player->GetDir() + VScale(player->GetDir(), 10.0f);
+			pushBack = newCenter - player->GetDirection() + VScale(player->GetDirection(), 10.0f);
+
+			player->HitMap(pushBack, mapHit);
 		}
 	}
 	else
@@ -191,18 +186,20 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 /// <summary>
 /// ゴール旗とプレイヤーの当たり判定
 /// </summary>
-/// <param name="flagPos"></param>
+/// <param name="goalFlag"></param>
 /// <param name="player"></param>
-void HitChecker::FlagAndPlayer(VECTOR flagPos, Player* player)
+void HitChecker::FlagAndPlayer(GoalFlag* goalFlag, Player* player)
 {
 	//プレイヤーからゴール旗の座標を引いた値を取得
-	VECTOR sub = player->GetPosition() - flagPos;
+	VECTOR sub = player->GetPosition() - goalFlag->GetPosition();
 
-	//プレイヤーとゴール旗の2点間の距離を計算
-	float direction = sqrt(pow(sub.x, 2) + pow(sub.z, 2));
+	//プレイヤーとゴール旗の距離を計算
+	float direction = VSize(sub);
+
+	float radius = player->GetCollide().radius + goalFlag->GetCollideRadius();
 
 	//衝突しているならば
-	if (direction < PLAYER_RADIUS + 50.0f)
+	if (direction < radius)
 	{
 		flagHit = true;
 	}

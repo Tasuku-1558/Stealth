@@ -1,4 +1,4 @@
-#include "Cake.h"
+#include "Stone.h"
 #include "ModelManager.h"
 
 
@@ -6,7 +6,7 @@
 /// コンストラクタ
 /// </summary>
 /// <param name="pos"></param>
-Cake::Cake(const VECTOR& pos) : ObjectBase()
+Stone::Stone(const VECTOR& pos) : ObjectBase()
 	, alive(true)
 	, SIZE({ 20.0f, 20.0f, 20.0f })
 	, ROTATE({ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f })
@@ -18,7 +18,7 @@ Cake::Cake(const VECTOR& pos) : ObjectBase()
 /// <summary>
 /// デストラクタ
 /// </summary>
-Cake::~Cake()
+Stone::~Stone()
 {
 	//処理なし
 }
@@ -26,10 +26,10 @@ Cake::~Cake()
 /// <summary>
 /// 初期化処理
 /// </summary>
-void Cake::Initialize()
+void Stone::Initialize()
 {
-	//ケーキのモデルの読み込み
-	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::CAKE));
+	//小石のモデルの読み込み
+	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STONE));
 
 	//モデルのサイズ,回転値,位置を設定
 	MV1SetScale(modelHandle, SIZE);
@@ -40,9 +40,9 @@ void Cake::Initialize()
 /// <summary>
 /// 活性化処理
 /// </summary>
-void Cake::Activate()
+void Stone::Activate()
 {
-	CakeAlive();
+	StoneAlive();
 
 	//当たり判定球の情報設定
 	collisionSphere.localCenter = ZERO_VECTOR;
@@ -53,7 +53,7 @@ void Cake::Activate()
 /// <summary>
 /// 終了処理
 /// </summary>
-void Cake::Finalize()
+void Stone::Finalize()
 {
 	MV1DeleteModel(modelHandle);
 }
@@ -61,32 +61,25 @@ void Cake::Finalize()
 /// <summary>
 /// 更新処理
 /// </summary>
-void Cake::Update(float deltaTime)
+void Stone::Update(float deltaTime)
 {
-	//処理なし
+	//当たり判定球の移動処理
+	collisionSphere.Move(position);
 }
 
 /// <summary>
-/// ケーキを非アクティブ化
+/// 小石を非アクティブ化
 /// </summary>
-void Cake::CakeAlive()
+void Stone::StoneAlive()
 {
 	alive = true;
 	position = position;
 }
 
 /// <summary>
-/// ケーキに衝突した
-/// </summary>
-void Cake::HitCake()
-{
-	alive = false;
-}
-
-/// <summary>
 /// 描画処理
 /// </summary>
-void Cake::Draw()
+void Stone::Draw()
 {
 	MV1DrawModel(modelHandle);
 }

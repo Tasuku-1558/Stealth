@@ -154,6 +154,8 @@
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="CakeBullet.cpp" />
     <ClCompile Include="CakeParticle.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="EffectBase.cpp" />
     <ClCompile Include="RepopEffect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="FifthStage.cpp" />
@@ -180,7 +182,6 @@
     <ClCompile Include="PlayerBase.cpp" />
     <ClCompile Include="FirstStage.cpp" />
     <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SecondStage.cpp" />
     <ClCompile Include="SelectionUi.cpp" />
     <ClCompile Include="Set.cpp" />
@@ -188,6 +189,7 @@
     <ClCompile Include="StageBase.cpp" />
     <ClCompile Include="StageMap.cpp" />
     <ClCompile Include="StageSelection.cpp" />
+    <ClCompile Include="Stone.cpp" />
     <ClCompile Include="ThirdStage.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="UiManager.cpp" />
@@ -196,6 +198,7 @@
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="CakeBullet.h" />
     <ClInclude Include="CakeParticle.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="RepopEffect.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="FifthStage.h" />
@@ -224,7 +227,6 @@
     <ClInclude Include="FirstStage.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SecondStage.h" />
     <ClInclude Include="SelectionUi.h" />
     <ClInclude Include="Set.h" />
@@ -232,6 +234,7 @@
     <ClInclude Include="StageBase.h" />
     <ClInclude Include="StageMap.h" />
     <ClInclude Include="StageSelection.h" />
+    <ClInclude Include="Stone.h" />
     <ClInclude Include="ThirdStage.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="UiManager.h" />
