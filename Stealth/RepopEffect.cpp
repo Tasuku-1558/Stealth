@@ -6,8 +6,7 @@
 /// コンストラクタ
 /// </summary>
 RepopEffect::RepopEffect(/*string effectPath, float effectSize*/)
-	: EffectBase()
-	, EFFECT_FOLDER_PATH("Data/effect/")
+	: EFFECT_FOLDER_PATH("Data/effect/")
 	, CAKE_PATH("cake.efkefc")
 	, MAGNIFICATION(30.0f)
 {

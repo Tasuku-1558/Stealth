@@ -20,9 +20,6 @@ TitleScene::TitleScene()
 	, inc(0)
 	, frame(0.0f)
 	, sphereZ(0.0f)
-	, light(nullptr)
-	, camera(nullptr)
-	, fadeManager(nullptr)
 	, VIDEO_FOLDER_PATH("Data/Video/")
 	, IMAGE_FOLDER_PATH("Data/image/")
 	, PLAY_VIDEO_PATH("PlayVideo.mp4")
@@ -87,9 +84,9 @@ void TitleScene::Finalize()
 
 	DeleteGraph(titleUi);
 
-	SafeDelete(camera);
+	delete camera;
 
-	SafeDelete(light);
+	delete light;
 }
 
 /// <summary>
@@ -214,8 +211,10 @@ void TitleScene::Blink()
 /// </summary>
 void TitleScene::Draw()
 {
+	//デモ動画を再生する
 	DrawGraph(0, 0, titleMovie, FALSE);
 
+	//タイトル名描画
 	DrawRotaGraph(950, 450, 0.5f, 0, titleName, TRUE);
 
 	Blink();
@@ -231,5 +230,6 @@ void TitleScene::Draw()
 		sphereZ = EXIT_SPHERE_POSY;
 	}
 
+	//3D球体の描画
 	DrawSphere3D({ -1250.0f, 0.0f, sphereZ }, 30.0f, 16, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
 }

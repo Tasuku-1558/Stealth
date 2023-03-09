@@ -6,8 +6,8 @@
 /// コンストラクタ
 /// </summary>
 /// <param name="pos"></param>
-Cake::Cake(const VECTOR& pos) : ObjectBase()
-	, alive(true)
+Cake::Cake(const VECTOR& pos)
+	: alive(true)
 	, SIZE({ 20.0f, 20.0f, 20.0f })
 	, ROTATE({ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f })
 	, RADIUS(50.0f)

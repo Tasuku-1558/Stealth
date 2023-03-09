@@ -18,10 +18,6 @@ StageSelection::StageSelection()
 	, stageMax(0)
 	, stageNo(0)
 	, changeTimeCount(0)
-	, light(nullptr)
-	, camera(nullptr)
-	, selectionUi(nullptr)
-	, fadeManager(nullptr)
 	, pushCount(0.0f)
 	, frame(0.0f)
 	, changeScene(false)
@@ -61,13 +57,13 @@ void StageSelection::Initialize()
 /// </summary>
 void StageSelection::Finalize()
 {
-	SafeDelete(light);
+	delete camera;
 
-	SafeDelete(camera);
+	delete light;
 
-	SafeDelete(selectionUi);
+	delete selectionUi;
 
-	SafeDelete(fadeManager);
+	delete fadeManager;
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);

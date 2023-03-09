@@ -5,8 +5,7 @@
 /// </summary>
 /// <param name="pos"></param>
 CakeParticle::CakeParticle(const VECTOR& pos)
-	: ParticleBase()
-	, particlePopTime(2.0f)
+	: particlePopTime(2.0f)
 	, PINK(GetColor(224, 148, 171))
 	, POS_Y(0.0f)
 {

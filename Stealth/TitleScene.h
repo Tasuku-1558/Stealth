@@ -25,14 +25,14 @@ private:
 
 	TitleScene(const TitleScene&);		//コピーコンストラクタ
 
-	string InputPath(string folderPath,	//画像のパスを入力
-					 string path);
-
 	void Initialize()override;			//初期化処理
 	void Activate()override;			//活性化処理
 	void Finalize()override;			//終了処理
 	void Blink();						//文字の点滅処理
 	void ChangeState();					//タイトルの状態の変更
+
+	string InputPath(string folderPath,	//画像のパスを入力
+					 string path);
 
 	//タイトルの状態
 	enum class SelectState

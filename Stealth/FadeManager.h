@@ -14,6 +14,7 @@ public:
 
 private:
 	FadeManager(const FadeManager&);//コピーコンストラクタ
+
 	void Activate();				//活性化処理
 
 	int fade;

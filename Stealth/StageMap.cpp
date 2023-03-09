@@ -10,8 +10,7 @@ using namespace std;
 /// <param name="rotate"></param>
 /// <param name="position"></param>
 StageMap::StageMap(/*ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position*/)
-	: StageBase()
-	, stageNo(0)
+	: stageNo(0)
 {
 	stageNo = 1;
 

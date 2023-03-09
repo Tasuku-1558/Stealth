@@ -5,8 +5,7 @@
 /// コンストラクタ
 /// </summary>
 PlayerBase::PlayerBase()
-	: ObjectBase()
-	, inputDirection()
+	: inputDirection()
 	, nextPosition()
 	, playerFindCount(0)
 	, playerFindImage(0)

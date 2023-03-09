@@ -38,7 +38,7 @@ private:
 
 	int cursorImage;						//照準画像格納用
 	int mouseX;								//マウスX座標
-	int mouseZ;								//マウスZ座標
+	int mouseY;								//マウスY座標
 	float worldMouseX;						//ワールドマウスX座標
 	float worldMouseY;						//ワールドマウスY座標
 	float worldMouseZ;						//ワールドマウスZ座標

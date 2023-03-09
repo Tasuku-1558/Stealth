@@ -38,6 +38,9 @@
     <Filter Include="ソース ファイル\Collision">
       <UniqueIdentifier>{4669bcea-c662-4ad4-82c9-7f5bddb84220}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソースファイル">
+      <UniqueIdentifier>{b3195715-190f-4056-8a0d-f368932e2fd5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

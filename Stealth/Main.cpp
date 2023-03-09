@@ -54,7 +54,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	//Effekseerの初期化処理
-	if (Effekseer_Init(8000) == -1)
+	//引数は画面に表示する最大パーティクル数を設定
+	if (Effekseer_Init(MAX_PARTICLE_NUMBER) == -1)
 	{
 		DxLib_End();
 		return -1;

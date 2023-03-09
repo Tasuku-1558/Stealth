@@ -4,7 +4,7 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-StageBase::StageBase() : ObjectBase()
+StageBase::StageBase()
 {
 	//処理なし
 }

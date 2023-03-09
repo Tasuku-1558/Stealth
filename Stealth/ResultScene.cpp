@@ -20,10 +20,8 @@ ResultScene::ResultScene()
 	, font(0)
 	, frame(0.0f)
 	, fireWorksParticle()
-	, camera(nullptr)
 	, particleFlag(false)
 	, particleInterval(0.0f)
-	, fadeManager(nullptr)
 	, clear(false)
 	, resultUiImage(0)
 	, alpha(255)
@@ -87,17 +85,17 @@ void ResultScene::Finalize()
 
 	DeleteGraph(backGroundImage);
 
-	SafeDelete(fadeManager);
+	DeleteGraph(resultUiImage);
 
-	SafeDelete(camera);
+	delete camera;
+
+	delete fadeManager;
 
 	for (auto fireWorksParticlePtr : fireWorksParticle)
 	{
-		SafeDelete(fireWorksParticlePtr);
 		DeleteFireWorksParticle(fireWorksParticlePtr);
+		//delete fireWorksParticlePtr;
 	}
-
-	DeleteGraph(resultUiImage);
 }
 
 /// <summary>

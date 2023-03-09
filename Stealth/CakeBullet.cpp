@@ -9,9 +9,7 @@
 /// </summary>
 /// <param name="cakePos"></param>
 CakeBullet::CakeBullet(const VECTOR& cakePos)
-    : cake(nullptr)
-    , bullet(nullptr)
-    , bulletCount(0.0f)
+    : bulletCount(0.0f)
     , cakeGet(false)
 {
     cake = new Cake(cakePos);

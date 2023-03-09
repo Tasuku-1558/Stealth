@@ -7,10 +7,10 @@ using namespace Math3d;		//VECTORの計算に使用
 /// <summary>
 /// コンストラクタ
 /// </summary>
-Bullet::Bullet() : ObjectBase()
-	, cursorImage(0)
+Bullet::Bullet()
+	: cursorImage(0)
 	, mouseX(0)
-	, mouseZ(0)
+	, mouseY(0)
 	, worldMouseX(0.0f)
 	, worldMouseY(30.0f)
 	, worldMouseZ(0.0f)
@@ -98,15 +98,15 @@ void Bullet::Update(float deltaTime)
 void Bullet::MouseMove(Cake* cake, Player* player)
 {
 	//マウスの座標取得
-	GetMousePoint(&mouseX, &mouseZ);
+	GetMousePoint(&mouseX, &mouseY);
 	mouseX -= 960;
-	mouseZ -= 540;
+	mouseY -= 540;
 
 	//ケーキが死んだら
 	if (!cake->GetAlive())
 	{
 		//マウスのX,Z座標のワールド座標を計算
-		worldMouseX = (float)mouseZ * (-3000.0f / 1920.0f) * 1.7f + player->GetPosition().z;
+		worldMouseX = (float)mouseY * (3000.0f / -1920.0f) * 1.7f + player->GetPosition().z;
 		worldMouseZ = (float)mouseX * (1900.0f / 1080.0f) * 1.5f + player->GetPosition().x;
 	}
 }
@@ -150,5 +150,5 @@ void Bullet::Draw()
 		MV1DrawModel(modelHandle);
 	}
 
-	DrawRotaGraph(mouseX + 960, mouseZ + 540, SCALE, 0.0f, cursorImage, TRUE);
+	DrawRotaGraph(mouseX + 960, mouseY + 540, SCALE, 0.0f, cursorImage, TRUE);
 }

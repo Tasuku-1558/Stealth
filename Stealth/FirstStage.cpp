@@ -27,20 +27,7 @@
 FirstStage::FirstStage()
 	: SceneBase(SceneType::PLAY)
 	, state()
-	, camera(nullptr)
-	, light(nullptr)
-	, backGround(nullptr)
-	, player(nullptr)
-	, enemy(nullptr)
 	, pUpdate(nullptr)
-	, cakeBullet(nullptr)
-	, hitChecker(nullptr)
-	, stageMap(nullptr)
-	, goalFlag(nullptr)
-	, cakeEffect(nullptr)
-	, cakeParticle()
-	, uiManager(nullptr)
-	, fadeManager(nullptr)
 	, font(0)
 	, frame(0.0f)
 	, particleFlag(false)
@@ -95,7 +82,7 @@ void FirstStage::Initialize()
 		stageMap->Initialize(ModelManager::STAGE2, { 80.0f, 60.0f, 80.0f },
 						{ 0.0f, 0.0f, 0.0f }, { -7000.0f, -100.0f, -2900.0f });
 		//エネミーに行動パターンのリストとスピードを設定
-		enemy = new Enemy(stageMap->GetMap(0), 1000.0f);
+		enemy = new Enemy(stageMap->GetMap(1), 1000.0f);
 
 		//ケーキの初期位置を設定
 		cakeBullet = new CakeBullet({ -1500.0f,30.0f,0.0f });
@@ -120,34 +107,23 @@ void FirstStage::Initialize()
 /// </summary>
 void FirstStage::Finalize()
 {
-	/*SafeDelete(camera);
-
-	SafeDelete(light);
-
-	SafeDelete(backGround);
-
-	SafeDelete(stageMap);
-
-	SafeDelete(enemy);
-
-	SafeDelete(cakeBullet);
-
-	SafeDelete(goalFlag);
-
-	SafeDelete(player);
-
-	SafeDelete(cakeEffect);
-
-	SafeDelete(hitChecker);
-
-	SafeDelete(uiManager);
-
-	SafeDelete(fadeManager);*/
+	delete camera;
+	delete light;
+	delete backGround;
+	delete stageMap;
+	delete enemy;
+	delete cakeBullet;
+	delete goalFlag;
+	delete player;
+	delete cakeEffect;
+	delete hitChecker;
+	delete uiManager;
+	delete fadeManager;
 
 	for (auto particlePtr : cakeParticle)
 	{
 		DeleteCakeParticle(particlePtr);
-		//SafeDelete(particlePtr);
+		delete particlePtr;
 	}
 
 	//作成したフォントデータの削除

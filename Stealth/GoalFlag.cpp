@@ -8,8 +8,8 @@ using namespace Math3d;		//VECTORの計算に使用
 /// コンストラクタ
 /// </summary>
 /// <param name="pos"></param>
-GoalFlag::GoalFlag(VECTOR pos) : ObjectBase()
-	, rotate()
+GoalFlag::GoalFlag(VECTOR pos)
+	: rotate()
 	, SIZE({ 1.0f, 1.0f, 1.0f })
 	, ROTATE_SPEED({ 0.0f, 3.0f, 0.0f })
 	, RADIUS(50.0f)
