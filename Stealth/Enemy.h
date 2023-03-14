@@ -1,9 +1,7 @@
 #pragma once
 
 #include <string>
-#include <vector>
 
-#include "DxLib.h"
 #include "EnemyBase.h"
 #include "Math3D.h"
 #include "Collision.h"

@@ -46,9 +46,6 @@ void Bullet::Initialize()
 	MV1SetScale(modelHandle, SIZE);
 	MV1SetRotationXYZ(modelHandle, ROTATE);
 
-	//マウスカーソルを表示しない
-	SetMouseDispFlag(FALSE);
-
 	string failePath = IMAGE_FOLDER_PATH + CURSOR_PATH;
 	cursorImage = LoadGraph(failePath.c_str());
 }

@@ -66,7 +66,7 @@ void FirstStage::Initialize()
 
 	effectManager = new EffectManager();
 
-	player = new Player();
+	player = new Player(effectManager);
 
 	//エネミーに行動パターンのナンバーとスピードを設定
 	enemy = new Enemy(0, 1000.0f);

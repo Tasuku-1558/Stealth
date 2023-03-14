@@ -60,5 +60,6 @@ void BackGround::Update()
 /// </summary>
 void BackGround::Draw()
 {
+	//”wŒi“®‰æ‚ğÄ¶‚·‚é
 	DrawGraph(0, 0, backGroundHandle, FALSE);
 }

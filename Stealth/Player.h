@@ -4,6 +4,7 @@
 #include "PlayerBase.h"
 #include "Math3D.h"
 #include "Collision.h"
+#include "EffectManager.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ using namespace std;
 class Player final : public PlayerBase
 {
 public:
-	Player();
+	Player(EffectManager* const inEffect);
 	virtual ~Player();
 
 	void Update(float deltaTime, VECTOR back, bool mapHit);						//更新処理
@@ -36,6 +37,8 @@ private:
 	void HitMap(VECTOR back, bool mapHit);										//マップに衝突した
 	string InputPath(string folderPath,											//パスを入力
 					 string path);
+
+	EffectManager* effectManager;	//エフェクトマネージャーのポインタ
 
 	float initialCount;				//初期位置に戻すカウント
 	int afterImageModelHandle[12];	//残像モデル格納用

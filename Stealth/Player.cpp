@@ -9,7 +9,9 @@ using namespace Math3d;		//VECTORの計算に使用
 /// <summary>
 /// コンストラクタ
 /// </summary>
-Player::Player() : PlayerBase()
+/// <param name="inEffect"></param>
+Player::Player(EffectManager* const inEffect)
+	: PlayerBase()
 	, initialCount(0.0f)
 	, pastPosition()
 	, afterImageModelHandle()
@@ -17,6 +19,8 @@ Player::Player() : PlayerBase()
 	, PLAYER_FIND_PATH("playerFind.png")
 	, AFTER_IMAGE_NUMBER(12)
 {
+	effectManager = inEffect;
+
 	Initialize();
 	Activate();
 }
@@ -245,9 +249,9 @@ void Player::FoundEnemy(float deltaTime, bool spotted)
 
 			spottedSeFlag = true;
 		}
-	}
 
-	FoundCount();
+		FoundCount();
+	}
 }
 
 /// <summary>
@@ -270,14 +274,19 @@ void Player::FoundCount()
 		}
 
 		direction = DIRECTION;
+
 		speed = SPEED;
+
+		initialCount = 0.0f;
 
 		//エネミーに見つかった回数を1プラスする
 		playerFindCount++;
 
-		initialCount = 0.0f;
 		findImageFlag = false;
 		spottedSeFlag = false;
+
+		//リスポーンエフェクトを出す
+		effectManager->CreateRepopEffect(position);
 	}
 }
 

@@ -37,9 +37,11 @@ private:
 	EffectBase* effect[EFFECT_AMOUNT];			//エフェクト格納用
 
 
-	//定数
+	//エフェクト
 	const string EFFECT_FOLDER_PATH;	//effectフォルダまでのパス
 	const string REPOP_EFFECT_PATH;		//リスポーン時エフェクトのパス
+
+	//エフェクトのサイズ
 	const float  REPOP_SIZE;			//リスポーンエフェクトのサイズ
 
 };

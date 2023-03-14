@@ -1,6 +1,4 @@
 #include "CakeBullet.h"
-#include "Player.h"
-#include "EffectManager.h"
 #include "SoundManager.h"
 
 
@@ -9,7 +7,7 @@
 /// </summary>
 /// <param name="cakePosition"></param>
 /// <param name="inEffect"></param>
-CakeBullet::CakeBullet(const VECTOR& cakePosition, EffectManager* inEffect)
+CakeBullet::CakeBullet(const VECTOR& cakePosition, EffectManager* const inEffect)
     : bulletCount(0.0f)
     , cakeGet(false)
 {

@@ -12,7 +12,7 @@ using namespace std;
 
 
 /// <summary>
-/// リザルトシーン
+/// リザルトシーンクラス
 /// </summary>
 class ResultScene final : public SceneBase
 {

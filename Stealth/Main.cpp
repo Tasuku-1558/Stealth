@@ -2,7 +2,6 @@
 #include "EffekseerForDXLib.h"
 #include "PreCompiledHeader.h"
 #include "ModelManager.h"
-#include "DeltaTime.h"
 #include "KeyManager.h"
 #include "SoundManager.h"
 
@@ -132,6 +131,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//差分を100万分の1にして保存する(マイクロ秒換算)
 		deltaTime = (nowTime - prevTime) / 1000000.0f;
 
+		//マウスカーソルを表示しない
+		SetMouseDispFlag(FALSE);
+
 		//DxlibのカメラとEffekseerのカメラを同期
 		Effekseer_Sync3DSetting();
 
@@ -165,12 +167,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//裏画面の内容を表画面に反映させる
 		ScreenFlip();
 
-		//次のシーンがENDなら
+		//次のシーンがENDならループを抜ける
 		if (nowSceneType == SceneType::END)
 		{
 			break;
 		}
 
+		//今のシーンが前のシーンと違うなら
 		if (nowSceneType != prevSceneType)
 		{
 			delete sceneBase;						//シーンの解放

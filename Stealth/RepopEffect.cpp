@@ -5,6 +5,8 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
+/// <param name="effectPath"></param>
+/// <param name="effectSize"></param>
 RepopEffect::RepopEffect(string effectPath, float effectSize)
 {
 	effectHandle = LoadEffekseerEffect(effectPath.c_str(), effectSize);

@@ -11,7 +11,7 @@ enum class SceneType
 };
 
 /// <summary>
-/// SceneBaseクラス
+/// シーンベースクラス
 /// </summary>
 class SceneBase
 {

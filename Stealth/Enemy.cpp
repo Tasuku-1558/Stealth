@@ -8,9 +8,10 @@ using namespace Math3d;		//VECTORの計算に使用
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="number"></param>
-/// <param name="enemySpeed"></param>
-Enemy::Enemy(int number, float enemySpeed) : EnemyBase()
+/// <param name="number">行動パターンの番号</param>
+/// <param name="enemySpeed">エネミーのスピード</param>
+Enemy::Enemy(int number, float enemySpeed)
+	: EnemyBase()
 	, cakeCount(0.0f)
 	, cakeFindFlag(false)
 	, IMAGE_FOLDER_PATH("Data/image/")

@@ -3,9 +3,9 @@
 #include "DxLib.h"
 #include "Cake.h"
 #include "Bullet.h"
+#include "EffectManager.h"
+#include "Player.h"
 
-class EffectManager;
-class Player;
 
 /// <summary>
 /// ケーキとバレット管理クラス
@@ -15,11 +15,10 @@ class CakeBullet final
 {
 public:
 
-    CakeBullet(const VECTOR& cakePosition, EffectManager* inEffect);
+    CakeBullet(const VECTOR& cakePosition, EffectManager* const inEffect);
     virtual ~CakeBullet();
 
     void Update(float deltaTime, Player* player);   //更新処理
-
     void Draw();                                    //描画処理
     
     const bool CakeGet() { return cakeGet; }        //ケーキを所持しているかいないかを返す
