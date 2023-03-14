@@ -8,22 +8,20 @@ using namespace Math3d;		//VECTORの計算に使用
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="id"></param>
+/// <param name="number"></param>
 /// <param name="enemySpeed"></param>
-Enemy::Enemy(vector<VECTOR>& id, float enemySpeed) : EnemyBase()
+Enemy::Enemy(int number, float enemySpeed) : EnemyBase()
 	, cakeCount(0.0f)
 	, cakeFindFlag(false)
-	, cakeEatFlag(false)
-	, cakeHalfFlag(false)
 	, IMAGE_FOLDER_PATH("Data/image/")
 	, MARK_PATH("mark.png")
-	, CAKE_PATH("ui8.png")
-	, CAKE_HALF_PATH("cakeHalf.png")
-	, enemyState(EnemyState::CRAWL)
-	, futureDir()
-	, rotate(false)
+	, nextDirection()
+	, rotateFlag(false)
+	, frame(0.0f)
+	, cakeEat(false)
+	, enemyReaction(EnemyReaction::NORMAL)
 {
-	Position(id);
+	Position(GetList(number));
 
 	changeSpeed = enemySpeed;
 
@@ -50,12 +48,8 @@ void Enemy::Initialize()
 	//視野モデルの読み込み
 	visualModelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY_VISUAL));
 
-	//画像の読み込み
-	markImage	 = LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
-
-	cakeImage[0] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_PATH).c_str());
-
-	cakeImage[1] = LoadGraph(InputPath(IMAGE_FOLDER_PATH, CAKE_HALF_PATH).c_str());
+	//ビックリマーク画像の読み込み
+	markImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
 }
 
 /// <summary>
@@ -76,7 +70,7 @@ void Enemy::Activate()
 {
 	speed = changeSpeed;
 	direction = ZERO_VECTOR;
-	futureDir = ZERO_VECTOR;
+	nextDirection = ZERO_VECTOR;
 
 	//当たり判定球の情報設定
 	collisionSphere.localCenter = ZERO_VECTOR;
@@ -108,11 +102,6 @@ void Enemy::Finalize()
 	MV1DeleteModel(visualModelHandle);
 
 	DeleteGraph(markImage);
-
-	for (int i = 0; i < CAKE_IMAGE_NUMBER; i++)
-	{
-		DeleteGraph(cakeImage[i]);
-	}
 }
 
 /// <summary>
@@ -140,56 +129,17 @@ void Enemy::Move(float deltaTime)
 {
 	if (enemyState == EnemyState::CRAWL || enemyState == EnemyState::ARRIVAL)
 	{
-		//ベクトルの正規化
+		//現在の向き
 		direction = VNorm(targetPosition - position);
 	}
 	
 	if (enemyState == EnemyState::ROTATION)
 	{
-		//ベクトルの正規化
+		//現在の向き
 		direction = VNorm(direction);
 
-		futureDir = VNorm(targetPosition - position);
-
-		float a = powf(direction.x, 2.0f) + (0.0f) + powf(direction.z, 2.0f);
-
-		float b = powf(futureDir.x, 2.0f) + (0.0f) + powf(futureDir.z, 2.0f);
-
-		float cos = VDot(direction, futureDir) / (a * b);
-
-		float sita = acosf(cos);
-
-		sita = sita * 180.0f / DX_PI_F;
-
-		if (rotate)
-		{
-			//回転が目標角度に十分近ければ回転をやめる
-			if (IsNearAngle(direction, futureDir))
-			{
-				direction = futureDir;
-				rotate = false;
-			}
-			else
-			{
-				//回転させる
-				VECTOR d = RotateForAimVecYAxis(direction, futureDir, 4.0f);
-			
-				//回転が目標角度を超えていないか
-				VECTOR cross1 = VCross(direction, futureDir);
-				VECTOR cross2 = VCross(d, futureDir);
-
-				//目標角度を超えたら終了
-				if (cross1.y * cross2.y < 0.0f)
-				{
-					d = futureDir;
-					direction = futureDir;
-					rotate = false;
-				}
-
-				//目標ベクトルに10度だけ近づけた角度
-				direction = d;
-			}
-		}
+		//目標の向き
+		nextDirection = VNorm(targetPosition - position);
 	}
 
 	position += direction * speed * deltaTime;
@@ -230,6 +180,58 @@ bool Enemy::IsGoal(float deltaTime)
 }
 
 /// <summary>
+/// エネミーの回転処理
+/// </summary>
+/// <param name="deltaTime"></param>
+void Enemy::EnemyRotate(float deltaTime)
+{
+	//エネミーを回転させるか
+	if (rotateFlag)
+	{
+		//回転が目標角度に十分近ければ回転をやめる
+		if (IsNearAngle(nextDirection, direction))
+		{
+			direction = nextDirection;
+			rotateFlag = false;
+		}
+		else
+		{
+			//回転させる
+			VECTOR interPolateDir = RotateForAimVecYAxis(direction, nextDirection, 4.0f);
+
+			//回転が目標角度を超えていないか
+			VECTOR cross1 = VCross(direction, nextDirection);
+			VECTOR cross2 = VCross(interPolateDir, nextDirection);
+
+			//目標角度を超えたら終了
+			if (cross1.y * cross2.y < 0.0f)
+			{
+				interPolateDir = nextDirection;
+				rotateFlag = false;
+			}
+
+			//目標ベクトルに10度だけ近づけた角度
+			direction = interPolateDir;
+		}
+	}
+
+	frame += deltaTime;
+
+	//各オブジェクトによってカウントの時間を変える
+	if (enemyReaction == EnemyReaction::NORMAL && frame > 1.0f ||
+		enemyReaction == EnemyReaction::PLAYER && frame > 2.0f||
+		enemyReaction == EnemyReaction::CAKE && frame > 6.0f)
+	{
+		//スピードを元に戻す
+		speed = changeSpeed;
+
+		frame = 0.0f;
+
+		enemyState = EnemyState::ARRIVAL;
+	}
+}
+
+/// <summary>
 /// エネミーの視野にプレイヤーが入った場合
 /// </summary>
 /// <param name="player"></param>
@@ -260,13 +262,16 @@ void Enemy::VisualAnglePlayer(Player* player)
 		{
 			enemyReaction = EnemyReaction::PLAYER;
 
-			//視野範囲内ならば
+			direction = sub;
+
 			Reaction();
 		}
 	}
 	else
 	{
 		playerSpotted = false;
+
+		enemyReaction = EnemyReaction::NORMAL;
 	}
 }
 
@@ -302,9 +307,9 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 		{
 			enemyReaction = EnemyReaction::CAKE;
 
-			//視野範囲内ならば
-			Reaction();
+			direction = sub;
 
+			Reaction();
 
 			CakeEatCount(deltaTime);
 		}
@@ -318,12 +323,12 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 
 		cakeFindFlag = false;
 
-		cakeEatFlag = false;
-
-		cakeHalfFlag = false;
+		cakeEat = false;
 
 		//カウントの初期化
 		cakeCount = 0.0f;
+
+		enemyReaction = EnemyReaction::NORMAL;
 	}
 }
 
@@ -345,20 +350,11 @@ void Enemy::CakeEatCount(float deltaTime)
 	}
 
 	//ビックリマーク画像が非表示になったら
-	//ケーキの画像を表示する
 	if (/*230.0f > bulletDirection*/!cakeFindFlag)
 	{
 		speed = 0.0f;
-		cakeEatFlag = true;
 
-		//カウントが4秒経過したら
-		//半分になったケーキの画像を表示する
-		if (cakeCount > 4.0f)
-		{
-			cakeEatFlag = false;
-
-			cakeHalfFlag = true;
-		}
+		cakeEat = true;
 	}
 }
 
@@ -369,6 +365,9 @@ void Enemy::Reaction()
 {
 	switch (enemyReaction)
 	{
+	case EnemyReaction::NORMAL:
+		break;
+
 	case EnemyReaction::PLAYER:
 
 		//プレイヤーを発見した
@@ -403,9 +402,17 @@ void Enemy::StateUpdate(float deltaTime)
 		//目的地にたどり着いたならば
 		if (IsGoal(deltaTime))
 		{
+			targetPosition = *itr;
+
+			//最終目的地に到着したら次の目的地に向かう
+			if (itr == pointList.end())
+			{
+				itr = pointList.begin();
+			}
+
 			enemyState = EnemyState::ROTATION;
 		}
-			
+
 		break;
 
 	case EnemyState::ARRIVAL:
@@ -413,17 +420,14 @@ void Enemy::StateUpdate(float deltaTime)
 		break;
 
 	case EnemyState::ROTATION:
-
+		
 		//エネミーの動きを止める
 		speed = 0.0f;
-		rotate = true;
+
+		//エネミーを回転させる
+		rotateFlag = true;
 		
-		if (CheckHitKey(KEY_INPUT_G))
-		{
-			speed = changeSpeed;
-			rotate = false;
-			enemyState = EnemyState::ARRIVAL;
-		}
+		EnemyRotate(deltaTime);
 
 		break;
 	}
@@ -457,20 +461,6 @@ void Enemy::ReactionDraw()
 	{
 		//ビックリマーク画像を描画
 		DrawBillboard3D(VGet(position.x - 200.0f, 400.0f, position.z + 200.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
-	}
-
-	//ケーキがエネミーの視野角に入ったならば
-	if (cakeEatFlag)
-	{
-		//ケーキの画像を描画
-		DrawBillboard3D(VGet(position.x + 100.0f, 500.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, cakeImage[0], TRUE);
-	}
-
-	//ケーキがエネミーの視野角に入って4秒経過したら
-	if (cakeHalfFlag)
-	{
-		//ケーキが半分の画像を描画
-		DrawBillboard3D(VGet(position.x + 100.0f, 500.0f, position.z - 100.0f), 0.5f, 0.5f, 200.0f, 0.0f, cakeImage[1], TRUE);
 	}
 }
 

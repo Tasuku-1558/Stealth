@@ -19,6 +19,7 @@ ModelManager::ModelManager()
     , STAGE3_PATH("Stage/stage3.mv1")
     , STAGE4_PATH("Stage/stage4.mv1")
     , STAGE5_PATH("Stage/stage5.mv1")
+    , STAGE_WALL_PATH("Stage/kabe.mqo")
     , GOAL_FLAG_PATH("Goal/goal.mv1")
 {
     LoadAllModel();
@@ -68,6 +69,8 @@ void ModelManager::LoadAllModel()
     modelHandle[STAGE4]       = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, STAGE4_PATH).c_str());
 
     modelHandle[STAGE5]       = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, STAGE5_PATH).c_str());
+
+    modelHandle[WALL] = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, STAGE_WALL_PATH).c_str());
 
     modelHandle[GOAL]         = MV1LoadModel(InputPath(MODEL_FOLDER_PATH, GOAL_FLAG_PATH).c_str());
 

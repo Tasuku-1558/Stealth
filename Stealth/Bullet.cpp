@@ -60,8 +60,6 @@ void Bullet::Activate()
 {
 	position = POSITION;
 
-	BulletDead();
-
 	//“–‚½‚è”»’è‹…‚Ìî•ñİ’è
 	collisionSphere.localCenter = ZERO_VECTOR;
 	collisionSphere.worldCenter = position;

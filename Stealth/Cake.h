@@ -9,7 +9,7 @@
 class Cake final : public ObjectBase
 {
 public:
-	Cake(const VECTOR& pos);
+	Cake(const VECTOR& cakePosition);
 	virtual ~Cake();
 
 	void Initialize();					//初期化処理
@@ -20,7 +20,7 @@ public:
 	void Draw();						//描画処理
 	void HitCake();						//ケーキに衝突した
 
-	const bool GetAlive() { return alive; }			//ケーキが生きてるか死んでるかを返す
+	const bool GetAlive() { return alive; }									//ケーキが生きてるか死んでるかを返す
 	const float GetCollideRadius() { return collisionSphere.radius; }		//当たり判定球の半径を返す
 
 private:

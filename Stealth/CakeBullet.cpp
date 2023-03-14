@@ -1,19 +1,22 @@
 #include "CakeBullet.h"
-#include "RepopEffect.h"
 #include "Player.h"
+#include "EffectManager.h"
 #include "SoundManager.h"
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="cakePos"></param>
-CakeBullet::CakeBullet(const VECTOR& cakePos)
+/// <param name="cakePosition"></param>
+/// <param name="inEffect"></param>
+CakeBullet::CakeBullet(const VECTOR& cakePosition, EffectManager* inEffect)
     : bulletCount(0.0f)
     , cakeGet(false)
 {
-    cake = new Cake(cakePos);
+    cake = new Cake(cakePosition);
     bullet = new Bullet();
+
+    effectManager = inEffect;
 
     Initialize();
     Activate();
@@ -59,8 +62,7 @@ void CakeBullet::Finalize()
 /// </summary>
 /// <param name="deltaTime"></param>
 /// <param name="player"></param>
-/// <param name="cakeEffect"></param>
-void CakeBullet::Update(float deltaTime, Player* player, RepopEffect* cakeEffect)
+void CakeBullet::Update(float deltaTime, Player* player)
 {
     //ケーキが生きていないならば
     if (!cake->GetAlive())
@@ -69,7 +71,7 @@ void CakeBullet::Update(float deltaTime, Player* player, RepopEffect* cakeEffect
     }
 
     Shoot(deltaTime, player);
-    BulletReuse(deltaTime, cakeEffect);
+    BulletReuse(deltaTime);
 }
 
 /// <summary>
@@ -96,8 +98,7 @@ void CakeBullet::Shoot(float deltaTime, Player* player)
 /// バレット再使用カウント
 /// </summary>
 /// <param name="deltaTime"></param>
-/// <param name="cakeEffect"></param>
-void CakeBullet::BulletReuse(float deltaTime, RepopEffect* cakeEffect)
+void CakeBullet::BulletReuse(float deltaTime)
 {
     //バレットが生きてるならば
     if (bullet->GetAlive())
@@ -108,18 +109,18 @@ void CakeBullet::BulletReuse(float deltaTime, RepopEffect* cakeEffect)
 
         if (bulletCount > 5.7f)
         {
-            //ケーキ復活エフェクトを出す
-            cakeEffect->Update(cake->GetPosition());
+           //リスポーンエフェクトを出す
+           effectManager->CreateRepopEffect(cake->GetPosition());
         }
 
         //カウントが6秒以上経過したら
         if (bulletCount > 6.0f)
         {
-            bulletCount = 0.0f;
-
             //ケーキをアクティブ状態にし、バレットを非アクティブにする
             cake->CakeAlive();
             bullet->BulletDead();
+
+            bulletCount = 0.0f;
         }
     }
 }

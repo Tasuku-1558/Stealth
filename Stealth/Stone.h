@@ -9,7 +9,7 @@
 class Stone final : public ObjectBase
 {
 public:
-	Stone(const VECTOR& pos);
+	Stone(const VECTOR& stonePosition);
 	virtual ~Stone();
 
 	void Initialize();					//‰Šú‰»ˆ—

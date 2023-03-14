@@ -5,14 +5,14 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="pos"></param>
-Cake::Cake(const VECTOR& pos)
+/// <param name="cakePosition"></param>
+Cake::Cake(const VECTOR& cakePosition)
 	: alive(true)
 	, SIZE({ 20.0f, 20.0f, 20.0f })
 	, ROTATE({ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f })
 	, RADIUS(50.0f)
 {
-	position = pos;
+	position = cakePosition;
 }
 
 /// <summary>
@@ -42,8 +42,6 @@ void Cake::Initialize()
 /// </summary>
 void Cake::Activate()
 {
-	CakeAlive();
-
 	//当たり判定球の情報設定
 	collisionSphere.localCenter = ZERO_VECTOR;
 	collisionSphere.worldCenter = position;

@@ -14,7 +14,7 @@ public:
 	Camera();
 	virtual ~Camera();
 
-	void Update(VECTOR playerPos);				//更新処理
+	void Update(VECTOR playerPosition);			//更新処理
 	void SelectionAndResultCamera();			//ステージセレクション画面とリザルト画面のカメラ
 
 private:

@@ -26,8 +26,9 @@ public:
 		STAGE3,			//ステージ3モデル
 		STAGE4,			//ステージ4モデル
 		STAGE5,			//ステージ5モデル
+		WALL,
 		GOAL,			//ゴールフラッグモデル
-		MODEL_AMOUNT	//モデルの数
+		MODEL_AMOUNT,	//モデルの数
 	};
 
 	static ModelManager& GetInstance();					  //アドレスを返す
@@ -60,6 +61,7 @@ private:
 	const string STAGE3_PATH;		//stage3モデルファイルのパス
 	const string STAGE4_PATH;		//stage4モデルファイルのパス
 	const string STAGE5_PATH;		//stage5モデルファイルのパス
+	const string STAGE_WALL_PATH;
 	const string GOAL_FLAG_PATH;	//goal_flagモデルファイルのパス
 
 };

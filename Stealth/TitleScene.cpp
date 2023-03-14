@@ -147,7 +147,7 @@ void TitleScene::ChangeState()
 	}
 
 	//終了状態なら
-	else if (selectState == SelectState::EXIT)
+	else
 	{
 		//ゲームを終了する
 		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_SPACE))
@@ -183,6 +183,7 @@ void TitleScene::Blink()
 		
 	alpha += inc;
 
+	//状態によって文字を点滅させる
 	if (selectState == SelectState::START)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
@@ -193,8 +194,7 @@ void TitleScene::Blink()
 
 		DrawGraph(400, 850, titleUi, TRUE);
 	}
-
-	if (selectState == SelectState::EXIT)
+	else
 	{
 		DrawGraph(400, 700, titleUi, TRUE);
 
@@ -224,8 +224,7 @@ void TitleScene::Draw()
 	{
 		sphereZ = START_SPHERE_POSY;
 	}
-
-	if (selectState == SelectState::EXIT)
+	else
 	{
 		sphereZ = EXIT_SPHERE_POSY;
 	}

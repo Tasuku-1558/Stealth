@@ -80,13 +80,6 @@ string ResultScene::InputPath(string folderPath, string path)
 /// </summary>
 void ResultScene::Finalize()
 {
-	//作成したフォントデータの削除
-	DeleteFontToHandle(font);
-
-	DeleteGraph(backGroundImage);
-
-	DeleteGraph(resultUiImage);
-
 	delete camera;
 
 	delete fadeManager;
@@ -94,8 +87,14 @@ void ResultScene::Finalize()
 	for (auto fireWorksParticlePtr : fireWorksParticle)
 	{
 		DeleteFireWorksParticle(fireWorksParticlePtr);
-		//delete fireWorksParticlePtr;
 	}
+
+	//作成したフォントデータの削除
+	DeleteFontToHandle(font);
+
+	DeleteGraph(backGroundImage);
+
+	DeleteGraph(resultUiImage);
 }
 
 /// <summary>

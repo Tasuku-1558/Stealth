@@ -80,11 +80,6 @@ void MonitoringEnemy::Finalize()
 	MV1DeleteModel(visualModelHandle);
 
 	DeleteGraph(markImage);
-
-	for (int i = 0; i < CAKE_IMAGE_NUMBER; i++)
-	{
-		DeleteGraph(cakeImage[i]);
-	}
 }
 
 /// <summary>

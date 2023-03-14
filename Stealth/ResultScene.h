@@ -21,7 +21,7 @@ public:
 	ResultScene();
 	virtual ~ResultScene();
 
-	SceneType Update(float deltaTime)override;		//更新処理
+	SceneType Update(float deltaTime)override;	//更新処理
 	void Draw()override;						//描画処理
 
 private:

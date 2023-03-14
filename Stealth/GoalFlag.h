@@ -10,7 +10,7 @@
 class GoalFlag final : public ObjectBase
 {
 public:
-	GoalFlag(VECTOR pos);
+	GoalFlag(VECTOR goalPosition);
 	virtual ~GoalFlag();
 
 	void Update(float deltaTime);		//XVˆ—

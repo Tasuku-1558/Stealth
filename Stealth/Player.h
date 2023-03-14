@@ -20,7 +20,6 @@ public:
 
 	void FoundEnemy(float deltaTime, bool spotted);								//エネミーに見つかった場合
 	void Draw();																//描画処理
-	void HitMap(VECTOR back, bool mapHit);										//マップに衝突した
 
 	const int FindCount() { return playerFindCount; }							//エネミーに見つかった回数を返す
 	const My3dLib::Sphere GetCollide() { return collisionSphere; }				//当たり判定球を返す
@@ -34,6 +33,7 @@ private:
 	void Finalize();															//終了処理
 	void AfterImage();															//プレイヤーの残像処理
 	void FoundCount();															//エネミーに見つかった時の初期位置へ戻すカウント
+	void HitMap(VECTOR back, bool mapHit);										//マップに衝突した
 	string InputPath(string folderPath,											//パスを入力
 					 string path);
 

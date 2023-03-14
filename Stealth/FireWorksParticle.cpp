@@ -4,14 +4,14 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="pos"></param>
+/// <param name="particlePosition"></param>
 /// <param name="changeColor"></param>
-FireWorksParticle::FireWorksParticle(const VECTOR pos, unsigned int changeColor)
+FireWorksParticle::FireWorksParticle(const VECTOR particlePosition, unsigned int changeColor)
 	: particlePopTime(3.0f)
 	, color(0)
 	, POS_Y(1000.0f)
 {
-	position = pos;
+	position = particlePosition;
 
 	color = changeColor;
 

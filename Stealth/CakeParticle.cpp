@@ -3,13 +3,13 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="pos"></param>
-CakeParticle::CakeParticle(const VECTOR& pos)
+/// <param name="particlePosition"></param>
+CakeParticle::CakeParticle(const VECTOR& particlePosition)
 	: particlePopTime(2.0f)
 	, PINK(GetColor(224, 148, 171))
 	, POS_Y(0.0f)
 {
-	position = pos;
+	position = particlePosition;
 
 	Initialize();
 }

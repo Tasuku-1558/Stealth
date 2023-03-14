@@ -10,7 +10,7 @@
 class CakeParticle final : public ParticleBase
 {
 public:
-	CakeParticle(const VECTOR& pos);
+	CakeParticle(const VECTOR& particlePosition);
 	virtual ~CakeParticle();
 
 	void Update(float deltaTime)override;	//XVˆ—

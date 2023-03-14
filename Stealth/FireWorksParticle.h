@@ -9,7 +9,7 @@
 class FireWorksParticle final : public ParticleBase
 {
 public:
-	FireWorksParticle(const VECTOR pos, unsigned int changeColor);
+	FireWorksParticle(const VECTOR particlePosition, unsigned int changeColor);
 	virtual ~FireWorksParticle();
 
 	void Update(float deltaTime)override;	//XVˆ—

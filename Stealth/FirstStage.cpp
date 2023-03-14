@@ -11,8 +11,8 @@
 #include "CakeBullet.h"
 #include "GoalFlag.h"
 #include "HitChecker.h"
-#include "RepopEffect.h"
 #include "CakeParticle.h"
+#include "EffectManager.h"
 #include "UiManager.h"
 #include "FadeManager.h"
 #include "Set.h"
@@ -26,7 +26,7 @@
 /// </summary>
 FirstStage::FirstStage()
 	: SceneBase(SceneType::PLAY)
-	, state()
+	, gameState(GameState::START)
 	, pUpdate(nullptr)
 	, font(0)
 	, frame(0.0f)
@@ -60,40 +60,21 @@ void FirstStage::Initialize()
 	
 	backGround = new BackGround();
 
-	stageMap = new StageMap();
+	//マップモデルの種類、サイズ、回転値、位置を入力する
+	stageMap = new StageMap(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
+		{ 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }, { -780.0f, -100.0f, 2400.0f });
 
-	if (stageMap->GetStage() == 1)
-	{
-		//マップモデルの種類、サイズ、回転値、位置を入力する
-		stageMap->Initialize(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
-			{ 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }, { -780.0f, -100.0f, 2400.0f });
-
-		//エネミーに行動パターンのリストとスピードを設定
-		enemy = new Enemy(stageMap->GetMap(1), 1000.0f);
-
-		//ケーキの初期位置を設定
-		cakeBullet = new CakeBullet({ 0.0f,30.0f,1500.0f });
-
-		goalFlag = new GoalFlag({ -50.0f ,0.0f,3700.0f });
-	}
-	if (stageMap->GetStage() == 2)
-	{
-		//マップモデルの種類、サイズ、回転値、位置を入力する
-		stageMap->Initialize(ModelManager::STAGE2, { 80.0f, 60.0f, 80.0f },
-						{ 0.0f, 0.0f, 0.0f }, { -7000.0f, -100.0f, -2900.0f });
-		//エネミーに行動パターンのリストとスピードを設定
-		enemy = new Enemy(stageMap->GetMap(1), 1000.0f);
-
-		//ケーキの初期位置を設定
-		cakeBullet = new CakeBullet({ -1500.0f,30.0f,0.0f });
-
-		//ゴールフラグの位置を設定
-		goalFlag = new GoalFlag({ -4000.0f ,0.0f,0.0f });
-	}
+	effectManager = new EffectManager();
 
 	player = new Player();
 
-	cakeEffect = new RepopEffect();
+	//エネミーに行動パターンのナンバーとスピードを設定
+	enemy = new Enemy(0, 1000.0f);
+
+	//ケーキの初期位置を設定
+	cakeBullet = new CakeBullet({ 0.0f,30.0f,1500.0f }, effectManager);
+
+	goalFlag = new GoalFlag({ -50.0f ,0.0f,3700.0f });
 
 	hitChecker = new HitChecker();
 
@@ -115,19 +96,23 @@ void FirstStage::Finalize()
 	delete cakeBullet;
 	delete goalFlag;
 	delete player;
-	delete cakeEffect;
 	delete hitChecker;
+	delete effectManager;
 	delete uiManager;
 	delete fadeManager;
 
 	for (auto particlePtr : cakeParticle)
 	{
 		DeleteCakeParticle(particlePtr);
-		delete particlePtr;
 	}
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(font);
+}
+
+void FirstStage::stage(int number)
+{
+	stageNo = number;
 }
 
 /// <summary>
@@ -137,7 +122,6 @@ void FirstStage::Activate()
 {
 	font = CreateFontToHandle("Oranienbaum", 50, 1);
 
-	state = State::START;
 	pUpdate = &FirstStage::UpdateStart;
 }
 
@@ -212,14 +196,14 @@ void FirstStage::UpdateStart(float deltaTime)
 
 	camera->Update(player->GetPosition());
 
-	cakeEffect->Update(player->GetPosition());
+	effectManager->CreateRepopEffect(player->GetPosition());
 
 	frame += deltaTime;
 
 	//1.3秒経過したらゲーム画面へ移行
 	if (frame > 1.3f)
 	{
-		state = State::GAME;
+		gameState = GameState::GAME;
 		pUpdate = &FirstStage::UpdateGame;
 	}
 }
@@ -242,7 +226,7 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	player->FoundEnemy(deltaTime, enemy->Spotted());
 
-	cakeBullet->Update(deltaTime, player, cakeEffect);
+	cakeBullet->Update(deltaTime, player);
 
 	goalFlag->Update(deltaTime);
 
@@ -277,14 +261,14 @@ void FirstStage::UpdateGame(float deltaTime)
 	//エネミーに2回見つかったら
 	if (player->FindCount() == PLAYER_HP)
 	{
-		state = State::OVER;
+		gameState = GameState::OVER;
 		pUpdate = &FirstStage::UpdateOver;
 	}
 
 	//プレイヤーがゴール地点に辿り着いたら
 	if (hitChecker->FlagHit())
 	{
-		state = State::GOAL;
+		gameState = GameState::GOAL;
 		pUpdate = &FirstStage::UpdateGoal;
 	}
 
@@ -348,20 +332,20 @@ void FirstStage::Draw()
 	stageMap->Draw();
 
 	//ゲーム状態がスタートではないならば描画する
-	if (state != State::START)
+	if (gameState != GameState::START)
 	{
 		enemy->Draw();
 
 		player->Draw();
 		
 		cakeBullet->Draw();
-
-		goalFlag->Draw();
 	}
 
-	cakeEffect->Draw();
+	goalFlag->Draw();
 
-	uiManager->Draw(state, player->FindCount(), hitChecker->UI());
+	effectManager->Draw();
+
+	uiManager->Draw(gameState, player->FindCount(), hitChecker->UI());
 	
 	uiManager->CakeGetDraw(cakeBullet->CakeGet());
 	
@@ -379,5 +363,6 @@ void FirstStage::Draw()
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->FindCount());
 	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "CakeAlive : %d\n(1:true 0:false)", cakeBullet->cake->GetAlive());
 	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());
+	DrawFormatStringToHandle(100, 600, GetColor(255, 0, 0), font, "stage : %d", stageNo);
 #endif // DEBUG
 }

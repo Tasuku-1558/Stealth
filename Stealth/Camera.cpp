@@ -41,11 +41,11 @@ void Camera::Initialize()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="playerPos"></param>
-void Camera::Update(VECTOR playerPos)
+/// <param name="playerPosition"></param>
+void Camera::Update(VECTOR playerPosition)
 {
 	//プレイヤーの位置を保存
-	aimLookPos = playerPos;
+	aimLookPos = playerPosition;
 
 	aimCameraPos = aimLookPos + cameraOffset;
 

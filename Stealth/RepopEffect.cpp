@@ -5,13 +5,9 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-RepopEffect::RepopEffect(/*string effectPath, float effectSize*/)
-	: EFFECT_FOLDER_PATH("Data/effect/")
-	, CAKE_PATH("cake.efkefc")
-	, MAGNIFICATION(30.0f)
+RepopEffect::RepopEffect(string effectPath, float effectSize)
 {
-	string failePath = EFFECT_FOLDER_PATH + CAKE_PATH;
-	effectHandle = LoadEffekseerEffect(failePath.c_str(), MAGNIFICATION);
+	effectHandle = LoadEffekseerEffect(effectPath.c_str(), effectSize);
 }
 
 /// <summary>
@@ -26,21 +22,23 @@ RepopEffect::~RepopEffect()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="pos"></param>
-void RepopEffect::Update(VECTOR pos)
+/// <param name="position"></param>
+void RepopEffect::Update(VECTOR position)
 {
-	//定期的にエフェクトを再生
+	//時間を経過
+	effectTime++;
+
+	//エフェクトを再生
 	if (effectTime % 1 == 0)
 	{
 		//エフェクトを再生
 		playingEffectHandle = PlayEffekseer3DEffect(effectHandle);
+
+		effectTime = 0;
 	}
 
 	//再生中のエフェクトを移動
-	SetPosPlayingEffekseer3DEffect(playingEffectHandle, pos.x, pos.y, pos.z);
-
-	//時間を経過
-	effectTime++;
+	SetPosPlayingEffekseer3DEffect(playingEffectHandle, position.x, position.y, position.z);
 }
 
 /// <summary>

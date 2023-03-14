@@ -19,7 +19,7 @@ public:
 	virtual ~TitleScene();
 
 	SceneType Update(float deltaTime)override;		//XVˆ—
-	void Draw()override;						//•`‰æˆ—
+	void Draw()override;							//•`‰æˆ—
 
 private:
 

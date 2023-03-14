@@ -17,7 +17,7 @@ public:
 	UiManager();
 	virtual ~UiManager();
 
-	void Draw(FirstStage::State state,
+	void Draw(FirstStage::GameState gameState,
 			  int playerCount, bool hitUi);	//描画処理
 
 	void CakeGetDraw(bool cakeGet);			//ケーキを持っているかのUI
@@ -40,7 +40,7 @@ private:
 		STAGE3,				//ステージ3スタート画像
 		STAGE4,				//ステージ4スタート画像
 		STAGE5,				//ステージ5スタート画像
-		GRAPHIC_AMOUNT		//画像の数
+		GRAPHIC_AMOUNT,		//画像の数
 	};
 
 	void Initialize();								//初期化処理

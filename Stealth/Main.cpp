@@ -16,23 +16,30 @@
 SceneBase* CreateScene(SceneType nowScene)
 {
 	SceneBase* retScene = nullptr;
+	StageSelection* stageSelection = nullptr;
+	FirstStage* firstStage = nullptr;
+
+	int no = 0;
 
 	switch (nowScene)
 	{
 	case SceneType::TITLE:
-		retScene = new TitleScene;
+		retScene = new TitleScene();
 		break;
 
 	case SceneType::SELECTION:
-		retScene = new StageSelection;
+		stageSelection = new StageSelection();
+		no = stageSelection->GetStage();
+		retScene = stageSelection;
 		break;
 
 	case SceneType::PLAY:
-		retScene = new FirstStage;
+		firstStage = new FirstStage();
+		retScene = firstStage;
 		break;
 
 	case SceneType::RESULT:
-		retScene = new ResultScene;
+		retScene = new ResultScene();
 		break;
 	}
 
@@ -104,12 +111,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//サウンド管理クラスの生成
 	SoundManager::GetInstance();
 
-	// ひとつ前のシーン
-	SceneType prevSceneType = SceneType::TITLE;
-	// 今のシーン
-	SceneType nowSceneType = SceneType::TITLE;
+	//ひとつ前のシーン
+	SceneType nowSceneType;
 
-	// シーンを生成
+	//今のシーン
+	SceneType prevSceneType = nowSceneType = SceneType::TITLE;
+
+	//シーンを生成
 	SceneBase* sceneBase = new TitleScene();
 	
 	//メインループ
@@ -165,7 +173,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		if (nowSceneType != prevSceneType)
 		{
-			delete sceneBase; //シーンの解放
+			delete sceneBase;						//シーンの解放
 			sceneBase = CreateScene(nowSceneType);	//シーンの生成
 		}
 

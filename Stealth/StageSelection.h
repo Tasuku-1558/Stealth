@@ -20,7 +20,7 @@ public:
 	SceneType Update(float deltaTime)override;				//更新処理
 	void Draw()override;									//描画処理
 
-	const int GetStage() { return stageNo; }
+ 	const int GetStage() { return stageNo; }
 
 private:
 	StageSelection(const StageSelection&);			//コピーコンストラクタ

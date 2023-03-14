@@ -12,8 +12,8 @@ class CakeBullet;
 class HitChecker;
 class StageMap;
 class GoalFlag;
-class RepopEffect;
 class CakeParticle;
+class EffectManager;
 class UiManager;
 class FadeManager;
 
@@ -27,10 +27,13 @@ public:
 	virtual ~FirstStage();
 
 	SceneType Update(float deltaTime)override;	//更新処理
-	void Draw()override;					//描画処理
+	void Draw()override;						//描画処理
+
+	void stage(int number);
+
 
 	//ゲームの状態
-	enum class State
+	enum class GameState
 	{
 		START,	//開始前
 		GAME,	//ゲーム中
@@ -50,8 +53,8 @@ private:
 	HitChecker* hitChecker;
 	StageMap* stageMap;
 	GoalFlag* goalFlag;
-	RepopEffect* cakeEffect;
 	std::vector<CakeParticle*> cakeParticle;
+	EffectManager* effectManager;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
 
@@ -78,7 +81,7 @@ private:
 	void (FirstStage::* pUpdate)(float deltaTime);	//Update関数ポインタ
 
 
-	State state;			//ゲーム状態
+	GameState gameState;	//ゲームの状態
 	int	  font;				//ゲームフォント
 	float frame;			//フレーム数
 	float particleInterval;	//パーティクル出現のインターバル

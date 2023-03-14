@@ -74,18 +74,17 @@ void UiManager::Finalize()
 /// <summary>
 /// FirstStageÇÃUIï`âÊèàóù
 /// </summary>
-/// <param name="state"></param>
+/// <param name="gameState"></param>
 /// <param name="playerCount"></param>
 /// <param name="hitUi"></param>
-void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
+void UiManager::Draw(FirstStage::GameState gameState, int playerCount, bool hitUi)
 {
-	switch (state)
+	switch (gameState)
 	{
-	case FirstStage::State::START:
-		
+	case FirstStage::GameState::START:
 		break;
 
-	case FirstStage::State::GAME:
+	case FirstStage::GameState::GAME:
 
 		StartGameDraw(STAGE1);
 		PlayerHpDraw(playerCount);
@@ -95,7 +94,7 @@ void UiManager::Draw(FirstStage::State state, int playerCount, bool hitUi)
 		DrawBillboard3D(VGet(0.0f, 0.0f, 800.0f), 0.5f, 0.5f, 200.0f, 0.0f, uiHandle[BALLOON], TRUE);
 		break;
 
-	case FirstStage::State::GOAL:
+	case FirstStage::GameState::GOAL:
 		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
 		break;
 	}

@@ -173,8 +173,6 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 			newCenter = moveCandidate;
 
 			pushBack = newCenter - player->GetDirection() + VScale(player->GetDirection(), 10.0f);
-
-			player->HitMap(pushBack, mapHit);
 		}
 	}
 	else

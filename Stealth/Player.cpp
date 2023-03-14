@@ -58,8 +58,8 @@ void Player::Initialize()
 /// <summary>
 /// パスの入力
 /// </summary>
-/// <param name="folderPath"></param>
-/// <param name="path"></param>
+/// <param name="folderPath">画像フォルダーのパス</param>
+/// <param name="path">画像のパス</param>
 /// <returns></returns>
 string Player::InputPath(string folderPath, string path)
 {
@@ -262,6 +262,7 @@ void Player::FoundCount()
 		//スピードを元に戻す
 		position = POSITION;
 		nextPosition = POSITION;
+		inputFlag = false;
 
 		for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
 		{
