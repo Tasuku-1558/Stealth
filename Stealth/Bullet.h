@@ -20,11 +20,9 @@ public:
 	Bullet();
 	virtual ~Bullet();
 
-	void Initialize();									//初期化処理
-	void Activate();									//活性化処理
-	void Finalize();									//終了処理
 	void Update(float deltaTime);						//更新処理
 	void Draw();										//描画処理
+
 	void MouseMove(Cake* cake, Player* player);			//マウスカーソルの移動
 	void BulletDead();									//バレットを非アクティブ化
 	void BulletAlive();									//バレットをアクティブ化
@@ -34,6 +32,9 @@ public:
 private:
 	Bullet(const Bullet&);					//コピーコンストラクタ
 
+	void Initialize();						//初期化処理
+	void Activate();						//活性化処理
+	void Finalize();						//終了処理
 	void OnShot();							//球が撃たれた時
 
 	int cursorImage;						//照準画像格納用

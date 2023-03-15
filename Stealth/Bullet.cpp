@@ -23,7 +23,8 @@ Bullet::Bullet()
 	, SCALE(0.4f)
 	, RADIUS(50.0f)
 {
-	//処理なし
+	Initialize();
+	Activate();
 }
 
 /// <summary>
@@ -31,7 +32,7 @@ Bullet::Bullet()
 /// </summary>
 Bullet::~Bullet()
 {
-	//処理なし
+	Finalize();
 }
 
 /// <summary>
@@ -101,7 +102,7 @@ void Bullet::MouseMove(Cake* cake, Player* player)
 	if (!cake->GetAlive())
 	{
 		//マウスのX,Z座標のワールド座標を計算
-		worldMouseX = (float)mouseY * (3000.0f / -1920.0f) * 1.7f + player->GetPosition().z;
+		worldMouseX = (float)mouseY * (-3000.0f / 1920.0f) * 1.7f + player->GetPosition().z;
 		worldMouseZ = (float)mouseX * (1900.0f / 1080.0f) * 1.5f + player->GetPosition().x;
 	}
 }

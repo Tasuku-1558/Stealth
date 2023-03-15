@@ -23,15 +23,12 @@ public:
     
     const bool CakeGet() { return cakeGet; }        //ケーキを所持しているかいないかを返す
 
-    Cake* cake;                     //Cakeクラスのポインタ
-    Bullet* bullet;                 //Bulletクラスのポインタ
-    EffectManager* effectManager;   //EffectManagerクラスのポインタ
+    Cake* cake;                                     //Cakeクラスのポインタ
+    Bullet* bullet;                                 //Bulletクラスのポインタ
+    EffectManager* effectManager;                   //EffectManagerクラスのポインタ
 
 private:
 
-    void Initialize();                               //初期化処理
-    void Activate();                                 //活性化処理
-    void Finalize();                                 //終了処理
     void Shoot(float deltaTime, Player* player);     //バレット発射処理
     void BulletReuse(float deltaTime);               //バレット再使用カウント
 

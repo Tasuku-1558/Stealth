@@ -74,6 +74,7 @@ void FirstStage::Initialize()
 	//ケーキの初期位置を設定
 	cakeBullet = new CakeBullet({ 0.0f,30.0f,1500.0f }, effectManager);
 
+	//ゴールフラグの初期位置を設定
 	goalFlag = new GoalFlag({ -50.0f ,0.0f,3700.0f });
 
 	hitChecker = new HitChecker();

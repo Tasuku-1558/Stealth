@@ -15,9 +15,6 @@ CakeBullet::CakeBullet(const VECTOR& cakePosition, EffectManager* const inEffect
     bullet = new Bullet();
 
     effectManager = inEffect;
-
-    Initialize();
-    Activate();
 }
 
 /// <summary>
@@ -25,34 +22,8 @@ CakeBullet::CakeBullet(const VECTOR& cakePosition, EffectManager* const inEffect
 /// </summary>
 CakeBullet::~CakeBullet()
 {
-    Finalize();
-}
-
-/// <summary>
-/// ‰Šú‰»ˆ—
-/// </summary>
-void CakeBullet::Initialize()
-{
-    cake->Initialize();
-    bullet->Initialize();
-}
-
-/// <summary>
-/// Šˆ«‰»ˆ—
-/// </summary>
-void CakeBullet::Activate()
-{
-    cake->Activate();
-    bullet->Activate();
-}
-
-/// <summary>
-/// I—¹ˆ—
-/// </summary>
-void CakeBullet::Finalize()
-{
-    cake->Finalize();
-    bullet->Finalize();
+    delete cake;
+    delete bullet;
 }
 
 /// <summary>

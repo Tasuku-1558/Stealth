@@ -15,6 +15,7 @@
 SceneBase* CreateScene(SceneType nowScene)
 {
 	SceneBase* retScene = nullptr;
+	TitleScene* titleScene = nullptr;
 	StageSelection* stageSelection = nullptr;
 	FirstStage* firstStage = nullptr;
 
@@ -23,7 +24,8 @@ SceneBase* CreateScene(SceneType nowScene)
 	switch (nowScene)
 	{
 	case SceneType::TITLE:
-		retScene = new TitleScene();
+		titleScene = new TitleScene();
+		retScene = titleScene;
 		break;
 
 	case SceneType::SELECTION:
@@ -34,6 +36,7 @@ SceneBase* CreateScene(SceneType nowScene)
 
 	case SceneType::PLAY:
 		firstStage = new FirstStage();
+		firstStage->stage(no);
 		retScene = firstStage;
 		break;
 
@@ -81,21 +84,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//Zバッファへの書き込みを有効にする
 	SetWriteZBuffer3D(TRUE);
-
-	//// シャドウマップハンドルの作成
-	//int shadowMapHandle = MakeShadowMap(SHADOWMAP_SIZE_X, SHADOWMAP_SIZE_Y);
-
-	//// シャドウマップが想定するライトの方向をセット
-	//SetShadowMapLightDirection(shadowMapHandle, LIGHT_DIRECTION);
-
-	//// シャドウマップに描画する範囲を設定
-	//SetShadowMapDrawArea(shadowMapHandle, SHADOWMAP_MINPOSITION, SHADOUMAP_MAXPOSITION);
 	
 	//フォントの読み込み
 	LPCSTR fontPath = "Data/Font/Oranienbaum.ttf";
 
 	if (AddFontResourceEx(fontPath, FR_PRIVATE, NULL) > 0) {}
-	else { MessageBox(NULL, "フォント読込失敗", "", MB_OK); }
+	else { MessageBox(NULL, "フォントの読込失敗", "", MB_OK); }
 
 	//時間計測
 	LONGLONG nowTime;
@@ -103,6 +97,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//待機フレーム時間(60fps)
 	float waitFrameTime = 16667.0f;
+
+	//メインループ用フラグ変数
+	bool loop = true;
 	
 	//モデル管理クラスの生成
 	ModelManager::GetInstance();
@@ -120,7 +117,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SceneBase* sceneBase = new TitleScene();
 	
 	//メインループ
-	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
+	while (loop)
 	{
 		//前フレームと現在のフレームの差分
 		float deltaTime;
@@ -141,25 +138,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		SoundManager::GetInstance().SeUpdate();
 
-		nowSceneType = sceneBase->Update(deltaTime);		//各シーンの更新処理
+		//各シーンの更新処理
+		nowSceneType = sceneBase->Update(deltaTime);
 
 		//画面を初期化する
 		ClearDrawScreen();
 
-		//// シャドウマップへの描画の準備
-		//ShadowMap_DrawSetup(shadowMapHandle);
-
-		//// シャドウマップへの描画を終了
-		//ShadowMap_DrawEnd();
-
-
-		//// 描画に使用するシャドウマップを設定
-		//SetUseShadowMap(0, shadowMapHandle);
-
-		//// 描画に使用するシャドウマップの設定を解除
-		//SetUseShadowMap(0, -1);
-
-		sceneBase->Draw();     //各シーンの描画処理
+		//各シーンの描画処理
+		sceneBase->Draw();
 
 		//デバック用　デルタタイム計測
 		DrawFormatString(0, 500, GetColor(255, 255, 255), "%f", deltaTime, TRUE);
@@ -167,9 +153,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//裏画面の内容を表画面に反映させる
 		ScreenFlip();
 
-		//次のシーンがENDならループを抜ける
-		if (nowSceneType == SceneType::END)
+		//次のシーンがENDならメインループを抜ける
+		if (nowSceneType == SceneType::END || CheckHitKey(KEY_INPUT_ESCAPE))
 		{
+			loop = false;
 			break;
 		}
 
@@ -177,7 +164,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (nowSceneType != prevSceneType)
 		{
 			delete sceneBase;						//シーンの解放
-			sceneBase = CreateScene(nowSceneType);	//シーンの生成
+			sceneBase = CreateScene(nowSceneType);	//新しいシーンの生成
 		}
 
 		//直前のシーンを記録
@@ -194,9 +181,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (RemoveFontResourceEx(fontPath, FR_PRIVATE, NULL)) {}
 	else { MessageBox(NULL, "remove failure", "", MB_OK); }
 
-	//DeleteShadowMap(shadowMapHandle);	//シャドウマップの削除
-
-	delete sceneBase;
+	delete sceneBase;			//シーンの解放
 
 	Effkseer_End();				//Effekseerの終了処理
 

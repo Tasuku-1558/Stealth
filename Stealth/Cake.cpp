@@ -13,6 +13,9 @@ Cake::Cake(const VECTOR& cakePosition)
 	, RADIUS(50.0f)
 {
 	position = cakePosition;
+
+	Initialize();
+	Activate();
 }
 
 /// <summary>
@@ -20,7 +23,7 @@ Cake::Cake(const VECTOR& cakePosition)
 /// </summary>
 Cake::~Cake()
 {
-	//èàóùÇ»Çµ
+	Finalize();
 }
 
 /// <summary>
