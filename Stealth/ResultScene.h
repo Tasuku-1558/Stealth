@@ -10,7 +10,6 @@ class FadeManager;
 
 using namespace std;
 
-
 /// <summary>
 /// リザルトシーンクラス
 /// </summary>
@@ -21,20 +20,19 @@ public:
 	ResultScene();
 	virtual ~ResultScene();
 
-	SceneType Update(float deltaTime)override;	//更新処理
-	void Draw()override;						//描画処理
+	SceneType Update(float deltaTime);	//更新処理
+	void Draw();						//描画処理
 
 private:
 	ResultScene(const ResultScene&);	//コピーコンストラクタ
 	
-	void Initialize()override;					//初期化処理
-	void Activate()override;					//活性化処理
-	void Finalize()override;					//終了処理
-	void SceneChange(float deltaTime);			//シーン切り替え
-	void Blink();								//文字の点滅処理
-	void BackGroundMove();						//背景画像の動き
-	void ReturnScreen(float deltaTime);			//画面を遷移する
-	void InputScene(float deltaTime, SceneType);		//シーンを入力
+	void Initialize();						//初期化処理
+	void Activate();						//活性化処理
+	void SceneChange(float deltaTime);		//シーン切り替え
+	void Blink();							//文字の点滅処理
+	void BackGroundMove();					//背景画像の動き
+	void ReturnScreen(float deltaTime);		//画面を遷移する
+	void InputScene(float deltaTime, SceneType sceneType);		//シーンを入力
 
 	string InputPath(string folderPath,	//画像のパスを入力
 					 string path);
@@ -48,7 +46,7 @@ private:
 	FadeManager* fadeManager;
 
 
-	int font;				//ゲームフォント
+	int fontHandle;			//ゲームフォント
 	float frame;			//フレーム数
 	float particleInterval;	//パーティクル出現のインターバル
 	bool  particleFlag;		//パーティクルを出したら

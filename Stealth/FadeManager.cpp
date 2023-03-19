@@ -8,10 +8,10 @@
 /// </summary>
 FadeManager::FadeManager()
 	: fade(0)
-	, fadeInc(0)
+	, fadeInc(2)
 	, BLACK(GetColor(0, 0, 0))
 {
-	Activate();
+	//ˆ—‚È‚µ
 }
 
 /// <summary>
@@ -20,14 +20,6 @@ FadeManager::FadeManager()
 FadeManager::~FadeManager()
 {
 	//ˆ—‚È‚µ
-}
-
-/// <summary>
-/// Šˆ«‰»ˆ—
-/// </summary>
-void FadeManager::Activate()
-{
-	fadeInc = 2;
 }
 
 /// <summary>

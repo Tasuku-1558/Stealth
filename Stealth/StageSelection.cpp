@@ -14,7 +14,7 @@
 /// </summary>
 StageSelection::StageSelection()
 	: SceneBase(SceneType::SELECTION)
-	, font(0)
+	, fontHandle(0)
 	, stageMax(0)
 	, stageNo(0)
 	, changeTimeCount(0)
@@ -35,7 +35,7 @@ StageSelection::StageSelection()
 /// </summary>
 StageSelection::~StageSelection()
 {
-	Finalize();
+	DeleteFontToHandle(fontHandle);
 }
 
 /// <summary>
@@ -53,23 +53,6 @@ void StageSelection::Initialize()
 }
 
 /// <summary>
-/// 終了処理
-/// </summary>
-void StageSelection::Finalize()
-{
-	delete camera;
-
-	delete light;
-
-	delete selectionUi;
-
-	delete fadeManager;
-
-	//作成したフォントデータの削除
-	DeleteFontToHandle(font);
-}
-
-/// <summary>
 /// 活性化処理
 /// </summary>
 void StageSelection::Activate()
@@ -79,7 +62,7 @@ void StageSelection::Activate()
 	stageMax = STAGE_NUMBER;
 
 	//フォントデータの作成
-	font = CreateFontToHandle("Oranienbaum", 120, 1);
+	fontHandle = CreateFontToHandle("Oranienbaum", 120, 1);
 }
 
 /// <summary>
@@ -155,16 +138,20 @@ void StageSelection::KeyMove(float deltaTime)
 {
 	pushCount -= deltaTime;
 
-	//矢印キー操作
-	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_UP) && pushCount < 0.0f)
+	//リターンキーを押していないならばキーの操作を有効にする
+	if (!changeScene)
 	{
-		stageNo = stageDecrement(stageNo);
-		pushCount = PUSH_INTERVAL;
-	}
-	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_DOWN) && pushCount < 0.0f)
-	{
-		stageNo = stageIncrement(stageNo);
-		pushCount = PUSH_INTERVAL;
+		//矢印キー操作
+		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_UP) && pushCount < 0.0f)
+		{
+			stageNo = stageDecrement(stageNo);
+			pushCount = PUSH_INTERVAL;
+		}
+		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_DOWN) && pushCount < 0.0f)
+		{
+			stageNo = stageIncrement(stageNo);
+			pushCount = PUSH_INTERVAL;
+		}
 	}
 
 	//リターンキーを押したならば
@@ -189,9 +176,6 @@ void StageSelection::KeyMove(float deltaTime)
 			//フレームが3.5秒経過したら画面を遷移する
 			if (frame > 3.5f)
 			{
-				changeTimeCount = 0;
-				changeScene = false;
-
 				StageCreator(stageNo);
 			}
 		}
@@ -232,7 +216,7 @@ void StageSelection::Draw()
 
 	if (!changeScene || (changeTimeCount / 5) % 2 == 0)
 	{
-		DrawFormatStringToHandle(200, 250, GetColor(0, 255, 0), font, "STAGE : %d", stageNo);
+		DrawFormatStringToHandle(200, 250, GetColor(0, 255, 0), fontHandle, "STAGE : %d", stageNo);
 	}
 	
 	selectionUi->Draw();

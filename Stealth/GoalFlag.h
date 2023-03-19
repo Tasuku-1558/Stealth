@@ -5,7 +5,7 @@
 #include "Collision.h"
 
 /// <summary>
-/// ゴールフラッグクラス
+/// ゴールオブジェクトクラス
 /// </summary>
 class GoalFlag final : public ObjectBase
 {
@@ -31,7 +31,7 @@ private:
 
 	//定数
 	const VECTOR SIZE;				//モデルの倍率
-	const VECTOR ROTATE_SPEED;		//モデルの回転スピード
+	const float ROTATE_SPEED_Y;		//モデルの回転スピード
 	const float  RADIUS;			//ゴールフラグの半径
 
 };

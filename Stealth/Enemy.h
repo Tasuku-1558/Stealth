@@ -36,6 +36,7 @@ private:
 
 	void Initialize();							//初期化処理
 	void Activate();							//活性化処理
+	void Finalize();							//終了処理
 	void Move(float deltaTime);					//移動処理
 	void Position(vector<VECTOR>& id);			//エネミー位置設定
 	void StateUpdate(float deltaTime);			//エネミーの状態変化
@@ -44,7 +45,6 @@ private:
 	void Reaction();							//エネミーのオブジェクトごとの反応
 	void CakeEatCount(float deltaTime);			//秒数によってケーキの状態変化
 	void ReactionDraw();						//リアクション画像の描画処理
-	void Finalize();							//終了処理
 	void EnemyRotate(float deltaTime);			//エネミーの回転処理
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 

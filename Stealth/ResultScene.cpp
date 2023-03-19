@@ -17,7 +17,7 @@ char gameOver[] = { "GAME OVER" };
 /// </summary>
 ResultScene::ResultScene()
 	: SceneBase(SceneType::RESULT)
-	, font(0)
+	, fontHandle(0)
 	, frame(0.0f)
 	, fireWorksParticle()
 	, particleFlag(false)
@@ -46,7 +46,7 @@ ResultScene::ResultScene()
 /// </summary>
 ResultScene::~ResultScene()
 {
-	Finalize();
+	DeleteFontToHandle(fontHandle);
 }
 
 /// <summary>
@@ -73,28 +73,6 @@ void ResultScene::Initialize()
 string ResultScene::InputPath(string folderPath, string path)
 {
 	return string(folderPath + path);
-}
-
-/// <summary>
-/// 終了処理
-/// </summary>
-void ResultScene::Finalize()
-{
-	delete camera;
-
-	delete fadeManager;
-
-	for (auto fireWorksParticlePtr : fireWorksParticle)
-	{
-		DeleteFireWorksParticle(fireWorksParticlePtr);
-	}
-
-	//作成したフォントデータの削除
-	DeleteFontToHandle(font);
-
-	DeleteGraph(backGroundImage);
-
-	DeleteGraph(resultUiImage);
 }
 
 /// <summary>
@@ -160,7 +138,7 @@ void ResultScene::Activate()
 {
 	clear = Set::GetInstance().GetResult();
 
-	font = CreateFontToHandle("Oranienbaum", 150, 1);
+	fontHandle = CreateFontToHandle("Oranienbaum", 150, 1);
 }
 
 /// <summary>
@@ -317,12 +295,12 @@ void ResultScene::Draw()
 			fireWorksParticlePtr->Draw();
 		}
 
-		DrawFormatStringToHandle(600, 400, GetColor(255, 215, 0), font, "%s", gameClear);
+		DrawFormatStringToHandle(600, 400, GetColor(255, 215, 0), fontHandle, "%s", gameClear);
 	}
 	//ゲームオーバーならば
 	else
 	{
-		DrawFormatStringToHandle(600, 400, GetColor(255, 0, 0), font, "%s", gameOver);
+		DrawFormatStringToHandle(600, 400, GetColor(255, 0, 0), fontHandle, "%s", gameOver);
 	}
 
 	Blink();

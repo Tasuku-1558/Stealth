@@ -36,8 +36,10 @@ HitChecker::~HitChecker()
 /// </summary>
 /// <param name="model"></param>
 /// <param name="player"></param>
-void HitChecker::Check(int model, Player* player, GoalFlag* goalFlag)
+void HitChecker::Check(int model, Player* player, vector<Cake*>* cake, /*vector<Enemy*>* enemy,*/ GoalFlag* goalFlag)
 {
+	CakeAndPlayer(player, cake);
+	//EnemyAndPlayer(player, enemy);
 	PlayerAndUI(player);
 	MapAndPlayer(model, player);
 	FlagAndPlayer(goalFlag, player);
@@ -48,20 +50,23 @@ void HitChecker::Check(int model, Player* player, GoalFlag* goalFlag)
 /// </summary>
 /// <param name="player"></param>
 /// <param name="cake"></param>
-void HitChecker::CakeAndPlayer(Player* player, Cake* cake)
+void HitChecker::CakeAndPlayer(Player* player, vector<Cake*>* cake)
 {
-	//プレイヤーからケーキの座標を引いた値を取得
-	VECTOR sub = player->GetPosition() - cake->GetPosition();
-
-	//プレイヤーとケーキの距離を計算
-	float direction = VSize(sub);
-	float radius = player->GetCollide().radius + cake->GetCollideRadius();
-	
-	//衝突しているならば
-	if (direction <= radius)
+	for (auto itr = cake->begin(); itr != cake->end(); ++itr)
 	{
-		//ケーキの反応
-		cake->HitCake();
+		//プレイヤーからケーキの座標を引いた値を取得
+		VECTOR sub = player->GetPosition() - (*itr)->GetPosition();
+
+		//プレイヤーとケーキの距離を計算
+		float direction = VSize(sub);
+		float radius = player->GetCollide().radius + (*itr)->GetCollideRadius();
+
+		//衝突しているならば
+		if (direction <= radius)
+		{
+			//ケーキの反応
+			(*itr)->HitCake();
+		}
 	}
 }
 
@@ -70,20 +75,23 @@ void HitChecker::CakeAndPlayer(Player* player, Cake* cake)
 /// </summary>
 /// <param name="player"></param>
 /// <param name="enemy"></param>
-void HitChecker::EnemyAndPlayer(Player* player, Enemy* enemy)
+void HitChecker::EnemyAndPlayer(Player* player, /*vector<Enemy*>* enemy*/Enemy* enemy)
 {
-	//プレイヤーからエネミーの座標を引いた値を取得
-	VECTOR sub = player->GetPosition() - enemy->GetPosition();
-
-	//プレイヤーとエネミーの距離を計算
-	float direction = VSize(sub);
-	float radius = player->GetCollide().radius + enemy->GetCollideRadius();
-
-	//衝突しているならば
-	if (direction <= radius)
+	//for (auto itr = enemy->begin(); itr != enemy->end(); ++itr)
 	{
-		//エネミーの反応
-		enemy->HitPlayer();
+		//プレイヤーからエネミーの座標を引いた値を取得
+		VECTOR sub = player->GetPosition() - /*(*itr)*/enemy->GetPosition();
+
+		//プレイヤーとエネミーの距離を計算
+		float direction = VSize(sub);
+		float radius = player->GetCollide().radius + /*(*itr)*/enemy->GetCollideRadius();
+
+		//衝突しているならば
+		if (direction <= radius)
+		{
+			//エネミーの反応
+			/*(*itr)*/enemy->HitPlayer();
+		}
 	}
 }
 
@@ -183,7 +191,7 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 }
 
 /// <summary>
-/// ゴール旗とプレイヤーの当たり判定
+/// ゴールオブジェクトとプレイヤーの当たり判定
 /// </summary>
 /// <param name="goalFlag"></param>
 /// <param name="player"></param>

@@ -17,17 +17,16 @@ public:
 	StageSelection();
 	virtual ~StageSelection();
 
-	SceneType Update(float deltaTime)override;				//更新処理
-	void Draw()override;									//描画処理
+	SceneType Update(float deltaTime);				//更新処理
+	void Draw();									//描画処理
 
  	const int GetStage() { return stageNo; }
 
 private:
 	StageSelection(const StageSelection&);			//コピーコンストラクタ
 
-	void Initialize()override;						//初期化処理
-	void Activate()override;						//活性化処理
-	void Finalize()override;						//終了処理
+	void Initialize();								//初期化処理
+	void Activate();								//活性化処理
 	int stageIncrement(int stageNumber);			//選択ステージを1つ先に持っていく
 	int stageDecrement(int stageNumber);			//選択ステージを1つ前に持っていく
 	void StageCreator(int stageNumber);				//各シーンへ遷移
@@ -38,7 +37,7 @@ private:
 	SelectionUi* selectionUi;
 	FadeManager* fadeManager;
 
-	int font;										//ゲームフォント
+	int fontHandle;									//ゲームフォント
 	int stageMax;									//最大ステージ数
 	int stageNo;									//ステージナンバー
 	int changeTimeCount;							//ステージ遷移カウント

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneBase.h"
+#include "DxLib.h"
 #include <string>
 
 using namespace std;
@@ -18,16 +19,15 @@ public:
 	TitleScene();
 	virtual ~TitleScene();
 
-	SceneType Update(float deltaTime)override;		//更新処理
-	void Draw()override;							//描画処理
+	SceneType Update(float deltaTime);		//更新処理
+	void Draw();							//描画処理
 
 private:
 
 	TitleScene(const TitleScene&);		//コピーコンストラクタ
 
-	void Initialize()override;			//初期化処理
-	void Activate()override;			//活性化処理
-	void Finalize()override;			//終了処理
+	void Initialize();					//初期化処理
+	void Activate();					//活性化処理
 	void Blink();						//文字の点滅処理
 	void ChangeState();					//タイトルの状態の変更
 
@@ -35,20 +35,20 @@ private:
 					 string path);
 
 	//タイトルの状態
-	enum class SelectState
+	enum class TitleState
 	{
 		START,	//ゲームを始める
 		EXIT,	//ゲームを終了する
 	};
 
-	SelectState selectState;			//タイトルの状態
+	TitleState titleState;				//タイトルの状態
 	int titleMovie;						//タイトル動画の格納用
 	int titleName;						//タイトル名の画像格納用
 	int titleUi;						//ステージ選択シーンへ遷移キーのUI格納用
 	int alpha;							//透過度
 	int inc;
 	float frame;						//フレーム数
-	float sphereZ;						//選択状態の目印球
+	VECTOR spherePosition;				//3D球体の位置
 
 	Light* light;
 	Camera* camera;						//カメラクラスのポインタ

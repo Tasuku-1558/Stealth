@@ -28,7 +28,7 @@ FirstStage::FirstStage()
 	: SceneBase(SceneType::PLAY)
 	, gameState(GameState::START)
 	, pUpdate(nullptr)
-	, font(0)
+	, fontHandle(0)
 	, frame(0.0f)
 	, particleFlag(false)
 	, particleInterval(0.0f)
@@ -46,7 +46,7 @@ FirstStage::FirstStage()
 /// </summary>
 FirstStage::~FirstStage()
 {
-	Finalize();
+	DeleteFontToHandle(fontHandle);
 }
 
 /// <summary>
@@ -72,7 +72,7 @@ void FirstStage::Initialize()
 	enemy = new Enemy(0, 1000.0f);
 
 	//ケーキの初期位置を設定
-	cakeBullet = new CakeBullet({ 0.0f,30.0f,1500.0f }, effectManager);
+	cakeBullet = new CakeBullet(/*{ 0.0f,30.0f,1500.0f }, */effectManager);
 
 	//ゴールフラグの初期位置を設定
 	goalFlag = new GoalFlag({ -50.0f ,0.0f,3700.0f });
@@ -84,36 +84,9 @@ void FirstStage::Initialize()
 	fadeManager = new FadeManager();
 }
 
-/// <summary>
-/// 終了処理
-/// </summary>
-void FirstStage::Finalize()
+void FirstStage::stage(int num)
 {
-	delete camera;
-	delete light;
-	delete backGround;
-	delete stageMap;
-	delete enemy;
-	delete cakeBullet;
-	delete goalFlag;
-	delete player;
-	delete hitChecker;
-	delete effectManager;
-	delete uiManager;
-	delete fadeManager;
-
-	for (auto particlePtr : cakeParticle)
-	{
-		DeleteCakeParticle(particlePtr);
-	}
-
-	//作成したフォントデータの削除
-	DeleteFontToHandle(font);
-}
-
-void FirstStage::stage(int number)
-{
-	stageNo = number;
+	stageNo = num;
 }
 
 /// <summary>
@@ -121,7 +94,7 @@ void FirstStage::stage(int number)
 /// </summary>
 void FirstStage::Activate()
 {
-	font = CreateFontToHandle("Oranienbaum", 50, 1);
+	fontHandle = CreateFontToHandle("Oranienbaum", 50, 1);
 
 	pUpdate = &FirstStage::UpdateStart;
 }
@@ -174,7 +147,7 @@ void FirstStage::DeleteCakeParticle(CakeParticle* deleteCakeParticle)
 void FirstStage::CakeParticlePop()
 {
 	//マウスカーソルを左クリックし、且つケーキとバレットが非アクティブ且つパーティクルが出ていないならば
-	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && cakeBullet->bullet->GetAlive() && !cakeBullet->cake->GetAlive() && !particleFlag)
+	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && cakeBullet->bullet->GetAlive() /*&& !cakeBullet->cake->GetAlive()*/ && !particleFlag)
 	{
 		//パーティクルの個数分エントリーする
 		for (int i = 0; i < PARTICLE_NUMBER; i++)
@@ -248,16 +221,13 @@ void FirstStage::UpdateGame(float deltaTime)
 		}
 	}
 	
-	hitChecker->Check(stageMap->GetModelHandle(), player, goalFlag);
-
-	hitChecker->EnemyAndPlayer(player, enemy);
-
-	hitChecker->CakeAndPlayer(player, cakeBullet->cake);
-
 	for (auto particlePtr : cakeParticle)
 	{
 		particlePtr->Update(deltaTime);
 	}
+
+	hitChecker->Check(stageMap->GetModelHandle(), player, &cakeBullet->cake, /*&enemy,*/ goalFlag);
+	hitChecker->EnemyAndPlayer(player, enemy);
 	
 	//エネミーに2回見つかったら
 	if (player->FindCount() == PLAYER_HP)
@@ -359,11 +329,11 @@ void FirstStage::Draw()
 
 	//デバック用
 #ifdef DEBUG
-	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), font, "X : %.0f", player->GetPosition().x);
-	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), font, "Z : %.0f", player->GetPosition().z);
-	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), font, "PlayerCount : %d", player->FindCount());
-	DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "CakeAlive : %d\n(1:true 0:false)", cakeBullet->cake->GetAlive());
-	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), font, "ParticleSize : %d", cakeParticle.size());
-	DrawFormatStringToHandle(100, 600, GetColor(255, 0, 0), font, "stage : %d", stageNo);
+	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), fontHandle, "X : %.0f", player->GetPosition().x);
+	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), fontHandle, "Z : %.0f", player->GetPosition().z);
+	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), fontHandle, "PlayerCount : %d", player->FindCount());
+	//DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "CakeAlive : %d\n(1:true 0:false)", cakeBullet->cake->GetAlive());
+	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), fontHandle, "ParticleSize : %d", cakeParticle.size());
+	DrawFormatStringToHandle(100, 600, GetColor(255, 0, 0), fontHandle, "stage : %d", stageNo);
 #endif // DEBUG
 }

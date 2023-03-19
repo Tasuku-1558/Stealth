@@ -16,18 +16,18 @@ TitleScene::TitleScene()
 	, titleMovie(0)
 	, titleName(0)
 	, titleUi(0)
-	, alpha(0)
-	, inc(0)
+	, alpha(255)
+	, inc(-3)
 	, frame(0.0f)
-	, sphereZ(0.0f)
+	, spherePosition({ -520.0f, 1200.0f, 0.0f })
 	, VIDEO_FOLDER_PATH("Data/Video/")
 	, IMAGE_FOLDER_PATH("Data/image/")
 	, PLAY_VIDEO_PATH("PlayVideo.mp4")
 	, TITLENAME_PATH("titleName.png")
 	, TITLE_UI_PATH("titleUi.png")
-	, START_SPHERE_POSY(-400.0f)
-	, EXIT_SPHERE_POSY(-720.0f)
-	, selectState(SelectState::START)
+	, START_SPHERE_POSY(-220.0f)
+	, EXIT_SPHERE_POSY(-350.0f)
+	, titleState(TitleState::START)
 {
 	Initialize();
 	Activate();
@@ -38,7 +38,7 @@ TitleScene::TitleScene()
 /// </summary>
 TitleScene::~TitleScene()
 {
-	Finalize();
+	//処理なし
 }
 
 /// <summary>
@@ -54,7 +54,7 @@ void TitleScene::Initialize()
 	//動画データの読み込み
 	titleMovie = LoadGraph(InputPath(VIDEO_FOLDER_PATH, PLAY_VIDEO_PATH).c_str());
 
-	//画像UIの読み込み
+	//UI画像の読み込み
 	titleName = LoadGraph(InputPath(IMAGE_FOLDER_PATH, TITLENAME_PATH).c_str());
 
 	titleUi = LoadGraph(InputPath(IMAGE_FOLDER_PATH, TITLE_UI_PATH).c_str());
@@ -72,31 +72,10 @@ string TitleScene::InputPath(string folderPath, string path)
 }
 
 /// <summary>
-/// 終了処理
-/// </summary>
-void TitleScene::Finalize()
-{
-	PauseMovieToGraph(titleMovie);
-
-	DeleteGraph(titleMovie);
-
-	DeleteGraph(titleName);
-
-	DeleteGraph(titleUi);
-
-	delete camera;
-
-	delete light;
-}
-
-/// <summary>
 /// 活性化処理
 /// </summary>
 void TitleScene::Activate()
 {
-	alpha = 255;
-	inc = -3;
-
 	//タイトルBGMを再生
 	SoundManager::GetInstance().PlayBgm(SoundManager::TITLE);
 }
@@ -128,7 +107,7 @@ SceneType TitleScene::Update(float deltaTime)
 void TitleScene::ChangeState()
 {
 	//スタート状態なら
-	if (selectState == SelectState::START)
+	if (titleState == TitleState::START)
 	{
 		//ステージ選択画面へ
 		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_SPACE))
@@ -142,7 +121,7 @@ void TitleScene::ChangeState()
 		//下矢印キーで状態を終了にする
 		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_DOWN))
 		{
-			selectState = SelectState::EXIT;
+			titleState = TitleState::EXIT;
 		}
 	}
 
@@ -161,7 +140,7 @@ void TitleScene::ChangeState()
 		//上矢印キーで状態をスタートにする
 		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_UP))
 		{
-			selectState = SelectState::START;
+			titleState = TitleState::START;
 		}
 	}
 }
@@ -184,7 +163,7 @@ void TitleScene::Blink()
 	alpha += inc;
 
 	//状態によって文字を点滅させる
-	if (selectState == SelectState::START)
+	if (titleState == TitleState::START)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 
@@ -220,15 +199,15 @@ void TitleScene::Draw()
 	Blink();
 
 	//タイトルの状態によって球の位置を変える
-	if (selectState == SelectState::START)
+	if (titleState == TitleState::START)
 	{
-		sphereZ = START_SPHERE_POSY;
+		spherePosition.z = START_SPHERE_POSY;
 	}
 	else
 	{
-		sphereZ = EXIT_SPHERE_POSY;
+		spherePosition.z = EXIT_SPHERE_POSY;
 	}
 
 	//3D球体の描画
-	DrawSphere3D({ -1250.0f, 0.0f, sphereZ }, 30.0f, 16, GetColor(255, 0, 0), GetColor(0, 0, 0), TRUE);
+	DrawSphere3D(spherePosition, 20.0f, 32, GetColor(255, 0, 0), GetColor(255, 255, 255), TRUE);
 }

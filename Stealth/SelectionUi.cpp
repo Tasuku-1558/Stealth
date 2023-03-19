@@ -5,7 +5,7 @@
 /// コンストラクタ
 /// </summary>
 SelectionUi::SelectionUi()
-	: font(0)
+	: fontHandle(0)
 	, selectionKeyImage(0)
 	, selectionUiImage(0)
 	, stageDescription(0)
@@ -77,7 +77,7 @@ void SelectionUi::Initialize()
 	operationMethod = LoadGraph(InputPath(IMAGE_FOLDER_PATH, OPERATION_METHOD_PATH).c_str());
 
 	//フォントデータの作成
-	font = CreateFontToHandle("Oranienbaum", 90, 1);
+	fontHandle = CreateFontToHandle("Oranienbaum", 90, 1);
 	
 }
 
@@ -128,7 +128,7 @@ void SelectionUi::Finalize()
 	DeleteGraph(selectionUiImage);
 
 	//作成したフォントデータの削除
-	DeleteFontToHandle(font);
+	DeleteFontToHandle(fontHandle);
 }
 
 /// <summary>
@@ -143,8 +143,8 @@ void SelectionUi::StageUiDraw(int mapNumber, int enemyNumber, int cakeNumber)
 	MV1DrawModel(modelHandle[mapNumber]);
 
 	//敵とケーキの数を表示
-	DrawFormatStringToHandle(370, 470, GetColor(255, 255, 255), font, "%d", enemyNumber);
-	DrawFormatStringToHandle(520, 570, GetColor(255, 255, 255), font, "%d", cakeNumber);
+	DrawFormatStringToHandle(370, 470, GetColor(255, 255, 255), fontHandle, "%d", enemyNumber);
+	DrawFormatStringToHandle(520, 570, GetColor(255, 255, 255), fontHandle, "%d", cakeNumber);
 }
 
 /// <summary>

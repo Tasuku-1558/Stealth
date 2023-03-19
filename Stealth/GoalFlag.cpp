@@ -11,7 +11,7 @@ using namespace Math3d;		//VECTORの計算に使用
 GoalFlag::GoalFlag(VECTOR goalPosition)
 	: rotate()
 	, SIZE({ 1.0f, 1.0f, 1.0f })
-	, ROTATE_SPEED({ 0.0f, 3.0f, 0.0f })
+	, ROTATE_SPEED_Y(3.0f)
 	, RADIUS(50.0f)
 {
 	position = goalPosition;
@@ -67,7 +67,7 @@ void GoalFlag::Finalize()
 void GoalFlag::Update(float deltaTime)
 {
 	//モデルを回転させる
-	rotate += ROTATE_SPEED * deltaTime;
+	rotate.y += ROTATE_SPEED_Y * deltaTime;
 
 	//モデルの回転値を設定
 	MV1SetRotationXYZ(modelHandle, rotate);

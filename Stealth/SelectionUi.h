@@ -34,7 +34,7 @@ private:
 	string InputPath(string folderPath,				//画像のパスを入力
 					 string imagePath);
 
-	int font;										//ゲームフォント
+	int fontHandle;										//ゲームフォント
 	int selectionKeyImage;							//ステージセレクションUI画像
 	int selectionUiImage;							//ステージセレクションからタイトルへ遷移のUI画像
 	int stageDescription;							//ステージの説明画像ハンドル

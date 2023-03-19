@@ -16,21 +16,24 @@ enum class SceneType
 class SceneBase
 {
 public:
-	SceneBase(SceneType sceneType) : nowSceneType(sceneType) { /*処理なし*/ }
-	virtual ~SceneBase(){/*処理なし*/}
+	SceneBase(SceneType sceneType);
+	virtual ~SceneBase();
 
 	virtual void Initialize() = 0;					//初期化処理
-	virtual void Finalize() = 0;					//終了処理
 	virtual void Activate() = 0;					//活性化処理
 	virtual SceneType Update(float deltaTime) = 0;	//更新処理
 	virtual void Draw() = 0;						//描画処理
 
+	SceneBase* CreateScene(SceneType nowScene);		//新しいシーンを生成する
+
+	int Get() { return number; }
 	
 protected:
 
 	SceneType nowSceneType;						//今のシーン
 
-
 private:
 	SceneBase(const SceneBase&);				//コピーコンストラクタ
+
+	int number;
 };

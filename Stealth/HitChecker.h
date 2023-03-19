@@ -2,11 +2,14 @@
 
 #include "DxLib.h"
 #include "Math3D.h"
+#include <vector>
 
 class Player;
 class Enemy;
 class Cake;
 class GoalFlag;
+
+using namespace std;
 
 /// <summary>
 /// 当たり判定クラス
@@ -17,10 +20,13 @@ public:
 	HitChecker();
 	virtual ~HitChecker();
 
-	void Check(int model, Player* player, GoalFlag* goalFlag);	//衝突判定
-	void CakeAndPlayer(Player* player, Cake* cake);			//ケーキとプレイヤーの当たり判定
-	void EnemyAndPlayer(Player* player, Enemy* enemy);	//エネミーとプレイヤーの当たり判定
+	void Check(int model, 
+			   Player* player, 
+			   vector<Cake*>* cake, 
+			  /* vector<Enemy*>* enemy, */
+			   GoalFlag* goalFlag);							//衝突判定
 
+	void EnemyAndPlayer(Player* player, /*vector<Enemy*>* enemy*/Enemy* enemy);	//エネミーとプレイヤーの当たり判定
 
 	const bool UI() { return uiHit; }						//UI画像に当たったかどうかを返す
 	const bool MapHit() { return mapHit; }					//マップにプレイヤーが衝突したかどうかを返す
@@ -29,11 +35,12 @@ public:
 
 private:
 
-	HitChecker(const HitChecker&);							//コピーコンストラクタ
+	HitChecker(const HitChecker&);								//コピーコンストラクタ
 
-	void PlayerAndUI(Player* player);						//プレイヤーとUI画像の当たり判定
-	void MapAndPlayer(int model, Player* player);			//マップとプレイヤーの当たり判定
-	void FlagAndPlayer(GoalFlag* goalFlag, Player* player);		//ゴール旗とプレイヤーの当たり判定
+	void CakeAndPlayer(Player* player, vector<Cake*>* cake);	//ケーキとプレイヤーの当たり判定
+	void PlayerAndUI(Player* player);							//プレイヤーとUI画像の当たり判定
+	void MapAndPlayer(int model, Player* player);				//マップとプレイヤーの当たり判定
+	void FlagAndPlayer(GoalFlag* goalFlag, Player* player);		//ゴールオブジェクトとプレイヤーの当たり判定
 
 
 	VECTOR uiPosition;		//UI画像の位置

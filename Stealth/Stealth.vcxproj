@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="CakeBullet.cpp" />
+    <ClCompile Include="CakeManager.cpp" />
     <ClCompile Include="CakeParticle.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="EffectBase.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="PlayerBase.cpp" />
     <ClCompile Include="FirstStage.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="SecondStage.cpp" />
     <ClCompile Include="SelectionUi.cpp" />
     <ClCompile Include="Set.cpp" />
@@ -197,6 +199,7 @@
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="CakeBullet.h" />
+    <ClInclude Include="CakeManager.h" />
     <ClInclude Include="CakeParticle.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="RepopEffect.h" />

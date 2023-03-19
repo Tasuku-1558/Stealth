@@ -1,52 +1,12 @@
 #include "DxLib.h"
 #include "EffekseerForDXLib.h"
 #include "PreCompiledHeader.h"
+#include "SceneBase.h"
 #include "ModelManager.h"
 #include "KeyManager.h"
 #include "SoundManager.h"
 
 #include "TitleScene.h"
-#include "StageSelection.h"
-#include "FirstStage.h"
-#include "ResultScene.h"
-
-
-//新しいシーンを生成する
-SceneBase* CreateScene(SceneType nowScene)
-{
-	SceneBase* retScene = nullptr;
-	TitleScene* titleScene = nullptr;
-	StageSelection* stageSelection = nullptr;
-	FirstStage* firstStage = nullptr;
-
-	int no = 0;
-
-	switch (nowScene)
-	{
-	case SceneType::TITLE:
-		titleScene = new TitleScene();
-		retScene = titleScene;
-		break;
-
-	case SceneType::SELECTION:
-		stageSelection = new StageSelection();
-		no = stageSelection->GetStage();
-		retScene = stageSelection;
-		break;
-
-	case SceneType::PLAY:
-		firstStage = new FirstStage();
-		firstStage->stage(no);
-		retScene = firstStage;
-		break;
-
-	case SceneType::RESULT:
-		retScene = new ResultScene();
-		break;
-	}
-
-	return retScene;
-}
 
 //メインプログラム
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -107,10 +67,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//サウンド管理クラスの生成
 	SoundManager::GetInstance();
 
-	//ひとつ前のシーン
+	//今のシーン
 	SceneType nowSceneType;
 
-	//今のシーン
+	//ひとつ前のシーン
 	SceneType prevSceneType = nowSceneType = SceneType::TITLE;
 
 	//シーンを生成
@@ -149,6 +109,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		//デバック用　デルタタイム計測
 		DrawFormatString(0, 500, GetColor(255, 255, 255), "%f", deltaTime, TRUE);
+		DrawFormatString(0, 550, GetColor(255, 255, 255), "%d", sceneBase->Get(), TRUE);
+
 
 		//裏画面の内容を表画面に反映させる
 		ScreenFlip();
@@ -163,8 +125,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//今のシーンが前のシーンと違うなら
 		if (nowSceneType != prevSceneType)
 		{
-			delete sceneBase;						//シーンの解放
-			sceneBase = CreateScene(nowSceneType);	//新しいシーンの生成
+			delete sceneBase;									//シーンの解放
+			sceneBase = sceneBase->CreateScene(nowSceneType);	//新しいシーンの生成
 		}
 
 		//直前のシーンを記録
@@ -181,11 +143,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (RemoveFontResourceEx(fontPath, FR_PRIVATE, NULL)) {}
 	else { MessageBox(NULL, "remove failure", "", MB_OK); }
 
-	delete sceneBase;			//シーンの解放
+	delete sceneBase;		//シーンの解放
 
-	Effkseer_End();				//Effekseerの終了処理
+	Effkseer_End();			//Effekseerの終了処理
 
-	DxLib_End();				//Dxlibの終了処理
+	DxLib_End();			//Dxlibの終了処理
 
-	return 0;					//ソフトの終了 
+	return 0;				//ソフトの終了 
 }
