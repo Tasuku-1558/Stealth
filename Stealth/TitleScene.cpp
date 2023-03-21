@@ -25,6 +25,7 @@ TitleScene::TitleScene()
 	, PLAY_VIDEO_PATH("PlayVideo.mp4")
 	, TITLENAME_PATH("titleName.png")
 	, TITLE_UI_PATH("titleUi.png")
+	, MAX_ALPHA(255)
 	, START_SPHERE_POSY(-220.0f)
 	, EXIT_SPHERE_POSY(-350.0f)
 	, titleState(TitleState::START)
@@ -150,7 +151,7 @@ void TitleScene::ChangeState()
 /// </summary>
 void TitleScene::Blink()
 {
-	if (alpha > 255 && inc > 0)
+	if (alpha > MAX_ALPHA && inc > 0)
 	{
 		inc *= -1;
 	}

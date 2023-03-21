@@ -3,7 +3,7 @@
 
 #include "Player.h"
 #include "Enemy.h"
-#include "Cake.h"
+#include "CakeBullet.h"
 #include "GoalFlag.h"
 
 using namespace Math3d;		//VECTORの計算に使用
@@ -36,9 +36,9 @@ HitChecker::~HitChecker()
 /// </summary>
 /// <param name="model"></param>
 /// <param name="player"></param>
-void HitChecker::Check(int model, Player* player, vector<Cake*>* cake, /*vector<Enemy*>* enemy,*/ GoalFlag* goalFlag)
+void HitChecker::Check(int model, Player* player, vector<CakeBullet*>* cakeBullet, /*vector<Enemy*>* enemy,*/ GoalFlag* goalFlag)
 {
-	CakeAndPlayer(player, cake);
+	CakeAndPlayer(player, cakeBullet);
 	//EnemyAndPlayer(player, enemy);
 	PlayerAndUI(player);
 	MapAndPlayer(model, player);
@@ -49,23 +49,23 @@ void HitChecker::Check(int model, Player* player, vector<Cake*>* cake, /*vector<
 /// ケーキとプレイヤーの当たり判定
 /// </summary>
 /// <param name="player"></param>
-/// <param name="cake"></param>
-void HitChecker::CakeAndPlayer(Player* player, vector<Cake*>* cake)
+/// <param name="cakeBullet"></param>
+void HitChecker::CakeAndPlayer(Player* player, vector<CakeBullet*>* cakeBullet)
 {
-	for (auto itr = cake->begin(); itr != cake->end(); ++itr)
+	for (auto itr = cakeBullet->begin(); itr != cakeBullet->end(); ++itr)
 	{
 		//プレイヤーからケーキの座標を引いた値を取得
-		VECTOR sub = player->GetPosition() - (*itr)->GetPosition();
+		VECTOR sub = player->GetPosition() - (*itr)->cake->GetPosition();
 
 		//プレイヤーとケーキの距離を計算
 		float direction = VSize(sub);
-		float radius = player->GetCollide().radius + (*itr)->GetCollideRadius();
+		float radius = player->GetCollide().radius + (*itr)->cake->GetCollideRadius();
 
 		//衝突しているならば
 		if (direction <= radius)
 		{
 			//ケーキの反応
-			(*itr)->HitCake();
+			(*itr)->cake->HitCake();
 		}
 	}
 }

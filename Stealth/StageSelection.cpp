@@ -2,7 +2,6 @@
 
 #include "DxLib.h"
 #include "PreCompiledHeader.h"
-#include "Light.h"
 #include "Camera.h"
 #include "SelectionUi.h"
 #include "KeyManager.h"
@@ -43,8 +42,6 @@ StageSelection::~StageSelection()
 /// </summary>
 void StageSelection::Initialize()
 {
-	light = new Light();
-
 	camera = new Camera();
 	
 	selectionUi = new SelectionUi();

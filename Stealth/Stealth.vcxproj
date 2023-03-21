@@ -153,7 +153,6 @@
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="CakeBullet.cpp" />
-    <ClCompile Include="CakeManager.cpp" />
     <ClCompile Include="CakeParticle.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="EffectBase.cpp" />
@@ -177,7 +176,6 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math3D.cpp" />
     <ClCompile Include="ModelManager.cpp" />
-    <ClCompile Include="MonitoringEnemy.cpp" />
     <ClCompile Include="ObjectBase.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBase.cpp" />
@@ -199,7 +197,6 @@
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="CakeBullet.h" />
-    <ClInclude Include="CakeManager.h" />
     <ClInclude Include="CakeParticle.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="RepopEffect.h" />
@@ -215,7 +212,6 @@
     <ClInclude Include="EffectBase.h" />
     <ClInclude Include="FadeManager.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="MonitoringEnemy.h" />
     <ClInclude Include="PreCompiledHeader.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBase.h" />

@@ -3,7 +3,9 @@
 #include <vector>
 #include "DxLib.h"
 
-class Cake;
+class EffectManager;
+class Player;
+class CakeBullet;
 
 using namespace std;
 
@@ -11,11 +13,20 @@ class CakeManager final
 {
 public:
 
-	CakeManager(vector<Cake*>* const inCakePosition);
+	CakeManager();
 	virtual ~CakeManager();
+
+	void Update(float deltaTime, Player* player);
+	void Draw();
 
 private:
 
-	vector<Cake*>* const cakePosition;
+	void EntryCake(CakeBullet* newCakeBullet);		//ケーキを登録
+	void DeleteCake(CakeBullet* deleteCakeBullet);	//ケーキを削除
+	void CakePop();						//ケーキの出現
+
+	EffectManager* effectManager;
+	std::vector<CakeBullet*> cakeBullet;
+
 
 };

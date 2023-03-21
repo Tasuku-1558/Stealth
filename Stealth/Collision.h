@@ -18,21 +18,6 @@ namespace My3dLib
 		float  radius;      //球体の半径
 	};
 
-	//カプセルの当たり判定
-	struct Capsule
-	{
-		Capsule();
-		Capsule(const VECTOR& start, const VECTOR& end, float radius);
-
-		VECTOR localStart; //カプセルのローカル開始座標
-		VECTOR worldStart; //カプセルのワールド開始座標
-		VECTOR localEnd;   //カプセルのローカル終了座標
-		VECTOR worldEnd;   //カプセルのワールド終了座標
-		float  radius;     //カプセルの半径
-	};
-
 	//当たり判定の関数組み合わせ
 	bool CollisionSphereAndSphere(const Sphere& sphere1, const Sphere& sphere2);
-	bool CollisionCapsuleAndSphere(const Sphere& sphere, const Capsule& capsule);
-
 }

@@ -103,9 +103,6 @@
     <ClCompile Include="ThirdStage.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="MonitoringEnemy.cpp">
-      <Filter>ソース ファイル\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="DeltaTime.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
@@ -168,9 +165,6 @@
     </ClCompile>
     <ClCompile Include="EffectBase.cpp">
       <Filter>ソース ファイル\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="CakeManager.cpp">
-      <Filter>ソース ファイル\Item</Filter>
     </ClCompile>
     <ClCompile Include="SceneBase.cpp">
       <Filter>ソース ファイル\Scene</Filter>
@@ -243,9 +237,6 @@
     <ClInclude Include="ThirdStage.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="MonitoringEnemy.h">
-      <Filter>ソース ファイル\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="DeltaTime.h">
       <Filter>ソース ファイル\System</Filter>
     </ClInclude>
@@ -305,9 +296,6 @@
     </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>ソース ファイル\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="CakeManager.h">
-      <Filter>ソース ファイル\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

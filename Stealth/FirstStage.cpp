@@ -1,6 +1,10 @@
+#include "rapidjson/document.h"
+#include "rapidjson/istreamwrapper.h"
 #include "FirstStage.h"
+
 #include "DxLib.h"
 #include "PreCompiledHeader.h"
+#include <fstream>
 
 #include "Player.h"
 #include "Enemy.h"
@@ -20,7 +24,16 @@
 //デバック用
 #define DEBUG
 
+namespace Json
+{
+	const char* filePath = "Data/Json/GameData.json";
 
+	//jsonファイルの解析
+	//解析・・・キーの名前をコンテンツとして扱えるようにするための作業（例　doc[キー].GetInt()などで使えるように？
+	std::ifstream ifs(filePath);
+	rapidjson::IStreamWrapper isw(ifs);
+	rapidjson::Document doc;
+}
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -37,6 +50,8 @@ FirstStage::FirstStage()
 	, PARTICLE_NUMBER(500)
 	, PLAYER_HP(2)
 {
+	Json::doc.ParseStream(Json::isw);
+
 	Initialize();
 	Activate();
 }
@@ -47,6 +62,11 @@ FirstStage::FirstStage()
 FirstStage::~FirstStage()
 {
 	DeleteFontToHandle(fontHandle);
+
+	for (auto CakeBulletPtr : cakeBullet)
+	{
+		DeleteCakeBullet(CakeBulletPtr);
+	}
 }
 
 /// <summary>
@@ -69,10 +89,7 @@ void FirstStage::Initialize()
 	player = new Player(effectManager);
 
 	//エネミーに行動パターンのナンバーとスピードを設定
-	enemy = new Enemy(0, 1000.0f);
-
-	//ケーキの初期位置を設定
-	cakeBullet = new CakeBullet(/*{ 0.0f,30.0f,1500.0f }, */effectManager);
+	enemy = new Enemy(0, Json::doc["Position"]["x"].GetFloat()/*1000.0f*/);
 
 	//ゴールフラグの初期位置を設定
 	goalFlag = new GoalFlag({ -50.0f ,0.0f,3700.0f });
@@ -82,6 +99,9 @@ void FirstStage::Initialize()
 	uiManager = new UiManager();
 
 	fadeManager = new FadeManager();
+
+	//ケーキの初期位置を設定
+	CakeBulletPop();
 }
 
 void FirstStage::stage(int num)
@@ -111,6 +131,47 @@ SceneType FirstStage::Update(float deltaTime)
 
 		return nowSceneType;
 	}
+}
+
+/// <summary>
+/// ケーキバレットを登録
+/// </summary>
+/// <param name="newCakeBullet"></param>
+void FirstStage::EntryCakeBullet(CakeBullet* newCakeBullet)
+{
+	cakeBullet.emplace_back(newCakeBullet);
+}
+
+/// <summary>
+/// ケーキバレットの削除
+/// </summary>
+/// <param name="deleteCakeBullet"></param>
+void FirstStage::DeleteCakeBullet(CakeBullet* deleteCakeBullet)
+{
+	//ケーキのパーティクルオブジェクトから検索して削除
+	auto iter = std::find(cakeBullet.begin(), cakeBullet.end(), deleteCakeBullet);
+
+	if (iter != cakeBullet.end())
+	{
+		//ケーキのパーティクルオブジェクトを最後尾に移動してデータを消す
+		std::iter_swap(iter, cakeBullet.end() - 1);
+		cakeBullet.pop_back();
+
+		return;
+	}
+}
+
+/// <summary>
+/// ケーキバレットの出現
+/// </summary>
+void FirstStage::CakeBulletPop()
+{
+	//ケーキの座標を設定
+	CakeBullet* newCakeBullet = new CakeBullet({ 0.0f,30.0f,1500.0f }, effectManager);
+	EntryCakeBullet(newCakeBullet);
+
+	CakeBullet* newCakeBullet2 = new CakeBullet({ 0.0f,30.0f,1000.0f }, effectManager);
+	EntryCakeBullet(newCakeBullet2);
 }
 
 /// <summary>
@@ -146,17 +207,20 @@ void FirstStage::DeleteCakeParticle(CakeParticle* deleteCakeParticle)
 /// </summary>
 void FirstStage::CakeParticlePop()
 {
-	//マウスカーソルを左クリックし、且つケーキとバレットが非アクティブ且つパーティクルが出ていないならば
-	if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0 && cakeBullet->bullet->GetAlive() /*&& !cakeBullet->cake->GetAlive()*/ && !particleFlag)
+	for (auto CakeBulletPtr : cakeBullet)
 	{
-		//パーティクルの個数分エントリーする
-		for (int i = 0; i < PARTICLE_NUMBER; i++)
+		//マウスカーソルを左クリックし、且つケーキとバレットが非アクティブ且つパーティクルが出ていないならば
+		if ((GetMouseInput() & MOUSE_INPUT_LEFT) && CakeBulletPtr->bullet->GetAlive() && !CakeBulletPtr->cake->GetAlive() && !particleFlag)
 		{
-			CakeParticle* newCakeParticle = new CakeParticle(cakeBullet->bullet->GetPosition());
-			EntryCakeParticle(newCakeParticle);
-		}
+			//パーティクルの個数分エントリーする
+			for (int i = 0; i < PARTICLE_NUMBER; i++)
+			{
+				CakeParticle* newCakeParticle = new CakeParticle(CakeBulletPtr->bullet->GetPosition());
+				EntryCakeParticle(newCakeParticle);
+			}
 
-		particleFlag = true;
+			particleFlag = true;
+		}
 	}
 }
 
@@ -192,15 +256,26 @@ void FirstStage::UpdateGame(float deltaTime)
 
 	camera->Update(player->GetPosition());
 
-	enemy->Update(deltaTime, player);
-
-	enemy->VisualAngleCake(cakeBullet->bullet, deltaTime);
-
-	player->Update(deltaTime, hitChecker->Back(),hitChecker->MapHit());
+	player->Update(deltaTime, hitChecker->Back(), hitChecker->MapHit());
 
 	player->FoundEnemy(deltaTime, enemy->Spotted());
 
-	cakeBullet->Update(deltaTime, player);
+	enemy->Update(deltaTime, player);
+
+	for (auto CakeBulletPtr : cakeBullet)
+	{
+		enemy->VisualAngleCake(CakeBulletPtr->bullet, deltaTime);
+
+		if (enemy->CakeFlag())
+		{
+			break;
+		}
+	}
+
+	for (auto CakeBulletPtr : cakeBullet)
+	{
+		CakeBulletPtr->Update(deltaTime, player);
+	}
 
 	goalFlag->Update(deltaTime);
 
@@ -226,7 +301,7 @@ void FirstStage::UpdateGame(float deltaTime)
 		particlePtr->Update(deltaTime);
 	}
 
-	hitChecker->Check(stageMap->GetModelHandle(), player, &cakeBullet->cake, /*&enemy,*/ goalFlag);
+	hitChecker->Check(stageMap->GetModelHandle(), player, &cakeBullet, /*&enemy,*/ goalFlag);
 	hitChecker->EnemyAndPlayer(player, enemy);
 	
 	//エネミーに2回見つかったら
@@ -309,7 +384,12 @@ void FirstStage::Draw()
 
 		player->Draw();
 		
-		cakeBullet->Draw();
+		for (auto CakeBulletPtr : cakeBullet)
+		{
+			CakeBulletPtr->Draw();
+
+			uiManager->CakeGetDraw(CakeBulletPtr->CakeGet());
+		}
 	}
 
 	goalFlag->Draw();
@@ -317,8 +397,6 @@ void FirstStage::Draw()
 	effectManager->Draw();
 
 	uiManager->Draw(gameState, player->FindCount(), hitChecker->UI());
-	
-	uiManager->CakeGetDraw(cakeBullet->CakeGet());
 	
 	for (auto particlePtr : cakeParticle)
 	{
@@ -332,7 +410,6 @@ void FirstStage::Draw()
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), fontHandle, "X : %.0f", player->GetPosition().x);
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), fontHandle, "Z : %.0f", player->GetPosition().z);
 	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), fontHandle, "PlayerCount : %d", player->FindCount());
-	//DrawFormatStringToHandle(100, 400, GetColor(255, 0, 0), font, "CakeAlive : %d\n(1:true 0:false)", cakeBullet->cake->GetAlive());
 	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), fontHandle, "ParticleSize : %d", cakeParticle.size());
 	DrawFormatStringToHandle(100, 600, GetColor(255, 0, 0), fontHandle, "stage : %d", stageNo);
 #endif // DEBUG

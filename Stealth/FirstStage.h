@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneBase.h"
+#include "DxLib.h"
 #include <vector>
 
 class Camera;
@@ -17,6 +18,7 @@ class EffectManager;
 class UiManager;
 class FadeManager;
 
+
 /// <summary>
 /// FirstStageクラス
 /// </summary>
@@ -26,8 +28,8 @@ public:
 	FirstStage();
 	virtual ~FirstStage();
 
-	SceneType Update(float deltaTime);	//更新処理
-	void Draw();						//描画処理
+	SceneType Update(float deltaTime)override;	//更新処理
+	void Draw()override;						//描画処理
 
 	void stage(int num);
 
@@ -49,7 +51,7 @@ private:
 	BackGround* backGround;
 	Player* player;
 	Enemy* enemy;
-	CakeBullet* cakeBullet;
+	std::vector<CakeBullet*> cakeBullet;
 	HitChecker* hitChecker;
 	StageMap* stageMap;
 	GoalFlag* goalFlag;
@@ -58,12 +60,16 @@ private:
 	UiManager* uiManager;
 	FadeManager* fadeManager;
 
-	void Initialize();				//初期化処理
-	void Activate();				//活性化処理
+	void Initialize()override;				//初期化処理
+	void Activate()override;				//活性化処理
 
 	void EntryEnemy(Enemy* newEnemy);								//エネミーを登録
 	void DeleteEnemy(Enemy* deleteEnemy);							//エネミーを削除
 	void EnemyPop();												//エネミーの出現
+
+	void EntryCakeBullet(CakeBullet* newCakeBullet);		//ケーキバレットを登録
+	void DeleteCakeBullet(CakeBullet* deleteCakeBullet);	//ケーキバレットを削除
+	void CakeBulletPop();									//ケーキバレットの出現
 
 	void EntryCakeParticle(CakeParticle* newCakeParticle);			//ケーキのパーティクルを登録
 	void DeleteCakeParticle(CakeParticle* deleteCakeParticle);		//ケーキのパーティクルを削除
@@ -81,6 +87,7 @@ private:
 	float frame;			//フレーム数
 	float particleInterval;	//パーティクル出現のインターバル
 	bool  particleFlag;		//パーティクルを出したら
+
 
 	bool clear;
 	int stageNo;

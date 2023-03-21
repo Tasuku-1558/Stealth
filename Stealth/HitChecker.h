@@ -6,7 +6,7 @@
 
 class Player;
 class Enemy;
-class Cake;
+class CakeBullet;
 class GoalFlag;
 
 using namespace std;
@@ -22,7 +22,7 @@ public:
 
 	void Check(int model, 
 			   Player* player, 
-			   vector<Cake*>* cake, 
+			   vector<CakeBullet*>* cakeBullet, 
 			  /* vector<Enemy*>* enemy, */
 			   GoalFlag* goalFlag);							//衝突判定
 
@@ -37,7 +37,7 @@ private:
 
 	HitChecker(const HitChecker&);								//コピーコンストラクタ
 
-	void CakeAndPlayer(Player* player, vector<Cake*>* cake);	//ケーキとプレイヤーの当たり判定
+	void CakeAndPlayer(Player* player, vector<CakeBullet*>* cakeBullet);	//ケーキとプレイヤーの当たり判定
 	void PlayerAndUI(Player* player);							//プレイヤーとUI画像の当たり判定
 	void MapAndPlayer(int model, Player* player);				//マップとプレイヤーの当たり判定
 	void FlagAndPlayer(GoalFlag* goalFlag, Player* player);		//ゴールオブジェクトとプレイヤーの当たり判定

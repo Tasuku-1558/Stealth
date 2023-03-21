@@ -8,6 +8,7 @@
 
 #include "TitleScene.h"
 
+
 //メインプログラム
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -60,7 +61,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//メインループ用フラグ変数
 	bool loop = true;
-	
+
 	//モデル管理クラスの生成
 	ModelManager::GetInstance();
 

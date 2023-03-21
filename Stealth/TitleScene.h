@@ -19,15 +19,15 @@ public:
 	TitleScene();
 	virtual ~TitleScene();
 
-	SceneType Update(float deltaTime);		//更新処理
-	void Draw();							//描画処理
+	SceneType Update(float deltaTime)override;		//更新処理
+	void Draw()override;							//描画処理
 
 private:
 
 	TitleScene(const TitleScene&);		//コピーコンストラクタ
 
-	void Initialize();					//初期化処理
-	void Activate();					//活性化処理
+	void Initialize()override;			//初期化処理
+	void Activate()override;			//活性化処理
 	void Blink();						//文字の点滅処理
 	void ChangeState();					//タイトルの状態の変更
 
@@ -61,6 +61,7 @@ private:
 	const string PLAY_VIDEO_PATH;	//タイトル動画のパス
 	const string TITLENAME_PATH;	//タイトル名の画像のパス
 	const string TITLE_UI_PATH;		//ステージ選択シーンへ遷移キーのUIのパス
+	const int	 MAX_ALPHA;			//最大透過度
 	const float  START_SPHERE_POSY;	//スタート状態の球のY座標
 	const float  EXIT_SPHERE_POSY;	//終了状態の球のY座標
 

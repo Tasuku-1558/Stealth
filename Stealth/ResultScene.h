@@ -20,14 +20,14 @@ public:
 	ResultScene();
 	virtual ~ResultScene();
 
-	SceneType Update(float deltaTime);	//更新処理
-	void Draw();						//描画処理
+	SceneType Update(float deltaTime)override;	//更新処理
+	void Draw()override;						//描画処理
 
 private:
 	ResultScene(const ResultScene&);	//コピーコンストラクタ
 	
-	void Initialize();						//初期化処理
-	void Activate();						//活性化処理
+	void Initialize()override;				//初期化処理
+	void Activate()override;				//活性化処理
 	void SceneChange(float deltaTime);		//シーン切り替え
 	void Blink();							//文字の点滅処理
 	void BackGroundMove();					//背景画像の動き

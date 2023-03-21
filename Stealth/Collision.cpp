@@ -38,35 +38,6 @@ namespace My3dLib
 	}
 
 	/// <summary>
-	/// カプセルコンストラクタ(引数なし)
-	/// </summary>
-	Capsule::Capsule()
-		: localStart()
-		, localEnd()
-		, worldStart()
-		, worldEnd()
-		, radius(0.0f)
-	{
-		//処理なし
-	}
-
-	/// <summary>
-	/// カプセルコンストラクタ(引数あり)
-	/// </summary>
-	/// <param name="start"></param>
-	/// <param name="end"></param>
-	/// <param name="radius"></param>
-	Capsule::Capsule(const VECTOR& start, const VECTOR& end, float radius)
-		: localStart()
-		, localEnd()
-		, worldStart()
-		, worldEnd()
-		, radius(0.0f)
-	{
-		//処理なし
-	}
-
-	/// <summary>
 	/// 当たり判定 球・球
 	/// </summary>
 	/// <param name="sphere1"></param>
@@ -76,17 +47,5 @@ namespace My3dLib
 	{
 		return HitCheck_Sphere_Sphere(sphere1.worldCenter, sphere1.radius,
 			sphere2.worldCenter, sphere2.radius);
-	}
-
-	/// <summary>
-	/// 当たり判定 球・カプセル
-	/// </summary>
-	/// <param name="sphere"></param>
-	/// <param name="capsule"></param>
-	/// <returns></returns>
-	bool CollisionCapsuleAndSphere(const Sphere& sphere, const Capsule& capsule)
-	{
-		return HitCheck_Sphere_Capsule(sphere.worldCenter, sphere.radius,
-			capsule.worldStart, capsule.worldEnd, capsule.radius);
 	}
 }
