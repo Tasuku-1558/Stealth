@@ -199,6 +199,7 @@
     <ClInclude Include="CakeBullet.h" />
     <ClInclude Include="CakeParticle.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Json.h" />
     <ClInclude Include="RepopEffect.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="FifthStage.h" />

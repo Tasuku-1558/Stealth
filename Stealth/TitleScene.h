@@ -4,11 +4,12 @@
 #include "DxLib.h"
 #include <string>
 
-using namespace std;
 
 class Light;
 class Camera;
 class FadeManager;
+
+using namespace std;
 
 /// <summary>
 /// タイトルシーンクラス
@@ -31,8 +32,8 @@ private:
 	void Blink();						//文字の点滅処理
 	void ChangeState();					//タイトルの状態の変更
 
-	string InputPath(string folderPath,	//画像のパスを入力
-					 string path);
+	string InputPath(string folderPath,
+					 string path);		//画像のパスを入力
 
 	//タイトルの状態
 	enum class TitleState

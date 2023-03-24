@@ -15,6 +15,28 @@ public:
 
 protected:
 
+	std::vector<VECTOR>& GetList(int number) { return positionList[number]; }      //敵の行動パターンリストを返す
+
+	VECTOR targetPosition;			//目的地の座標
+	VECTOR visualPosition;			//視野モデルの位置
+	VECTOR visualDir;				//視野モデルの方向
+	int markImage;					//ビックリマーク画像格納用
+	int visualModelHandle;			//視野モデルハンドル
+	float speed;					//エネミーの移動速度
+	float changeSpeed;				//ステージごとのエネミーの移動速度
+	float length;					//視野角の距離
+	float bulletDirection;			//バレットとエネミーの距離
+	bool playerSpotted;				//プレイヤーを発見したかどうか
+	bool cakeFlag;					//ケーキを発見したかどうか
+
+
+	//定数
+	const float RANGE_DEGREE;		//視野角度
+	const float RADIUS;				//エネミーの半径
+	
+
+private:
+
 	//FirstStageでの敵の行動
 	void MapList();                         //敵の行動パターンリスト(左右移動の敵)
 
@@ -34,26 +56,8 @@ protected:
 	void MapList8();                        //敵の行動パターンリスト8(右下L字移動の敵)
 	void MapList9();                        //敵の行動パターンリスト9(左上L字移動の敵)
 
-	std::vector<VECTOR>& GetList(int number) { return positionList[number]; }      //敵の行動パターンリストを返す
 
-	VECTOR targetPosition;			//目的地の座標
-	VECTOR visualPosition;			//視野モデルの位置
-	VECTOR visualDir;				//視野モデルの方向
-	int markImage;					//ビックリマーク画像格納用
-	int visualModelHandle;			//視野モデルハンドル
-	float speed;					//エネミーの移動速度
-	float changeSpeed;				//ステージごとのエネミーの移動速度
-	float length;					//視野角の距離
-	float bulletDirection;			//バレットとエネミーの距離
-	bool playerSpotted;				//プレイヤーを発見したかどうか
-	bool cakeFlag;					//ケーキを発見したかどうか
-	
 	std::vector<VECTOR> positionList[9];
 	std::vector<VECTOR>::iterator itr[9];
 
-
-	//定数
-	const float RANGE_DEGREE;		//視野角度
-	const float RADIUS;				//エネミーの半径
-	
 };

@@ -1,10 +1,6 @@
-#include "rapidjson/document.h"
-#include "rapidjson/istreamwrapper.h"
+#include "Json.h"
 #include "FirstStage.h"
-
-#include "DxLib.h"
 #include "PreCompiledHeader.h"
-#include <fstream>
 
 #include "Player.h"
 #include "Enemy.h"
@@ -24,16 +20,6 @@
 //デバック用
 #define DEBUG
 
-namespace Json
-{
-	const char* filePath = "Data/Json/GameData.json";
-
-	//jsonファイルの解析
-	//解析・・・キーの名前をコンテンツとして扱えるようにするための作業（例　doc[キー].GetInt()などで使えるように？
-	std::ifstream ifs(filePath);
-	rapidjson::IStreamWrapper isw(ifs);
-	rapidjson::Document doc;
-}
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -50,7 +36,7 @@ FirstStage::FirstStage()
 	, PARTICLE_NUMBER(500)
 	, PLAYER_HP(2)
 {
-	Json::doc.ParseStream(Json::isw);
+	GameData::doc.ParseStream(GameData::isw);
 
 	Initialize();
 	Activate();
@@ -89,10 +75,12 @@ void FirstStage::Initialize()
 	player = new Player(effectManager);
 
 	//エネミーに行動パターンのナンバーとスピードを設定
-	enemy = new Enemy(0, Json::doc["Position"]["x"].GetFloat()/*1000.0f*/);
+	enemy = new Enemy(0, GameData::doc["EnemySpeed"]["stage1"].GetFloat());
 
 	//ゴールフラグの初期位置を設定
-	goalFlag = new GoalFlag({ -50.0f ,0.0f,3700.0f });
+	goalFlag = new GoalFlag({ GameData::doc["GoalPosition"]["x"].GetFloat(),
+							  GameData::doc["GoalPosition"]["y"].GetFloat(),
+							  GameData::doc["GoalPosition"]["z"].GetFloat() });
 
 	hitChecker = new HitChecker();
 
@@ -167,10 +155,14 @@ void FirstStage::DeleteCakeBullet(CakeBullet* deleteCakeBullet)
 void FirstStage::CakeBulletPop()
 {
 	//ケーキの座標を設定
-	CakeBullet* newCakeBullet = new CakeBullet({ 0.0f,30.0f,1500.0f }, effectManager);
+	CakeBullet* newCakeBullet = new CakeBullet({ GameData::doc["CakePosition"]["stage1"]["x"].GetFloat(),
+												 GameData::doc["CakePosition"]["stage1"]["y"].GetFloat(),
+												 GameData::doc["CakePosition"]["stage1"]["z"].GetFloat() }, effectManager);
 	EntryCakeBullet(newCakeBullet);
 
-	CakeBullet* newCakeBullet2 = new CakeBullet({ 0.0f,30.0f,1000.0f }, effectManager);
+	CakeBullet* newCakeBullet2 = new CakeBullet({ GameData::doc["CakePosition"]["stage2"]["x"].GetFloat(),
+												  GameData::doc["CakePosition"]["stage2"]["y"].GetFloat(),
+												  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() }, effectManager);
 	EntryCakeBullet(newCakeBullet2);
 }
 

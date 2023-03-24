@@ -1,5 +1,4 @@
 #include "TitleScene.h"
-#include "DxLib.h"
 #include "PreCompiledHeader.h"
 #include "Light.h"
 #include "Camera.h"

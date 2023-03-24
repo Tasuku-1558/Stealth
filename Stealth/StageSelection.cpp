@@ -1,6 +1,5 @@
 ﻿#include "StageSelection.h"
 
-#include "DxLib.h"
 #include "PreCompiledHeader.h"
 #include "Camera.h"
 #include "SelectionUi.h"

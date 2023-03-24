@@ -2,7 +2,6 @@
 
 #include <string>
 
-#include "DxLib.h"
 #include "FirstStage.h"
 
 

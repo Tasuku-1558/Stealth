@@ -10,6 +10,7 @@ FadeManager::FadeManager()
 	: fade(0)
 	, fadeInc(2)
 	, BLACK(GetColor(0, 0, 0))
+	, MAX_FADE(255)
 {
 	//処理なし
 }
@@ -28,7 +29,7 @@ FadeManager::~FadeManager()
 void FadeManager::FadeMove()
 {
 	//画面効果の増分チェック
-	if (fade > 255 && fadeInc > 0)
+	if (fade > MAX_FADE && fadeInc > 0)
 	{
 		fadeInc *= -1;
 	}

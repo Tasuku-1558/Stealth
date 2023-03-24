@@ -67,9 +67,9 @@ private:
 	void DeleteEnemy(Enemy* deleteEnemy);							//エネミーを削除
 	void EnemyPop();												//エネミーの出現
 
-	void EntryCakeBullet(CakeBullet* newCakeBullet);		//ケーキバレットを登録
-	void DeleteCakeBullet(CakeBullet* deleteCakeBullet);	//ケーキバレットを削除
-	void CakeBulletPop();									//ケーキバレットの出現
+	void EntryCakeBullet(CakeBullet* newCakeBullet);				//ケーキバレットを登録
+	void DeleteCakeBullet(CakeBullet* deleteCakeBullet);			//ケーキバレットを削除
+	void CakeBulletPop();											//ケーキバレットの出現
 
 	void EntryCakeParticle(CakeParticle* newCakeParticle);			//ケーキのパーティクルを登録
 	void DeleteCakeParticle(CakeParticle* deleteCakeParticle);		//ケーキのパーティクルを削除

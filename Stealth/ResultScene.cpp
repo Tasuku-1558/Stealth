@@ -1,5 +1,4 @@
 #include "ResultScene.h"
-#include "DxLib.h"
 #include "PreCompiledHeader.h"
 #include "Camera.h"
 #include "FireWorksParticle.h"

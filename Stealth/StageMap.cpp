@@ -38,7 +38,6 @@ StageMap::StageMap(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate
 	MV1SetRotationXYZ(modelHandle, rotate);
 	MV1SetPosition(modelHandle, position);
 
-	kabe = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::WALL));
 
 	Initialize();
 
