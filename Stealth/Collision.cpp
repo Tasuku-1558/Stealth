@@ -36,16 +36,4 @@ namespace My3dLib
 	{
 		worldCenter = localCenter + pos;
 	}
-
-	/// <summary>
-	/// “–‚½‚è”»’è ‹…E‹…
-	/// </summary>
-	/// <param name="sphere1"></param>
-	/// <param name="sphere2"></param>
-	/// <returns></returns>
-	bool CollisionSphereAndSphere(const Sphere& sphere1, const Sphere& sphere2)
-	{
-		return HitCheck_Sphere_Sphere(sphere1.worldCenter, sphere1.radius,
-			sphere2.worldCenter, sphere2.radius);
-	}
 }

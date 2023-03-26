@@ -27,8 +27,7 @@ private:
 	ResultScene(const ResultScene&);	//コピーコンストラクタ
 	
 	void Initialize()override;				//初期化処理
-	void Activate()override;				//活性化処理
-	void SceneChange(float deltaTime);		//シーン切り替え
+	void SceneChange();						//シーン切り替え
 	void Blink();							//文字の点滅処理
 	void BackGroundMove();					//背景画像の動き
 	void ReturnScreen(float deltaTime);		//画面を遷移する

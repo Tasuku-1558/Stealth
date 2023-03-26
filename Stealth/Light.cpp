@@ -23,5 +23,6 @@ Light::~Light()
 /// </summary>
 void Light::Initialize()
 {
+	//ƒ‰ƒCƒg‚ÌŒü‚«‚ğİ’è
 	SetLightDirection(DIRECTION);
 }

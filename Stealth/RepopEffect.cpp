@@ -5,8 +5,8 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="effectPath"></param>
-/// <param name="effectSize"></param>
+/// <param name="effectPath">エフェクトのパス</param>
+/// <param name="effectSize">エフェクトのサイズ</param>
 RepopEffect::RepopEffect(string effectPath, float effectSize)
 {
 	effectHandle = LoadEffekseerEffect(effectPath.c_str(), effectSize);

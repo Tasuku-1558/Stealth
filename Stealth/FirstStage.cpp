@@ -1,13 +1,14 @@
 #include "Json.h"
 #include "FirstStage.h"
+
 #include "PreCompiledHeader.h"
 
-#include "Player.h"
-#include "Enemy.h"
 #include "Camera.h"
 #include "Light.h"
 #include "BackGround.h"
 #include "StageMap.h"
+#include "Player.h"
+#include "Enemy.h"
 #include "CakeBullet.h"
 #include "GoalFlag.h"
 #include "HitChecker.h"
@@ -24,7 +25,7 @@
 /// コンストラクタ
 /// </summary>
 FirstStage::FirstStage()
-	: SceneBase(SceneType::PLAY)
+	: SceneBase(SceneType::GAME)
 	, gameState(GameState::START)
 	, pUpdate(nullptr)
 	, fontHandle(0)
@@ -39,7 +40,6 @@ FirstStage::FirstStage()
 	GameData::doc.ParseStream(GameData::isw);
 
 	Initialize();
-	Activate();
 }
 
 /// <summary>
@@ -90,21 +90,15 @@ void FirstStage::Initialize()
 
 	//ケーキの初期位置を設定
 	CakeBulletPop();
+
+	fontHandle = CreateFontToHandle("Oranienbaum", 50, 1);
+
+	pUpdate = &FirstStage::UpdateStart;
 }
 
 void FirstStage::stage(int num)
 {
 	stageNo = num;
-}
-
-/// <summary>
-/// 活性化処理
-/// </summary>
-void FirstStage::Activate()
-{
-	fontHandle = CreateFontToHandle("Oranienbaum", 50, 1);
-
-	pUpdate = &FirstStage::UpdateStart;
 }
 
 /// <summary>

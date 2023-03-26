@@ -17,7 +17,4 @@ namespace My3dLib
 		VECTOR worldCenter; //球体のワールド中心座標
 		float  radius;      //球体の半径
 	};
-
-	//当たり判定の関数組み合わせ
-	bool CollisionSphereAndSphere(const Sphere& sphere1, const Sphere& sphere2);
 }

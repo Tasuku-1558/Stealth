@@ -4,8 +4,7 @@
 #include <vector>
 
 /// <summary>
-/// Enemyの親クラス
-/// ObjectBaseクラスを継承
+/// エネミー基底クラス
 /// </summary>
 class EnemyBase : public ObjectBase
 {

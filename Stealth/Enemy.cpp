@@ -27,7 +27,6 @@ Enemy::Enemy(int number, float enemySpeed)
 	changeSpeed = enemySpeed;
 
 	Initialize();
-	Activate();
 }
 
 /// <summary>
@@ -51,6 +50,13 @@ void Enemy::Initialize()
 
 	//ビックリマーク画像の読み込み
 	markImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
+
+	speed = changeSpeed;
+
+	//当たり判定球の情報設定
+	collisionSphere.localCenter = ZERO_VECTOR;
+	collisionSphere.worldCenter = position;
+	collisionSphere.radius = RADIUS;
 }
 
 /// <summary>
@@ -62,21 +68,6 @@ void Enemy::Initialize()
 string Enemy::InputPath(string folderPath, string imagePath)
 {
 	return string(folderPath + imagePath);
-}
-
-/// <summary>
-/// 活性化処理
-/// </summary>
-void Enemy::Activate()
-{
-	speed = changeSpeed;
-	direction = ZERO_VECTOR;
-	nextDirection = ZERO_VECTOR;
-
-	//当たり判定球の情報設定
-	collisionSphere.localCenter = ZERO_VECTOR;
-	collisionSphere.worldCenter = position;
-	collisionSphere.radius = RADIUS;
 }
 
 /// <summary>

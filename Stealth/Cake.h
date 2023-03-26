@@ -25,7 +25,6 @@ private:
 	Cake(const Cake&);			//コピーコンストラクタ
 
 	void Initialize();			//初期化処理
-	void Activate();			//活性化処理
 	void Finalize();			//終了処理
 
 	bool alive;					//ケーキが生きてるか死んでいるか

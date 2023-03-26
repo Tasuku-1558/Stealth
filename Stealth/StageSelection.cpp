@@ -25,7 +25,6 @@ StageSelection::StageSelection()
 	, PUSH_INTERVAL(0.2f)
 {
 	Initialize();
-	Activate();
 }
 
 /// <summary>
@@ -46,13 +45,7 @@ void StageSelection::Initialize()
 	selectionUi = new SelectionUi();
 
 	fadeManager = new FadeManager();
-}
 
-/// <summary>
-/// 活性化処理
-/// </summary>
-void StageSelection::Activate()
-{
 	stageNo = FIRST_STAGE_NUMBER;
 
 	stageMax = STAGE_NUMBER;
@@ -101,11 +94,11 @@ void StageSelection::StageCreator(int stageNumber)
 	//各シーン
 	if (stageNumber == 1)
 	{
-		nowSceneType = SceneType::PLAY;
+		nowSceneType = SceneType::GAME;
 	}
 	if (stageNumber == 2)
 	{
-		nowSceneType = SceneType::PLAY;
+		nowSceneType = SceneType::GAME;
 	}
 	if (stageNumber == 6)
 	{
@@ -159,18 +152,18 @@ void StageSelection::KeyMove(float deltaTime)
 	//リターンキーを押したならば
 	if (changeScene)
 	{
-		//ステージ遷移のカウントを開始する
+		//文字点滅カウントを開始する
 		changeTimeCount++;
 
 		frame += deltaTime;
 
-		if (changeTimeCount > MAX_TIME)
+		if (frame > 1.0f)
 		{
 			//画面効果処理を行う
 			fadeManager->FadeMove();
 
 			//フレームが3.5秒経過したら画面を遷移する
-			if (frame > 3.5f)
+			if (frame > 3.0f)
 			{
 				StageCreator(stageNo);
 			}
@@ -210,7 +203,7 @@ void StageSelection::Draw()
 		selectionUi->TitleUiDraw();
 	}
 
-	if (!changeScene || (changeTimeCount / 5) % 2 == 0)
+	if ((changeTimeCount / 5) % 2 == 0)
 	{
 		DrawFormatStringToHandle(200, 250, GetColor(0, 255, 0), fontHandle, "STAGE : %d", stageNo);
 	}

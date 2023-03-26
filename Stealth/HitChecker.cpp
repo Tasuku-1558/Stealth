@@ -58,11 +58,11 @@ void HitChecker::CakeAndPlayer(Player* player, vector<CakeBullet*>* cakeBullet)
 		VECTOR sub = player->GetPosition() - (*itr)->cake->GetPosition();
 
 		//プレイヤーとケーキの距離を計算
-		float direction = VSize(sub);
+		float distance = VSize(sub);
 		float radius = player->GetCollide().radius + (*itr)->cake->GetCollideRadius();
 
 		//衝突しているならば
-		if (direction <= radius)
+		if (distance <= radius)
 		{
 			//ケーキの反応
 			(*itr)->cake->HitCake();
@@ -83,11 +83,11 @@ void HitChecker::EnemyAndPlayer(Player* player, /*vector<Enemy*>* enemy*/Enemy* 
 		VECTOR sub = player->GetPosition() - /*(*itr)*/enemy->GetPosition();
 
 		//プレイヤーとエネミーの距離を計算
-		float direction = VSize(sub);
+		float distance = VSize(sub);
 		float radius = player->GetCollide().radius + /*(*itr)*/enemy->GetCollideRadius();
 
 		//衝突しているならば
-		if (direction <= radius)
+		if (distance <= radius)
 		{
 			//エネミーの反応
 			/*(*itr)*/enemy->HitPlayer();
@@ -105,11 +105,11 @@ void HitChecker::PlayerAndUI(Player* player)
 	VECTOR sub = player->GetPosition() - uiPosition;
 
 	//プレイヤーとUI画像の距離を計算
-	float direction = VSize(sub);
+	float distance = VSize(sub);
 	float radius = player->GetCollide().radius + 50.0f;
 
 	//衝突しているならば
-	if (direction <= radius)
+	if (distance <= radius)
 	{
 		uiHit = true;
 	}
@@ -201,12 +201,12 @@ void HitChecker::FlagAndPlayer(GoalFlag* goalFlag, Player* player)
 	VECTOR sub = player->GetPosition() - goalFlag->GetPosition();
 
 	//プレイヤーとゴール旗の距離を計算
-	float direction = VSize(sub);
+	float distance = VSize(sub);
 
 	float radius = player->GetCollide().radius + goalFlag->GetCollideRadius();
 
 	//衝突しているならば
-	if (direction <= radius)
+	if (distance <= radius)
 	{
 		flagHit = true;
 	}

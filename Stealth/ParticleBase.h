@@ -7,7 +7,7 @@
 using namespace Math3d;		//VECTORの計算に使用
 
 /// <summary>
-/// パーティクルベースクラス
+/// パーティクル基底クラス
 /// </summary>
 class ParticleBase
 {

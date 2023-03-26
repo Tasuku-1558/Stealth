@@ -47,7 +47,7 @@ SceneBase* SceneBase::CreateScene(SceneType nowScene)
 		retScene = stageSelection;
 		break;
 
-	case SceneType::PLAY:
+	case SceneType::GAME:
 		firstStage = new FirstStage();
 		firstStage->stage(number);
 		retScene = firstStage;

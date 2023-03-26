@@ -22,13 +22,14 @@ public:
 		EFFECT_AMOUNT,		//エフェクトの種類
 	};
 
-	void Initialize();		//初期化処理
 	void Draw();			//描画処理
 
 	void CreateRepopEffect(VECTOR position);	//リスポーンエフェクトの生成
 
 private:
 	EffectManager(const EffectManager&);		//コピーコンストラクタ
+
+	void Initialize();							//初期化処理
 
 	string InputPath(string folderPath, 
 					 string effectPath);		//パスの入力

@@ -8,7 +8,6 @@ using namespace std;
 
 /// <summary>
 /// リスポーンエフェクトクラス
-/// ケーキ再スポーン時のエフェクトとプレイヤーリスポーン時のエフェクトに使用している
 /// </summary>
 class RepopEffect final : public EffectBase
 {

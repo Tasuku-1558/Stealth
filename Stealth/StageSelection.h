@@ -25,7 +25,6 @@ private:
 	StageSelection(const StageSelection&);			//コピーコンストラクタ
 
 	void Initialize()override;						//初期化処理
-	void Activate()override;						//活性化処理
 	int stageIncrement(int stageNumber);			//選択ステージを1つ先に持っていく
 	int stageDecrement(int stageNumber);			//選択ステージを1つ前に持っていく
 	void StageCreator(int stageNumber);				//各シーンへ遷移
@@ -38,7 +37,7 @@ private:
 	int fontHandle;									//ゲームフォント
 	int stageMax;									//最大ステージ数
 	int stageNo;									//ステージナンバー
-	int changeTimeCount;							//ステージ遷移カウント
+	int changeTimeCount;							//文字点滅カウント
 	float frame;									//フレーム数
 	float pushCount;								//ステージ切り替えカウント
 	bool changeScene;								//シーンを遷移させるか

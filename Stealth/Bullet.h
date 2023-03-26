@@ -33,7 +33,6 @@ private:
 	Bullet(const Bullet&);					//コピーコンストラクタ
 
 	void Initialize();						//初期化処理
-	void Activate();						//活性化処理
 	void Finalize();						//終了処理
 	void OnShot();							//球が撃たれた時
 

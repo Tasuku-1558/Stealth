@@ -140,7 +140,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		prevTime = nowTime;
 	}
 
-	//フォントのアンロード
+	//フォントの削除
 	if (RemoveFontResourceEx(fontPath, FR_PRIVATE, NULL)) {}
 	else { MessageBox(NULL, "remove failure", "", MB_OK); }
 

@@ -5,7 +5,7 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="cakePosition"></param>
+/// <param name="cakePosition">ケーキの座標</param>
 /// <param name="inEffect"></param>
 CakeBullet::CakeBullet(const VECTOR& cakePosition, EffectManager* const inEffect)
     : bulletCount(0.0f)

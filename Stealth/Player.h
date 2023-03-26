@@ -29,7 +29,6 @@ private:
 	Player(const Player&);														//コピーコンストラクタ
 
 	void Initialize();															//初期化処理
-	void Activate();															//活性化処理
 	void Move(float deltaTime, VECTOR back, bool mapHit);						//移動処理
 	void Finalize();															//終了処理
 	void AfterImage();															//プレイヤーの残像処理

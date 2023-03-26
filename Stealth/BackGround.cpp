@@ -1,5 +1,5 @@
 #include "BackGround.h"
-
+#include "DxLib.h"
 
 /// <summary>
 /// コンストラクタ
@@ -7,7 +7,8 @@
 BackGround::BackGround()
 	: backGroundHandle(0)
 	, VIDEO_FOLDER_PATH("Data/Video/")
-	, BACK_GROUND_VIDEO_PATH("BackGround.mp4")
+	, BACKGROUND_VIDEO_PATH("BackGround.mp4")
+	, PLAY_POSITION(0)
 {
 	Initialize();
 }
@@ -25,7 +26,8 @@ BackGround::~BackGround()
 /// </summary>
 void BackGround::Initialize()
 {
-	string failePath = VIDEO_FOLDER_PATH + BACK_GROUND_VIDEO_PATH;
+	//背景動画の読み込み
+	string failePath = VIDEO_FOLDER_PATH + BACKGROUND_VIDEO_PATH;
 	backGroundHandle = LoadGraph(failePath.c_str());
 }
 
@@ -48,7 +50,7 @@ void BackGround::Update()
 	if (!GetMovieStateToGraph(backGroundHandle))
 	{
 		//動画が終了したら0秒の所からまた再生する
-		SeekMovieToGraph(backGroundHandle, 0);
+		SeekMovieToGraph(backGroundHandle, PLAY_POSITION);
 
 		//動画を再生する
 		PlayMovieToGraph(backGroundHandle);

@@ -22,7 +22,6 @@ private:
 	GoalFlag(const GoalFlag&);			//コピーコンストラクタ
 
 	void Initialize();					//初期化処理
-	void Activate();					//活性化処理
 	void Finalize();					//終了処理
 
 	VECTOR rotate;						//モデルの回転
@@ -31,7 +30,7 @@ private:
 
 	//定数
 	const VECTOR SIZE;				//モデルの倍率
-	const float ROTATE_SPEED_Y;		//モデルの回転スピード
+	const float  ROTATE_SPEED;		//モデルの回転スピード
 	const float  RADIUS;			//ゴールフラグの半径
 
 };

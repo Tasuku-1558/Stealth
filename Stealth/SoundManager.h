@@ -6,7 +6,6 @@ using namespace std;
 
 /// <summary>
 /// サウンド管理クラス
-/// BGMとSEの再生と停止を行う
 /// シングルトン
 /// </summary>
 class SoundManager final

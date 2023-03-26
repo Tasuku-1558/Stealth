@@ -61,7 +61,6 @@ private:
 	FadeManager* fadeManager;
 
 	void Initialize()override;				//初期化処理
-	void Activate()override;				//活性化処理
 
 	void EntryEnemy(Enemy* newEnemy);								//エネミーを登録
 	void DeleteEnemy(Enemy* deleteEnemy);							//エネミーを削除
@@ -75,6 +74,7 @@ private:
 	void DeleteCakeParticle(CakeParticle* deleteCakeParticle);		//ケーキのパーティクルを削除
 	void CakeParticlePop();											//ケーキのパーティクルの出現
 
+	//各状態に応じた更新処理
 	void UpdateStart(float deltaTime);				//ゲーム開始前
 	void UpdateGame(float deltaTime);				//ゲーム中
 	void UpdateGoal(float deltaTime);				//ゴール

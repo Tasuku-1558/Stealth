@@ -20,9 +20,6 @@
     <Filter Include="ソース ファイル\Enemy">
       <UniqueIdentifier>{8932d879-1753-411f-8793-a09007e7b73e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Map">
-      <UniqueIdentifier>{ecf49082-e725-44f3-9d10-9c85f1400af7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Effect">
       <UniqueIdentifier>{98c52eb2-fc72-42b9-b112-efd79609faee}</UniqueIdentifier>
     </Filter>
@@ -37,6 +34,9 @@
     </Filter>
     <Filter Include="ソース ファイル\Collision">
       <UniqueIdentifier>{4669bcea-c662-4ad4-82c9-7f5bddb84220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Stage">
+      <UniqueIdentifier>{ecf49082-e725-44f3-9d10-9c85f1400af7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -88,9 +88,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
-    <ClCompile Include="StageBase.cpp">
-      <Filter>ソース ファイル\Map</Filter>
-    </ClCompile>
     <ClCompile Include="StageSelection.cpp">
       <Filter>ソース ファイル\Scene\StageSelection</Filter>
     </ClCompile>
@@ -107,7 +104,7 @@
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="StageMap.cpp">
-      <Filter>ソース ファイル\Map</Filter>
+      <Filter>ソース ファイル\Stage</Filter>
     </ClCompile>
     <ClCompile Include="FourthStage.cpp">
       <Filter>ソース ファイル\Scene</Filter>
@@ -150,9 +147,6 @@
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>ソース ファイル\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Stone.cpp">
-      <Filter>ソース ファイル\Item</Filter>
     </ClCompile>
     <ClCompile Include="HitChecker.cpp">
       <Filter>ソース ファイル\Collision</Filter>
@@ -216,9 +210,6 @@
     <ClInclude Include="BackGround.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="StageBase.h">
-      <Filter>ソース ファイル\Map</Filter>
-    </ClInclude>
     <ClInclude Include="RepopEffect.h">
       <Filter>ソース ファイル\Effect</Filter>
     </ClInclude>
@@ -244,7 +235,7 @@
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="StageMap.h">
-      <Filter>ソース ファイル\Map</Filter>
+      <Filter>ソース ファイル\Stage</Filter>
     </ClInclude>
     <ClInclude Include="FourthStage.h">
       <Filter>ソース ファイル\Scene</Filter>
@@ -284,9 +275,6 @@
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>ソース ファイル\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Stone.h">
-      <Filter>ソース ファイル\Item</Filter>
     </ClInclude>
     <ClInclude Include="HitChecker.h">
       <Filter>ソース ファイル\Collision</Filter>

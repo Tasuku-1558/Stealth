@@ -5,7 +5,7 @@ enum class SceneType
 {
 	TITLE,			//タイトル画面
 	SELECTION,		//セレクション画面
-	PLAY,			//ゲーム画面
+	GAME,			//ゲーム画面
 	RESULT,			//リザルト画面
 	END,			//終了
 };
@@ -20,7 +20,6 @@ public:
 	virtual ~SceneBase();
 
 	virtual void Initialize() = 0;					//初期化処理
-	virtual void Activate() = 0;					//活性化処理
 	virtual SceneType Update(float deltaTime) = 0;	//更新処理
 	virtual void Draw() = 0;						//描画処理
 

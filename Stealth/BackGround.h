@@ -1,6 +1,5 @@
 #pragma once
 
-#include "DxLib.h"
 #include <string>
 
 using namespace std;
@@ -26,7 +25,8 @@ private:
     int backGroundHandle;       //背景動画格納用
 
     //定数
-    const string VIDEO_FOLDER_PATH;	        //videoフォルダまでのパス
-    const string BACK_GROUND_VIDEO_PATH;	//背景動画のパス
+    const string VIDEO_FOLDER_PATH;	        //Videoフォルダまでのパス
+    const string BACKGROUND_VIDEO_PATH;	    //背景動画のパス
+    const int    PLAY_POSITION;             //動画再生位置
 
 };

@@ -5,7 +5,7 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="cakePosition"></param>
+/// <param name="cakePosition">ケーキの座標</param>
 Cake::Cake(const VECTOR& cakePosition)
 	: alive(true)
 	, SIZE({ 20.0f, 20.0f, 20.0f })
@@ -15,7 +15,6 @@ Cake::Cake(const VECTOR& cakePosition)
 	position = cakePosition;
 
 	Initialize();
-	Activate();
 }
 
 /// <summary>
@@ -38,13 +37,7 @@ void Cake::Initialize()
 	MV1SetScale(modelHandle, SIZE);
 	MV1SetRotationXYZ(modelHandle, ROTATE);
 	MV1SetPosition(modelHandle, position);
-}
 
-/// <summary>
-/// 活性化処理
-/// </summary>
-void Cake::Activate()
-{
 	//当たり判定球の情報設定
 	collisionSphere.localCenter = ZERO_VECTOR;
 	collisionSphere.worldCenter = position;

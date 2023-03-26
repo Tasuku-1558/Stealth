@@ -22,7 +22,6 @@ Player::Player(EffectManager* const inEffect)
 	effectManager = inEffect;
 
 	Initialize();
-	Activate();
 }
 
 /// <summary>
@@ -41,7 +40,6 @@ void Player::Initialize()
 	//プレイヤーモデルの読み込み
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::PLAYER));
 
-	//残像の枚数分読み込む
 	for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
 	{
 		//プレイヤー残像モデルの読み込み
@@ -57,6 +55,22 @@ void Player::Initialize()
 
 	//画像の読み込み
 	playerFindImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
+
+	position = POSITION;
+	nextPosition = POSITION;
+
+	for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
+	{
+		pastPosition[i] = POSITION;
+	}
+
+	direction = DIRECTION;
+	speed = SPEED;
+
+	//当たり判定球の情報設定
+	collisionSphere.localCenter = ZERO_VECTOR;
+	collisionSphere.worldCenter = position;
+	collisionSphere.radius = RADIUS;
 }
 
 /// <summary>
@@ -83,28 +97,6 @@ void Player::Finalize()
 	}
 
 	DeleteGraph(playerFindImage);
-}
-
-/// <summary>
-/// 活性化処理
-/// </summary>
-void Player::Activate()
-{
-	position = POSITION;
-	nextPosition = POSITION;
-
-	for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
-	{
-		pastPosition[i] = POSITION;
-	}
-
-	direction = DIRECTION;
-	speed = SPEED;
-
-	//当たり判定球の情報設定
-	collisionSphere.localCenter = ZERO_VECTOR;
-	collisionSphere.worldCenter = position;
-	collisionSphere.radius = RADIUS;
 }
 
 /// <summary>
@@ -215,11 +207,11 @@ void Player::AfterImage()
 		pastPosition[i] = pastPosition[i - 1];
 		MV1SetPosition(afterImageModelHandle[i], pastPosition[i] - AFTER_IMAGE_ADJUSTMENT);
 		MV1SetRotationYUseDir(afterImageModelHandle[i], direction, 0.0f);
-	}
 
-	pastPosition[0] = position;
-	MV1SetPosition(afterImageModelHandle[0], pastPosition[0] - AFTER_IMAGE_ADJUSTMENT);
-	MV1SetRotationYUseDir(afterImageModelHandle[0], direction, 0.0f);
+		pastPosition[0] = position;
+		MV1SetPosition(afterImageModelHandle[0], pastPosition[0] - AFTER_IMAGE_ADJUSTMENT);
+		MV1SetRotationYUseDir(afterImageModelHandle[0], direction, 0.0f);
+	}
 }
 
 /// <summary>

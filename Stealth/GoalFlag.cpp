@@ -11,13 +11,12 @@ using namespace Math3d;		//VECTORの計算に使用
 GoalFlag::GoalFlag(VECTOR goalPosition)
 	: rotate()
 	, SIZE({ 1.0f, 1.0f, 1.0f })
-	, ROTATE_SPEED_Y(3.0f)
+	, ROTATE_SPEED(3.0f)
 	, RADIUS(50.0f)
 {
 	position = goalPosition;
 
 	Initialize();
-	Activate();
 }
 
 /// <summary>
@@ -39,13 +38,7 @@ void GoalFlag::Initialize()
 	//モデルのサイズと位置を設定
 	MV1SetScale(modelHandle, SIZE);
 	MV1SetPosition(modelHandle, position);
-}
 
-/// <summary>
-/// 活性化処理
-/// </summary>
-void GoalFlag::Activate()
-{
 	//当たり判定球の情報設定
 	collisionSphere.localCenter = ZERO_VECTOR;
 	collisionSphere.worldCenter = position;
@@ -67,7 +60,7 @@ void GoalFlag::Finalize()
 void GoalFlag::Update(float deltaTime)
 {
 	//モデルを回転させる
-	rotate.y += ROTATE_SPEED_Y * deltaTime;
+	rotate.y += ROTATE_SPEED * deltaTime;
 
 	//モデルの回転値を設定
 	MV1SetRotationXYZ(modelHandle, rotate);

@@ -1,13 +1,13 @@
 #pragma once
 
-#include "StageBase.h"
+#include "ObjectBase.h"
 #include "ModelManager.h"
 
 
 /// <summary>
 /// ステージマップクラス
 /// </summary>
-class StageMap final : public StageBase
+class StageMap final : public ObjectBase
 {
 public:
 	StageMap(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position);

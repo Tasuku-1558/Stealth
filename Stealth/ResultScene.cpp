@@ -37,7 +37,6 @@ ResultScene::ResultScene()
 	, PARTICLE_NUMBER(500)
 {
 	Initialize();
-	Activate();
 }
 
 /// <summary>
@@ -61,6 +60,10 @@ void ResultScene::Initialize()
 	resultUiImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, RESULT_UI_PATH).c_str());
 
 	backGroundImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, RESULT_BACKGROUND_PATH).c_str());
+
+	clear = Set::GetInstance().GetResult();
+
+	fontHandle = CreateFontToHandle("Oranienbaum", 150, 1);
 }
 
 /// <summary>
@@ -131,16 +134,6 @@ void ResultScene::FireWorksParticlePop()
 }
 
 /// <summary>
-/// 活性化処理
-/// </summary>
-void ResultScene::Activate()
-{
-	clear = Set::GetInstance().GetResult();
-
-	fontHandle = CreateFontToHandle("Oranienbaum", 150, 1);
-}
-
-/// <summary>
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime"></param>
@@ -171,7 +164,10 @@ SceneType ResultScene::Update(float deltaTime)
 
 	BackGroundMove();
 	
-	SceneChange(deltaTime);
+	if (!titleFlag && !selectionFlag)
+	{
+		SceneChange();
+	}
 
 	ReturnScreen(deltaTime);
 
@@ -190,7 +186,7 @@ SceneType ResultScene::Update(float deltaTime)
 /// <summary>
 /// シーン切り替え
 /// </summary>
-void ResultScene::SceneChange(float deltaTime)
+void ResultScene::SceneChange()
 {
 	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_BACK))
 	{
@@ -244,12 +240,8 @@ void ResultScene::ReturnScreen(float deltaTime)
 /// </summary>
 void ResultScene::Blink()
 {
-	if (alpha > 255 && inc > 0)
-	{
-		inc *= -1;
-	}
-
-	if (alpha < 0 && inc < 0)
+	if (alpha > 255 && inc > 0 ||
+		alpha < 0 && inc < 0)
 	{
 		inc *= -1;
 	}

@@ -7,14 +7,13 @@
 UiManager::UiManager()
 	: uiHandle()
 	, stageCount(0)
-	, alpha(0)
-	, inc(0)
+	, alpha(255)
+	, inc(-3)
 	, IMAGE_FOLDER_PATH("Data/image/")
 	, UI_GRAPHIC_PATH("ui")
 	, IMAGE_FILENAME_EXTENSION(".png")
 {
 	Initialize();
-	Activate();
 }
 
 /// <summary>
@@ -51,15 +50,6 @@ void UiManager::Initialize()
 }
 
 /// <summary>
-/// Šˆ«‰»ˆ—
-/// </summary>
-void UiManager::Activate()
-{
-	alpha = 255;
-	inc = -3;
-}
-
-/// <summary>
 /// I—¹ˆ—
 /// </summary>
 void UiManager::Finalize()
@@ -72,7 +62,7 @@ void UiManager::Finalize()
 }
 
 /// <summary>
-/// FirstStage‚ÌUI•`‰æˆ—
+/// •`‰æˆ—
 /// </summary>
 /// <param name="gameState"></param>
 /// <param name="playerCount"></param>

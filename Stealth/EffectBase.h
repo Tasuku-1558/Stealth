@@ -3,7 +3,7 @@
 #include "DxLib.h"
 
 /// <summary>
-/// エフェクトベースクラス
+/// エフェクト基底クラス
 /// </summary>
 class EffectBase
 {

@@ -12,7 +12,7 @@ class Bullet;
 using namespace std;
 
 /// <summary>
-/// ケーキが効くエネミー (赤色)
+/// エネミークラス
 /// </summary>
 class Enemy final : public EnemyBase
 {
@@ -35,7 +35,6 @@ private:
 	Enemy(const Enemy&);						//コピーコンストラクタ
 
 	void Initialize();							//初期化処理
-	void Activate();							//活性化処理
 	void Finalize();							//終了処理
 	void Move(float deltaTime);					//移動処理
 	void Position(vector<VECTOR>& id);			//エネミー位置設定

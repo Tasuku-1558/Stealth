@@ -24,7 +24,6 @@ Bullet::Bullet()
 	, RADIUS(50.0f)
 {
 	Initialize();
-	Activate();
 }
 
 /// <summary>
@@ -49,13 +48,7 @@ void Bullet::Initialize()
 
 	string failePath = IMAGE_FOLDER_PATH + CURSOR_PATH;
 	cursorImage = LoadGraph(failePath.c_str());
-}
 
-/// <summary>
-/// Šˆ«‰»ˆ—
-/// </summary>
-void Bullet::Activate()
-{
 	position = POSITION;
 
 	//“–‚½‚è”»’è‹…‚Ìî•ñİ’è
