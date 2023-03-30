@@ -47,7 +47,7 @@ private:
 	My3dLib::Sphere collisionSphere;		//当たり判定球
 
 	//定数
-	const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
+	const string IMAGE_FOLDER_PATH;	//Imageフォルダまでのパス
 	const string CURSOR_PATH;		//カーソル画像のパス
 	const VECTOR SIZE;				//モデルの倍率
 	const VECTOR POSITION;			//モデルの位置

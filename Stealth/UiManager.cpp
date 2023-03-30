@@ -9,7 +9,7 @@ UiManager::UiManager()
 	, stageCount(0)
 	, alpha(255)
 	, inc(-3)
-	, IMAGE_FOLDER_PATH("Data/image/")
+	, IMAGE_FOLDER_PATH("Data/Image/")
 	, UI_GRAPHIC_PATH("ui")
 	, IMAGE_FILENAME_EXTENSION(".png")
 {
@@ -67,14 +67,14 @@ void UiManager::Finalize()
 /// <param name="gameState"></param>
 /// <param name="playerCount"></param>
 /// <param name="hitUi"></param>
-void UiManager::Draw(FirstStage::GameState gameState, int playerCount, bool hitUi)
+void UiManager::Draw(GameScene::GameState gameState, int playerCount, bool hitUi)
 {
 	switch (gameState)
 	{
-	case FirstStage::GameState::START:
+	case GameScene::GameState::START:
 		break;
 
-	case FirstStage::GameState::GAME:
+	case GameScene::GameState::GAME:
 
 		StartGameDraw(STAGE1);
 		PlayerHpDraw(playerCount);
@@ -84,7 +84,7 @@ void UiManager::Draw(FirstStage::GameState gameState, int playerCount, bool hitU
 		DrawBillboard3D(VGet(0.0f, 0.0f, 800.0f), 0.5f, 0.5f, 200.0f, 0.0f, uiHandle[BALLOON], TRUE);
 		break;
 
-	case FirstStage::GameState::GOAL:
+	case GameScene::GameState::GOAL:
 		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
 		break;
 	}

@@ -39,7 +39,7 @@ private:
 
 
 	//エフェクト
-	const string EFFECT_FOLDER_PATH;	//effectフォルダまでのパス
+	const string EFFECT_FOLDER_PATH;	//Effectフォルダまでのパス
 	const string REPOP_EFFECT_PATH;		//リスポーン時エフェクトのパス
 
 	//エフェクトのサイズ

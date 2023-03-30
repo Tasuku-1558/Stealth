@@ -83,6 +83,6 @@ private:
 	bool cakeEat;
 
 	//定数
-	const string IMAGE_FOLDER_PATH;	//imageフォルダまでのパス
+	const string IMAGE_FOLDER_PATH;	//Imageフォルダまでのパス
 	const string MARK_PATH;			//ビックリマーク画像のパス
 };

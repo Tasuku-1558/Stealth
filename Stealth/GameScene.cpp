@@ -1,5 +1,5 @@
 #include "Json.h"
-#include "FirstStage.h"
+#include "GameScene.h"
 
 #include "PreCompiledHeader.h"
 
@@ -24,7 +24,7 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-FirstStage::FirstStage()
+GameScene::GameScene()
 	: SceneBase(SceneType::GAME)
 	, gameState(GameState::START)
 	, pUpdate(nullptr)
@@ -45,7 +45,7 @@ FirstStage::FirstStage()
 /// <summary>
 /// デストラクタ
 /// </summary>
-FirstStage::~FirstStage()
+GameScene::~GameScene()
 {
 	DeleteFontToHandle(fontHandle);
 
@@ -58,7 +58,7 @@ FirstStage::~FirstStage()
 /// <summary>
 /// 初期化処理
 /// </summary>
-void FirstStage::Initialize()
+void GameScene::Initialize()
 {
 	camera = new Camera();
 
@@ -93,10 +93,10 @@ void FirstStage::Initialize()
 
 	fontHandle = CreateFontToHandle("Oranienbaum", 50, 1);
 
-	pUpdate = &FirstStage::UpdateStart;
+	pUpdate = &GameScene::UpdateStart;
 }
 
-void FirstStage::stage(int num)
+void GameScene::stage(int num)
 {
 	stageNo = num;
 }
@@ -105,7 +105,7 @@ void FirstStage::stage(int num)
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime"></param>
-SceneType FirstStage::Update(float deltaTime)
+SceneType GameScene::Update(float deltaTime)
 {
 	if (pUpdate != nullptr)
 	{
@@ -119,7 +119,7 @@ SceneType FirstStage::Update(float deltaTime)
 /// ケーキバレットを登録
 /// </summary>
 /// <param name="newCakeBullet"></param>
-void FirstStage::EntryCakeBullet(CakeBullet* newCakeBullet)
+void GameScene::EntryCakeBullet(CakeBullet* newCakeBullet)
 {
 	cakeBullet.emplace_back(newCakeBullet);
 }
@@ -128,7 +128,7 @@ void FirstStage::EntryCakeBullet(CakeBullet* newCakeBullet)
 /// ケーキバレットの削除
 /// </summary>
 /// <param name="deleteCakeBullet"></param>
-void FirstStage::DeleteCakeBullet(CakeBullet* deleteCakeBullet)
+void GameScene::DeleteCakeBullet(CakeBullet* deleteCakeBullet)
 {
 	//ケーキのパーティクルオブジェクトから検索して削除
 	auto iter = std::find(cakeBullet.begin(), cakeBullet.end(), deleteCakeBullet);
@@ -146,7 +146,7 @@ void FirstStage::DeleteCakeBullet(CakeBullet* deleteCakeBullet)
 /// <summary>
 /// ケーキバレットの出現
 /// </summary>
-void FirstStage::CakeBulletPop()
+void GameScene::CakeBulletPop()
 {
 	//ケーキの座標を設定
 	CakeBullet* newCakeBullet = new CakeBullet({ GameData::doc["CakePosition"]["stage1"]["x"].GetFloat(),
@@ -164,7 +164,7 @@ void FirstStage::CakeBulletPop()
 /// ケーキのパーティクルを登録
 /// </summary>
 /// <param name="newCakeParticle"></param>
-void FirstStage::EntryCakeParticle(CakeParticle* newCakeParticle)
+void GameScene::EntryCakeParticle(CakeParticle* newCakeParticle)
 {
 	cakeParticle.emplace_back(newCakeParticle);
 }
@@ -173,7 +173,7 @@ void FirstStage::EntryCakeParticle(CakeParticle* newCakeParticle)
 /// ケーキのパーティクルを削除
 /// </summary>
 /// <param name="deleteCakeParticle"></param>
-void FirstStage::DeleteCakeParticle(CakeParticle* deleteCakeParticle)
+void GameScene::DeleteCakeParticle(CakeParticle* deleteCakeParticle)
 {
 	//ケーキのパーティクルオブジェクトから検索して削除
 	auto iter = std::find(cakeParticle.begin(), cakeParticle.end(), deleteCakeParticle);
@@ -191,7 +191,7 @@ void FirstStage::DeleteCakeParticle(CakeParticle* deleteCakeParticle)
 /// <summary>
 /// ケーキのパーティクルの出現
 /// </summary>
-void FirstStage::CakeParticlePop()
+void GameScene::CakeParticlePop()
 {
 	for (auto CakeBulletPtr : cakeBullet)
 	{
@@ -214,7 +214,7 @@ void FirstStage::CakeParticlePop()
 /// ゲーム開始前
 /// </summary>
 /// <param name="deltaTime"></param>
-void FirstStage::UpdateStart(float deltaTime)
+void GameScene::UpdateStart(float deltaTime)
 {
 	backGround->Update();
 
@@ -228,7 +228,7 @@ void FirstStage::UpdateStart(float deltaTime)
 	if (frame > 1.3f)
 	{
 		gameState = GameState::GAME;
-		pUpdate = &FirstStage::UpdateGame;
+		pUpdate = &GameScene::UpdateGame;
 	}
 }
 
@@ -236,7 +236,7 @@ void FirstStage::UpdateStart(float deltaTime)
 /// ゲーム中
 /// </summary>
 /// <param name="deltaTime"></param>
-void FirstStage::UpdateGame(float deltaTime)
+void GameScene::UpdateGame(float deltaTime)
 {
 	backGround->Update();
 
@@ -294,14 +294,14 @@ void FirstStage::UpdateGame(float deltaTime)
 	if (player->FindCount() == PLAYER_HP)
 	{
 		gameState = GameState::OVER;
-		pUpdate = &FirstStage::UpdateOver;
+		pUpdate = &GameScene::UpdateOver;
 	}
 
 	//プレイヤーがゴール地点に辿り着いたら
 	if (hitChecker->FlagHit())
 	{
 		gameState = GameState::GOAL;
-		pUpdate = &FirstStage::UpdateGoal;
+		pUpdate = &GameScene::UpdateGoal;
 	}
 
 	for (auto particlePtr : cakeParticle)
@@ -318,14 +318,12 @@ void FirstStage::UpdateGame(float deltaTime)
 /// ゴール
 /// </summary>
 /// <param name="deltaTime"></param>
-void FirstStage::UpdateGoal(float deltaTime)
+void GameScene::UpdateGoal(float deltaTime)
 {
-	frame += deltaTime;
-
 	fadeManager->FadeMove();
 
-	//フレーム数が3.4秒経過したら
-	if (frame > 3.4f)
+	//フェードが終わったら
+	if (fadeManager->FadeEnd())
 	{
 		Set::GetInstance().SetResult(clear);
 
@@ -338,14 +336,12 @@ void FirstStage::UpdateGoal(float deltaTime)
 /// ゲームオーバー
 /// </summary>
 /// <param name="deltaTime"></param>
-void FirstStage::UpdateOver(float deltaTime)
+void GameScene::UpdateOver(float deltaTime)
 {
-	frame += deltaTime;
-
 	fadeManager->FadeMove();
 
-	//フレーム数が3.4秒経過したら
-	if (frame > 3.4f)
+	//フェードが終わったら
+	if (fadeManager->FadeEnd())
 	{
 		Set::GetInstance().SetResult(!clear);
 
@@ -357,7 +353,7 @@ void FirstStage::UpdateOver(float deltaTime)
 /// <summary>
 /// 描画処理
 /// </summary>
-void FirstStage::Draw()
+void GameScene::Draw()
 {
 	backGround->Draw();
 

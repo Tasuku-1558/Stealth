@@ -9,6 +9,7 @@
 FadeManager::FadeManager()
 	: fade(0)
 	, fadeInc(2)
+	, fadeEnd(false)
 	, BLACK(GetColor(0, 0, 0))
 	, MAX_FADE(255)
 {
@@ -32,6 +33,7 @@ void FadeManager::FadeMove()
 	if (fade > MAX_FADE && fadeInc > 0)
 	{
 		fadeInc *= -1;
+		fadeEnd = true;
 	}
 
 	fade += fadeInc;

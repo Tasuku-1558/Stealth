@@ -157,13 +157,13 @@ void StageSelection::KeyMove(float deltaTime)
 
 		frame += deltaTime;
 
+		//1秒経過したら
 		if (frame > 1.0f)
 		{
-			//画面効果処理を行う
 			fadeManager->FadeMove();
 
-			//フレームが3.5秒経過したら画面を遷移する
-			if (frame > 3.0f)
+			//フェードが終わったら
+			if (fadeManager->FadeEnd())
 			{
 				StageCreator(stageNo);
 			}

@@ -20,13 +20,13 @@ class FadeManager;
 
 
 /// <summary>
-/// FirstStageクラス
+/// ゲームシーンクラス
 /// </summary>
-class FirstStage final : public SceneBase
+class GameScene final : public SceneBase
 {
 public:
-	FirstStage();
-	virtual ~FirstStage();
+	GameScene();
+	virtual ~GameScene();
 
 	SceneType Update(float deltaTime)override;	//更新処理
 	void Draw()override;						//描画処理
@@ -44,7 +44,7 @@ public:
 	};
 
 private:
-	FirstStage(const FirstStage&);	//コピーコンストラクタ
+	GameScene(const GameScene&);	//コピーコンストラクタ
 
 	Camera* camera;
 	Light* light;
@@ -79,7 +79,7 @@ private:
 	void UpdateGame(float deltaTime);				//ゲーム中
 	void UpdateGoal(float deltaTime);				//ゴール
 	void UpdateOver(float deltaTime);				//ゲームオーバー
-	void (FirstStage::* pUpdate)(float deltaTime);	//Update関数ポインタ
+	void (GameScene::* pUpdate)(float deltaTime);	//Update関数ポインタ
 
 
 	GameState gameState;	//ゲームの状態

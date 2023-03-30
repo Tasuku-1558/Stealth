@@ -16,7 +16,7 @@ public:
 	enum Bgm
 	{
 		TITLE,		//タイトル曲
-		//PLAY,		//ゲーム曲
+		//GAME,		//ゲーム曲
 		//RESULT,		//リザルト曲
 		BGM_AMOUNT	//BGMの数
 	};
@@ -51,7 +51,7 @@ private:
 
 
 	//定数
-	const string SOUND_FOLDER_PATH;			//soundフォルダまでのパス
+	const string SOUND_FOLDER_PATH;			//Soundフォルダまでのパス
 	const string BGM_PATH;					//BGMフォルダまでのパス
 	const string SE_PATH;					//SEフォルダまでのパス
 	const string SOUND_FILENAME_EXTENSION;	//BGMとSEの拡張子

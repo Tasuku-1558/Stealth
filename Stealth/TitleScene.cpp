@@ -16,19 +16,21 @@ TitleScene::TitleScene()
 	, titleMovie(0)
 	, titleName(0)
 	, startUi(0)
+	, exitUi(0)
 	, alpha(255)
 	, inc(-3)
 	, frame(0.0f)
 	, spherePosition({ -520.0f, 1200.0f, 0.0f })
 	, VIDEO_FOLDER_PATH("Data/Video/")
-	, IMAGE_FOLDER_PATH("Data/image/")
+	, IMAGE_FOLDER_PATH("Data/Image/")
 	, PLAY_VIDEO_PATH("PlayVideo.mp4")
 	, TITLENAME_PATH("titleName.png")
-	, TITLE_UI_PATH("titleUi.png")
+	, START_UI_PATH("startUi.png")
+	, EXIT_UI_PATH("exitUi.png")
 	, MAX_ALPHA(255)
 	, PLAY_POSITION(0)
-	, START_SPHERE_POSY(-220.0f)
-	, EXIT_SPHERE_POSY(-350.0f)
+	, START_SPHERE_POS_Z(-220.0f)
+	, EXIT_SPHERE_POS_Z(-350.0f)
 {
 	Initialize();
 }
@@ -38,9 +40,6 @@ TitleScene::TitleScene()
 /// </summary>
 TitleScene::~TitleScene()
 {
-	delete light;
-	delete camera;
-
 	PauseMovieToGraph(titleMovie);
 
 	DeleteGraph(titleMovie);
@@ -68,7 +67,9 @@ void TitleScene::Initialize()
 	//タイトルUIの読み込み
 	titleName = LoadGraph(InputPath(IMAGE_FOLDER_PATH, TITLENAME_PATH).c_str());
 
-	startUi = LoadGraph(InputPath(IMAGE_FOLDER_PATH, TITLE_UI_PATH).c_str());
+	startUi = LoadGraph(InputPath(IMAGE_FOLDER_PATH, START_UI_PATH).c_str());
+
+	exitUi = LoadGraph(InputPath(IMAGE_FOLDER_PATH, EXIT_UI_PATH).c_str());
 
 	//タイトルBGMを再生
 	SoundManager::GetInstance().PlayBgm(SoundManager::TITLE);
@@ -114,7 +115,7 @@ void TitleScene::ChangeState()
 	//スタート状態なら
 	if (titleState == TitleState::START)
 	{
-		spherePosition.z = START_SPHERE_POSY;
+		spherePosition.z = START_SPHERE_POS_Z;
 
 		//ステージ選択画面へ
 		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_SPACE))
@@ -135,7 +136,7 @@ void TitleScene::ChangeState()
 	//終了状態なら
 	else
 	{
-		spherePosition.z = EXIT_SPHERE_POSY;
+		spherePosition.z = EXIT_SPHERE_POS_Z;
 
 		//ゲームを終了する
 		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_SPACE))
@@ -176,7 +177,7 @@ void TitleScene::Blink()
 
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
 
-		DrawGraph(400, 850, startUi, TRUE);
+		DrawGraph(400, 850, exitUi, TRUE);
 	}
 	else
 	{
@@ -184,7 +185,7 @@ void TitleScene::Blink()
 
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 
-		DrawGraph(400, 850, startUi, TRUE);
+		DrawGraph(400, 850, exitUi, TRUE);
 
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
 	}

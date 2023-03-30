@@ -38,6 +38,9 @@
     <Filter Include="ソース ファイル\Stage">
       <UniqueIdentifier>{ecf49082-e725-44f3-9d10-9c85f1400af7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Goal">
+      <UniqueIdentifier>{00c4cb4f-6437-4436-8716-d46b48d402ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -55,7 +58,7 @@
     <ClCompile Include="Math3D.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
-    <ClCompile Include="FirstStage.cpp">
+    <ClCompile Include="GameScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -96,9 +99,6 @@
     </ClCompile>
     <ClCompile Include="ThirdStage.cpp">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="DeltaTime.cpp">
-      <Filter>ソース ファイル\System</Filter>
     </ClCompile>
     <ClCompile Include="ResultScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
@@ -142,9 +142,6 @@
     <ClCompile Include="RepopEffect.cpp">
       <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="GoalFlag.cpp">
-      <Filter>ソース ファイル\ObjectBase</Filter>
-    </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
@@ -159,6 +156,9 @@
     </ClCompile>
     <ClCompile Include="SceneBase.cpp">
       <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GoalFlag.cpp">
+      <Filter>ソース ファイル\Goal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -180,7 +180,7 @@
     <ClInclude Include="SceneBase.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="FirstStage.h">
+    <ClInclude Include="GameScene.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
@@ -225,9 +225,6 @@
     <ClInclude Include="ThirdStage.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="DeltaTime.h">
-      <Filter>ソース ファイル\System</Filter>
-    </ClInclude>
     <ClInclude Include="ResultScene.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
@@ -270,9 +267,6 @@
     <ClInclude Include="EffectManager.h">
       <Filter>ソース ファイル\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="GoalFlag.h">
-      <Filter>ソース ファイル\ObjectBase</Filter>
-    </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>ソース ファイル\System</Filter>
     </ClInclude>
@@ -284,6 +278,9 @@
     </ClInclude>
     <ClInclude Include="Json.h">
       <Filter>ソース ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="GoalFlag.h">
+      <Filter>ソース ファイル\Goal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

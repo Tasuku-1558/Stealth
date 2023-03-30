@@ -1,7 +1,7 @@
 #include "SceneBase.h"
 #include "TitleScene.h"
 #include "StageSelection.h"
-#include "FirstStage.h"
+#include "GameScene.h"
 #include "ResultScene.h"
 
 
@@ -33,7 +33,7 @@ SceneBase* SceneBase::CreateScene(SceneType nowScene)
 {
 	SceneBase* retScene = nullptr;
 	StageSelection* stageSelection = nullptr;
-	FirstStage* firstStage = nullptr;
+	GameScene* gameScene = nullptr;
 
 	switch (nowScene)
 	{
@@ -48,9 +48,9 @@ SceneBase* SceneBase::CreateScene(SceneType nowScene)
 		break;
 
 	case SceneType::GAME:
-		firstStage = new FirstStage();
-		firstStage->stage(number);
-		retScene = firstStage;
+		gameScene = new GameScene();
+		gameScene->stage(number);
+		retScene = gameScene;
 		break;
 
 	case SceneType::RESULT:

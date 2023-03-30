@@ -16,13 +16,14 @@ public:
 	ParticleBase();
 	virtual ~ParticleBase();
 
-	virtual void Initialize() = 0;				//初期化処理
 	virtual void Update(float deltaTime) = 0;	//更新処理
 	virtual void Draw() = 0;					//描画処理
 
 	const bool IsParticleEnd() { return endFlag; }		//パーティクルを消すフラグを返す
 
 protected:
+
+	virtual void Initialize() = 0;				//初期化処理
 
 	VECTOR position;		//パーティクルの位置
 	float  radius;			//パーティクルの半径

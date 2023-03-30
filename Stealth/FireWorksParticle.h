@@ -24,5 +24,5 @@ private:
 	unsigned int color;					//パーティクルの色
 
 	//定数
-	const float POS_Y;					//エフェクトのY座標
+	const float POS_Y;					//パーティクルのY座標
 };

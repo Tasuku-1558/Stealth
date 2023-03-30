@@ -10,6 +10,8 @@ const int  COLOR_BIT      = 32;                     //カラービット数
 
 const int MAX_PARTICLE_NUMBER = 2200;               //画面に表示する最大パーティクル数
 
+const float WAIT_FRAME_TIME = 16667.0f;				//待機フレーム時間(60fps)
+
 const VECTOR ZERO_VECTOR  = { 0.0f, 0.0f, 0.0f };	//ゼロベクトル
 
 ////シャドウマップのサイズ

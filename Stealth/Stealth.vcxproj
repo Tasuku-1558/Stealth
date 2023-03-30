@@ -165,7 +165,6 @@
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="ParticleBase.cpp" />
     <ClCompile Include="ResultScene.cpp" />
-    <ClCompile Include="DeltaTime.cpp" />
     <ClCompile Include="FadeManager.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -179,7 +178,7 @@
     <ClCompile Include="ObjectBase.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBase.cpp" />
-    <ClCompile Include="FirstStage.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="SceneBase.cpp" />
     <ClCompile Include="SecondStage.cpp" />
@@ -207,7 +206,6 @@
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="ParticleBase.h" />
     <ClInclude Include="ResultScene.h" />
-    <ClInclude Include="DeltaTime.h" />
     <ClInclude Include="EffectBase.h" />
     <ClInclude Include="FadeManager.h" />
     <ClInclude Include="Camera.h" />
@@ -222,7 +220,7 @@
     <ClInclude Include="ObjectBase.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBase.h" />
-    <ClInclude Include="FirstStage.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="SecondStage.h" />

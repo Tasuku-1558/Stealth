@@ -31,7 +31,7 @@ ResultScene::ResultScene()
 	, backGroundImage(0)
 	, backGroundX(0)
 	, backGroundY(0)
-	, IMAGE_FOLDER_PATH("Data/image/")
+	, IMAGE_FOLDER_PATH("Data/Image/")
 	, RESULT_UI_PATH("resultUi.png")
 	, RESULT_BACKGROUND_PATH("resultBackGround.png")
 	, PARTICLE_NUMBER(500)
@@ -164,12 +164,13 @@ SceneType ResultScene::Update(float deltaTime)
 
 	BackGroundMove();
 	
+	//どのシーンにも遷移していないならば
 	if (!titleFlag && !selectionFlag)
 	{
 		SceneChange();
 	}
 
-	ReturnScreen(deltaTime);
+	ReturnScreen();
 
 	for (auto fireWorksParticlePtr : fireWorksParticle)
 	{
@@ -201,16 +202,13 @@ void ResultScene::SceneChange()
 /// <summary>
 /// シーンを入力
 /// </summary>
-/// <param name="deltaTime"></param>
 /// <param name="sceneType"></param>
-void ResultScene::InputScene(float deltaTime, SceneType sceneType)
+void ResultScene::InputScene(SceneType sceneType)
 {
-	frame += deltaTime;
-
 	fadeManager->FadeMove();
 
-	//フレーム数が2.2秒経過したら
-	if (frame > 2.2f)
+	//フェードが終わったら
+	if (fadeManager->FadeEnd())
 	{
 		nowSceneType = sceneType;
 	}
@@ -219,19 +217,18 @@ void ResultScene::InputScene(float deltaTime, SceneType sceneType)
 /// <summary>
 /// 画面を遷移する
 /// </summary>
-/// <param name="deltaTime"></param>
-void ResultScene::ReturnScreen(float deltaTime)
+void ResultScene::ReturnScreen()
 {
 	if (titleFlag)
 	{
 		//タイトル画面へ遷移
-		InputScene(deltaTime, SceneType::TITLE);
+		InputScene(SceneType::TITLE);
 	}
 
 	if (selectionFlag)
 	{
 		//ステージ選択画面へ遷移
-		InputScene(deltaTime, SceneType::SELECTION);
+		InputScene(SceneType::SELECTION);
 	}
 }
 

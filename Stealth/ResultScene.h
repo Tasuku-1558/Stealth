@@ -30,8 +30,8 @@ private:
 	void SceneChange();						//シーン切り替え
 	void Blink();							//文字の点滅処理
 	void BackGroundMove();					//背景画像の動き
-	void ReturnScreen(float deltaTime);		//画面を遷移する
-	void InputScene(float deltaTime, SceneType sceneType);		//シーンを入力
+	void ReturnScreen();					//画面を遷移する
+	void InputScene(SceneType sceneType);	//シーンを入力
 
 	string InputPath(string folderPath,	//画像のパスを入力
 					 string path);
@@ -62,7 +62,7 @@ private:
 
 
 	//定数
-	const string IMAGE_FOLDER_PATH;			//imageフォルダまでのパス
+	const string IMAGE_FOLDER_PATH;			//Imageフォルダまでのパス
 	const string RESULT_UI_PATH;			//リザルト画面のUIのパス
 	const string RESULT_BACKGROUND_PATH;	//リザルト画面の背景画像のパス
 	const int    PARTICLE_NUMBER;			//パーティクルの数

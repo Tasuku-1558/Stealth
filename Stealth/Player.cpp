@@ -15,7 +15,7 @@ Player::Player(EffectManager* const inEffect)
 	, initialCount(0.0f)
 	, pastPosition()
 	, afterImageModelHandle()
-	, IMAGE_FOLDER_PATH("Data/image/")
+	, IMAGE_FOLDER_PATH("Data/Image/")
 	, PLAYER_FIND_PATH("playerFind.png")
 	, AFTER_IMAGE_NUMBER(12)
 {
@@ -51,6 +51,8 @@ void Player::Initialize()
 
 		//モデルのエミッシブカラーを変更
 		MV1SetMaterialEmiColor(afterImageModelHandle[i], 0, AFTER_IMAGE_COLOR);
+
+		pastPosition[i] = POSITION;
 	}
 
 	//画像の読み込み
@@ -58,11 +60,6 @@ void Player::Initialize()
 
 	position = POSITION;
 	nextPosition = POSITION;
-
-	for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
-	{
-		pastPosition[i] = POSITION;
-	}
 
 	direction = DIRECTION;
 	speed = SPEED;

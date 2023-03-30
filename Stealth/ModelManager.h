@@ -49,7 +49,7 @@ private:
 
 
 	//定数
-	const string MODEL_FOLDER_PATH;	//modelフォルダまでのパス
+	const string MODEL_FOLDER_PATH;	//Modelフォルダまでのパス
 	const string PLAYER_PATH;		//playerモデルファイルのパス
 	const string ENEMY_PATH;		//enemyモデルファイルのパス
 	const string ENEMY_VISUAL_PATH;	//enemy_visualモデルファイルのパス

@@ -14,7 +14,7 @@ Enemy::Enemy(int number, float enemySpeed)
 	: EnemyBase()
 	, cakeCount(0.0f)
 	, cakeFindFlag(false)
-	, IMAGE_FOLDER_PATH("Data/image/")
+	, IMAGE_FOLDER_PATH("Data/Image/")
 	, MARK_PATH("mark.png")
 	, nextDirection()
 	, rotateFlag(false)
@@ -211,7 +211,7 @@ void Enemy::EnemyRotate(float deltaTime)
 
 	//各オブジェクトによってカウントの時間を変える
 	if (enemyReaction == EnemyReaction::NORMAL && frame > 1.0f ||
-		enemyReaction == EnemyReaction::PLAYER && frame > 2.0f||
+		enemyReaction == EnemyReaction::PLAYER && frame > 2.0f ||
 		enemyReaction == EnemyReaction::CAKE && frame > 6.0f)
 	{
 		//スピードを元に戻す

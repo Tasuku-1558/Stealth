@@ -6,7 +6,7 @@
 /// コンストラクタ
 /// </summary>
 EffectManager::EffectManager()
-	: EFFECT_FOLDER_PATH("Data/effect/")
+	: EFFECT_FOLDER_PATH("Data/Effect/")
 	, REPOP_EFFECT_PATH("repop.efkefc")
 	, REPOP_SIZE(30.0f)
 {

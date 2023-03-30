@@ -1,9 +1,7 @@
 #pragma once
 
 #include <string>
-
-#include "FirstStage.h"
-
+#include "GameScene.h"
 
 using namespace std;
 
@@ -16,7 +14,7 @@ public:
 	UiManager();
 	virtual ~UiManager();
 
-	void Draw(FirstStage::GameState gameState,
+	void Draw(GameScene::GameState gameState,
 			  int playerCount, bool hitUi);	//•`‰æˆ—
 
 	void CakeGetDraw(bool cakeGet);			//ƒP[ƒL‚ğ‚Á‚Ä‚¢‚é‚©‚ÌUI
