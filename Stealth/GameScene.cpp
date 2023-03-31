@@ -220,7 +220,7 @@ void GameScene::UpdateStart(float deltaTime)
 
 	camera->Update(player->GetPosition());
 
-	effectManager->CreateRepopEffect(player->GetPosition());
+	effectManager->CreateEffect(0, player->GetPosition());
 
 	frame += deltaTime;
 

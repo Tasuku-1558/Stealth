@@ -1,5 +1,5 @@
 #include "EffectManager.h"
-#include "RepopEffect.h"
+#include "Effect.h"
 
 
 /// <summary>
@@ -30,7 +30,7 @@ EffectManager::~EffectManager()
 void EffectManager::Initialize()
 {
 	//各エフェクトの読み込み
-	effect[0] = new RepopEffect(InputPath(EFFECT_FOLDER_PATH, REPOP_EFFECT_PATH), REPOP_SIZE);
+	effect[0] = new Effect(InputPath(EFFECT_FOLDER_PATH, REPOP_EFFECT_PATH), REPOP_SIZE);
 }
 
 /// <summary>
@@ -45,12 +45,13 @@ void EffectManager::Draw()
 }
 
 /// <summary>
-/// リスポーンエフェクトの生成
+/// エフェクトの生成
 /// </summary>
+/// <param name="number">エフェクトの種類</param>
 /// <param name="position">エフェクトの位置</param>
-void EffectManager::CreateRepopEffect(VECTOR position)
+void EffectManager::CreateEffect(int number, VECTOR position)
 {
-	effect[REPOP]->Update(position);
+	effect[number]->Update(position);
 }
 
 /// <summary>

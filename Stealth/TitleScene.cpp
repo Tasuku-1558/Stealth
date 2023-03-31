@@ -19,7 +19,8 @@ TitleScene::TitleScene()
 	, exitUi(0)
 	, alpha(255)
 	, inc(-3)
-	, frame(0.0f)
+	, sceneChangeGame(false)
+	, sceneChangeEnd(false)
 	, spherePosition({ -520.0f, 1200.0f, 0.0f })
 	, VIDEO_FOLDER_PATH("Data/Video/")
 	, IMAGE_FOLDER_PATH("Data/Image/")
@@ -76,7 +77,7 @@ void TitleScene::Initialize()
 }
 
 /// <summary>
-/// 画像のパスを入力
+/// パスを入力
 /// </summary>
 /// <param name="folderPath">フォルダまでのパス</param>
 /// <param name="path"></param>
@@ -102,7 +103,13 @@ SceneType TitleScene::Update(float deltaTime)
 		PlayMovieToGraph(titleMovie);
 	}
 
-	ChangeState();
+	//シーンが切り替わっていないならば
+	if (!sceneChangeGame && !sceneChangeEnd)
+	{
+		ChangeState();
+	}
+
+	ReturnScreen();
 
 	return nowSceneType;
 }
@@ -120,10 +127,7 @@ void TitleScene::ChangeState()
 		//ステージ選択画面へ
 		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_SPACE))
 		{
-			//タイトルBGMを停止
-			SoundManager::GetInstance().StopBgm();
-
-			nowSceneType = SceneType::SELECTION;
+			sceneChangeGame = true;
 		}
 
 		//下矢印キーで状態を終了にする
@@ -141,10 +145,7 @@ void TitleScene::ChangeState()
 		//ゲームを終了する
 		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_SPACE))
 		{
-			//タイトルBGMを停止
-			SoundManager::GetInstance().StopBgm();
-
-			nowSceneType = SceneType::END;
+			sceneChangeEnd = true;
 		}
 
 		//上矢印キーで状態をスタートにする
@@ -152,6 +153,42 @@ void TitleScene::ChangeState()
 		{
 			titleState = TitleState::START;
 		}
+	}
+}
+
+/// <summary>
+/// 画面を遷移する
+/// </summary>
+void TitleScene::ReturnScreen()
+{
+	if (sceneChangeGame)
+	{
+		//ステージ選択画面へ
+		InputScene(SceneType::SELECTION);
+	}
+
+	if (sceneChangeEnd)
+	{
+		//ゲームを終了する
+		InputScene(SceneType::END);
+	}
+}
+
+/// <summary>
+/// シーンを入力
+/// </summary>
+/// <param name="sceneType"></param>
+void TitleScene::InputScene(SceneType sceneType)
+{
+	fadeManager->FadeMove();
+
+	//フェードが終わったら
+	if (fadeManager->FadeEnd())
+	{
+		//タイトルBGMを停止
+		SoundManager::GetInstance().StopBgm();
+
+		nowSceneType = sceneType;
 	}
 }
 

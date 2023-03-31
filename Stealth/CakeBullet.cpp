@@ -79,7 +79,7 @@ void CakeBullet::BulletReuse(float deltaTime)
         if (bulletCount > 5.7f)
         {
             //リスポーンエフェクトを出す
-            effectManager->CreateRepopEffect(cake->GetPosition());
+            effectManager->CreateEffect(0, cake->GetPosition());
         }
 
         //カウントが6秒以上経過したら

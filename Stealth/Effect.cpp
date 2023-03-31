@@ -1,4 +1,4 @@
-#include "RepopEffect.h"
+#include "Effect.h"
 #include "EffekseerForDXLib.h"
 
 
@@ -7,7 +7,7 @@
 /// </summary>
 /// <param name="effectPath">エフェクトのパス</param>
 /// <param name="effectSize">エフェクトのサイズ</param>
-RepopEffect::RepopEffect(string effectPath, float effectSize)
+Effect::Effect(string effectPath, float effectSize)
 {
 	effectHandle = LoadEffekseerEffect(effectPath.c_str(), effectSize);
 }
@@ -15,7 +15,7 @@ RepopEffect::RepopEffect(string effectPath, float effectSize)
 /// <summary>
 /// デストラクタ
 /// </summary>
-RepopEffect::~RepopEffect()
+Effect::~Effect()
 {
 	//エフェクトリソースを削除
 	DeleteEffekseerEffect(effectHandle);
@@ -24,8 +24,8 @@ RepopEffect::~RepopEffect()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="position"></param>
-void RepopEffect::Update(VECTOR position)
+/// <param name="position">エフェクトの位置</param>
+void Effect::Update(VECTOR position)
 {
 	//時間を経過
 	effectTime++;
@@ -46,7 +46,7 @@ void RepopEffect::Update(VECTOR position)
 /// <summary>
 /// 描画処理
 /// </summary>
-void RepopEffect::Draw()
+void Effect::Draw()
 {
 	//再生中のエフェクトを更新
 	UpdateEffekseer3D();

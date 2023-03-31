@@ -1,6 +1,9 @@
 #pragma once
 
 #include "DxLib.h"
+#include <string>
+
+using namespace std;
 
 /// <summary>
 /// エフェクト基底クラス

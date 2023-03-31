@@ -29,9 +29,11 @@ private:
 	void Initialize()override;			//初期化処理
 	void Blink();						//文字の点滅処理
 	void ChangeState();					//タイトルの状態の変更
+	void ReturnScreen();				//画面を遷移する
+	void InputScene(SceneType sceneType);		//シーンを入力
 
 	string InputPath(string folderPath,
-					 string path);		//画像のパスを入力
+					 string path);		//パスを入力
 
 	//タイトルの状態
 	enum class TitleState
@@ -47,7 +49,8 @@ private:
 	int exitUi;							//ゲームを終了する遷移キーのUI格納用
 	int alpha;							//透過度
 	int inc;
-	float frame;						//フレーム数
+	bool sceneChangeGame;				//ゲームシーンに切り替えるか
+	bool sceneChangeEnd;				//エンドシーンに切り替えるか
 	VECTOR spherePosition;				//3D球体の位置
 
 	Light* light;						//ライトクラスのポインタ

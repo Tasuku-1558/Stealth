@@ -25,7 +25,6 @@ private:
 	void Finalize();					//I—¹ˆ—
 
 	VECTOR rotate;						//ƒ‚ƒfƒ‹‚Ì‰ñ“]
-
 	My3dLib::Sphere collisionSphere;	//“–‚½‚è”»’è‹…
 
 	//’è”

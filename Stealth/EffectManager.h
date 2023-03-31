@@ -1,10 +1,6 @@
 #pragma once
 
 #include "EffectBase.h"
-#include <string>
-
-
-using namespace std;
 
 /// <summary>
 /// エフェクト管理クラス
@@ -16,15 +12,15 @@ public:
 	virtual ~EffectManager();
 
 	//エフェクトの種類
-	enum Effect
+	enum EffectType
 	{
-		REPOP,				//リスポーンエフェクト(ケーキとプレイヤー)
+		REPOP,				//リスポーンエフェクト
 		EFFECT_AMOUNT,		//エフェクトの種類
 	};
 
 	void Draw();			//描画処理
 
-	void CreateRepopEffect(VECTOR position);	//リスポーンエフェクトの生成
+	void CreateEffect(int number, VECTOR position);	//エフェクトの生成
 
 private:
 	EffectManager(const EffectManager&);		//コピーコンストラクタ
@@ -40,7 +36,7 @@ private:
 
 	//エフェクト
 	const string EFFECT_FOLDER_PATH;	//Effectフォルダまでのパス
-	const string REPOP_EFFECT_PATH;		//リスポーン時エフェクトのパス
+	const string REPOP_EFFECT_PATH;		//リスポーンエフェクトのパス
 
 	//エフェクトのサイズ
 	const float  REPOP_SIZE;			//リスポーンエフェクトのサイズ

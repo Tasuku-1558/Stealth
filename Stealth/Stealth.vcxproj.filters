@@ -139,7 +139,7 @@
     <ClCompile Include="EffectManager.cpp">
       <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="RepopEffect.cpp">
+    <ClCompile Include="Effect.cpp">
       <Filter>ソース ファイル\Effect</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
@@ -210,7 +210,7 @@
     <ClInclude Include="BackGround.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="RepopEffect.h">
+    <ClInclude Include="Effect.h">
       <Filter>ソース ファイル\Effect</Filter>
     </ClInclude>
     <ClInclude Include="EffectBase.h">

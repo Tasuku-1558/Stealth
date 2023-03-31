@@ -275,7 +275,7 @@ void Player::FoundCount()
 		spottedSeFlag = false;
 
 		//リスポーンエフェクトを出す
-		effectManager->CreateRepopEffect(position);
+		effectManager->CreateEffect(0, position);
 	}
 }
 
