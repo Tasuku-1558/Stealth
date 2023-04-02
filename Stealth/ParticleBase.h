@@ -16,6 +16,7 @@ public:
 	ParticleBase();
 	virtual ~ParticleBase();
 
+	virtual void Initialize() = 0;				//初期化処理
 	virtual void Update(float deltaTime) = 0;	//更新処理
 	virtual void Draw() = 0;					//描画処理
 
@@ -23,14 +24,12 @@ public:
 
 protected:
 
-	virtual void Initialize() = 0;				//初期化処理
-
-	VECTOR position;		//パーティクルの位置
 	float  radius;			//パーティクルの半径
 	float  particleCount;	//パーティクルカウント
 	float  xPower;			//横方向の力
 	float  zPower;			//縦方向の力
 	bool   endFlag;			//パーティクルを消すか消さないか
+	VECTOR position;		//パーティクルの位置
 
 	//定数
 	const int DIVNUM;		//パーティクルのポリゴンの細かさ

@@ -1,6 +1,6 @@
 #include "Json.h"
 #include "GameScene.h"
-
+#include "DxLib.h"
 #include "PreCompiledHeader.h"
 
 #include "Camera.h"
@@ -36,6 +36,8 @@ GameScene::GameScene()
 	, stageNo(0)
 	, PARTICLE_NUMBER(500)
 	, PLAYER_HP(2)
+	, GAME_START_COUNT(1.3f)
+	, MAX_PARTICLE_INTERVAL(5.0f)
 {
 	GameData::doc.ParseStream(GameData::isw);
 
@@ -55,6 +57,11 @@ GameScene::~GameScene()
 	}
 }
 
+void GameScene::stage(int num)
+{
+	stageNo = num;
+}
+
 /// <summary>
 /// 初期化処理
 /// </summary>
@@ -66,23 +73,26 @@ void GameScene::Initialize()
 	
 	backGround = new BackGround();
 
-	//マップモデルの種類、サイズ、回転値、位置を入力する
-	stageMap = new StageMap(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
-		{ 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }, { -780.0f, -100.0f, 2400.0f });
-
 	effectManager = new EffectManager();
 
-	player = new Player(effectManager);
-
-	//エネミーに行動パターンのナンバーとスピードを設定
-	enemy = new Enemy(0, GameData::doc["EnemySpeed"]["stage1"].GetFloat());
-
-	//ゴールフラグの初期位置を設定
-	goalFlag = new GoalFlag({ GameData::doc["GoalPosition"]["x"].GetFloat(),
-							  GameData::doc["GoalPosition"]["y"].GetFloat(),
-							  GameData::doc["GoalPosition"]["z"].GetFloat() });
-
 	hitChecker = new HitChecker();
+
+	player = new Player(effectManager, hitChecker);
+	
+	//if (stageNo == 1)
+	{
+		//マップモデルの種類、サイズ、回転値、位置を入力する
+		stageMap = new StageMap(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
+			{ 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }, { -780.0f, -100.0f, 2400.0f });
+
+		//エネミーに行動パターンのナンバーとスピードを設定
+		enemy = new Enemy(0, GameData::doc["EnemySpeed"]["stage1"].GetFloat());
+
+		//ゴールフラグの初期位置を設定
+		goalFlag = new GoalFlag({ GameData::doc["GoalPosition"]["x"].GetFloat(),
+								  GameData::doc["GoalPosition"]["y"].GetFloat(),
+								  GameData::doc["GoalPosition"]["z"].GetFloat() });
+	}
 
 	uiManager = new UiManager();
 
@@ -94,11 +104,6 @@ void GameScene::Initialize()
 	fontHandle = CreateFontToHandle("Oranienbaum", 50, 1);
 
 	pUpdate = &GameScene::UpdateStart;
-}
-
-void GameScene::stage(int num)
-{
-	stageNo = num;
 }
 
 /// <summary>
@@ -211,6 +216,44 @@ void GameScene::CakeParticlePop()
 }
 
 /// <summary>
+/// シーンを入力
+/// </summary>
+/// <param name="decision">ゲームクリアかゲームオーバーか</param>
+void GameScene::InputScene(bool decision)
+{
+	fadeManager->FadeMove();
+
+	//フェードが終わったら
+	if (fadeManager->FadeEnd())
+	{
+		Set::GetInstance().SetResult(decision);
+
+		//リザルト画面へ遷移
+		nowSceneType = SceneType::RESULT;
+	}
+}
+
+/// <summary>
+/// 画面を変える
+/// </summary>
+void GameScene::ChangeScreen()
+{
+	//エネミーに2回見つかったら
+	if (player->FindCount() == PLAYER_HP)
+	{
+		gameState = GameState::OVER;
+		pUpdate = &GameScene::UpdateOver;
+	}
+
+	//プレイヤーがゴール地点に辿り着いたら
+	if (hitChecker->FlagHit())
+	{
+		gameState = GameState::GOAL;
+		pUpdate = &GameScene::UpdateGoal;
+	}
+}
+
+/// <summary>
 /// ゲーム開始前
 /// </summary>
 /// <param name="deltaTime"></param>
@@ -220,12 +263,14 @@ void GameScene::UpdateStart(float deltaTime)
 
 	camera->Update(player->GetPosition());
 
-	effectManager->CreateEffect(0, player->GetPosition());
+	enemy->Update(deltaTime, player);
+
+	effectManager->CreateEffect(player->GetPosition(), EffectManager::REPOP);
 
 	frame += deltaTime;
 
 	//1.3秒経過したらゲーム画面へ移行
-	if (frame > 1.3f)
+	if (frame > GAME_START_COUNT)
 	{
 		gameState = GameState::GAME;
 		pUpdate = &GameScene::UpdateGame;
@@ -242,7 +287,7 @@ void GameScene::UpdateGame(float deltaTime)
 
 	camera->Update(player->GetPosition());
 
-	player->Update(deltaTime, hitChecker->Back(), hitChecker->MapHit());
+	player->Update(deltaTime);
 
 	player->FoundEnemy(deltaTime, enemy->Spotted());
 
@@ -251,7 +296,8 @@ void GameScene::UpdateGame(float deltaTime)
 	for (auto CakeBulletPtr : cakeBullet)
 	{
 		enemy->VisualAngleCake(CakeBulletPtr->bullet, deltaTime);
-
+		
+		//エネミーがケーキを見つけたならば
 		if (enemy->CakeFlag())
 		{
 			break;
@@ -275,7 +321,7 @@ void GameScene::UpdateGame(float deltaTime)
 
 		//5秒経過したら
 		//パーティクルを再度出せるようにする
-		if (particleInterval > 5.0f)
+		if (particleInterval > MAX_PARTICLE_INTERVAL)
 		{
 			particleFlag = false;
 			particleInterval = 0.0f;
@@ -290,19 +336,7 @@ void GameScene::UpdateGame(float deltaTime)
 	hitChecker->Check(stageMap->GetModelHandle(), player, &cakeBullet, /*&enemy,*/ goalFlag);
 	hitChecker->EnemyAndPlayer(player, enemy);
 	
-	//エネミーに2回見つかったら
-	if (player->FindCount() == PLAYER_HP)
-	{
-		gameState = GameState::OVER;
-		pUpdate = &GameScene::UpdateOver;
-	}
-
-	//プレイヤーがゴール地点に辿り着いたら
-	if (hitChecker->FlagHit())
-	{
-		gameState = GameState::GOAL;
-		pUpdate = &GameScene::UpdateGoal;
-	}
+	ChangeScreen();
 
 	for (auto particlePtr : cakeParticle)
 	{
@@ -320,16 +354,7 @@ void GameScene::UpdateGame(float deltaTime)
 /// <param name="deltaTime"></param>
 void GameScene::UpdateGoal(float deltaTime)
 {
-	fadeManager->FadeMove();
-
-	//フェードが終わったら
-	if (fadeManager->FadeEnd())
-	{
-		Set::GetInstance().SetResult(clear);
-
-		//リザルト画面へ遷移
-		nowSceneType = SceneType::RESULT;
-	}
+	InputScene(clear);
 }
 
 /// <summary>
@@ -338,16 +363,7 @@ void GameScene::UpdateGoal(float deltaTime)
 /// <param name="deltaTime"></param>
 void GameScene::UpdateOver(float deltaTime)
 {
-	fadeManager->FadeMove();
-
-	//フェードが終わったら
-	if (fadeManager->FadeEnd())
-	{
-		Set::GetInstance().SetResult(!clear);
-
-		//リザルト画面へ遷移
-		nowSceneType = SceneType::RESULT;
-	}
+	InputScene(!clear);
 }
 
 /// <summary>
@@ -359,11 +375,11 @@ void GameScene::Draw()
 
 	stageMap->Draw();
 
-	//ゲーム状態がスタートではないならば描画する
+	enemy->Draw();
+
+	//ゲーム状態がスタートではないならば
 	if (gameState != GameState::START)
 	{
-		enemy->Draw();
-
 		player->Draw();
 		
 		for (auto CakeBulletPtr : cakeBullet)

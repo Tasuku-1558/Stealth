@@ -31,7 +31,6 @@ char stage1[16][16] =
 /// <param name="position"></param>
 StageMap::StageMap(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position)
 	: kabe(0)
-	, frameNo(0)
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(modelType));
 	MV1SetScale(modelHandle, size);

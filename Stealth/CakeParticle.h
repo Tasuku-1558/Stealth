@@ -21,9 +21,9 @@ private:
 
 	void Initialize()override;				//初期化処理
 
-	float particlePopTime;				//パーティクルの出現時間
 
 	//定数
 	const unsigned int PINK;			//パーティクルのカラー
+	const float PARTICLE_POP_TIME;		//パーティクルの出現時間
 	const float POS_Y;					//パーティクルのY座標
 };

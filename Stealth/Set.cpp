@@ -1,9 +1,8 @@
 #include "Set.h"
 
 
-bool Set::resultFlag = false;
-
 Set::Set()
+	: resultFlag(false)
 {
 	//ˆ—‚È‚µ
 }

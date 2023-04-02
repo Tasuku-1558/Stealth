@@ -97,17 +97,11 @@
     <ClCompile Include="SelectionUi.cpp">
       <Filter>ソース ファイル\Scene\StageSelection</Filter>
     </ClCompile>
-    <ClCompile Include="ThirdStage.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="ResultScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="StageMap.cpp">
       <Filter>ソース ファイル\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="FourthStage.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>ソース ファイル\Item</Filter>
@@ -120,9 +114,6 @@
     </ClCompile>
     <ClCompile Include="Set.cpp">
       <Filter>ソース ファイル\System</Filter>
-    </ClCompile>
-    <ClCompile Include="FifthStage.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="KeyManager.cpp">
       <Filter>ソース ファイル\System</Filter>
@@ -159,6 +150,9 @@
     </ClCompile>
     <ClCompile Include="GoalFlag.cpp">
       <Filter>ソース ファイル\Goal</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>ソース ファイル\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -222,9 +216,6 @@
     <ClInclude Include="SelectionUi.h">
       <Filter>ソース ファイル\Scene\StageSelection</Filter>
     </ClInclude>
-    <ClInclude Include="ThirdStage.h">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="ResultScene.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
@@ -233,9 +224,6 @@
     </ClInclude>
     <ClInclude Include="StageMap.h">
       <Filter>ソース ファイル\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="FourthStage.h">
-      <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>ソース ファイル\Item</Filter>
@@ -248,9 +236,6 @@
     </ClInclude>
     <ClInclude Include="Set.h">
       <Filter>ソース ファイル\System</Filter>
-    </ClInclude>
-    <ClInclude Include="FifthStage.h">
-      <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="KeyManager.h">
       <Filter>ソース ファイル\System</Filter>
@@ -281,6 +266,9 @@
     </ClInclude>
     <ClInclude Include="GoalFlag.h">
       <Filter>ソース ファイル\Goal</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>ソース ファイル\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

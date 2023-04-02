@@ -1,7 +1,6 @@
 #pragma once
 
 #include "SceneBase.h"
-#include "DxLib.h"
 #include <vector>
 
 class Camera;
@@ -33,7 +32,6 @@ public:
 
 	void stage(int num);
 
-
 	//ゲームの状態
 	enum class GameState
 	{
@@ -61,6 +59,8 @@ private:
 	FadeManager* fadeManager;
 
 	void Initialize()override;				//初期化処理
+	void InputScene(bool decision);			//シーンを入力
+	void ChangeScreen();					//画面を変える
 
 	void EntryEnemy(Enemy* newEnemy);								//エネミーを登録
 	void DeleteEnemy(Enemy* deleteEnemy);							//エネミーを削除
@@ -87,13 +87,13 @@ private:
 	float frame;			//フレーム数
 	float particleInterval;	//パーティクル出現のインターバル
 	bool  particleFlag;		//パーティクルを出したら
-
-
 	bool clear;
 	int stageNo;
 
 	//定数
-	const int PARTICLE_NUMBER;			//パーティクルの数
-	const int PLAYER_HP;				//プレイヤーのHP数
+	const int	PARTICLE_NUMBER;		//パーティクルの数
+	const int	PLAYER_HP;				//プレイヤーのHP数
+	const float GAME_START_COUNT;		//ゲーム開始カウント
+	const float MAX_PARTICLE_INTERVAL;	//最大パーティクル出現のインタ―バル
 
 };

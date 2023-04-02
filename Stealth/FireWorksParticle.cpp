@@ -4,16 +4,16 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="particlePosition"></param>
-/// <param name="changeColor"></param>
-FireWorksParticle::FireWorksParticle(const VECTOR particlePosition, unsigned int changeColor)
-	: particlePopTime(3.0f)
-	, color(0)
+/// <param name="particlePosition">パーティクルの位置</param>
+/// <param name="particleColor">パーティクルの色</param>
+FireWorksParticle::FireWorksParticle(const VECTOR particlePosition, unsigned int particleColor)
+	: color(0)
+	, PARTICLE_POP_TIME(3.0f)
 	, POS_Y(1000.0f)
 {
 	position = particlePosition;
 
-	color = changeColor;
+	color = particleColor;
 
 	Initialize();
 }
@@ -46,7 +46,7 @@ void FireWorksParticle::Initialize()
 void FireWorksParticle::Update(float deltaTime)
 {
 	//パーティクルの半径を調整する
-	radius = ((particlePopTime - particleCount) / particlePopTime) * radius;
+	radius = ((PARTICLE_POP_TIME - particleCount) / PARTICLE_POP_TIME) * radius;
 
 	//パーティクルに飛ばす力を加える
 	position.x += xPower;
@@ -57,7 +57,7 @@ void FireWorksParticle::Update(float deltaTime)
 	particleCount += deltaTime;
 
 	//パーティクルの出現時間を超えたらパーティクルを消す
-	if (particleCount > particlePopTime)
+	if (particleCount > PARTICLE_POP_TIME)
 	{
 		endFlag = true;
 

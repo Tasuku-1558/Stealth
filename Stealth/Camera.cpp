@@ -6,7 +6,7 @@ using namespace Math3d;		//VECTORの計算に使用
 /// コンストラクタ
 /// </summary>
 Camera::Camera()
-	: position()
+	: cameraPosition()
 	, lookPos()
 	, aimCameraPos()
 	, lookMoveDir()
@@ -41,7 +41,7 @@ void Camera::Initialize()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="playerPosition"></param>
+/// <param name="playerPosition">プレイヤーの位置</param>
 void Camera::Update(VECTOR playerPosition)
 {
 	//プレイヤーの位置を保存
@@ -50,13 +50,13 @@ void Camera::Update(VECTOR playerPosition)
 	aimCameraPos = aimLookPos + cameraOffset;
 
 	lookMoveDir = aimLookPos - lookPos;
-	posMoveDir = aimCameraPos - position;
+	posMoveDir = aimCameraPos - cameraPosition;
 
-	position += posMoveDir;
+	cameraPosition += posMoveDir;
 	lookPos += lookMoveDir;
 
 	//カメラの視点、注視点を設定
-	SetCameraPositionAndTarget_UpVecY(position, lookPos);
+	SetCameraPositionAndTarget_UpVecY(cameraPosition, lookPos);
 }
 
 /// <summary>

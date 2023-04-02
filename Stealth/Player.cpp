@@ -9,17 +9,20 @@ using namespace Math3d;		//VECTORの計算に使用
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="inEffect"></param>
-Player::Player(EffectManager* const inEffect)
+/// <param name="inEffect">エフェクトマネージャーのポインタ</param>
+/// <param name="inHitChecker">ヒットチェッカーのポインタ</param>
+Player::Player(EffectManager* const inEffect, HitChecker* const inHitChecker)
 	: PlayerBase()
 	, initialCount(0.0f)
 	, pastPosition()
-	, afterImageModelHandle()
+	, afterImageModel()
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, PLAYER_FIND_PATH("playerFind.png")
 	, AFTER_IMAGE_NUMBER(12)
 {
 	effectManager = inEffect;
+
+	hitChecker = inHitChecker;
 
 	Initialize();
 }
@@ -43,14 +46,14 @@ void Player::Initialize()
 	for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
 	{
 		//プレイヤー残像モデルの読み込み
-		afterImageModelHandle[i] = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::PLAYER));
+		afterImageModel[i] = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::PLAYER));
 
 		//モデルの不透明度の設定
 		//0.0fに近いほど透明度が上がる
-		MV1SetOpacityRate(afterImageModelHandle[i], OPACITY);
+		MV1SetOpacityRate(afterImageModel[i], OPACITY);
 
 		//モデルのエミッシブカラーを変更
-		MV1SetMaterialEmiColor(afterImageModelHandle[i], 0, AFTER_IMAGE_COLOR);
+		MV1SetMaterialEmiColor(afterImageModel[i], 0, AFTER_IMAGE_COLOR);
 
 		pastPosition[i] = POSITION;
 	}
@@ -90,7 +93,7 @@ void Player::Finalize()
 
 	for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
 	{
-		MV1DeleteModel(afterImageModelHandle[i]);
+		MV1DeleteModel(afterImageModel[i]);
 	}
 
 	DeleteGraph(playerFindImage);
@@ -100,11 +103,9 @@ void Player::Finalize()
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime"></param>
-/// <param name="back"></param>
-/// <param name="mapHit"></param>
-void Player::Update(float deltaTime, VECTOR back, bool mapHit)
+void Player::Update(float deltaTime)
 {
-	Move(deltaTime, back, mapHit);
+	Move(deltaTime);
 
 	AfterImage();
 
@@ -113,16 +114,10 @@ void Player::Update(float deltaTime, VECTOR back, bool mapHit)
 }
 
 /// <summary>
-/// 移動処理
+/// キー入力処理
 /// </summary>
-/// <param name="deltaTime"></param>
-/// <param name="back"></param>
-/// <param name="mapHit"></param>
-void Player::Move(float deltaTime, VECTOR back, bool mapHit)
+void Player::KeyInput()
 {
-	//入力方向を初期化する
-	inputDirection = ZERO_VECTOR;
-
 	//上下移動
 	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_W))
 	{
@@ -145,11 +140,22 @@ void Player::Move(float deltaTime, VECTOR back, bool mapHit)
 		inputDirection += LEFT;
 		inputFlag = true;
 	}
+}
+
+/// <summary>
+/// 移動処理
+/// </summary>
+/// <param name="deltaTime"></param>
+void Player::Move(float deltaTime)
+{
+	//入力方向を初期化する
+	inputDirection = ZERO_VECTOR;
+
+	KeyInput();
 
 	//十字キーの入力があったら
 	if (inputFlag)
 	{
-
 		//左右・上下同時押しなどで入力ベクトルが0の時は移動できない
 		if (VSize(inputDirection) < 1.0f)
 		{
@@ -163,7 +169,7 @@ void Player::Move(float deltaTime, VECTOR back, bool mapHit)
 		nextPosition += direction * speed * deltaTime;
 
 		//マップに衝突した
-		HitMap(back, mapHit);
+		HitMap();
 	}
 
 	//モデルの位置と向きを設定
@@ -174,15 +180,13 @@ void Player::Move(float deltaTime, VECTOR back, bool mapHit)
 /// <summary>
 /// マップに衝突した
 /// </summary>
-/// <param name="back"></param>
-/// <param name="mapHit"></param>
-void Player::HitMap(VECTOR back, bool mapHit)
+void Player::HitMap()
 {
 	//マップにプレイヤーが衝突したならば
-	if (mapHit)
+	if (hitChecker->MapHit())
 	{
 		//未来の位置に押し戻しの値を加える
-		nextPosition = back;
+		nextPosition = hitChecker->Back();
 
 		position = nextPosition;
 		nextPosition = position;
@@ -202,12 +206,12 @@ void Player::AfterImage()
 	for (int i = AFTER_IMAGE_NUMBER - 1; i >= 1; i--)
 	{
 		pastPosition[i] = pastPosition[i - 1];
-		MV1SetPosition(afterImageModelHandle[i], pastPosition[i] - AFTER_IMAGE_ADJUSTMENT);
-		MV1SetRotationYUseDir(afterImageModelHandle[i], direction, 0.0f);
+		MV1SetPosition(afterImageModel[i], pastPosition[i] - AFTER_IMAGE_ADJUSTMENT);
+		MV1SetRotationYUseDir(afterImageModel[i], direction, 0.0f);
 
 		pastPosition[0] = position;
-		MV1SetPosition(afterImageModelHandle[0], pastPosition[0] - AFTER_IMAGE_ADJUSTMENT);
-		MV1SetRotationYUseDir(afterImageModelHandle[0], direction, 0.0f);
+		MV1SetPosition(afterImageModel[0], pastPosition[0] - AFTER_IMAGE_ADJUSTMENT);
+		MV1SetRotationYUseDir(afterImageModel[0], direction, 0.0f);
 	}
 }
 
@@ -249,7 +253,7 @@ void Player::FoundEnemy(float deltaTime, bool spotted)
 void Player::FoundCount()
 {
 	//初期化カウントが0.8秒経過したら
-	if (initialCount > initialTime)
+	if (initialCount > INITIAL_TIME)
 	{
 		//位置と向きを初期位置に
 		//スピードを元に戻す
@@ -275,7 +279,7 @@ void Player::FoundCount()
 		spottedSeFlag = false;
 
 		//リスポーンエフェクトを出す
-		effectManager->CreateEffect(0, position);
+		effectManager->CreateEffect(position, EffectManager::REPOP);
 	}
 }
 
@@ -288,12 +292,12 @@ void Player::Draw()
 	if (findImageFlag)
 	{
 		//見つかったという画像を描画
-		DrawGraph(findImageX, findImageY, playerFindImage, TRUE);
+		DrawGraph(FIND_IMAGE_X, FIND_IMAGE_Y, playerFindImage, TRUE);
 	}
 
 	for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
 	{
-		MV1DrawModel(afterImageModelHandle[i]);
+		MV1DrawModel(afterImageModel[i]);
 	}
 
 	MV1DrawModel(modelHandle);

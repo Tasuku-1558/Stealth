@@ -69,5 +69,6 @@ private:
 	const int	 PLAY_POSITION;		//タイトル動画の再生位置
 	const float  START_SPHERE_POS_Z;//スタート状態の球のZ座標
 	const float  EXIT_SPHERE_POS_Z;	//終了状態の球のZ座標
+	const float  SPHERE_RADIUS;		//球の半径
 
 };

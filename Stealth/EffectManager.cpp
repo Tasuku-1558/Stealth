@@ -30,7 +30,7 @@ EffectManager::~EffectManager()
 void EffectManager::Initialize()
 {
 	//各エフェクトの読み込み
-	effect[0] = new Effect(InputPath(EFFECT_FOLDER_PATH, REPOP_EFFECT_PATH), REPOP_SIZE);
+	effect[REPOP] = new Effect(InputPath(EFFECT_FOLDER_PATH, REPOP_EFFECT_PATH), REPOP_SIZE);
 }
 
 /// <summary>
@@ -47,11 +47,11 @@ void EffectManager::Draw()
 /// <summary>
 /// エフェクトの生成
 /// </summary>
-/// <param name="number">エフェクトの種類</param>
 /// <param name="position">エフェクトの位置</param>
-void EffectManager::CreateEffect(int number, VECTOR position)
+/// <param name="effectType">エフェクトの種類</param>
+void EffectManager::CreateEffect(VECTOR position, EffectType effectType)
 {
-	effect[number]->Update(position);
+	effect[effectType]->Update(position);
 }
 
 /// <summary>

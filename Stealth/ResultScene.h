@@ -46,19 +46,19 @@ private:
 
 
 	int fontHandle;			//ゲームフォント
-	float frame;			//フレーム数
-	float particleInterval;	//パーティクル出現のインターバル
-	bool  particleFlag;		//パーティクルを出したら
 	int resultUiImage;		//リザルト画面のUI画像格納用
-	bool clear;
 	int alpha;				//透過度
 	int inc;
 	int prevAlpha;
-	bool titleFlag;			//タイトル画面へ遷移するかしないか
-	bool selectionFlag;		//ステージセレクション画面へ遷移するかしないか
 	int backGroundImage;	//リザルト画面の背景格納用
 	int backGroundX;		//背景のX座標
 	int backGroundY;		//背景のY座標
+	float frame;			//フレーム数
+	float particleInterval;	//パーティクル出現のインターバル
+	bool  particleFlag;		//パーティクルを出したら
+	bool clear;
+	bool titleFlag;			//タイトル画面へ遷移するかしないか
+	bool selectionFlag;		//ステージセレクション画面へ遷移するかしないか
 
 
 	//定数
@@ -66,4 +66,6 @@ private:
 	const string RESULT_UI_PATH;			//リザルト画面のUIのパス
 	const string RESULT_BACKGROUND_PATH;	//リザルト画面の背景画像のパス
 	const int    PARTICLE_NUMBER;			//パーティクルの数
+	const int	 MAX_ALPHA;					//最大透過度
+	const int	 BACKGROUND_Y_INCREASE;		//背景の増加量
 };

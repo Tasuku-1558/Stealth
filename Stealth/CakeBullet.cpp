@@ -6,7 +6,7 @@
 /// コンストラクタ
 /// </summary>
 /// <param name="cakePosition">ケーキの座標</param>
-/// <param name="inEffect"></param>
+/// <param name="inEffect">エフェクトマネージャーのポインタ</param>
 CakeBullet::CakeBullet(const VECTOR& cakePosition, EffectManager* const inEffect)
     : bulletCount(0.0f)
     , cakeGet(false)
@@ -79,10 +79,10 @@ void CakeBullet::BulletReuse(float deltaTime)
         if (bulletCount > 5.7f)
         {
             //リスポーンエフェクトを出す
-            effectManager->CreateEffect(0, cake->GetPosition());
+            effectManager->CreateEffect(cake->GetPosition(), EffectManager::REPOP);
         }
 
-        //カウントが6秒以上経過したら
+        //カウントが6秒経過したら
         if (bulletCount > 6.0f)
         {
             //ケーキをアクティブ状態にし、バレットを非アクティブにする

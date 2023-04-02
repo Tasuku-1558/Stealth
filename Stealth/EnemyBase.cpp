@@ -5,10 +5,7 @@
 /// コンストラクタ
 /// </summary>
 EnemyBase::EnemyBase()
-	: targetPosition()
-	, visualPosition()
-	, visualDir()
-	, markImage(0)
+	: markImage(0)
 	, visualModelHandle(0)
 	, speed(0.0f)
 	, changeSpeed(0.0f)
@@ -16,6 +13,9 @@ EnemyBase::EnemyBase()
 	, bulletDirection(0.0f)
 	, playerSpotted(false)
 	, cakeFlag(false)
+	, targetPosition()
+	, visualPosition()
+	, visualDir()
 	, RANGE_DEGREE(27.0f)
 	, RADIUS(100.0f)
 {

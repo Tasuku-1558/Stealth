@@ -17,24 +17,26 @@ char gameOver[] = { "GAME OVER" };
 ResultScene::ResultScene()
 	: SceneBase(SceneType::RESULT)
 	, fontHandle(0)
+	, resultUiImage(0)
+	, alpha(255)
+	, inc(-3)
+	, prevAlpha(0)
+	, backGroundImage(0)
+	, backGroundX(0)
+	, backGroundY(0)
 	, frame(0.0f)
 	, fireWorksParticle()
 	, particleFlag(false)
 	, particleInterval(0.0f)
 	, clear(false)
-	, resultUiImage(0)
-	, alpha(255)
-	, inc(-3)
-	, prevAlpha(0)
 	, titleFlag(false)
 	, selectionFlag(false)
-	, backGroundImage(0)
-	, backGroundX(0)
-	, backGroundY(0)
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, RESULT_UI_PATH("resultUi.png")
 	, RESULT_BACKGROUND_PATH("resultBackGround.png")
 	, PARTICLE_NUMBER(500)
+	, MAX_ALPHA(255)
+	, BACKGROUND_Y_INCREASE(2)
 {
 	Initialize();
 }
@@ -237,7 +239,7 @@ void ResultScene::ReturnScreen()
 /// </summary>
 void ResultScene::Blink()
 {
-	if (alpha > 255 && inc > 0 ||
+	if (alpha > MAX_ALPHA && inc > 0 ||
 		alpha < 0 && inc < 0)
 	{
 		inc *= -1;
@@ -257,9 +259,9 @@ void ResultScene::Blink()
 /// </summary>
 void ResultScene::BackGroundMove()
 {
-	backGroundY += 2;
+	backGroundY += BACKGROUND_Y_INCREASE;
 
-	//Y座標が端になったら
+	//Y座標がスクリーン端になったら
 	if (backGroundY == SCREEN_HEIGHT)
 	{
 		backGroundY = 0;

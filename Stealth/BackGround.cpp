@@ -36,8 +36,6 @@ void BackGround::Initialize()
 /// </summary>
 void BackGround::Finalize()
 {
-	PauseMovieToGraph(backGroundHandle);
-
 	DeleteGraph(backGroundHandle);
 }
 

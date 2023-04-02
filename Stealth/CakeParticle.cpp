@@ -3,10 +3,10 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="particlePosition"></param>
+/// <param name="particlePosition">パーティクルの位置</param>
 CakeParticle::CakeParticle(const VECTOR& particlePosition)
-	: particlePopTime(2.0f)
-	, PINK(GetColor(224, 148, 171))
+	: PINK(GetColor(224, 148, 171))
+	, PARTICLE_POP_TIME(2.0f)
 	, POS_Y(0.0f)
 {
 	position = particlePosition;
@@ -42,7 +42,7 @@ void CakeParticle::Initialize()
 void CakeParticle::Update(float deltaTime)
 {
 	//パーティクルの半径を調整する
-	radius = ((particlePopTime - particleCount) / particlePopTime) * radius;
+	radius = ((PARTICLE_POP_TIME - particleCount) / PARTICLE_POP_TIME) * radius;
 
 	//パーティクルに飛ばす力を加える
 	position.x += xPower;
@@ -53,7 +53,7 @@ void CakeParticle::Update(float deltaTime)
 	particleCount += deltaTime;
 
 	//パーティクルの出現時間を超えたらパーティクルを消す
-	if (particleCount > particlePopTime)
+	if (particleCount > PARTICLE_POP_TIME)
 	{
 		endFlag = true;
 

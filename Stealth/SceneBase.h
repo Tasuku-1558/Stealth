@@ -24,15 +24,14 @@ public:
 	virtual void Draw() = 0;						//描画処理
 
 	SceneBase* CreateScene(SceneType nowScene);		//新しいシーンを生成する
-
-	int Get() { return number; }
 	
 protected:
 
 	SceneType nowSceneType;						//今のシーン
 
+	int number;
+
 private:
 	SceneBase(const SceneBase&);				//コピーコンストラクタ
 
-	int number;
 };

@@ -22,6 +22,6 @@ private:
 	bool fadeEnd;		//フェード終了フラグ
 
 	//定数
-	const int BLACK;			//フェードのカラー
-	const int MAX_FADE;
+	const int BLACK;		//フェードのカラー
+	const int MAX_FADE;		//最大フェード値
 };

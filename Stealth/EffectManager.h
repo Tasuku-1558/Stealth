@@ -20,7 +20,7 @@ public:
 
 	void Draw();			//描画処理
 
-	void CreateEffect(int number, VECTOR position);	//エフェクトの生成
+	void CreateEffect(VECTOR position, EffectType effectType);	//エフェクトの生成
 
 private:
 	EffectManager(const EffectManager&);		//コピーコンストラクタ

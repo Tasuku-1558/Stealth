@@ -6,7 +6,6 @@
 
 /// <summary>
 /// カメラクラス
-/// プレイヤーへの追従カメラ
 /// </summary>
 class Camera final
 {
@@ -22,7 +21,7 @@ private:
 
 	void Initialize();							//初期化処理
 
-	VECTOR position;		//カメラの位置
+	VECTOR cameraPosition;	//カメラの位置
 	VECTOR cameraOffset;	//プレイヤーからの相対位置
 	VECTOR lookPos;			//カメラの注視点
 	VECTOR aimLookPos;

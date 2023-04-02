@@ -158,10 +158,9 @@
     <ClCompile Include="EffectBase.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
-    <ClCompile Include="FifthStage.cpp" />
     <ClCompile Include="FireWorksParticle.cpp" />
-    <ClCompile Include="FourthStage.cpp" />
     <ClCompile Include="GoalFlag.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="ParticleBase.cpp" />
     <ClCompile Include="ResultScene.cpp" />
@@ -187,7 +186,6 @@
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="StageMap.cpp" />
     <ClCompile Include="StageSelection.cpp" />
-    <ClCompile Include="ThirdStage.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="UiManager.cpp" />
   </ItemGroup>
@@ -196,12 +194,11 @@
     <ClInclude Include="CakeBullet.h" />
     <ClInclude Include="CakeParticle.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="Json.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
-    <ClInclude Include="FifthStage.h" />
     <ClInclude Include="FireWorksParticle.h" />
-    <ClInclude Include="FourthStage.h" />
     <ClInclude Include="GoalFlag.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="ParticleBase.h" />
@@ -229,7 +226,6 @@
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="StageMap.h" />
     <ClInclude Include="StageSelection.h" />
-    <ClInclude Include="ThirdStage.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="UiManager.h" />
   </ItemGroup>

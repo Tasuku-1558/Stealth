@@ -32,6 +32,7 @@ TitleScene::TitleScene()
 	, PLAY_POSITION(0)
 	, START_SPHERE_POS_Z(-220.0f)
 	, EXIT_SPHERE_POS_Z(-350.0f)
+	, SPHERE_RADIUS(20.0f)
 {
 	Initialize();
 }
@@ -41,8 +42,6 @@ TitleScene::TitleScene()
 /// </summary>
 TitleScene::~TitleScene()
 {
-	PauseMovieToGraph(titleMovie);
-
 	DeleteGraph(titleMovie);
 
 	DeleteGraph(titleName);
@@ -242,7 +241,7 @@ void TitleScene::Draw()
 	Blink();
 
 	//3D‹…‘Ì‚Ì•`‰æ
-	DrawSphere3D(spherePosition, 20.0f, 32, GetColor(255, 0, 0), GetColor(255, 255, 255), TRUE);
+	DrawSphere3D(spherePosition, SPHERE_RADIUS, COLOR_BIT, GetColor(255, 0, 0), GetColor(255, 255, 255), TRUE);
 
 	fadeManager->Draw();
 }

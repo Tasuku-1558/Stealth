@@ -21,7 +21,7 @@ public:
 
 protected:
 
+	int	   modelHandle;	//モデルハンドル
 	VECTOR position;	//現在の座標
 	VECTOR direction;	//向きベクトル
-	int	   modelHandle;	//モデルハンドル
 };

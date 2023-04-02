@@ -28,8 +28,8 @@ KeyManager::~KeyManager()
 /// <returns></returns>
 KeyManager& KeyManager::GetInstance()
 {
-	static KeyManager keyManger;
-	return keyManger;
+	static KeyManager keyManager;
+	return keyManager;
 }
 
 /// <summary>

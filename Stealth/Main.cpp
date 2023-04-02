@@ -80,6 +80,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//メインループ
 	while (loop)
 	{
+		SceneBase* scene = nullptr;
+
 		//前フレームと現在のフレームの差分
 		float deltaTime;
 
@@ -110,8 +112,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		//デバック用　デルタタイム計測
 		DrawFormatString(0, 500, GetColor(255, 255, 255), "%f", deltaTime, TRUE);
-		DrawFormatString(0, 550, GetColor(255, 255, 255), "%d", sceneBase->Get(), TRUE);
-
 
 		//裏画面の内容を表画面に反映させる
 		ScreenFlip();
@@ -127,7 +127,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (nowSceneType != prevSceneType)
 		{
 			delete sceneBase;									//シーンの解放
-			sceneBase = sceneBase->CreateScene(nowSceneType);	//新しいシーンの生成
+			sceneBase = scene->CreateScene(nowSceneType);		//新しいシーンの生成
 		}
 
 		//直前のシーンを記録

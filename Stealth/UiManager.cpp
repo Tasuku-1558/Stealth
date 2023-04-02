@@ -1,5 +1,5 @@
 #include "UiManager.h"
-
+#include "DxLib.h"
 
 /// <summary>
 /// コンストラクタ
@@ -64,7 +64,7 @@ void UiManager::Finalize()
 /// <summary>
 /// 描画処理
 /// </summary>
-/// <param name="gameState"></param>
+/// <param name="gameState">ゲームの状態</param>
 /// <param name="playerCount"></param>
 /// <param name="hitUi"></param>
 void UiManager::Draw(GameScene::GameState gameState, int playerCount, bool hitUi)

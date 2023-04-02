@@ -34,8 +34,10 @@ HitChecker::~HitChecker()
 /// <summary>
 /// 衝突判定
 /// </summary>
-/// <param name="model"></param>
-/// <param name="player"></param>
+/// <param name="model">ステージモデル</param>
+/// <param name="player">プレイヤーのポインタ</param>
+/// <param name="cakeBullet">ケーキバレットのポインタ</param>
+/// <param name="goalFlag">ゴールオブジェクトのポインタ</param>
 void HitChecker::Check(int model, Player* player, vector<CakeBullet*>* cakeBullet, /*vector<Enemy*>* enemy,*/ GoalFlag* goalFlag)
 {
 	CakeAndPlayer(player, cakeBullet);
@@ -200,7 +202,7 @@ void HitChecker::FlagAndPlayer(GoalFlag* goalFlag, Player* player)
 	//プレイヤーからゴール旗の座標を引いた値を取得
 	VECTOR sub = player->GetPosition() - goalFlag->GetPosition();
 
-	//プレイヤーとゴール旗の距離を計算
+	//プレイヤーとゴールオブジェクトの距離を計算
 	float distance = VSize(sub);
 
 	float radius = player->GetCollide().radius + goalFlag->GetCollideRadius();

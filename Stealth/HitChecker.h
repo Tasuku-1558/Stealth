@@ -30,7 +30,7 @@ public:
 
 	const bool UI() { return uiHit; }						//UI画像に当たったかどうかを返す
 	const bool MapHit() { return mapHit; }					//マップにプレイヤーが衝突したかどうかを返す
-	const bool FlagHit() { return flagHit; }				//ゴール旗にプレイヤーが当たったかどうかを返す
+	const bool FlagHit() { return flagHit; }				//ゴールオブジェクトにプレイヤーが当たったかどうかを返す
 	const VECTOR Back() { return pushBack; }				//マップの壁にプレイヤーが衝突したときの押し戻し値を返す
 
 private:
@@ -43,10 +43,10 @@ private:
 	void FlagAndPlayer(GoalFlag* goalFlag, Player* player);		//ゴールオブジェクトとプレイヤーの当たり判定
 
 
-	VECTOR uiPosition;		//UI画像の位置
 	bool uiHit;				//UI画像を描画するかどうか
-	bool flagHit;			//ゴール旗に衝突したかどうか
+	bool flagHit;			//ゴールオブジェクトに衝突したかどうか
 	bool mapHit;			//マップモデルに衝突したかどうか
+	VECTOR uiPosition;		//UI画像の位置
 	VECTOR pushBack;		//マップに衝突した時の押し戻し量
 
 	MV1_COLL_RESULT_POLY_DIM hitPolyDim;

@@ -7,13 +7,14 @@ public:
 
 	static Set& GetInstance();		//アドレスを返す
 
-	static void SetResult(bool result);
-	static bool GetResult() { return resultFlag; }
+	void SetResult(bool result);
+
+	const bool GetResult() { return resultFlag; }
 
 private:
 	Set();
 	Set(const Set&);		//コピーコンストラクタ
 	virtual ~Set();
 
-	static bool resultFlag;
+	bool resultFlag;
 };

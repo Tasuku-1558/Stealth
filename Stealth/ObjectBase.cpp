@@ -4,9 +4,9 @@
 /// コンストラクタ
 /// </summary>
 ObjectBase::ObjectBase()
-	: position()
+	: modelHandle(0)
 	, direction()
-	, modelHandle(0)
+	, position()
 {
 	//処理なし
 }

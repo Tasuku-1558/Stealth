@@ -142,7 +142,7 @@ void SoundManager::SeUpdate()
 /// <summary>
 /// BGM‚ğÄ¶
 /// </summary>
-/// <param name="bgm"></param>
+/// <param name="bgm">Bgm‚Ìí—Ş</param>
 void SoundManager::PlayBgm(Bgm bgm)
 {
 	PlaySoundMem(bgmData[bgm], DX_PLAYTYPE_LOOP);

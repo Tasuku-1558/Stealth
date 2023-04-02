@@ -16,8 +16,8 @@ public:
 	enum Bgm
 	{
 		TITLE,		//タイトル曲
-		//GAME,		//ゲーム曲
-		//RESULT,		//リザルト曲
+		GAME,		//ゲーム曲
+		RESULT,		//リザルト曲
 		BGM_AMOUNT	//BGMの数
 	};
 

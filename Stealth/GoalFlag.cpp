@@ -7,12 +7,12 @@ using namespace Math3d;		//VECTORの計算に使用
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="goalPosition"></param>
+/// <param name="goalPosition">ゴールオブジェクトの位置</param>
 GoalFlag::GoalFlag(VECTOR goalPosition)
 	: rotate()
-	, SIZE({ 1.0f, 1.0f, 1.0f })
 	, ROTATE_SPEED(3.0f)
 	, RADIUS(50.0f)
+	, SIZE({ 1.0f, 1.0f, 1.0f })
 {
 	position = goalPosition;
 

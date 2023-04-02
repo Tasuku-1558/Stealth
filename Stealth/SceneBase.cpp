@@ -28,7 +28,7 @@ SceneBase::~SceneBase()
 /// 新しいシーンを生成する
 /// </summary>
 /// <param name="nowScene">現在のシーン</param>
-/// <returns>次のシーン</returns>
+/// <returns>シーンを返す</returns>
 SceneBase* SceneBase::CreateScene(SceneType nowScene)
 {
 	SceneBase* retScene = nullptr;
@@ -43,13 +43,13 @@ SceneBase* SceneBase::CreateScene(SceneType nowScene)
 
 	case SceneType::SELECTION:
 		stageSelection = new StageSelection();
-		number = stageSelection->GetStage();
+		//number = stageSelection->GetStage();
 		retScene = stageSelection;
 		break;
 
 	case SceneType::GAME:
 		gameScene = new GameScene();
-		gameScene->stage(number);
+		//gameScene->stage(number);
 		retScene = gameScene;
 		break;
 

@@ -31,7 +31,7 @@ namespace My3dLib
 	/// <summary>
 	/// 球体のワールド座標を移動する
 	/// </summary>
-	/// <param name="pos"></param>
+	/// <param name="pos">位置</param>
 	void Sphere::Move(const VECTOR& pos)
 	{
 		worldCenter = localCenter + pos;

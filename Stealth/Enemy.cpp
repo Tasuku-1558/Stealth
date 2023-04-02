@@ -209,7 +209,7 @@ void Enemy::EnemyRotate(float deltaTime)
 
 	frame += deltaTime;
 
-	//各オブジェクトによってカウントの時間を変える
+	//各リアクションによってカウントの時間を変える
 	if (enemyReaction == EnemyReaction::NORMAL && frame > 1.0f ||
 		enemyReaction == EnemyReaction::PLAYER && frame > 2.0f ||
 		enemyReaction == EnemyReaction::CAKE && frame > 6.0f)

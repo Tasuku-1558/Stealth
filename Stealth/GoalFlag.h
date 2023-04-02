@@ -28,8 +28,8 @@ private:
 	My3dLib::Sphere collisionSphere;	//当たり判定球
 
 	//定数
-	const VECTOR SIZE;				//モデルの倍率
 	const float  ROTATE_SPEED;		//モデルの回転スピード
 	const float  RADIUS;			//ゴールフラグの半径
+	const VECTOR SIZE;				//モデルの倍率
 
 };
