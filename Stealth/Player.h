@@ -8,8 +8,6 @@
 #include "HitChecker.h"
 
 
-using namespace std;
-
 /// <summary>
 /// プレイヤークラス
 /// </summary>
@@ -44,14 +42,5 @@ private:
 	HitChecker* hitChecker;			//ヒットチェッカーのポインタ
 
 
-	float initialCount;				//初期位置に戻すカウント
-	int afterImageModel[12];		//残像モデル格納用
-	VECTOR pastPosition[12];		//プレイヤーの過去の位置
-
 	My3dLib::Sphere collisionSphere;	//当たり判定球
-
-	//定数
-	const string IMAGE_FOLDER_PATH;		//Imageフォルダまでのパス
-	const string PLAYER_FIND_PATH;		//エネミーに見つかった時の画像のパス
-	const int	 AFTER_IMAGE_NUMBER;	//プレイヤーの残像枚数
 };

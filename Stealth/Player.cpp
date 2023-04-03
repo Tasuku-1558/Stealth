@@ -12,13 +12,6 @@ using namespace Math3d;		//VECTORの計算に使用
 /// <param name="inEffect">エフェクトマネージャーのポインタ</param>
 /// <param name="inHitChecker">ヒットチェッカーのポインタ</param>
 Player::Player(EffectManager* const inEffect, HitChecker* const inHitChecker)
-	: PlayerBase()
-	, initialCount(0.0f)
-	, pastPosition()
-	, afterImageModel()
-	, IMAGE_FOLDER_PATH("Data/Image/")
-	, PLAYER_FIND_PATH("playerFind.png")
-	, AFTER_IMAGE_NUMBER(12)
 {
 	effectManager = inEffect;
 
@@ -69,7 +62,7 @@ void Player::Initialize()
 
 	//当たり判定球の情報設定
 	collisionSphere.localCenter = ZERO_VECTOR;
-	collisionSphere.worldCenter = position;
+	collisionSphere.worldCenter = POSITION;
 	collisionSphere.radius = RADIUS;
 }
 
@@ -253,7 +246,7 @@ void Player::FoundEnemy(float deltaTime, bool spotted)
 void Player::FoundCount()
 {
 	//初期化カウントが0.8秒経過したら
-	if (initialCount > INITIAL_TIME)
+	if (initialCount > MAX_INITIAL_TIME)
 	{
 		//位置と向きを初期位置に
 		//スピードを元に戻す
@@ -279,7 +272,7 @@ void Player::FoundCount()
 		spottedSeFlag = false;
 
 		//リスポーンエフェクトを出す
-		effectManager->CreateEffect(position, EffectManager::REPOP);
+		effectManager->CreateEffect(position, EffectManager::RESPAWN);
 	}
 }
 

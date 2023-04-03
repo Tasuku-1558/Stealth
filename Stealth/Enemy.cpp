@@ -11,8 +11,7 @@ using namespace Math3d;		//VECTORの計算に使用
 /// <param name="number">行動パターンの番号</param>
 /// <param name="enemySpeed">エネミーのスピード</param>
 Enemy::Enemy(int number, float enemySpeed)
-	: EnemyBase()
-	, cakeCount(0.0f)
+	: cakeCount(0.0f)
 	, cakeFindFlag(false)
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, MARK_PATH("mark.png")

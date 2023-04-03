@@ -19,11 +19,11 @@ public:
 private:
 	CakeParticle(const CakeParticle&);	//コピーコンストラクタ
 
-	void Initialize()override;				//初期化処理
+	void Initialize()override;			//初期化処理
 
 
 	//定数
-	const unsigned int PINK;			//パーティクルのカラー
-	const float PARTICLE_POP_TIME;		//パーティクルの出現時間
-	const float POS_Y;					//パーティクルのY座標
+	const unsigned int PINK;		//パーティクルのカラー
+	const float MAX_POP_TIME;		//パーティクルの最大出現時間
+	const float POSITION_Y;			//パーティクルのY座標
 };

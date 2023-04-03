@@ -11,7 +11,7 @@ namespace My3dLib
 		Sphere();
 		Sphere(const VECTOR& center, float radius);
 
-		void Move(const VECTOR& pos);					//球体のワールド座標を移動する
+		void Move(const VECTOR& position);	//球体のワールド座標を移動する
 
 		VECTOR localCenter; //球体のローカル中心座標
 		VECTOR worldCenter; //球体のワールド中心座標

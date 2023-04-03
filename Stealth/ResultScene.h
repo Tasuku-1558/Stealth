@@ -49,7 +49,6 @@ private:
 	int resultUiImage;		//リザルト画面のUI画像格納用
 	int alpha;				//透過度
 	int inc;
-	int prevAlpha;
 	int backGroundImage;	//リザルト画面の背景格納用
 	int backGroundX;		//背景のX座標
 	int backGroundY;		//背景のY座標
@@ -59,7 +58,8 @@ private:
 	bool clear;
 	bool titleFlag;			//タイトル画面へ遷移するかしないか
 	bool selectionFlag;		//ステージセレクション画面へ遷移するかしないか
-
+	char gameClear[11];		//ゲームクリアの文字
+	char gameOver[10];		//ゲームオーバーの文字
 
 	//定数
 	const string IMAGE_FOLDER_PATH;			//Imageフォルダまでのパス
@@ -68,4 +68,5 @@ private:
 	const int    PARTICLE_NUMBER;			//パーティクルの数
 	const int	 MAX_ALPHA;					//最大透過度
 	const int	 BACKGROUND_Y_INCREASE;		//背景の増加量
+	const float  MAX_PARTICLE_INTERVAL;		//パーティクル出現の最大インターバル
 };

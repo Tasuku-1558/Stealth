@@ -30,8 +30,6 @@ public:
 	SceneType Update(float deltaTime)override;	//XVˆ—
 	void Draw()override;						//•`‰æˆ—
 
-	void stage(int num);
-
 	//ƒQ[ƒ€‚Ìó‘Ô
 	enum class GameState
 	{

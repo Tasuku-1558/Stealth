@@ -57,11 +57,6 @@ GameScene::~GameScene()
 	}
 }
 
-void GameScene::stage(int num)
-{
-	stageNo = num;
-}
-
 /// <summary>
 /// 初期化処理
 /// </summary>
@@ -79,20 +74,17 @@ void GameScene::Initialize()
 
 	player = new Player(effectManager, hitChecker);
 	
-	//if (stageNo == 1)
-	{
-		//マップモデルの種類、サイズ、回転値、位置を入力する
-		stageMap = new StageMap(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
-			{ 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }, { -780.0f, -100.0f, 2400.0f });
+	//マップモデルの種類、サイズ、回転値、位置を入力する
+	stageMap = new StageMap(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
+		{ 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }, { -780.0f, -100.0f, 2400.0f });
 
-		//エネミーに行動パターンのナンバーとスピードを設定
-		enemy = new Enemy(0, GameData::doc["EnemySpeed"]["stage1"].GetFloat());
+	//エネミーに行動パターンのナンバーとスピードを設定
+	enemy = new Enemy(0, GameData::doc["EnemySpeed"]["stage1"].GetFloat());
 
-		//ゴールフラグの初期位置を設定
-		goalFlag = new GoalFlag({ GameData::doc["GoalPosition"]["x"].GetFloat(),
-								  GameData::doc["GoalPosition"]["y"].GetFloat(),
-								  GameData::doc["GoalPosition"]["z"].GetFloat() });
-	}
+	//ゴールフラグの初期位置を設定
+	goalFlag = new GoalFlag({ GameData::doc["GoalPosition"]["x"].GetFloat(),
+							  GameData::doc["GoalPosition"]["y"].GetFloat(),
+							  GameData::doc["GoalPosition"]["z"].GetFloat() });
 
 	uiManager = new UiManager();
 
@@ -156,12 +148,12 @@ void GameScene::CakeBulletPop()
 	//ケーキの座標を設定
 	CakeBullet* newCakeBullet = new CakeBullet({ GameData::doc["CakePosition"]["stage1"]["x"].GetFloat(),
 												 GameData::doc["CakePosition"]["stage1"]["y"].GetFloat(),
-												 GameData::doc["CakePosition"]["stage1"]["z"].GetFloat() }, effectManager);
+												 GameData::doc["CakePosition"]["stage1"]["z"].GetFloat() }, effectManager, player);
 	EntryCakeBullet(newCakeBullet);
 
 	CakeBullet* newCakeBullet2 = new CakeBullet({ GameData::doc["CakePosition"]["stage2"]["x"].GetFloat(),
 												  GameData::doc["CakePosition"]["stage2"]["y"].GetFloat(),
-												  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() }, effectManager);
+												  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() }, effectManager, player);
 	EntryCakeBullet(newCakeBullet2);
 }
 
@@ -265,7 +257,7 @@ void GameScene::UpdateStart(float deltaTime)
 
 	enemy->Update(deltaTime, player);
 
-	effectManager->CreateEffect(player->GetPosition(), EffectManager::REPOP);
+	effectManager->CreateEffect(player->GetPosition(), EffectManager::RESPAWN);
 
 	frame += deltaTime;
 
@@ -306,7 +298,7 @@ void GameScene::UpdateGame(float deltaTime)
 
 	for (auto CakeBulletPtr : cakeBullet)
 	{
-		CakeBulletPtr->Update(deltaTime, player);
+		CakeBulletPtr->Update(deltaTime);
 	}
 
 	goalFlag->Update(deltaTime);
@@ -394,7 +386,7 @@ void GameScene::Draw()
 
 	effectManager->Draw();
 
-	uiManager->Draw(gameState, player->FindCount(), hitChecker->UI());
+	uiManager->Draw(gameState, player->FindCount(), hitChecker->UiHit());
 	
 	for (auto particlePtr : cakeParticle)
 	{

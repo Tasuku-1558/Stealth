@@ -32,8 +32,8 @@ private:
 	My3dLib::Sphere collisionSphere;	//当たり判定球
 
 	//定数
+	const float  RADIUS;		//ケーキの半径
 	const VECTOR SIZE;          //モデルの倍率
 	const VECTOR ROTATE;		//モデルの回転値
-	const float  RADIUS;		//ケーキの半径
 
 };

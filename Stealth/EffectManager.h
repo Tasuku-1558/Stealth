@@ -14,7 +14,7 @@ public:
 	//エフェクトの種類
 	enum EffectType
 	{
-		REPOP,				//リスポーンエフェクト
+		RESPAWN,			//リスポーンエフェクト
 		EFFECT_AMOUNT,		//エフェクトの種類
 	};
 
@@ -27,12 +27,7 @@ private:
 
 	void Initialize();							//初期化処理
 
-	string InputPath(string folderPath, 
-					 string effectPath);		//パスの入力
-
-
 	EffectBase* effect[EFFECT_AMOUNT];			//エフェクト格納用
-
 
 	//エフェクト
 	const string EFFECT_FOLDER_PATH;	//Effectフォルダまでのパス

@@ -25,10 +25,10 @@ private:
 	StageSelection(const StageSelection&);			//コピーコンストラクタ
 
 	void Initialize()override;						//初期化処理
+	void KeyMove(float deltaTime);					//キー操作
 	int stageIncrement(int stageNumber);			//選択ステージを1つ先に持っていく
 	int stageDecrement(int stageNumber);			//選択ステージを1つ前に持っていく
-	void StageCreator(int stageNumber);				//各シーンへ遷移
-	void KeyMove(float deltaTime);					//キー操作
+	int StageCreator(int stageNumber);				//各シーンへ遷移
 
 	Camera* camera;
 	SelectionUi* selectionUi;

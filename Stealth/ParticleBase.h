@@ -24,13 +24,15 @@ public:
 
 protected:
 
-	float  radius;			//パーティクルの半径
-	float  particleCount;	//パーティクルカウント
-	float  xPower;			//横方向の力
-	float  zPower;			//縦方向の力
-	bool   endFlag;			//パーティクルを消すか消さないか
-	VECTOR position;		//パーティクルの位置
+	float  radius;				//半径
+	float  particlePopCount;	//パーティクル出現カウント
+	float  xPower;				//横方向の力
+	float  zPower;				//縦方向の力
+	bool   endFlag;				//消すか消さないか
+	VECTOR position;			//位置
 
 	//定数
-	const int DIVNUM;		//パーティクルのポリゴンの細かさ
+	const int DIVNUM;		//ポリゴンの細かさ
+	const int ALPHA;		//アルファブレンド
+	const int NOBLEND;		//デフォルトブレンド処理
 };

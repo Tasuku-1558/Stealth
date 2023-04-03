@@ -89,7 +89,7 @@ int StageSelection::stageDecrement(int stageNumber)
 /// 各シーンへ遷移
 /// </summary>
 /// <param name="stageNumber"></param>
-void StageSelection::StageCreator(int stageNumber)
+int StageSelection::StageCreator(int stageNumber)
 {
 	//各シーン
 	if (stageNumber == 1)
@@ -104,6 +104,8 @@ void StageSelection::StageCreator(int stageNumber)
 	{
 		nowSceneType = SceneType::TITLE;
 	}
+
+	return stageNumber;
 }
 
 /// <summary>
@@ -165,7 +167,7 @@ void StageSelection::KeyMove(float deltaTime)
 			//フェードが終わったら
 			if (fadeManager->FadeEnd())
 			{
-				StageCreator(stageNo);
+				stageNo = StageCreator(stageNo);
 			}
 		}
 	}
@@ -198,7 +200,7 @@ void StageSelection::Draw()
 	{
 		selectionUi->StageUiDraw(4, 4, 1);
 	}
-	else if (stageNo == 6)
+	if (stageNo == 6)
 	{
 		selectionUi->TitleUiDraw();
 	}

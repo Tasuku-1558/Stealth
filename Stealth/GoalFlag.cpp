@@ -32,7 +32,7 @@ GoalFlag::~GoalFlag()
 /// </summary>
 void GoalFlag::Initialize()
 {
-	//ゴールのモデルの読み込み
+	//ゴールオブジェクトモデルの読み込み
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::GOAL));
 
 	//モデルのサイズと位置を設定

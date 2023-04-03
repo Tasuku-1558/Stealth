@@ -7,10 +7,6 @@
 #include "Set.h"
 
 
-char gameClear[] = { "GAME CLEAR" };
-char gameOver[] = { "GAME OVER" };
-
-
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -20,7 +16,6 @@ ResultScene::ResultScene()
 	, resultUiImage(0)
 	, alpha(255)
 	, inc(-3)
-	, prevAlpha(0)
 	, backGroundImage(0)
 	, backGroundX(0)
 	, backGroundY(0)
@@ -31,12 +26,15 @@ ResultScene::ResultScene()
 	, clear(false)
 	, titleFlag(false)
 	, selectionFlag(false)
+	, gameClear("GAME CLEAR")
+	, gameOver("GAME OVER")
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, RESULT_UI_PATH("resultUi.png")
 	, RESULT_BACKGROUND_PATH("resultBackGround.png")
 	, PARTICLE_NUMBER(500)
 	, MAX_ALPHA(255)
 	, BACKGROUND_Y_INCREASE(2)
+	, MAX_PARTICLE_INTERVAL(2.0f)
 {
 	Initialize();
 }
@@ -152,7 +150,7 @@ SceneType ResultScene::Update(float deltaTime)
 	
 		//2秒経過したら
 		//パーティクルを再度出せるようにする
-		if (particleInterval > 2.0f)
+		if (particleInterval > MAX_PARTICLE_INTERVAL)
 		{
 			particleFlag = false;
 			particleInterval = 0.0f;

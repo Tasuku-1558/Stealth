@@ -8,9 +8,9 @@
 /// <param name="cakePosition">ケーキの座標</param>
 Cake::Cake(const VECTOR& cakePosition)
 	: alive(true)
+	, RADIUS(50.0f)
 	, SIZE({ 20.0f, 20.0f, 20.0f })
 	, ROTATE({ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f })
-	, RADIUS(50.0f)
 {
 	position = cakePosition;
 
@@ -30,7 +30,7 @@ Cake::~Cake()
 /// </summary>
 void Cake::Initialize()
 {
-	//ケーキのモデルの読み込み
+	//ケーキモデルの読み込み
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::CAKE));
 
 	//モデルのサイズ,回転値,位置を設定

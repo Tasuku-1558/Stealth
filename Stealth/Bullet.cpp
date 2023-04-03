@@ -1,29 +1,30 @@
 #include "Bullet.h"
 #include "ModelManager.h"
-#include "Player.h"
 
 using namespace Math3d;		//VECTORの計算に使用
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-Bullet::Bullet()
+/// <param name="inPlayer">プレイヤーのポインタ</param>
+Bullet::Bullet(Player* const inPlayer)
 	: cursorImage(0)
 	, mouseX(0)
 	, mouseY(0)
-	, worldMouseX(0.0f)
-	, worldMouseY(30.0f)
-	, worldMouseZ(0.0f)
 	, alive(false)
+	, worldMouse()
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, CURSOR_PATH("pointer.png")
 	, SIZE({ 20.0f, 20.0f, 20.0f })
 	, POSITION({ 0.0f, 30.0f, 0.0f })
 	, ROTATE({ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f })
+	, INITIAL_WORLD_MOUSE({ 0.0f,30.0f,0.0f })
 	, SCALE(0.4f)
+	, ANGLE(0.0f)
 	, RADIUS(50.0f)
 {
 	Initialize();
+	player = inPlayer;
 }
 
 /// <summary>
@@ -51,9 +52,11 @@ void Bullet::Initialize()
 
 	position = POSITION;
 
+	worldMouse = INITIAL_WORLD_MOUSE;
+
 	//当たり判定球の情報設定
 	collisionSphere.localCenter = ZERO_VECTOR;
-	collisionSphere.worldCenter = position;
+	collisionSphere.worldCenter = POSITION;
 	collisionSphere.radius = RADIUS;
 }
 
@@ -83,8 +86,7 @@ void Bullet::Update(float deltaTime)
 /// マウスカーソルの移動
 /// </summary>
 /// <param name="cake"></param>
-/// <param name="player">プレイヤーの位置</param>
-void Bullet::MouseMove(Cake* cake, Player* player)
+void Bullet::MouseMove(Cake* cake)
 {
 	//マウスの座標取得
 	GetMousePoint(&mouseX, &mouseY);
@@ -95,8 +97,8 @@ void Bullet::MouseMove(Cake* cake, Player* player)
 	if (!cake->GetAlive())
 	{
 		//マウスのX,Z座標のワールド座標を計算
-		worldMouseX = (float)mouseY * (-3000.0f / 1920.0f) * 1.7f + player->GetPosition().z;
-		worldMouseZ = (float)mouseX * (1900.0f / 1080.0f) * 1.5f + player->GetPosition().x;
+		worldMouse.x = (float)mouseY * (-3000.0f / 1920.0f) * 1.7f + player->GetPosition().z;
+		worldMouse.z = (float)mouseX * (1900.0f / 1080.0f) * 1.5f + player->GetPosition().x;
 	}
 }
 
@@ -123,7 +125,7 @@ void Bullet::BulletAlive()
 void Bullet::OnShot()
 {
 	//モデルの位置を設定
-	position = VGet(worldMouseZ, worldMouseY, worldMouseX);
+	position = VGet(worldMouse.z, worldMouse.y, worldMouse.x);
 
 	MV1SetPosition(modelHandle, position);
 }
@@ -139,5 +141,5 @@ void Bullet::Draw()
 		MV1DrawModel(modelHandle);
 	}
 
-	DrawRotaGraph(mouseX + 960, mouseY + 540, SCALE, 0.0f, cursorImage, TRUE);
+	DrawRotaGraph(mouseX + 960, mouseY + 540, SCALE, ANGLE, cursorImage, TRUE);
 }

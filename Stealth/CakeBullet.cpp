@@ -7,12 +7,15 @@
 /// </summary>
 /// <param name="cakePosition">ケーキの座標</param>
 /// <param name="inEffect">エフェクトマネージャーのポインタ</param>
-CakeBullet::CakeBullet(const VECTOR& cakePosition, EffectManager* const inEffect)
+/// <param name="player">プレイヤーのポインタ</param>
+CakeBullet::CakeBullet(const VECTOR& cakePosition, EffectManager* const inEffect, Player* player)
     : bulletCount(0.0f)
     , cakeGet(false)
+    , RESPAWN_EFFECT_POP_COUNT(5.7f)
+    , MAX_BULLET_TIME(6.0f)
 {
     cake = new Cake(cakePosition);
-    bullet = new Bullet();
+    bullet = new Bullet(player);
 
     effectManager = inEffect;
 }
@@ -30,8 +33,7 @@ CakeBullet::~CakeBullet()
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime"></param>
-/// <param name="player"></param>
-void CakeBullet::Update(float deltaTime, Player* player)
+void CakeBullet::Update(float deltaTime)
 {
     //ケーキが生きていないならば
     if (!cake->GetAlive())
@@ -39,7 +41,7 @@ void CakeBullet::Update(float deltaTime, Player* player)
         cakeGet = true;
     }
 
-    Shoot(deltaTime, player);
+    Shoot(deltaTime);
     BulletReuse(deltaTime);
 }
 
@@ -47,8 +49,7 @@ void CakeBullet::Update(float deltaTime, Player* player)
 /// バレット発射処理
 /// </summary>
 /// <param name="deltaTime"></param>
-/// <param name="player"></param>
-void CakeBullet::Shoot(float deltaTime, Player* player)
+void CakeBullet::Shoot(float deltaTime)
 {
     //マウスカーソルを左クリックし、且つケーキとバレットが非アクティブならば
     if ((GetMouseInput() & MOUSE_INPUT_LEFT) && !bullet->GetAlive() && !cake->GetAlive())
@@ -60,7 +61,7 @@ void CakeBullet::Shoot(float deltaTime, Player* player)
         SoundManager::GetInstance().SePlayFlag(SoundManager::CAKE_SHOOT);
 	}
 
-    bullet->MouseMove(cake, player);
+    bullet->MouseMove(cake);
 }
 
 /// <summary>
@@ -76,14 +77,14 @@ void CakeBullet::BulletReuse(float deltaTime)
 
         cakeGet = false;
 
-        if (bulletCount > 5.7f)
+        if (bulletCount > RESPAWN_EFFECT_POP_COUNT)
         {
             //リスポーンエフェクトを出す
-            effectManager->CreateEffect(cake->GetPosition(), EffectManager::REPOP);
+            effectManager->CreateEffect(cake->GetPosition(), EffectManager::RESPAWN);
         }
 
         //カウントが6秒経過したら
-        if (bulletCount > 6.0f)
+        if (bulletCount > MAX_BULLET_TIME)
         {
             //ケーキをアクティブ状態にし、バレットを非アクティブにする
             cake->CakeAlive();

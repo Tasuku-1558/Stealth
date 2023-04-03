@@ -18,8 +18,8 @@ namespace My3dLib
 	/// <summary>
 	/// 球体コンストラクタ(引数あり)
 	/// </summary>
-	/// <param name="center"></param>
-	/// <param name="radius"></param>
+	/// <param name="center">中心座標</param>
+	/// <param name="radius">半径</param>
 	Sphere::Sphere(const VECTOR& center, float radius)
 		: localCenter(center)
 		, worldCenter(center)
@@ -31,9 +31,9 @@ namespace My3dLib
 	/// <summary>
 	/// 球体のワールド座標を移動する
 	/// </summary>
-	/// <param name="pos">位置</param>
-	void Sphere::Move(const VECTOR& pos)
+	/// <param name="position">球体の位置</param>
+	void Sphere::Move(const VECTOR& position)
 	{
-		worldCenter = localCenter + pos;
+		worldCenter = localCenter + position;
 	}
 }

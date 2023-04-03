@@ -1,6 +1,6 @@
 #include "EffectManager.h"
 #include "Effect.h"
-
+#include "InputManager.h"
 
 /// <summary>
 /// コンストラクタ
@@ -30,7 +30,7 @@ EffectManager::~EffectManager()
 void EffectManager::Initialize()
 {
 	//各エフェクトの読み込み
-	effect[REPOP] = new Effect(InputPath(EFFECT_FOLDER_PATH, REPOP_EFFECT_PATH), REPOP_SIZE);
+	effect[RESPAWN] = new Effect(Input::InputPath(EFFECT_FOLDER_PATH, REPOP_EFFECT_PATH), REPOP_SIZE);
 }
 
 /// <summary>
@@ -52,15 +52,4 @@ void EffectManager::Draw()
 void EffectManager::CreateEffect(VECTOR position, EffectType effectType)
 {
 	effect[effectType]->Update(position);
-}
-
-/// <summary>
-/// パスの入力
-/// </summary>
-/// <param name="folderPath">エフェクトフォルダーの名前</param>
-/// <param name="effectPath">エフェクトの名前</param>
-/// <returns>エフェクトのパス</returns>
-string EffectManager::InputPath(string folderPath, string effectPath)
-{
-	return string(folderPath + effectPath);
 }

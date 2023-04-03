@@ -8,17 +8,17 @@
 
 
 /// <summary>
-/// ケーキとバレットクラス
+/// ケーキバレットクラス
 /// ケーキが生きてるか死んでるか、ケーキを発射を管理
 /// </summary>
 class CakeBullet final
 {
 public:
 
-    CakeBullet(const VECTOR& cakePosition, EffectManager* const inEffect);
+    CakeBullet(const VECTOR& cakePosition, EffectManager* const inEffect, Player* player);
     virtual ~CakeBullet();
 
-    void Update(float deltaTime, Player* player);   //更新処理
+    void Update(float deltaTime);                   //更新処理
     void Draw();                                    //描画処理
     
     const bool CakeGet() { return cakeGet; }        //ケーキを所持しているかいないかを返す
@@ -28,12 +28,16 @@ public:
 
 private:
 
-    void Shoot(float deltaTime, Player* player);    //バレット発射処理
+    void Shoot(float deltaTime);                    //バレット発射処理
     void BulletReuse(float deltaTime);              //バレット再使用カウント
 
     EffectManager* effectManager;                   //EffectManagerクラスのポインタ
 
     float bulletCount;                              //弾の効果時間
     bool cakeGet;                                   //ケーキを所持しているかいないか
+
+    //定数
+    const float RESPAWN_EFFECT_POP_COUNT;           //リスポーンエフェクト出現カウント
+    const float MAX_BULLET_TIME;                   //弾の最大効果時間
 
 };

@@ -11,7 +11,6 @@
 /// <param name="sceneType"></param>
 SceneBase::SceneBase(SceneType sceneType)
 	: nowSceneType(sceneType)
-	, number(0)
 {
 	//ˆ—‚È‚µ
 }
@@ -32,8 +31,6 @@ SceneBase::~SceneBase()
 SceneBase* SceneBase::CreateScene(SceneType nowScene)
 {
 	SceneBase* retScene = nullptr;
-	StageSelection* stageSelection = nullptr;
-	GameScene* gameScene = nullptr;
 
 	switch (nowScene)
 	{
@@ -42,15 +39,11 @@ SceneBase* SceneBase::CreateScene(SceneType nowScene)
 		break;
 
 	case SceneType::SELECTION:
-		stageSelection = new StageSelection();
-		//number = stageSelection->GetStage();
-		retScene = stageSelection;
+		retScene = new StageSelection();
 		break;
 
 	case SceneType::GAME:
-		gameScene = new GameScene();
-		//gameScene->stage(number);
-		retScene = gameScene;
+		retScene = new GameScene();
 		break;
 
 	case SceneType::RESULT:

@@ -24,11 +24,11 @@ public:
 			   Player* player, 
 			   vector<CakeBullet*>* cakeBullet, 
 			  /* vector<Enemy*>* enemy, */
-			   GoalFlag* goalFlag);							//衝突判定
+			   GoalFlag* goalFlag);					//衝突判定
 
 	void EnemyAndPlayer(Player* player, /*vector<Enemy*>* enemy*/Enemy* enemy);	//エネミーとプレイヤーの当たり判定
 
-	const bool UI() { return uiHit; }						//UI画像に当たったかどうかを返す
+	const bool UiHit() { return uiHit; }					//UI画像に当たったかどうかを返す
 	const bool MapHit() { return mapHit; }					//マップにプレイヤーが衝突したかどうかを返す
 	const bool FlagHit() { return flagHit; }				//ゴールオブジェクトにプレイヤーが当たったかどうかを返す
 	const VECTOR Back() { return pushBack; }				//マップの壁にプレイヤーが衝突したときの押し戻し値を返す
@@ -38,7 +38,7 @@ private:
 	HitChecker(const HitChecker&);								//コピーコンストラクタ
 
 	void CakeAndPlayer(Player* player, vector<CakeBullet*>* cakeBullet);	//ケーキとプレイヤーの当たり判定
-	void PlayerAndUI(Player* player);							//プレイヤーとUI画像の当たり判定
+	void PlayerAndUi(Player* player);							//プレイヤーとUI画像の当たり判定
 	void MapAndPlayer(int model, Player* player);				//マップとプレイヤーの当たり判定
 	void FlagAndPlayer(GoalFlag* goalFlag, Player* player);		//ゴールオブジェクトとプレイヤーの当たり判定
 

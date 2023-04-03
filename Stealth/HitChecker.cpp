@@ -42,7 +42,7 @@ void HitChecker::Check(int model, Player* player, vector<CakeBullet*>* cakeBulle
 {
 	CakeAndPlayer(player, cakeBullet);
 	//EnemyAndPlayer(player, enemy);
-	PlayerAndUI(player);
+	PlayerAndUi(player);
 	MapAndPlayer(model, player);
 	FlagAndPlayer(goalFlag, player);
 }
@@ -50,7 +50,7 @@ void HitChecker::Check(int model, Player* player, vector<CakeBullet*>* cakeBulle
 /// <summary>
 /// ケーキとプレイヤーの当たり判定
 /// </summary>
-/// <param name="player"></param>
+/// <param name="player">プレイヤーのポインタ</param>
 /// <param name="cakeBullet"></param>
 void HitChecker::CakeAndPlayer(Player* player, vector<CakeBullet*>* cakeBullet)
 {
@@ -75,7 +75,7 @@ void HitChecker::CakeAndPlayer(Player* player, vector<CakeBullet*>* cakeBullet)
 /// <summary>
 /// エネミーとプレイヤーの当たり判定
 /// </summary>
-/// <param name="player"></param>
+/// <param name="player">プレイヤーのポインタ</param>
 /// <param name="enemy"></param>
 void HitChecker::EnemyAndPlayer(Player* player, /*vector<Enemy*>* enemy*/Enemy* enemy)
 {
@@ -100,8 +100,8 @@ void HitChecker::EnemyAndPlayer(Player* player, /*vector<Enemy*>* enemy*/Enemy* 
 /// <summary>
 /// プレイヤーとUI画像の当たり判定
 /// </summary>
-/// <param name="player"></param>
-void HitChecker::PlayerAndUI(Player* player)
+/// <param name="player">プレイヤーのポインタ</param>
+void HitChecker::PlayerAndUi(Player* player)
 {
 	//プレイヤーからUI画像の座標を引いた値を取得
 	VECTOR sub = player->GetPosition() - uiPosition;
@@ -124,8 +124,8 @@ void HitChecker::PlayerAndUI(Player* player)
 /// <summary>
 /// マップとプレイヤーの当たり判定
 /// </summary>
-/// <param name="model"></param>
-/// <param name="player"></param>
+/// <param name="model">ステージモデル</param>
+/// <param name="player">プレイヤーのポインタ</param>
 void HitChecker::MapAndPlayer(int model, Player* player)
 {
 	//モデル全体のコリジョン情報を構築
@@ -196,7 +196,7 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 /// ゴールオブジェクトとプレイヤーの当たり判定
 /// </summary>
 /// <param name="goalFlag"></param>
-/// <param name="player"></param>
+/// <param name="player">プレイヤーのポインタ</param>
 void HitChecker::FlagAndPlayer(GoalFlag* goalFlag, Player* player)
 {
 	//プレイヤーからゴール旗の座標を引いた値を取得

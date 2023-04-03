@@ -6,8 +6,8 @@
 /// <param name="particlePosition">パーティクルの位置</param>
 CakeParticle::CakeParticle(const VECTOR& particlePosition)
 	: PINK(GetColor(224, 148, 171))
-	, PARTICLE_POP_TIME(2.0f)
-	, POS_Y(0.0f)
+	, MAX_POP_TIME(2.0f)
+	, POSITION_Y(0.0f)
 {
 	position = particlePosition;
 
@@ -33,6 +33,8 @@ void CakeParticle::Initialize()
 
 	xPower = tmpRadius * cosf(rad * DX_PI_F);
 	zPower = tmpRadius * sinf(rad * DX_PI_F);
+
+	position.y = POSITION_Y;
 }
 
 /// <summary>
@@ -42,22 +44,21 @@ void CakeParticle::Initialize()
 void CakeParticle::Update(float deltaTime)
 {
 	//パーティクルの半径を調整する
-	radius = ((PARTICLE_POP_TIME - particleCount) / PARTICLE_POP_TIME) * radius;
+	radius = ((MAX_POP_TIME - particlePopCount) / MAX_POP_TIME) * radius;
 
 	//パーティクルに飛ばす力を加える
 	position.x += xPower;
-	position.y = POS_Y;
 	position.z += zPower;
 	
 	//パーティクルを出したらカウントを開始する
-	particleCount += deltaTime;
+	particlePopCount += deltaTime;
 
 	//パーティクルの出現時間を超えたらパーティクルを消す
-	if (particleCount > PARTICLE_POP_TIME)
+	if (particlePopCount > MAX_POP_TIME)
 	{
 		endFlag = true;
 
-		particleCount = 0.0f;
+		particlePopCount = 0.0f;
 	}
 }
 
@@ -66,7 +67,7 @@ void CakeParticle::Update(float deltaTime)
 /// </summary>
 void CakeParticle::Draw()
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, ALPHA);
 	DrawSphere3D(position, radius, DIVNUM, PINK, PINK, FALSE);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, NOBLEND);
 }
