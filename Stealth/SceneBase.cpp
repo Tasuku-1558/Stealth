@@ -11,6 +11,7 @@
 /// <param name="sceneType"></param>
 SceneBase::SceneBase(SceneType sceneType)
 	: nowSceneType(sceneType)
+	, number(0)
 {
 	//ˆ—‚È‚µ
 }

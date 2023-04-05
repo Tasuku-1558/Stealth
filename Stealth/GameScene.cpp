@@ -73,19 +73,38 @@ void GameScene::Initialize()
 	hitChecker = new HitChecker();
 
 	player = new Player(effectManager, hitChecker);
+
+	stageNo = Set::GetInstance().GetStage();
+
+	if (stageNo == 1)
+	{
+		//マップモデルの種類、サイズ、回転値、位置を入力する
+		stageMap = new StageMap(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
+			{ 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }, { -780.0f, -100.0f, 2400.0f });
+
+		//エネミーに行動パターンのナンバーとスピードを設定
+		enemy = new Enemy(0, GameData::doc["EnemySpeed"]["stage1"].GetFloat());
+
+		//ゴールフラグの初期位置を設定
+		goalFlag = new GoalFlag({ GameData::doc["GoalPosition"]["x"].GetFloat(),
+								  GameData::doc["GoalPosition"]["y"].GetFloat(),
+								  GameData::doc["GoalPosition"]["z"].GetFloat() });
+	}
+	if (stageNo == 2)
+	{
+		//マップモデルの種類、サイズ、回転値、位置を入力する
+		stageMap = new StageMap(ModelManager::STAGE2, { 80.0f, 60.0f, 80.0f },
+			{ 0.0f, 0.0f, 0.0f }, { -7000.0f, -100.0f, -2900.0f });
+
+		//エネミーに行動パターンのナンバーとスピードを設定
+		enemy = new Enemy(0, GameData::doc["EnemySpeed"]["stage1"].GetFloat());
+
+		//ゴールフラグの初期位置を設定
+		goalFlag = new GoalFlag({ GameData::doc["GoalPosition"]["x"].GetFloat(),
+								  GameData::doc["GoalPosition"]["y"].GetFloat(),
+								  GameData::doc["GoalPosition"]["z"].GetFloat() });
+	}
 	
-	//マップモデルの種類、サイズ、回転値、位置を入力する
-	stageMap = new StageMap(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
-		{ 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }, { -780.0f, -100.0f, 2400.0f });
-
-	//エネミーに行動パターンのナンバーとスピードを設定
-	enemy = new Enemy(0, GameData::doc["EnemySpeed"]["stage1"].GetFloat());
-
-	//ゴールフラグの初期位置を設定
-	goalFlag = new GoalFlag({ GameData::doc["GoalPosition"]["x"].GetFloat(),
-							  GameData::doc["GoalPosition"]["y"].GetFloat(),
-							  GameData::doc["GoalPosition"]["z"].GetFloat() });
-
 	uiManager = new UiManager();
 
 	fadeManager = new FadeManager();

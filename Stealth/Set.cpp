@@ -3,6 +3,7 @@
 
 Set::Set()
 	: resultFlag(false)
+	, number(0)
 {
 	//ˆ—‚È‚µ
 }
@@ -21,4 +22,9 @@ Set& Set::GetInstance()
 void Set::SetResult(bool result)
 {
 	resultFlag = result;
+}
+
+void Set::SetStage(int num)
+{
+	number = num;
 }

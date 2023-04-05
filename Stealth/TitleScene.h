@@ -59,16 +59,16 @@ private:
 
 
 	//定数
+	const int	 MAX_ALPHA;			//最大透過度
+	const int	 PLAY_POSITION;		//タイトル動画の再生位置
+	const float  START_SPHERE_POS_Z;//スタート状態の球のZ座標
+	const float  EXIT_SPHERE_POS_Z;	//終了状態の球のZ座標
+	const float  SPHERE_RADIUS;		//球の半径
 	const string VIDEO_FOLDER_PATH;	//Videoフォルダまでのパス
 	const string IMAGE_FOLDER_PATH;	//Imageフォルダまでのパス
 	const string PLAY_VIDEO_PATH;	//タイトル動画のパス
 	const string TITLENAME_PATH;	//タイトル名の画像のパス
 	const string START_UI_PATH;		//ゲームを始める遷移キーのUIのパス
 	const string EXIT_UI_PATH;		//ゲームを終了する遷移キーのUIのパス
-	const int	 MAX_ALPHA;			//最大透過度
-	const int	 PLAY_POSITION;		//タイトル動画の再生位置
-	const float  START_SPHERE_POS_Z;//スタート状態の球のZ座標
-	const float  EXIT_SPHERE_POS_Z;	//終了状態の球のZ座標
-	const float  SPHERE_RADIUS;		//球の半径
 
 };

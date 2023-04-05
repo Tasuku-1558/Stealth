@@ -13,7 +13,6 @@ public:
 	StageMap(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position);
 	virtual ~StageMap();
 
-	void Initialize();      //‰Šú‰»ˆ—
 	void Draw();            //•`‰æˆ—
 
 private:

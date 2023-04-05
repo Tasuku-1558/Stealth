@@ -73,12 +73,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//シーンを生成
 	SceneBase* sceneBase = new TitleScene();
+
+	SceneBase* scene = nullptr;
 	
 	//メインループ
 	while (loop)
 	{
-		SceneBase* scene = nullptr;
-
 		//前フレームと現在のフレームの差分
 		float deltaTime;
 

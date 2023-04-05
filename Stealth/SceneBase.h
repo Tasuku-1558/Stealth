@@ -26,6 +26,7 @@ public:
 	SceneBase* CreateScene(SceneType nowScene);		//新しいシーンを生成する
 
 protected:
+	int number;
 
 	SceneType nowSceneType;						//今のシーン
 

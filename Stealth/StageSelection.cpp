@@ -5,7 +5,7 @@
 #include "SelectionUi.h"
 #include "KeyManager.h"
 #include "FadeManager.h"
-
+#include "Set.h"
 
 /// <summary>
 /// コンストラクタ
@@ -168,6 +168,7 @@ void StageSelection::KeyMove(float deltaTime)
 			if (fadeManager->FadeEnd())
 			{
 				stageNo = StageCreator(stageNo);
+				Set::GetInstance().SetStage(stageNo);
 			}
 		}
 	}

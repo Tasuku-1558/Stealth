@@ -37,9 +37,6 @@ StageMap::StageMap(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate
 	MV1SetRotationXYZ(modelHandle, rotate);
 	MV1SetPosition(modelHandle, position);
 
-
-	Initialize();
-
 }
 
 /// <summary>
@@ -48,15 +45,6 @@ StageMap::StageMap(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate
 StageMap::~StageMap()
 {
 	Finalize();
-}
-
-/// <summary>
-/// ‰Šú‰»ˆ—
-/// </summary>
-void StageMap::Initialize()
-{
-	
-
 }
 
 /// <summary>
