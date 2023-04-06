@@ -152,7 +152,7 @@ void UiManager::CakeGetDraw(bool cakeGet)
 /// <param name="playerCount"></param>
 void UiManager::PlayerHpDraw(int playerCount)
 {
-	DrawRotaGraph(515, 150, 0.7f, 0, uiHandle[FRAME], TRUE);
+	DrawRotaGraph(160, 80, 0.7f, 0, uiHandle[FRAME], TRUE);
 
 	DrawRotaGraph(205, 70, 0.5f, 0, uiHandle[PLAYER_HP_FRAME], TRUE);
 

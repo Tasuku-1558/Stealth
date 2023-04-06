@@ -34,8 +34,7 @@ public:
 	const VECTOR Back() { return pushBack; }				//マップの壁にプレイヤーが衝突したときの押し戻し値を返す
 
 private:
-
-	HitChecker(const HitChecker&);								//コピーコンストラクタ
+	HitChecker(const HitChecker&);							//コピーコンストラクタ
 
 	void CakeAndPlayer(Player* player, vector<CakeBullet*>* cakeBullet);	//ケーキとプレイヤーの当たり判定
 	void PlayerAndUi(Player* player);							//プレイヤーとUI画像の当たり判定

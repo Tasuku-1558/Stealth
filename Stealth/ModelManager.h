@@ -21,11 +21,9 @@ public:
 		CAKE,			//ケーキモデル
 		CAKE_HALF,		//ケーキが半分のモデル
 		STONE,			//小石モデル
+		KABE,
 		STAGE1,			//ステージ1モデル
 		STAGE2,			//ステージ2モデル
-		STAGE3,			//ステージ3モデル
-		STAGE4,			//ステージ4モデル
-		STAGE5,			//ステージ5モデル
 		GOAL,			//ゴールフラッグモデル
 		MODEL_AMOUNT,	//モデルの数
 	};
@@ -39,14 +37,15 @@ private:
 	ModelManager(const ModelManager&);			//コピーコンストラクタ
 	virtual ~ModelManager();
 
-	string InputPath(string folderPath,			//モデルのパスを入力
-					 string modelPath);
-
 	void LoadAllModel();						//全てのモデルの読み込み
 	void DeleteAllModel();						//全てのモデルの削除
 
-	int modelHandle[MODEL_AMOUNT];				//モデルハンドル
+	struct Model
+	{
+		string modelPath;
+	};
 
+	int modelHandle[MODEL_AMOUNT];				//モデルハンドル
 
 	//定数
 	const string MODEL_FOLDER_PATH;	//Modelフォルダまでのパス
@@ -56,11 +55,9 @@ private:
 	const string CAKE_PATH;			//cakeモデルファイルのパス
 	const string CAKE_HALF_PATH;	//cake_halfモデルファイルのパス
 	const string STONE_PATH;		//stoneモデルファイルのパス
+	const string KABE_PATH;			//kabeモデルファイルのパス
 	const string STAGE1_PATH;		//stage1モデルファイルのパス
 	const string STAGE2_PATH;		//stage2モデルファイルのパス
-	const string STAGE3_PATH;		//stage3モデルファイルのパス
-	const string STAGE4_PATH;		//stage4モデルファイルのパス
-	const string STAGE5_PATH;		//stage5モデルファイルのパス
 	const string GOAL_FLAG_PATH;	//goal_flagモデルファイルのパス
 
 };

@@ -31,9 +31,9 @@ private:
 
 	//エフェクト
 	const string EFFECT_FOLDER_PATH;	//Effectフォルダまでのパス
-	const string REPOP_EFFECT_PATH;		//リスポーンエフェクトのパス
+	const string RESPAWN_EFFECT_PATH;	//リスポーンエフェクトのパス
 
 	//エフェクトのサイズ
-	const float  REPOP_SIZE;			//リスポーンエフェクトのサイズ
+	const float  RESPAWN_SIZE;			//リスポーンエフェクトのサイズ
 
 };

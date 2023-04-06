@@ -7,8 +7,8 @@
 /// </summary>
 EffectManager::EffectManager()
 	: EFFECT_FOLDER_PATH("Data/Effect/")
-	, REPOP_EFFECT_PATH("repop.efkefc")
-	, REPOP_SIZE(30.0f)
+	, RESPAWN_EFFECT_PATH("Respawn/Respawn.efkefc")
+	, RESPAWN_SIZE(30.0f)
 {
 	Initialize();
 }
@@ -30,7 +30,7 @@ EffectManager::~EffectManager()
 void EffectManager::Initialize()
 {
 	//各エフェクトの読み込み
-	effect[RESPAWN] = new Effect(Input::InputPath(EFFECT_FOLDER_PATH, REPOP_EFFECT_PATH), REPOP_SIZE);
+	effect[RESPAWN] = new Effect(Input::InputPath(EFFECT_FOLDER_PATH, RESPAWN_EFFECT_PATH), RESPAWN_SIZE);
 }
 
 /// <summary>

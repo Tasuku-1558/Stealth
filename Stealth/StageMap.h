@@ -21,5 +21,4 @@ private:
 	void Finalize();						//I—¹ˆ—
 
 	int kabe;
-
 };
