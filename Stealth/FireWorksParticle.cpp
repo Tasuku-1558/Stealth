@@ -6,7 +6,7 @@
 /// </summary>
 /// <param name="particlePosition">パーティクルの位置</param>
 /// <param name="particleColor">パーティクルの色</param>
-FireWorksParticle::FireWorksParticle(const VECTOR particlePosition, unsigned int particleColor)
+FireWorksParticle::FireWorksParticle(const VECTOR& particlePosition, unsigned int particleColor)
 	: color(0)
 	, MAX_POP_TIME(3.0f)
 	, POSITION_Y(1000.0f)

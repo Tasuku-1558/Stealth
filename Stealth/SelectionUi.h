@@ -16,34 +16,31 @@ public:
 	SelectionUi();
 	virtual ~SelectionUi();
 
-	void Draw();									//描画処理
+	void Draw();		//描画処理
 	void StageUiDraw(int mapNumber, int enemyNumber, 
-					 int cakeNumber);				//ステージのUI描画処理
+					 int cakeNumber);		//ステージのUI描画処理
 
-	void TitleUiDraw();								//タイトルへ遷移するUI描画処理
+	void TitleUiDraw();		//タイトルへ遷移するUI描画処理
 
 private:
-	SelectionUi(const SelectionUi&);				//コピーコンストラクタ
+	SelectionUi(const SelectionUi&);	//コピーコンストラクタ
 
-	void Initialize();								//初期化処理
-	void Finalize();								//終了処理
+	void Initialize();			//初期化処理
+	void Finalize();			//終了処理
 
 	void MapInput(int number, ModelManager::ModelType modelType, 
 				  VECTOR mapPos, VECTOR size, VECTOR rotate);		//マップ情報入力
 
-	string InputPath(string folderPath,				//画像のパスを入力
-					 string imagePath);
-
-	int fontHandle;										//ゲームフォント
-	int selectionKeyImage;							//ステージセレクションUI画像
-	int selectionUiImage;							//ステージセレクションからタイトルへ遷移のUI画像
-	int stageDescription;							//ステージの説明画像ハンドル
-	int operationMethod;							//操作方法説明画像のハンドル
-	int modelHandle[5];								//マップモデルハンドル
-	VECTOR position[5];								//マップモデルの位置
+	int fontHandle;				//ゲームフォント
+	int selectionKeyImage;		//ステージセレクションUI画像
+	int selectionUiImage;		//ステージセレクションからタイトルへ遷移のUI画像
+	int stageDescription;		//ステージの説明画像ハンドル
+	int operationMethod;		//操作方法説明画像のハンドル
+	int modelHandle[5];			//マップモデルハンドル
+	VECTOR position[5];			//マップモデルの位置
 
 	//定数
-	const string IMAGE_FOLDER_PATH;			//imageフォルダまでのパス
+	const string IMAGE_FOLDER_PATH;			//Imageフォルダまでのパス
 	const string SELECTION_KEY_PATH;		//ステージセレクションUI画像のパス
 	const string SELECTION_TITLE_PATH;		//ステージセレクションからタイトルへ遷移のUI画像
 	const string STAGE_DESCRIPTION_PATH;	//ステージの説明画像のパス

@@ -1,14 +1,15 @@
 #include "BackGround.h"
 #include "DxLib.h"
+#include "InputManager.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 BackGround::BackGround()
 	: backGroundHandle(0)
+	, PLAY_POSITION(0)
 	, VIDEO_FOLDER_PATH("Data/Video/")
 	, BACKGROUND_VIDEO_PATH("BackGround.mp4")
-	, PLAY_POSITION(0)
 {
 	Initialize();
 }
@@ -27,8 +28,7 @@ BackGround::~BackGround()
 void BackGround::Initialize()
 {
 	//背景動画の読み込み
-	string failePath = VIDEO_FOLDER_PATH + BACKGROUND_VIDEO_PATH;
-	backGroundHandle = LoadGraph(failePath.c_str());
+	backGroundHandle = LoadGraph(Input::InputPath(VIDEO_FOLDER_PATH, BACKGROUND_VIDEO_PATH).c_str());
 }
 
 /// <summary>

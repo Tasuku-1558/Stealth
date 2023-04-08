@@ -19,10 +19,13 @@ public:
 
 protected:
 
-	int effectHandle;					//エフェクトハンドル
-	int playingEffectHandle;			//再生中のエフェクトのハンドルを初期化
-	int effectTime;						//エフェクト時間
+	int effectHandle;				//エフェクトハンドル
+	int playingEffectHandle;		//再生中のエフェクトのハンドルを初期化
+	int effectTime;					//エフェクト時間
+
+	//定数
+	const int PLAY_EFFECT_TIME;		//エフェクト再生時間
 
 private:
-	EffectBase(const EffectBase&);		//コピーコンストラクタ
+	EffectBase(const EffectBase&);	//コピーコンストラクタ
 };

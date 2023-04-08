@@ -10,7 +10,7 @@ class Player;
 class Enemy;
 class CakeBullet;
 class HitChecker;
-class StageMap;
+class Stage;
 class GoalFlag;
 class CakeParticle;
 class EffectManager;
@@ -49,7 +49,7 @@ private:
 	Enemy* enemy;
 	std::vector<CakeBullet*> cakeBullet;
 	HitChecker* hitChecker;
-	StageMap* stageMap;
+	Stage* stage;
 	GoalFlag* goalFlag;
 	std::vector<CakeParticle*> cakeParticle;
 	EffectManager* effectManager;
@@ -82,11 +82,11 @@ private:
 
 	GameState gameState;	//ゲームの状態
 	int	  fontHandle;		//ゲームフォント
+	int stageNo;			//選択したステージ格納用
 	float frame;			//フレーム数
 	float particleInterval;	//パーティクル出現のインターバル
 	bool  particleFlag;		//パーティクルを出したら
 	bool clear;
-	int stageNo;
 
 	//定数
 	const int	PARTICLE_NUMBER;		//パーティクルの数

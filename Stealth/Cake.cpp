@@ -33,7 +33,7 @@ void Cake::Initialize()
 	//ケーキモデルの読み込み
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::CAKE));
 
-	//モデルのサイズ,回転値,位置を設定
+	//ケーキモデルのサイズと回転値と位置を設定
 	MV1SetScale(modelHandle, SIZE);
 	MV1SetRotationXYZ(modelHandle, ROTATE);
 	MV1SetPosition(modelHandle, position);

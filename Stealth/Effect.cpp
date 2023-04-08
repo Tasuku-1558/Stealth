@@ -31,7 +31,7 @@ void Effect::Update(VECTOR position)
 	effectTime++;
 
 	//エフェクトを再生
-	if (effectTime % 1 == 0)
+	if (effectTime % PLAY_EFFECT_TIME == 0)
 	{
 		//エフェクトを再生
 		playingEffectHandle = PlayEffekseer3DEffect(effectHandle);

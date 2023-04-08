@@ -21,7 +21,7 @@ public:
 		CAKE,			//ケーキモデル
 		CAKE_HALF,		//ケーキが半分のモデル
 		STONE,			//小石モデル
-		KABE,
+		KABE,			//ステージモデル
 		STAGE1,			//ステージ1モデル
 		STAGE2,			//ステージ2モデル
 		GOAL,			//ゴールフラッグモデル
@@ -42,7 +42,7 @@ private:
 
 	struct Model
 	{
-		string modelPath;
+		string modelPath;	//モデルのパス
 	};
 
 	int modelHandle[MODEL_AMOUNT];				//モデルハンドル

@@ -51,11 +51,11 @@ private:
 
 
 	//定数
+	const int	 BGM_VOLUME;				//BGMの音量
+	const int	 SE_VOLUME;					//SEの音量
 	const string SOUND_FOLDER_PATH;			//Soundフォルダまでのパス
 	const string BGM_PATH;					//BGMフォルダまでのパス
 	const string SE_PATH;					//SEフォルダまでのパス
 	const string SOUND_FILENAME_EXTENSION;	//BGMとSEの拡張子
-	const int	 BGM_VOLUME;				//BGMの音量
-	const int	 SE_VOLUME;					//SEの音量
 
 };

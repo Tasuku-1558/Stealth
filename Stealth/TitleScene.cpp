@@ -5,7 +5,7 @@
 #include "KeyManager.h"
 #include "SoundManager.h"
 #include "FadeManager.h"
-
+#include "InputManager.h"
 
 /// <summary>
 /// コンストラクタ
@@ -62,28 +62,17 @@ void TitleScene::Initialize()
 	fadeManager = new FadeManager();
 
 	//動画データの読み込み
-	titleMovie = LoadGraph(InputPath(VIDEO_FOLDER_PATH, PLAY_VIDEO_PATH).c_str());
+	titleMovie = LoadGraph(Input::InputPath(VIDEO_FOLDER_PATH, PLAY_VIDEO_PATH).c_str());
 
 	//タイトルUIの読み込み
-	titleName = LoadGraph(InputPath(IMAGE_FOLDER_PATH, TITLENAME_PATH).c_str());
+	titleName = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, TITLENAME_PATH).c_str());
 
-	startUi = LoadGraph(InputPath(IMAGE_FOLDER_PATH, START_UI_PATH).c_str());
+	startUi = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, START_UI_PATH).c_str());
 
-	exitUi = LoadGraph(InputPath(IMAGE_FOLDER_PATH, EXIT_UI_PATH).c_str());
+	exitUi = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, EXIT_UI_PATH).c_str());
 
 	//タイトルBGMを再生
 	SoundManager::GetInstance().PlayBgm(SoundManager::TITLE);
-}
-
-/// <summary>
-/// パスを入力
-/// </summary>
-/// <param name="folderPath">フォルダまでのパス</param>
-/// <param name="path"></param>
-/// <returns></returns>
-string TitleScene::InputPath(string folderPath, string path)
-{
-	return string(folderPath + path);
 }
 
 /// <summary>

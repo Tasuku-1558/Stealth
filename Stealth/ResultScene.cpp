@@ -4,6 +4,7 @@
 #include "FireWorksParticle.h"
 #include "FadeManager.h"
 #include "KeyManager.h"
+#include "InputManager.h"
 #include "Set.h"
 
 
@@ -28,13 +29,13 @@ ResultScene::ResultScene()
 	, selectionFlag(false)
 	, gameClear("GAME CLEAR")
 	, gameOver("GAME OVER")
-	, IMAGE_FOLDER_PATH("Data/Image/")
-	, RESULT_UI_PATH("resultUi.png")
-	, RESULT_BACKGROUND_PATH("resultBackGround.png")
 	, PARTICLE_NUMBER(500)
 	, MAX_ALPHA(255)
 	, BACKGROUND_Y_INCREASE(2)
 	, MAX_PARTICLE_INTERVAL(2.0f)
+	, IMAGE_FOLDER_PATH("Data/Image/")
+	, RESULT_UI_PATH("resultUi.png")
+	, RESULT_BACKGROUND_PATH("resultBackGround.png")
 {
 	Initialize();
 }
@@ -57,24 +58,14 @@ void ResultScene::Initialize()
 	fadeManager = new FadeManager();
 
 	//リザルトUI画像の読み込み
-	resultUiImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, RESULT_UI_PATH).c_str());
+	resultUiImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, RESULT_UI_PATH).c_str());
 
-	backGroundImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, RESULT_BACKGROUND_PATH).c_str());
+	backGroundImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, RESULT_BACKGROUND_PATH).c_str());
 
 	clear = Set::GetInstance().GetResult();
 
+	//フォントデータの読み込み
 	fontHandle = CreateFontToHandle("Oranienbaum", 150, 1);
-}
-
-/// <summary>
-/// 画像のパスを入力
-/// </summary>
-/// <param name="folderPath"></param>
-/// <param name="path"></param>
-/// <returns></returns>
-string ResultScene::InputPath(string folderPath, string path)
-{
-	return string(folderPath + path);
 }
 
 /// <summary>

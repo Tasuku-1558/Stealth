@@ -13,13 +13,13 @@ public:
 	Camera();
 	virtual ~Camera();
 
-	void Update(VECTOR playerPosition);			//更新処理
-	void SelectionAndResultCamera();			//ステージセレクション画面とリザルト画面のカメラ
+	void Update(VECTOR playerPosition);		//更新処理
+	void SelectionAndResultCamera();		//ステージセレクション画面とリザルト画面のカメラ
 
 private:
-	Camera(const Camera&);						//コピーコンストラクタ
+	Camera(const Camera&);	//コピーコンストラクタ
 
-	void Initialize();							//初期化処理
+	void Initialize();		//初期化処理
 
 	VECTOR cameraPosition;	//カメラの位置
 	VECTOR cameraOffset;	//プレイヤーからの相対位置

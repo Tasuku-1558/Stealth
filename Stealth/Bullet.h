@@ -46,13 +46,13 @@ private:
 	Player* player;						//プレイヤーのポインタ
 
 	//定数
+	const float	 SCALE;					//カーソル画像の大きさ
+	const float  ANGLE;					//カーソル画像の回転値
+	const float  RADIUS;				//ケーキの半径
 	const string IMAGE_FOLDER_PATH;		//Imageフォルダまでのパス
 	const string CURSOR_PATH;			//カーソル画像のパス
 	const VECTOR SIZE;					//モデルの倍率
 	const VECTOR POSITION;				//モデルの位置
 	const VECTOR ROTATE;				//モデルの回転値
 	const VECTOR INITIAL_WORLD_MOUSE;	//初期のワールドマウス座標
-	const float	 SCALE;					//カーソル画像の大きさ
-	const float  ANGLE;					//カーソル画像の回転値
-	const float  RADIUS;				//ケーキの半径
 };

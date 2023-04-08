@@ -9,7 +9,7 @@
 class FireWorksParticle final : public ParticleBase
 {
 public:
-	FireWorksParticle(const VECTOR particlePosition, unsigned int particleColor);
+	FireWorksParticle(const VECTOR& particlePosition, unsigned int particleColor);
 	virtual ~FireWorksParticle();
 
 	void Update(float deltaTime)override;	//更新処理
@@ -18,7 +18,7 @@ public:
 private:
 	FireWorksParticle(const FireWorksParticle&);	//コピーコンストラクタ
 
-	void Initialize()override;				//初期化処理
+	void Initialize()override;			//初期化処理
 
 	unsigned int color;					//パーティクルの色
 

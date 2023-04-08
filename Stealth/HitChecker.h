@@ -24,7 +24,7 @@ public:
 			   Player* player, 
 			   vector<CakeBullet*>* cakeBullet, 
 			  /* vector<Enemy*>* enemy, */
-			   GoalFlag* goalFlag);					//衝突判定
+			   GoalFlag* goalFlag);				//衝突判定
 
 	void EnemyAndPlayer(Player* player, /*vector<Enemy*>* enemy*/Enemy* enemy);	//エネミーとプレイヤーの当たり判定
 

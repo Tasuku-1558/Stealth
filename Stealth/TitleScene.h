@@ -32,9 +32,6 @@ private:
 	void ReturnScreen();				//画面を遷移する
 	void InputScene(SceneType sceneType);		//シーンを入力
 
-	string InputPath(string folderPath,
-					 string path);		//パスを入力
-
 	//タイトルの状態
 	enum class TitleState
 	{
@@ -42,20 +39,20 @@ private:
 		EXIT,	//ゲームを終了する
 	};
 
-	TitleState titleState;				//タイトルの状態
-	int titleMovie;						//タイトル動画の格納用
-	int titleName;						//タイトル名の画像格納用
-	int startUi;						//ゲームを始める遷移キーのUI格納用
-	int exitUi;							//ゲームを終了する遷移キーのUI格納用
-	int alpha;							//透過度
+	TitleState titleState;		//タイトルの状態
+	int titleMovie;				//タイトル動画の格納用
+	int titleName;				//タイトル名の画像格納用
+	int startUi;				//ゲームを始める遷移キーのUI格納用
+	int exitUi;					//ゲームを終了する遷移キーのUI格納用
+	int alpha;					//透過度
 	int inc;
-	bool sceneChangeGame;				//ゲームシーンに切り替えるか
-	bool sceneChangeEnd;				//エンドシーンに切り替えるか
-	VECTOR spherePosition;				//3D球体の位置
+	bool sceneChangeGame;		//ゲームシーンに切り替えるか
+	bool sceneChangeEnd;		//エンドシーンに切り替えるか
+	VECTOR spherePosition;		//3D球体の位置
 
-	Light* light;						//ライトクラスのポインタ
-	Camera* camera;						//カメラクラスのポインタ
-	FadeManager* fadeManager;			//フェードマネージャークラスのポインタ
+	Light* light;				//ライトクラスのポインタ
+	Camera* camera;				//カメラクラスのポインタ
+	FadeManager* fadeManager;	//フェードマネージャークラスのポインタ
 
 
 	//定数

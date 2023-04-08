@@ -47,9 +47,6 @@ private:
 	void EnemyRotate(float deltaTime);			//エネミーの回転処理
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 
-	string InputPath(string folderPath,			//画像のパスを入力
-					 string imagePath);
-
 	//エネミーの動き
 	enum class EnemyState
 	{
@@ -79,7 +76,7 @@ private:
 
 	VECTOR nextDirection;	//回転したい向き
 	bool rotateFlag;		//回転させるかさせないか
-	float frame;
+	float rotateTime;		//回転時間
 	bool cakeEat;
 
 	//定数

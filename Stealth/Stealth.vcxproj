@@ -184,7 +184,7 @@
     <ClCompile Include="SelectionUi.cpp" />
     <ClCompile Include="Set.cpp" />
     <ClCompile Include="SoundManager.cpp" />
-    <ClCompile Include="StageMap.cpp" />
+    <ClCompile Include="Stage.cpp" />
     <ClCompile Include="StageSelection.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="UiManager.cpp" />
@@ -220,11 +220,10 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="SceneBase.h" />
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="SecondStage.h" />
     <ClInclude Include="SelectionUi.h" />
     <ClInclude Include="Set.h" />
     <ClInclude Include="SoundManager.h" />
-    <ClInclude Include="StageMap.h" />
+    <ClInclude Include="Stage.h" />
     <ClInclude Include="StageSelection.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="UiManager.h" />

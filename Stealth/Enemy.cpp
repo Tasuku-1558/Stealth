@@ -2,6 +2,7 @@
 #include "ModelManager.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "InputManager.h"
 
 using namespace Math3d;		//VECTORの計算に使用
 
@@ -11,15 +12,15 @@ using namespace Math3d;		//VECTORの計算に使用
 /// <param name="number">行動パターンの番号</param>
 /// <param name="enemySpeed">エネミーのスピード</param>
 Enemy::Enemy(int number, float enemySpeed)
-	: cakeCount(0.0f)
+	: enemyReaction(EnemyReaction::NORMAL)
+	, cakeCount(0.0f)
 	, cakeFindFlag(false)
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, MARK_PATH("mark.png")
 	, nextDirection()
 	, rotateFlag(false)
-	, frame(0.0f)
+	, rotateTime(0.0f)
 	, cakeEat(false)
-	, enemyReaction(EnemyReaction::NORMAL)
 {
 	Position(GetList(number));
 
@@ -48,7 +49,7 @@ void Enemy::Initialize()
 	visualModelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::ENEMY_VISUAL));
 
 	//ビックリマーク画像の読み込み
-	markImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
+	markImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, MARK_PATH).c_str());
 
 	speed = changeSpeed;
 
@@ -56,17 +57,6 @@ void Enemy::Initialize()
 	collisionSphere.localCenter = ZERO_VECTOR;
 	collisionSphere.worldCenter = position;
 	collisionSphere.radius = RADIUS;
-}
-
-/// <summary>
-/// 画像のパスを入力
-/// </summary>
-/// <param name="folderPath"></param>
-/// <param name="imagePath"></param>
-/// <returns></returns>
-string Enemy::InputPath(string folderPath, string imagePath)
-{
-	return string(folderPath + imagePath);
 }
 
 /// <summary>
@@ -107,9 +97,6 @@ void Enemy::Update(float deltaTime, Player* player)
 	Move(deltaTime);
 
 	VisualAnglePlayer(player);
-
-	//当たり判定球の移動処理
-	collisionSphere.Move(position);
 }
 
 /// <summary>
@@ -142,6 +129,9 @@ void Enemy::Move(float deltaTime)
 	//視野の位置と向きをセット
 	MV1SetPosition(visualModelHandle, position);
 	MV1SetRotationYUseDir(visualModelHandle, direction, 0.0f);
+
+	//当たり判定球の移動処理
+	collisionSphere.Move(position);
 }
 
 /// <summary>
@@ -206,17 +196,17 @@ void Enemy::EnemyRotate(float deltaTime)
 		}
 	}
 
-	frame += deltaTime;
+	rotateTime += deltaTime;
 
 	//各リアクションによってカウントの時間を変える
-	if (enemyReaction == EnemyReaction::NORMAL && frame > 1.0f ||
-		enemyReaction == EnemyReaction::PLAYER && frame > 2.0f ||
-		enemyReaction == EnemyReaction::CAKE && frame > 6.0f)
+	if (enemyReaction == EnemyReaction::NORMAL && rotateTime > 1.0f ||
+		enemyReaction == EnemyReaction::PLAYER && rotateTime > 2.0f ||
+		enemyReaction == EnemyReaction::CAKE && rotateTime > 6.0f)
 	{
 		//スピードを元に戻す
 		speed = changeSpeed;
 
-		frame = 0.0f;
+		rotateTime = 0.0f;
 
 		enemyState = EnemyState::ARRIVAL;
 	}

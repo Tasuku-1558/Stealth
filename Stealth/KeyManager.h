@@ -19,8 +19,7 @@ private:
 	KeyManager(const KeyManager&);			//コピーコンストラクタ
 	virtual ~KeyManager();
 
-
+	int  keyReleaseCount;         //連続キー入力がないカウント
 	char currentKeyState[256];    //現在のキー押下状態
 	char prevKeyState[256];       //前フレームのキー押下状態
-	int  keyReleaseCount;         //連続キー入力がないカウント
 };

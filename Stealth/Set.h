@@ -10,7 +10,7 @@ public:
 	void SetResult(bool result);
 	void SetStage(int num);
 
-	const int GetStage() { return number; }
+	const int GetStage() { return stageNumber; }
 
 	const bool GetResult() { return resultFlag; }
 
@@ -19,6 +19,6 @@ private:
 	Set(const Set&);		//コピーコンストラクタ
 	virtual ~Set();
 
-	int number;
+	int stageNumber;
 	bool resultFlag;
 };

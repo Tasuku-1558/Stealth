@@ -3,6 +3,7 @@
 #include "ModelManager.h"
 #include "KeyManager.h"
 #include "SoundManager.h"
+#include "InputManager.h"
 
 using namespace Math3d;		//VECTORの計算に使用
 
@@ -51,8 +52,8 @@ void Player::Initialize()
 		pastPosition[i] = POSITION;
 	}
 
-	//画像の読み込み
-	playerFindImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
+	//見つかった画像の読み込み
+	playerFindImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
 
 	position = POSITION;
 	nextPosition = POSITION;
@@ -64,17 +65,6 @@ void Player::Initialize()
 	collisionSphere.localCenter = ZERO_VECTOR;
 	collisionSphere.worldCenter = POSITION;
 	collisionSphere.radius = RADIUS;
-}
-
-/// <summary>
-/// パスの入力
-/// </summary>
-/// <param name="folderPath">画像フォルダーのパス</param>
-/// <param name="path">画像のパス</param>
-/// <returns></returns>
-string Player::InputPath(string folderPath, string path)
-{
-	return string(folderPath + path);
 }
 
 /// <summary>
@@ -101,9 +91,6 @@ void Player::Update(float deltaTime)
 	Move(deltaTime);
 
 	AfterImage();
-
-	//当たり判定球の移動処理
-	collisionSphere.Move(position);
 }
 
 /// <summary>
@@ -168,6 +155,9 @@ void Player::Move(float deltaTime)
 	//モデルの位置と向きを設定
 	MV1SetPosition(modelHandle, position);
 	MV1SetRotationYUseDir(modelHandle, direction, 0.0f);
+
+	//当たり判定球の移動処理
+	collisionSphere.Move(position);
 }
 
 /// <summary>

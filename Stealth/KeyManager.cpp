@@ -7,9 +7,9 @@
 /// コンストラクタ
 /// </summary>
 KeyManager::KeyManager()
-    : currentKeyState()
+    : keyReleaseCount(0)
+    , currentKeyState()
     , prevKeyState()
-    , keyReleaseCount(0)
 {
     //処理なし
 }

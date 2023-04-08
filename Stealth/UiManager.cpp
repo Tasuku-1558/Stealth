@@ -1,6 +1,6 @@
 #include "UiManager.h"
 #include "DxLib.h"
-
+#include "InputManager.h"
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -33,18 +33,15 @@ UiManager::~UiManager()
 /// </summary>
 void UiManager::Initialize()
 {
-	//UI画像読み込み
-	string failePath;
-	string fullPath = failePath = IMAGE_FOLDER_PATH + UI_GRAPHIC_PATH;		//フォルダパス + ファイル名
-	
+	//Ui画像読み込み	
 	for (int i = 0; i < GRAPHIC_AMOUNT; ++i)
 	{
-		fullPath = failePath + std::to_string(i) + IMAGE_FILENAME_EXTENSION;
-		uiHandle[i] = LoadGraph(fullPath.c_str());
+		string uiPath = IMAGE_FOLDER_PATH + UI_GRAPHIC_PATH + to_string(i) + IMAGE_FILENAME_EXTENSION;
+		uiHandle[i] = LoadGraph(uiPath.c_str());
 
 		if (uiHandle[i] < 0)
 		{
-			printfDx("画像読み込みに失敗[%d]\n", i);
+			printfDx("Ui画像読み込みに失敗[%d]\n", i);
 		}
 	}
 }

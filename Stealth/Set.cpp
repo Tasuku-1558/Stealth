@@ -3,7 +3,7 @@
 
 Set::Set()
 	: resultFlag(false)
-	, number(0)
+	, stageNumber(0)
 {
 	//ˆ—‚È‚µ
 }
@@ -24,7 +24,7 @@ void Set::SetResult(bool result)
 	resultFlag = result;
 }
 
-void Set::SetStage(int num)
+void Set::SetStage(int number)
 {
-	number = num;
+	stageNumber = number;
 }

@@ -51,7 +51,7 @@ void HitChecker::Check(int model, Player* player, vector<CakeBullet*>* cakeBulle
 /// ケーキとプレイヤーの当たり判定
 /// </summary>
 /// <param name="player">プレイヤーのポインタ</param>
-/// <param name="cakeBullet"></param>
+/// <param name="cakeBullet">ケーキバレットのポインタ</param>
 void HitChecker::CakeAndPlayer(Player* player, vector<CakeBullet*>* cakeBullet)
 {
 	for (auto itr = cakeBullet->begin(); itr != cakeBullet->end(); ++itr)
@@ -131,7 +131,7 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 	//モデル全体のコリジョン情報を構築
 	MV1SetupCollInfo(model, 0, 8, 8, 8);
 
-	//マップモデルとプレイヤーの当たり判定
+	//ステージモデルとプレイヤーの当たり判定
 	hitPolyDim = MV1CollCheck_Sphere(model, -1, player->GetCollide().worldCenter, player->GetCollide().radius);
 
 	VECTOR moveCandidate = player->GetCollide().worldCenter;	//球中心候補

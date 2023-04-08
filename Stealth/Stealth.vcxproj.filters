@@ -100,7 +100,7 @@
     <ClCompile Include="ResultScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="StageMap.cpp">
+    <ClCompile Include="Stage.cpp">
       <Filter>ソース ファイル\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
@@ -195,9 +195,6 @@
     <ClInclude Include="FadeManager.h">
       <Filter>ソース ファイル\System</Filter>
     </ClInclude>
-    <ClInclude Include="SecondStage.h">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="TitleScene.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
@@ -222,7 +219,7 @@
     <ClInclude Include="PreCompiledHeader.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="StageMap.h">
+    <ClInclude Include="Stage.h">
       <Filter>ソース ファイル\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">

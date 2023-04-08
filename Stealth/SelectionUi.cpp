@@ -1,5 +1,5 @@
 #include "SelectionUi.h"
-
+#include "InputManager.h"
 
 /// <summary>
 /// コンストラクタ
@@ -61,17 +61,16 @@ void SelectionUi::Initialize()
 	MapInput(1, ModelManager::STAGE2, STAGE2_POSITION, STAGE2_SIZE, STAGE2_ROTATE);
 
 	//セレクションUi画像の読み込み
-	stageDescription = LoadGraph(InputPath(IMAGE_FOLDER_PATH, STAGE_DESCRIPTION_PATH).c_str());
+	stageDescription = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, STAGE_DESCRIPTION_PATH).c_str());
 
-	selectionKeyImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_KEY_PATH).c_str());
+	selectionKeyImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, SELECTION_KEY_PATH).c_str());
 
-	selectionUiImage = LoadGraph(InputPath(IMAGE_FOLDER_PATH, SELECTION_TITLE_PATH).c_str());
+	selectionUiImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, SELECTION_TITLE_PATH).c_str());
 
-	operationMethod = LoadGraph(InputPath(IMAGE_FOLDER_PATH, OPERATION_METHOD_PATH).c_str());
+	operationMethod = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, OPERATION_METHOD_PATH).c_str());
 
 	//フォントデータの作成
 	fontHandle = CreateFontToHandle("Oranienbaum", 90, 1);
-	
 }
 
 /// <summary>
@@ -89,17 +88,6 @@ void SelectionUi::MapInput(int number, ModelManager::ModelType modelType, VECTOR
 	MV1SetScale(modelHandle[number], size);
 	MV1SetRotationXYZ(modelHandle[number], rotate);
 	MV1SetPosition(modelHandle[number], position[number]);
-}
-
-/// <summary>
-/// 画像のパスを入力
-/// </summary>
-/// <param name="folderPath"></param>
-/// <param name="path"></param>
-/// <returns></returns>
-std::string SelectionUi::InputPath(std::string folderPath, std::string imagePath)
-{
-	return std::string(folderPath + imagePath);
 }
 
 /// <summary>

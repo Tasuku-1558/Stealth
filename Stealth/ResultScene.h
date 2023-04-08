@@ -16,7 +16,6 @@ using namespace std;
 class ResultScene final : public SceneBase
 {
 public:
-
 	ResultScene();
 	virtual ~ResultScene();
 
@@ -32,9 +31,6 @@ private:
 	void BackGroundMove();					//背景画像の動き
 	void ReturnScreen();					//画面を遷移する
 	void InputScene(SceneType sceneType);	//シーンを入力
-
-	string InputPath(string folderPath,	//画像のパスを入力
-					 string path);
 
 	void EntryFireWorksParticle(FireWorksParticle* newFireWorksParticle);		//花火パーティクルを登録
 	void DeleteFireWorksParticle(FireWorksParticle* deleteFireWorksParticle);	//花火パーティクルを削除
@@ -58,15 +54,15 @@ private:
 	bool clear;
 	bool titleFlag;			//タイトル画面へ遷移するかしないか
 	bool selectionFlag;		//ステージセレクション画面へ遷移するかしないか
-	char gameClear[11];		//ゲームクリアの文字
-	char gameOver[10];		//ゲームオーバーの文字
+	char gameClear[11];		//ゲームクリアの文字格納用
+	char gameOver[10];		//ゲームオーバーの文字格納用
 
 	//定数
-	const string IMAGE_FOLDER_PATH;			//Imageフォルダまでのパス
-	const string RESULT_UI_PATH;			//リザルト画面のUIのパス
-	const string RESULT_BACKGROUND_PATH;	//リザルト画面の背景画像のパス
 	const int    PARTICLE_NUMBER;			//パーティクルの数
 	const int	 MAX_ALPHA;					//最大透過度
 	const int	 BACKGROUND_Y_INCREASE;		//背景の増加量
 	const float  MAX_PARTICLE_INTERVAL;		//パーティクル出現の最大インターバル
+	const string IMAGE_FOLDER_PATH;			//Imageフォルダまでのパス
+	const string RESULT_UI_PATH;			//リザルト画面のUIのパス
+	const string RESULT_BACKGROUND_PATH;	//リザルト画面の背景画像のパス
 };

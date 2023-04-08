@@ -26,17 +26,16 @@ public:
 	const My3dLib::Sphere GetCollide() { return collisionSphere; }	//当たり判定球を返す
 
 private:
-	Player(const Player&);					//コピーコンストラクタ
+	Player(const Player&);			//コピーコンストラクタ
 
-	void Initialize();						//初期化処理
-	void Move(float deltaTime);				//移動処理
-	void Finalize();						//終了処理
-	void KeyInput();						//キー入力処理
-	void AfterImage();						//プレイヤーの残像処理
-	void FoundCount();						//エネミーに見つかった時の初期位置へ戻すカウント
-	void HitMap();							//マップに衝突した
-	string InputPath(string folderPath,		//パスを入力
-					 string path);
+	void Initialize();				//初期化処理
+	void Move(float deltaTime);		//移動処理
+	void Finalize();				//終了処理
+	void KeyInput();				//キー入力処理
+	void AfterImage();				//プレイヤーの残像処理
+	void FoundCount();				//エネミーに見つかった時の初期位置へ戻すカウント
+	void HitMap();					//マップに衝突した
+
 
 	EffectManager* effectManager;	//エフェクトマネージャーのポインタ
 	HitChecker* hitChecker;			//ヒットチェッカーのポインタ

@@ -1,5 +1,7 @@
 #include "Bullet.h"
 #include "ModelManager.h"
+#include "InputManager.h"
+
 
 using namespace Math3d;		//VECTORの計算に使用
 
@@ -13,15 +15,15 @@ Bullet::Bullet(Player* const inPlayer)
 	, mouseY(0)
 	, alive(false)
 	, worldMouse()
+	, SCALE(0.4f)
+	, ANGLE(0.0f)
+	, RADIUS(50.0f)
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, CURSOR_PATH("pointer.png")
 	, SIZE({ 20.0f, 20.0f, 20.0f })
 	, POSITION({ 0.0f, 30.0f, 0.0f })
 	, ROTATE({ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f })
 	, INITIAL_WORLD_MOUSE({ 0.0f,30.0f,0.0f })
-	, SCALE(0.4f)
-	, ANGLE(0.0f)
-	, RADIUS(50.0f)
 {
 	Initialize();
 	player = inPlayer;
@@ -40,15 +42,15 @@ Bullet::~Bullet()
 /// </summary>
 void Bullet::Initialize()
 {
-	//ケーキのモデルの読み込み
+	//ケーキモデルの読み込み
 	modelHandle = ModelManager::GetInstance().GetModelHandle(ModelManager::CAKE);
 
-	//モデルのサイズと回転値を設定
+	//ケーキモデルのサイズと回転値を設定
 	MV1SetScale(modelHandle, SIZE);
 	MV1SetRotationXYZ(modelHandle, ROTATE);
 
-	string failePath = IMAGE_FOLDER_PATH + CURSOR_PATH;
-	cursorImage = LoadGraph(failePath.c_str());
+	//カーソル画像の読み込み
+	cursorImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, CURSOR_PATH).c_str());
 
 	position = POSITION;
 
@@ -124,9 +126,9 @@ void Bullet::BulletAlive()
 /// </summary>
 void Bullet::OnShot()
 {
-	//モデルの位置を設定
 	position = VGet(worldMouse.z, worldMouse.y, worldMouse.x);
 
+	//ケーキの位置を設定
 	MV1SetPosition(modelHandle, position);
 }
 
