@@ -121,7 +121,7 @@ void GameScene::Initialize()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 SceneType GameScene::Update(float deltaTime)
 {
 	if (pUpdate != nullptr)
@@ -135,7 +135,7 @@ SceneType GameScene::Update(float deltaTime)
 /// <summary>
 /// ケーキバレットを登録
 /// </summary>
-/// <param name="newCakeBullet"></param>
+/// <param name="newCakeBullet">登録するケーキバレットのポインタ</param>
 void GameScene::EntryCakeBullet(CakeBullet* newCakeBullet)
 {
 	cakeBullet.emplace_back(newCakeBullet);
@@ -144,7 +144,7 @@ void GameScene::EntryCakeBullet(CakeBullet* newCakeBullet)
 /// <summary>
 /// ケーキバレットの削除
 /// </summary>
-/// <param name="deleteCakeBullet"></param>
+/// <param name="deleteCakeBullet">削除するケーキバレットのポインタ</param>
 void GameScene::DeleteCakeBullet(CakeBullet* deleteCakeBullet)
 {
 	//ケーキのパーティクルオブジェクトから検索して削除

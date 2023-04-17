@@ -98,27 +98,21 @@ void Player::Update(float deltaTime)
 /// </summary>
 void Player::KeyInput()
 {
-	//è„â∫à⁄ìÆ
-	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_W))
+	Key key[] =
 	{
-		inputDirection += UP;
-		inputFlag = true;
-	}
-	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_S))
+		{KEY_INPUT_W,UP},
+		{KEY_INPUT_S,DOWN},
+		{KEY_INPUT_D,RIGHT},
+		{KEY_INPUT_A,LEFT},
+	};
+
+	for (int i = 0; i < KEY_INPUT_PATTERN; i++)
 	{
-		inputDirection += DOWN;
-		inputFlag = true;
-	}
-	//ç∂âEà⁄ìÆ
-	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_D))
-	{
-		inputDirection += RIGHT;
-		inputFlag = true;
-	}
-	if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_A))
-	{
-		inputDirection += LEFT;
-		inputFlag = true;
+		if (KeyManager::GetInstance().CheckPressed(key[i].input))
+		{
+			inputDirection += key[i].dir;
+			inputFlag = true;
+		}
 	}
 }
 

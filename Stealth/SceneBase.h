@@ -3,11 +3,11 @@
 //シーンの種類
 enum class SceneType
 {
-	TITLE,			//タイトル画面
-	SELECTION,		//セレクション画面
-	GAME,			//ゲーム画面
-	RESULT,			//リザルト画面
-	END,			//終了
+	TITLE,		//タイトル画面
+	SELECTION,	//セレクション画面
+	GAME,		//ゲーム画面
+	RESULT,		//リザルト画面
+	END,		//終了
 };
 
 /// <summary>

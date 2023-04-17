@@ -44,13 +44,10 @@ SoundManager& SoundManager::GetInstance()
 void SoundManager::LoadAllSound()
 {
 	//BGMの読み込み
-	string path = SOUND_FOLDER_PATH + BGM_PATH;
-	string fullPath = path;
-
 	for (int i = 0; i < BGM_AMOUNT; ++i)
 	{
-		fullPath = path + to_string(i) + SOUND_FILENAME_EXTENSION;		// + 連番数字 + .拡張子
-		bgmData[i] = LoadSoundMem(fullPath.c_str());
+		string bgmPath = SOUND_FOLDER_PATH + BGM_PATH + to_string(i) + SOUND_FILENAME_EXTENSION;	// + 連番数字 + 拡張子
+		bgmData[i] = LoadSoundMem(bgmPath.c_str());
 
 		if (bgmData[i] < 0)
 		{
@@ -59,13 +56,10 @@ void SoundManager::LoadAllSound()
 	}
 
 	//SEの読み込み
-	path = SOUND_FOLDER_PATH + SE_PATH;
-	fullPath = path;
-
 	for (int i = 0; i < SE_AMOUNT; ++i)
 	{
-		fullPath = path + to_string(i) + SOUND_FILENAME_EXTENSION;		// + 連番数字 + .拡張子
-		seData[i] = LoadSoundMem(fullPath.c_str());
+		string sePath = SOUND_FOLDER_PATH + SE_PATH + to_string(i) + SOUND_FILENAME_EXTENSION;	// + 連番数字 + 拡張子
+		seData[i] = LoadSoundMem(sePath.c_str());
 
 		if (seData[i] < 0)
 		{

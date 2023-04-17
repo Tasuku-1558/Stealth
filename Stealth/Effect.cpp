@@ -36,7 +36,7 @@ void Effect::Update(VECTOR position)
 		//エフェクトを再生
 		playingEffectHandle = PlayEffekseer3DEffect(effectHandle);
 
-		effectTime = 0;
+		effectTime = INITIAL_EFFECT_TIME;
 	}
 
 	//再生中のエフェクトを移動

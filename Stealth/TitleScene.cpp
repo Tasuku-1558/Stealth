@@ -23,6 +23,7 @@ TitleScene::TitleScene()
 	, sceneChangeEnd(false)
 	, spherePosition({ -520.0f, 1200.0f, 0.0f })
 	, MAX_ALPHA(255)
+	, INC_SPEED(-1)
 	, PLAY_POSITION(0)
 	, START_SPHERE_POS_Z(-220.0f)
 	, EXIT_SPHERE_POS_Z(-350.0f)
@@ -188,7 +189,7 @@ void TitleScene::Blink()
 	if (alpha > MAX_ALPHA && inc > 0 ||
 		alpha < 0 && inc < 0)
 	{
-		inc *= -1;
+		inc *= INC_SPEED;
 	}
 
 	alpha += inc;

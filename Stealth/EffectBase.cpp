@@ -9,6 +9,7 @@ EffectBase::EffectBase()
 	, playingEffectHandle(0)
 	, effectTime(0)
 	, PLAY_EFFECT_TIME(1)
+	, INITIAL_EFFECT_TIME(0)
 {
 	//ˆ—‚È‚µ
 }

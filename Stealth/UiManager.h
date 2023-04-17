@@ -46,12 +46,12 @@ private:
 	void PlayerHpDraw(int playerCount);				//プレイヤーHPUI
 	void OperationMethodDraw(bool hitUi);			//操作方法説明UI
 
-	int stageCount;									//ステージ名称表示カウント
-	int uiHandle[GRAPHIC_AMOUNT];					//画像ハンドル
+	int uiHandle[GRAPHIC_AMOUNT];					//画像ハンドル格納用
 	int alpha;										//透過度
 	int inc;
 
 	//定数
+	const int	 MAX_ALPHA;					//最大透過度
 	const string IMAGE_FOLDER_PATH;			//画像格納フォルダ
 	const string UI_GRAPHIC_PATH;			//UI画像
 	const string IMAGE_FILENAME_EXTENSION;	//画像拡張子

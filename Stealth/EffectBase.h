@@ -25,6 +25,7 @@ protected:
 
 	//定数
 	const int PLAY_EFFECT_TIME;		//エフェクト再生時間
+	const int INITIAL_EFFECT_TIME;	//初期エフェクト再生時間
 
 private:
 	EffectBase(const EffectBase&);	//コピーコンストラクタ

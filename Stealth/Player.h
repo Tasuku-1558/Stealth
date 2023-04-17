@@ -36,10 +36,15 @@ private:
 	void FoundCount();				//エネミーに見つかった時の初期位置へ戻すカウント
 	void HitMap();					//マップに衝突した
 
+	//キー入力
+	struct Key
+	{
+		int input;	//キー操作
+		VECTOR dir;	//方向
+	};
 
 	EffectManager* effectManager;	//エフェクトマネージャーのポインタ
 	HitChecker* hitChecker;			//ヒットチェッカーのポインタ
-
 
 	My3dLib::Sphere collisionSphere;	//当たり判定球
 };

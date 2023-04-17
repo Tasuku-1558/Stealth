@@ -45,7 +45,7 @@ private:
 	int startUi;				//ゲームを始める遷移キーのUI格納用
 	int exitUi;					//ゲームを終了する遷移キーのUI格納用
 	int alpha;					//透過度
-	int inc;
+	int inc;					//透過スピ―ド
 	bool sceneChangeGame;		//ゲームシーンに切り替えるか
 	bool sceneChangeEnd;		//エンドシーンに切り替えるか
 	VECTOR spherePosition;		//3D球体の位置
@@ -57,6 +57,7 @@ private:
 
 	//定数
 	const int	 MAX_ALPHA;			//最大透過度
+	const int	 INC_SPEED;			//透過スピード
 	const int	 PLAY_POSITION;		//タイトル動画の再生位置
 	const float  START_SPHERE_POS_Z;//スタート状態の球のZ座標
 	const float  EXIT_SPHERE_POS_Z;	//終了状態の球のZ座標

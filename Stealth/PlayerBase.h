@@ -33,6 +33,7 @@ protected:
 	const int	  FIND_IMAGE_X;				//見つかった画像のX座標
 	const int	  FIND_IMAGE_Y;				//見つかった画像のY座標
 	const int	  AFTER_IMAGE_NUMBER;		//プレイヤーの残像枚数
+	const int	  KEY_INPUT_PATTERN;		//キー入力パターン
 	const float	  SPEED;					//移動速度
 	const float	  OPACITY;					//不透明度
 	const float	  RADIUS;					//半径

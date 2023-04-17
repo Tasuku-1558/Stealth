@@ -1,14 +1,15 @@
 #include "UiManager.h"
 #include "DxLib.h"
-#include "InputManager.h"
+
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
 UiManager::UiManager()
 	: uiHandle()
-	, stageCount(0)
 	, alpha(255)
 	, inc(-3)
+	, MAX_ALPHA(255)
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, UI_GRAPHIC_PATH("ui")
 	, IMAGE_FILENAME_EXTENSION(".png")
@@ -21,11 +22,7 @@ UiManager::UiManager()
 /// </summary>
 UiManager::~UiManager()
 {
-	//終了処理が呼ばれてなければ
-	if (uiHandle[0] != NULL)
-	{
-		Finalize();
-	}
+	Finalize();
 }
 
 /// <summary>
@@ -72,7 +69,6 @@ void UiManager::Draw(GameScene::GameState gameState, int playerCount, bool hitUi
 		break;
 
 	case GameScene::GameState::GAME:
-
 		StartGameDraw(STAGE1);
 		PlayerHpDraw(playerCount);
 		OperationMethodDraw(hitUi);
@@ -90,31 +86,21 @@ void UiManager::Draw(GameScene::GameState gameState, int playerCount, bool hitUi
 /// <summary>
 /// ゲーム開始UI
 /// </summary>
-/// <param name="graphic"></param>
+/// <param name="graphic">Ui画像の種類</param>
 void UiManager::StartGameDraw(Graphic graphic)
 {
-	stageCount++;
-
-	if (stageCount < 190)
+	if (alpha > MAX_ALPHA && inc > 0)
 	{
-		if (alpha > 255 && inc > 0)
-		{
-			inc *= -1;
-		}
-
-		alpha += inc;
+		inc *= -1;
 	}
 
-	if (stageCount < 200)
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+	alpha += inc;
 
-		DrawGraph(0, -100, uiHandle[graphic], TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
+	DrawGraph(0, -100, uiHandle[graphic], TRUE);
 
-		stageCount = 0;
-	}
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
 }
 
 /// <summary>
