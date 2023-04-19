@@ -12,13 +12,9 @@ SelectionUi::SelectionUi()
 	, operationMethod(0)
 	, modelHandle()
 	, position()
-	, IMAGE_FOLDER_PATH("Data/Image/")
-	, SELECTION_KEY_PATH("selection_key.png")
-	, SELECTION_TITLE_PATH("selection_Ui.png")
-	, STAGE_DESCRIPTION_PATH("stage_description.png")
-	, OPERATION_METHOD_PATH("operation_method.png")
-	, STAGE_NUMBER(5)
-
+	, SELECTION_FONT_SIZE(90)
+	, FONT_THICK(1)
+	, STAGE_NUMBER(2)
 	, STAGE1_POSITION({ 500.0f, 700.0f, 250.0f })
 	, STAGE1_SIZE({ 14.0f, 14.0f, 14.0f })
 	, STAGE1_ROTATE({ 0.0f, 180.0f * DX_PI_F / 180.0f, 15.0f * DX_PI_F / 180.0f })
@@ -27,17 +23,11 @@ SelectionUi::SelectionUi()
 	, STAGE2_SIZE({ 11.0f, 11.0f, 11.0f })
 	, STAGE2_ROTATE({ 80.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f })
 
-	, STAGE3_POSITION({ 500.0f, 800.0f, 300.0f })
-	, STAGE3_SIZE({ 10.0f, 10.0f, 10.0f })
-	, STAGE3_ROTATE({ 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f })
-
-	, STAGE4_POSITION({ 300.0f, 500.0f, 500.0f })
-	, STAGE4_SIZE({ 11.0f, 11.0f, 11.0f })
-	, STAGE4_ROTATE({ 0.0f, 180.0f * DX_PI_F / 180.0f, 5.0f * DX_PI_F / 180.0f })
-
-	, STAGE5_POSITION({ -200.0f, 800.0f, 600.0f })
-	, STAGE5_SIZE({ 13.0f, 13.0f, 13.0f })
-	, STAGE5_ROTATE({ 0.0f, 180.0f * DX_PI_F / 180.0f, 5.0f * DX_PI_F / 180.0f })
+	, IMAGE_FOLDER_PATH("Data/Image/")
+	, SELECTION_KEY_PATH("selection_key.png")
+	, SELECTION_TITLE_PATH("selection_Ui.png")
+	, STAGE_DESCRIPTION_PATH("stage_description.png")
+	, OPERATION_METHOD_PATH("operation_method.png")
 {
 	Initialize();
 }
@@ -70,7 +60,7 @@ void SelectionUi::Initialize()
 	operationMethod = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, OPERATION_METHOD_PATH).c_str());
 
 	//フォントデータの作成
-	fontHandle = CreateFontToHandle("Oranienbaum", 90, 1);
+	fontHandle = CreateFontToHandle("Oranienbaum", SELECTION_FONT_SIZE, 1);
 }
 
 /// <summary>

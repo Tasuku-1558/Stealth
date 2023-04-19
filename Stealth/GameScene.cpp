@@ -28,16 +28,19 @@ GameScene::GameScene()
 	: SceneBase(SceneType::GAME)
 	, gameState(GameState::START)
 	, pUpdate(nullptr)
-	, fontHandle(0)
+	, gameFontHandle(0)
 	, stageNo(0)
 	, frame(0.0f)
 	, particleFlag(false)
 	, particleInterval(0.0f)
 	, clear(true)
+	, GAME_FONT_SIZE(50)
+	, FONT_THICK(1)
 	, PARTICLE_NUMBER(500)
 	, PLAYER_HP(2)
 	, GAME_START_COUNT(1.3f)
 	, MAX_PARTICLE_INTERVAL(5.0f)
+	, PARTICLE_INTERVAL(0.0f)
 {
 	GameData::doc.ParseStream(GameData::isw);
 
@@ -49,7 +52,7 @@ GameScene::GameScene()
 /// </summary>
 GameScene::~GameScene()
 {
-	DeleteFontToHandle(fontHandle);
+	DeleteFontToHandle(gameFontHandle);
 
 	for (auto CakeBulletPtr : cakeBullet)
 	{
@@ -83,7 +86,7 @@ void GameScene::Initialize()
 			{ 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }, { -780.0f, -100.0f, 2400.0f });
 
 		//エネミーに行動パターンのナンバーとスピードを設定
-		enemy = new Enemy(0, GameData::doc["EnemySpeed"]["stage1"].GetFloat());
+		enemy = new Enemy(GameData::doc["EnemyMovePattern"]["stage1"].GetInt(), GameData::doc["EnemySpeed"]["stage1"].GetFloat());
 
 		//ゴールフラグの初期位置を設定
 		goalFlag = new GoalFlag({ GameData::doc["GoalPosition"]["x"].GetFloat(),
@@ -97,7 +100,7 @@ void GameScene::Initialize()
 			{ 0.0f, 0.0f, 0.0f }, { -7000.0f, -100.0f, -2900.0f });
 
 		//エネミーに行動パターンのナンバーとスピードを設定
-		enemy = new Enemy(1, GameData::doc["EnemySpeed"]["stage1"].GetFloat());
+		enemy = new Enemy(GameData::doc["EnemyMovePattern"]["stage2"].GetInt(), GameData::doc["EnemySpeed"]["stage1"].GetFloat());
 
 		//ゴールフラグの初期位置を設定
 		goalFlag = new GoalFlag({ GameData::doc["GoalPosition"]["x"].GetFloat(),
@@ -113,7 +116,7 @@ void GameScene::Initialize()
 	CakeBulletPop();
 
 	//ゲームフォントの読み込み
-	fontHandle = CreateFontToHandle("Oranienbaum", 50, 1);
+	gameFontHandle = CreateFontToHandle("Oranienbaum", GAME_FONT_SIZE, FONT_THICK);
 
 	pUpdate = &GameScene::UpdateStart;
 }
@@ -130,6 +133,8 @@ SceneType GameScene::Update(float deltaTime)
 
 		return nowSceneType;
 	}
+
+	return nowSceneType;
 }
 
 /// <summary>
@@ -180,7 +185,7 @@ void GameScene::CakeBulletPop()
 /// <summary>
 /// ケーキのパーティクルを登録
 /// </summary>
-/// <param name="newCakeParticle"></param>
+/// <param name="newCakeParticle">登録するケーキパーティクルのポインタ</param>
 void GameScene::EntryCakeParticle(CakeParticle* newCakeParticle)
 {
 	cakeParticle.emplace_back(newCakeParticle);
@@ -189,7 +194,7 @@ void GameScene::EntryCakeParticle(CakeParticle* newCakeParticle)
 /// <summary>
 /// ケーキのパーティクルを削除
 /// </summary>
-/// <param name="deleteCakeParticle"></param>
+/// <param name="deleteCakeParticle">削除するケーキパーティクルのポインタ</param>
 void GameScene::DeleteCakeParticle(CakeParticle* deleteCakeParticle)
 {
 	//ケーキのパーティクルオブジェクトから検索して削除
@@ -268,7 +273,7 @@ void GameScene::ChangeScreen()
 /// <summary>
 /// ゲーム開始前
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void GameScene::UpdateStart(float deltaTime)
 {
 	backGround->Update();
@@ -292,7 +297,7 @@ void GameScene::UpdateStart(float deltaTime)
 /// <summary>
 /// ゲーム中
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void GameScene::UpdateGame(float deltaTime)
 {
 	backGround->Update();
@@ -336,7 +341,7 @@ void GameScene::UpdateGame(float deltaTime)
 		if (particleInterval > MAX_PARTICLE_INTERVAL)
 		{
 			particleFlag = false;
-			particleInterval = 0.0f;
+			particleInterval = PARTICLE_INTERVAL;
 		}
 	}
 	
@@ -363,7 +368,7 @@ void GameScene::UpdateGame(float deltaTime)
 /// <summary>
 /// ゴール
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void GameScene::UpdateGoal(float deltaTime)
 {
 	InputScene(clear);
@@ -372,7 +377,7 @@ void GameScene::UpdateGoal(float deltaTime)
 /// <summary>
 /// ゲームオーバー
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void GameScene::UpdateOver(float deltaTime)
 {
 	InputScene(!clear);
@@ -417,10 +422,9 @@ void GameScene::Draw()
 
 	//デバック用
 #ifdef DEBUG
-	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), fontHandle, "X : %.0f", player->GetPosition().x);
-	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), fontHandle, "Z : %.0f", player->GetPosition().z);
-	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), fontHandle, "PlayerCount : %d", player->FindCount());
-	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), fontHandle, "ParticleSize : %d", cakeParticle.size());
-	DrawFormatStringToHandle(100, 600, GetColor(255, 0, 0), fontHandle, "stage : %d", stageNo);
+	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), gameFontHandle, "X : %.0f", player->GetPosition().x);
+	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), gameFontHandle, "Z : %.0f", player->GetPosition().z);
+	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), gameFontHandle, "PlayerCount : %d", player->FindCount());
+	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), gameFontHandle, "ParticleSize : %d", cakeParticle.size());
 #endif // DEBUG
 }

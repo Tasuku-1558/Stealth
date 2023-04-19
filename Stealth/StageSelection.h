@@ -16,8 +16,8 @@ public:
 	StageSelection();
 	virtual ~StageSelection();
 
-	SceneType Update(float deltaTime)override;				//更新処理
-	void Draw()override;									//描画処理
+	SceneType Update(float deltaTime)override;			//更新処理
+	void Draw()override;								//描画処理
 
  	const int GetStage() { return stageNo; }
 
@@ -34,18 +34,20 @@ private:
 	SelectionUi* selectionUi;
 	FadeManager* fadeManager;
 
-	int fontHandle;									//ゲームフォント
-	int stageMax;									//最大ステージ数
-	int stageNo;									//ステージナンバー
-	int changeTimeCount;							//文字点滅カウント
-	float frame;									//フレーム数
-	float pushCount;								//ステージ切り替えカウント
-	bool changeScene;								//シーンを遷移させるか
+	int fontHandle;							//ゲームフォント
+	int stageNo;							//ステージナンバー
+	int changeTimeCount;					//文字点滅カウント
+	float frame;							//フレーム数
+	float pushCount;						//ステージ切り替えカウント
+	bool changeScene;						//シーンを切り替える
+	
 
 	//定数
-	const int	STAGE_NUMBER;						//ステージの数
-	const int   MAX_TIME;							//マックスステージ遷移カウント
-	const int   FIRST_STAGE_NUMBER;					//最初に表示されるステージ
-	const float PUSH_INTERVAL;						//切り替えカウントのインターバル
+	const int   MAX_STAGE;					//最大ステージ数
+	const int   ADD_STAGE_NUMBER;			//ステージを切り替える数
+	const int	SELECTION_FONT_SIZE;		//ゲームフォントのサイズ
+	const int	FONT_THICK;					//フォントの太さ
+	const float PUSH_INTERVAL;				//切り替えカウントのインターバル
+	const float FADE_START_FRAME;			//フェード開始フレーム
 
 };

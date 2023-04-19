@@ -36,15 +36,12 @@ private:
 	int selectionUiImage;		//ステージセレクションからタイトルへ遷移のUI画像
 	int stageDescription;		//ステージの説明画像ハンドル
 	int operationMethod;		//操作方法説明画像のハンドル
-	int modelHandle[5];			//マップモデルハンドル
-	VECTOR position[5];			//マップモデルの位置
+	int modelHandle[2];			//マップモデルハンドル
+	VECTOR position[2];			//マップモデルの位置
 
 	//定数
-	const string IMAGE_FOLDER_PATH;			//Imageフォルダまでのパス
-	const string SELECTION_KEY_PATH;		//ステージセレクションUI画像のパス
-	const string SELECTION_TITLE_PATH;		//ステージセレクションからタイトルへ遷移のUI画像
-	const string STAGE_DESCRIPTION_PATH;	//ステージの説明画像のパス
-	const string OPERATION_METHOD_PATH;		//操作方法説明画像のパス
+	const int	 SELECTION_FONT_SIZE;		//ゲームフォントのサイズ
+	const int	 FONT_THICK;				//フォントの太さ
 	const int	 STAGE_NUMBER;				//ステージ数
 
 	const VECTOR STAGE1_POSITION;			//ステージ1モデルの位置
@@ -55,16 +52,9 @@ private:
 	const VECTOR STAGE2_SIZE;				//ステージ2モデルの倍率
 	const VECTOR STAGE2_ROTATE;				//ステージ2モデルの回転値
 
-	const VECTOR STAGE3_POSITION;			//ステージ3モデルの位置
-	const VECTOR STAGE3_SIZE;				//ステージ3モデルの倍率
-	const VECTOR STAGE3_ROTATE;				//ステージ3モデルの回転値
-
-	const VECTOR STAGE4_POSITION;			//ステージ4モデルの位置
-	const VECTOR STAGE4_SIZE;				//ステージ4モデルの倍率
-	const VECTOR STAGE4_ROTATE;				//ステージ4モデルの回転値
-
-	const VECTOR STAGE5_POSITION;			//ステージ5モデルの位置
-	const VECTOR STAGE5_SIZE;				//ステージ5モデルの倍率
-	const VECTOR STAGE5_ROTATE;				//ステージ5モデルの回転値
-
+	const string IMAGE_FOLDER_PATH;			//Imageフォルダまでのパス
+	const string SELECTION_KEY_PATH;		//ステージセレクションUI画像のパス
+	const string SELECTION_TITLE_PATH;		//ステージセレクションからタイトルへ遷移のUI画像
+	const string STAGE_DESCRIPTION_PATH;	//ステージの説明画像のパス
+	const string OPERATION_METHOD_PATH;		//操作方法説明画像のパス
 };

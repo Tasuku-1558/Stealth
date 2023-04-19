@@ -13,8 +13,8 @@ namespace My3dLib
 
 		void Move(const VECTOR& position);	//球体のワールド座標を移動する
 
+		float  radius;      //球体の半径
 		VECTOR localCenter; //球体のローカル中心座標
 		VECTOR worldCenter; //球体のワールド中心座標
-		float  radius;      //球体の半径
 	};
 }

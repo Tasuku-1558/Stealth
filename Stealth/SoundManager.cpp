@@ -31,7 +31,7 @@ SoundManager::~SoundManager()
 /// <summary>
 /// ƒAƒhƒŒƒX‚ğ•Ô‚·
 /// </summary>
-/// <returns></returns>
+/// <returns>soundManager‚ğ•Ô‚·</returns>
 SoundManager& SoundManager::GetInstance()
 {
 	static SoundManager soundManager;

@@ -37,15 +37,15 @@ private:
 	ModelManager(const ModelManager&);			//コピーコンストラクタ
 	virtual ~ModelManager();
 
-	void LoadAllModel();						//全てのモデルの読み込み
-	void DeleteAllModel();						//全てのモデルの削除
+	void LoadAllModel();		//全てのモデルの読み込み
+	void DeleteAllModel();		//全てのモデルの削除
 
 	struct Model
 	{
 		string modelPath;	//モデルのパス
 	};
 
-	int modelHandle[MODEL_AMOUNT];				//モデルハンドル
+	int modelHandle[MODEL_AMOUNT];	//モデルハンドル
 
 	//定数
 	const string MODEL_FOLDER_PATH;	//Modelフォルダまでのパス

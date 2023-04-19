@@ -47,7 +47,7 @@ void Player::Initialize()
 		MV1SetOpacityRate(afterImageModel[i], OPACITY);
 
 		//モデルのエミッシブカラーを変更
-		MV1SetMaterialEmiColor(afterImageModel[i], 0, AFTER_IMAGE_COLOR);
+		MV1SetMaterialEmiColor(afterImageModel[i], MATERIAL_INDEX, AFTER_IMAGE_COLOR);
 
 		pastPosition[i] = POSITION;
 	}
@@ -85,7 +85,7 @@ void Player::Finalize()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void Player::Update(float deltaTime)
 {
 	Move(deltaTime);
@@ -100,10 +100,10 @@ void Player::KeyInput()
 {
 	Key key[] =
 	{
-		{KEY_INPUT_W,UP},
-		{KEY_INPUT_S,DOWN},
-		{KEY_INPUT_D,RIGHT},
-		{KEY_INPUT_A,LEFT},
+		{KEY_INPUT_W, UP},
+		{KEY_INPUT_S, DOWN},
+		{KEY_INPUT_D, RIGHT},
+		{KEY_INPUT_A, LEFT},
 	};
 
 	for (int i = 0; i < KEY_INPUT_PATTERN; i++)
@@ -119,7 +119,7 @@ void Player::KeyInput()
 /// <summary>
 /// 移動処理
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void Player::Move(float deltaTime)
 {
 	//入力方向を初期化する
@@ -131,7 +131,7 @@ void Player::Move(float deltaTime)
 	if (inputFlag)
 	{
 		//左右・上下同時押しなどで入力ベクトルが0の時は移動できない
-		if (VSize(inputDirection) < 1.0f)
+		if (VSize(inputDirection) < MAX_INPUT_DIRECTION)
 		{
 			return;
 		}
@@ -203,13 +203,13 @@ void Player::FoundEnemy(float deltaTime, bool spotted)
 	if (spotted)
 	{
 		//プレイヤーの動きを止める
-		speed = 0.0f;
+		speed = STOP_SPEED;
 
 		//エネミーに見つかった時の画像を表示
 		findImageFlag = true;
 
 		//初期位置に戻すカウントを開始する
-		initialCount += deltaTime;
+		initialTime += deltaTime;
 
 		//一度だけサウンドを流す
 		if (!spottedSeFlag)
@@ -230,7 +230,7 @@ void Player::FoundEnemy(float deltaTime, bool spotted)
 void Player::FoundCount()
 {
 	//初期化カウントが0.8秒経過したら
-	if (initialCount > MAX_INITIAL_TIME)
+	if (initialTime > MAX_INITIAL_TIME)
 	{
 		//位置と向きを初期位置に
 		//スピードを元に戻す
@@ -247,7 +247,7 @@ void Player::FoundCount()
 
 		speed = SPEED;
 
-		initialCount = 0.0f;
+		initialTime = INITIAL_TIME;
 
 		//エネミーに見つかった回数を1プラスする
 		playerFindCount++;

@@ -40,7 +40,7 @@ void CakeParticle::Initialize()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void CakeParticle::Update(float deltaTime)
 {
 	//パーティクルの半径を調整する
@@ -58,7 +58,7 @@ void CakeParticle::Update(float deltaTime)
 	{
 		endFlag = true;
 
-		particlePopCount = 0.0f;
+		particlePopCount = INITIAL_PARTICLE_POP_COUNT;
 	}
 }
 

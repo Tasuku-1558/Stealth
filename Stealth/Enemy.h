@@ -26,9 +26,9 @@ public:
 	void VisualAngleCake(Bullet* bullet, float deltaTime);	//エネミーの視野にケーキが入った場合
 	void HitPlayer();										//プレイヤーと衝突した
 
-	const float GetCollideRadius() { return collisionSphere.radius; }		//当たり判定球の半径を返す
-	const bool Spotted() { return playerSpotted; }			//プレイヤーを見つけたかどうかを返す
-	const bool CakeFlag() { return cakeFlag; }				//ケーキを見つけたかどうかを返す
+	const float GetCollideRadius() { return collisionSphere.radius; }	//当たり判定球の半径を返す
+	const bool Spotted() { return playerSpotted; }						//プレイヤーを見つけたかどうかを返す
+	const bool CakeFlag() { return cakeFlag; }							//ケーキを見つけたかどうかを返す
 	const bool CakeEatFlag() { return cakeEat; }
 
 private:
@@ -50,34 +50,32 @@ private:
 	//エネミーの動き
 	enum class EnemyState
 	{
-		CRAWL,			//巡回中
-		ARRIVAL,		//目的地に到着
-		ROTATION,		//方向転換
+		CRAWL,		//巡回中
+		ARRIVAL,	//目的地に到着
+		ROTATION,	//方向転換
 	};
 
 	//オブジェクトごとのエネミーの反応
 	enum class EnemyReaction
 	{
-		NORMAL,			//見つけていない
-		PLAYER,			//プレイヤー
-		CAKE,			//ケーキ
+		NORMAL,		//見つけていない
+		PLAYER,		//プレイヤー
+		CAKE,		//ケーキ
 	};
 
-	EnemyState enemyState;						//エネミーの動き
-	EnemyReaction enemyReaction;				//オブジェクトごとのエネミーの反応
+	EnemyState enemyState;				//エネミーの動き
+	EnemyReaction enemyReaction;		//オブジェクトごとのエネミーの反応
 
-	My3dLib::Sphere collisionSphere;			//当たり判定球
+	My3dLib::Sphere collisionSphere;	//当たり判定球
 
 	vector<VECTOR>::iterator itr;
 	vector<VECTOR> pointList;
 
 	float cakeCount;		//エネミーのケーキの反応カウント
 	bool cakeFindFlag;		//エネミーがケーキを見つけたかどうか
-
-	VECTOR nextDirection;	//回転したい向き
 	bool rotateFlag;		//回転させるかさせないか
-	float rotateTime;		//回転時間
 	bool cakeEat;
+	VECTOR nextDirection;	//回転したい向き
 
 	//定数
 	const string IMAGE_FOLDER_PATH;	//Imageフォルダまでのパス

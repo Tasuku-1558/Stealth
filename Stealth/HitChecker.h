@@ -42,15 +42,19 @@ private:
 	void FlagAndPlayer(GoalFlag* goalFlag, Player* player);		//ゴールオブジェクトとプレイヤーの当たり判定
 
 
+	float moveLengh;		//移動量
 	bool uiHit;				//UI画像を描画するかどうか
 	bool flagHit;			//ゴールオブジェクトに衝突したかどうか
 	bool mapHit;			//マップモデルに衝突したかどうか
 	VECTOR uiPosition;		//UI画像の位置
 	VECTOR pushBack;		//マップに衝突した時の押し戻し量
+	VECTOR moveVec;			//移動ベクトル
+	VECTOR planeNormal;		//ポリゴン平面法線
 
 	MV1_COLL_RESULT_POLY_DIM hitPolyDim;
 
 	//定数
+	const float SCALE;			//スケーリング値
 	const VECTOR UI_POSITION;	//UI画像の位置
 
 };

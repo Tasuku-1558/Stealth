@@ -127,22 +127,22 @@ namespace Math3d
 	/// <summary>
 	/// nowVecからnextVecに向かってdegreeVerociyの速度でY回転する
 	/// </summary>
-	/// <param name="nowVec"></param>
-	/// <param name="nextVec"></param>
-	/// <param name="degreeVerocity"></param>
-	/// <returns></returns>
+	/// <param name="nowVec">現在のベクトル</param>
+	/// <param name="nextVec">未来のベクトル</param>
+	/// <param name="degreeVerocity">度数速度</param>
+	/// <returns>Y軸回転ベクトルを返す</returns>
 	VECTOR RotateForAimVecYAxis(const VECTOR& nowVec, const VECTOR& nextVec, float degreeVerocity)
 	{
 		//角速度（度数）をラジアン角に変換、右回りか左回りかを調べる
-		float rotRadian = (DX_PI_F * degreeVerocity / 180.0f);
-		rotRadian *= CalcRotationDirectionYAxis(nowVec, nextVec);
+		float rotateRadian = (DX_PI_F * degreeVerocity / 180.0f);
+		rotateRadian *= CalcRotationDirectionYAxis(nowVec, nextVec);
 
-		//Y軸回転行列を作成する
-		MATRIX yrotMat = MGetRotY(rotRadian);
+		//Y軸回転行列を作成
+		MATRIX yRotateMat = MGetRotY(rotateRadian);
 
-		//Y軸回転する
-		VECTOR rotVec = VTransform(nowVec, yrotMat);
+		//Y軸回転
+		VECTOR rotateVec = VTransform(nowVec, yRotateMat);
 
-		return rotVec;
+		return rotateVec;
 	}
 }

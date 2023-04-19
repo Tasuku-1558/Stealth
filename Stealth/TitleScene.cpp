@@ -25,6 +25,8 @@ TitleScene::TitleScene()
 	, MAX_ALPHA(255)
 	, INC_SPEED(-1)
 	, PLAY_POSITION(0)
+	, SPHERE_DIFCOLOR(GetColor(255, 0, 0))
+	, SPHERE_SPCCOLOR(GetColor(255, 255, 255))
 	, START_SPHERE_POS_Z(-220.0f)
 	, EXIT_SPHERE_POS_Z(-350.0f)
 	, SPHERE_RADIUS(20.0f)
@@ -65,7 +67,7 @@ void TitleScene::Initialize()
 	//動画データの読み込み
 	titleMovie = LoadGraph(Input::InputPath(VIDEO_FOLDER_PATH, PLAY_VIDEO_PATH).c_str());
 
-	//タイトルUIの読み込み
+	//タイトルUi画像の読み込み
 	titleName = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, TITLENAME_PATH).c_str());
 
 	startUi = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, START_UI_PATH).c_str());
@@ -79,7 +81,7 @@ void TitleScene::Initialize()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 SceneType TitleScene::Update(float deltaTime)
 {
 	//デモ動画を再生中
@@ -166,7 +168,7 @@ void TitleScene::ReturnScreen()
 /// <summary>
 /// シーンを入力
 /// </summary>
-/// <param name="sceneType"></param>
+/// <param name="sceneType">シーンの種類</param>
 void TitleScene::InputScene(SceneType sceneType)
 {
 	fadeManager->FadeMove();
@@ -231,7 +233,7 @@ void TitleScene::Draw()
 	Blink();
 
 	//3D球体の描画
-	DrawSphere3D(spherePosition, SPHERE_RADIUS, COLOR_BIT, GetColor(255, 0, 0), GetColor(255, 255, 255), TRUE);
+	DrawSphere3D(spherePosition, SPHERE_RADIUS, COLOR_BIT, SPHERE_DIFCOLOR, SPHERE_SPCCOLOR, TRUE);
 
 	fadeManager->Draw();
 }

@@ -12,12 +12,16 @@ using namespace Math3d;		//VECTORの計算に使用
 /// コンストラクタ
 /// </summary>
 HitChecker::HitChecker()
-	: hitPolyDim()
-	, uiPosition()
+	: moveLengh(0.0f)
 	, uiHit(false)
-	, pushBack()
 	, mapHit(false)
 	, flagHit(false)
+	, uiPosition()
+	, pushBack()
+	, moveVec()
+	, planeNormal()
+	, hitPolyDim()
+	, SCALE(10.0f)
 	, UI_POSITION({ 0.0f, 30.0f, 800.0f })
 {
 	uiPosition = UI_POSITION;
@@ -135,10 +139,7 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 	hitPolyDim = MV1CollCheck_Sphere(model, -1, player->GetCollide().worldCenter, player->GetCollide().radius);
 
 	VECTOR moveCandidate = player->GetCollide().worldCenter;	//球中心候補
-	VECTOR moveVec = VGet(0.0f, 0.0f, 0.0f);					//移動ベクトル
-	VECTOR planeNormal = VGet(0.0f, 0.0f, 0.0f);				//ポリゴン平面法線
 	VECTOR newCenter = player->GetCollide().worldCenter;		//移動候補
-	float  moveLengh = 0.0f;									//移動量
 
 	//プレイヤーがマップに当たったかどうか
 	if (hitPolyDim.HitNum)
@@ -158,14 +159,14 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 
 			//プレイヤー中心に最も近いポリゴン平面の点を求める
 			VECTOR tmp = moveCandidate - hitPolyDim.Dim[i].Position[0];
-			float  dot = VDot(planeNormal, tmp);
+			float dot = VDot(planeNormal, tmp);
 
 			//衝突点
 			VECTOR hitPos = moveCandidate - planeNormal * dot;
 
 			//プレイヤーがどれくらいめり込んでいるかを算出
 			VECTOR tmp2 = moveCandidate - hitPos;
-			float  len = VSize(tmp2);
+			float len = VSize(tmp2);
 
 			//めり込んでいる場合はプレイヤーの中心を押し戻し
 			if (HitCheck_Sphere_Triangle(moveCandidate, player->GetCollide().radius,
@@ -183,7 +184,7 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 			//移動候補を移動位置にする
 			newCenter = moveCandidate;
 
-			pushBack = newCenter - player->GetDirection() + VScale(player->GetDirection(), 10.0f);
+			pushBack = newCenter - player->GetDirection() + VScale(player->GetDirection(), SCALE);
 		}
 	}
 	else

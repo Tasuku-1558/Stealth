@@ -25,7 +25,7 @@ KeyManager::~KeyManager()
 /// <summary>
 /// アドレスを返す
 /// </summary>
-/// <returns></returns>
+/// <returns>keyManagerを返す</returns>
 KeyManager& KeyManager::GetInstance()
 {
 	static KeyManager keyManager;
@@ -61,8 +61,8 @@ void KeyManager::Update()
 /// <summary>
 /// キーが押されているか
 /// </summary>
-/// <param name="keyCode"></param>
-/// <returns></returns>
+/// <param name="keyCode">キーの種類</param>
+/// <returns>キーが押されているかどうかを返す</returns>
 bool KeyManager::CheckPressed(int keyCode) const
 {
     if (currentKeyState[keyCode] == 0)

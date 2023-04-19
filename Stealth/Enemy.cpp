@@ -15,12 +15,11 @@ Enemy::Enemy(int number, float enemySpeed)
 	: enemyReaction(EnemyReaction::NORMAL)
 	, cakeCount(0.0f)
 	, cakeFindFlag(false)
+	, rotateFlag(false)
+	, cakeEat(false)
+	, nextDirection()
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, MARK_PATH("mark.png")
-	, nextDirection()
-	, rotateFlag(false)
-	, rotateTime(0.0f)
-	, cakeEat(false)
 {
 	Position(GetList(number));
 
@@ -62,10 +61,10 @@ void Enemy::Initialize()
 /// <summary>
 /// エネミー位置設定
 /// </summary>
-/// <param name="id"></param>
+/// <param name="id">敵の行動パターンリスト</param>
 void Enemy::Position(vector<VECTOR>& id)
 {
-	pointList = id;					//マップから座標リストを受け取る
+	pointList = id;					//座標リストを受け取る
 
 	itr = pointList.begin();		//イテレータを先頭に設定
 
@@ -88,8 +87,8 @@ void Enemy::Finalize()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="deltaTime"></param>
-/// <param name="player"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
+/// <param name="player">プレイヤーのポインタ</param>
 void Enemy::Update(float deltaTime, Player* player)
 {
 	StateUpdate(deltaTime);
@@ -102,7 +101,7 @@ void Enemy::Update(float deltaTime, Player* player)
 /// <summary>
 /// 移動処理
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void Enemy::Move(float deltaTime)
 {
 	if (enemyState == EnemyState::CRAWL || enemyState == EnemyState::ARRIVAL)
@@ -153,7 +152,7 @@ void Enemy::SetTargetPosition()
 /// <summary>
 /// 目的地に到達したならば
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 /// <returns></returns>
 bool Enemy::IsGoal(float deltaTime)
 {
@@ -163,7 +162,7 @@ bool Enemy::IsGoal(float deltaTime)
 /// <summary>
 /// エネミーの回転処理
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void Enemy::EnemyRotate(float deltaTime)
 {
 	//エネミーを回転させるか
@@ -185,7 +184,7 @@ void Enemy::EnemyRotate(float deltaTime)
 			VECTOR cross2 = VCross(interPolateDir, nextDirection);
 
 			//目標角度を超えたら終了
-			if (cross1.y * cross2.y < 0.0f)
+			if (cross1.y * cross2.y < TARGET_ANGLE)
 			{
 				interPolateDir = nextDirection;
 				rotateFlag = false;
@@ -206,7 +205,7 @@ void Enemy::EnemyRotate(float deltaTime)
 		//スピードを元に戻す
 		speed = changeSpeed;
 
-		rotateTime = 0.0f;
+		rotateTime = INITIAL_ROTATE_TIME;
 
 		enemyState = EnemyState::ARRIVAL;
 	}
@@ -333,7 +332,7 @@ void Enemy::CakeEatCount(float deltaTime)
 	//ビックリマーク画像が非表示になったら
 	if (/*230.0f > bulletDirection*/!cakeFindFlag)
 	{
-		speed = 0.0f;
+		speed = STOP_SPEED;
 
 		cakeEat = true;
 	}
@@ -364,7 +363,7 @@ void Enemy::Reaction()
 		cakeFindFlag = true;
 
 		//エネミーの動きを止める
-		speed = 0.0f;
+		speed = STOP_SPEED;
 		
 		break;
 	}
@@ -403,7 +402,7 @@ void Enemy::StateUpdate(float deltaTime)
 	case EnemyState::ROTATION:
 		
 		//エネミーの動きを止める
-		speed = 0.0f;
+		speed = STOP_SPEED;
 
 		//エネミーを回転させる
 		rotateFlag = true;
@@ -431,7 +430,7 @@ void Enemy::ReactionDraw()
 	if (playerSpotted)
 	{
 		//エネミーの動きを止める
-		speed = 0.0f;
+		speed = STOP_SPEED;
 
 		//ビックリマークの画像を描画
 		DrawBillboard3D(VGet(position.x - 200.0f, 0.0f, position.z + 200.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);

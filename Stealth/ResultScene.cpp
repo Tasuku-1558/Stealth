@@ -13,7 +13,7 @@
 /// </summary>
 ResultScene::ResultScene()
 	: SceneBase(SceneType::RESULT)
-	, fontHandle(0)
+	, resultFontHandle(0)
 	, resultUiImage(0)
 	, alpha(255)
 	, inc(-3)
@@ -29,9 +29,13 @@ ResultScene::ResultScene()
 	, selectionFlag(false)
 	, gameClear("GAME CLEAR")
 	, gameOver("GAME OVER")
+	, RESULT_FONT_SIZE(150)
+	, FONT_THICK(1)
 	, PARTICLE_NUMBER(500)
 	, MAX_ALPHA(255)
+	, INC_SPEED(-1)
 	, BACKGROUND_Y_INCREASE(2)
+	, INITIAL_BACKGROUND_Y(0)
 	, MAX_PARTICLE_INTERVAL(2.0f)
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, RESULT_UI_PATH("resultUi.png")
@@ -45,7 +49,7 @@ ResultScene::ResultScene()
 /// </summary>
 ResultScene::~ResultScene()
 {
-	DeleteFontToHandle(fontHandle);
+	DeleteFontToHandle(resultFontHandle);
 }
 
 /// <summary>
@@ -57,21 +61,22 @@ void ResultScene::Initialize()
 
 	fadeManager = new FadeManager();
 
-	//リザルトUI画像の読み込み
+	//リザルトUi画像の読み込み
 	resultUiImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, RESULT_UI_PATH).c_str());
 
 	backGroundImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, RESULT_BACKGROUND_PATH).c_str());
 
+	//ゲームをクリアしたかどうかを格納する
 	clear = Set::GetInstance().GetResult();
 
 	//フォントデータの読み込み
-	fontHandle = CreateFontToHandle("Oranienbaum", 150, 1);
+	resultFontHandle = CreateFontToHandle("Oranienbaum", RESULT_FONT_SIZE, FONT_THICK);
 }
 
 /// <summary>
 /// 花火パーティクルを登録
 /// </summary>
-/// <param name="newFireWorksParticle"></param>
+/// <param name="newFireWorksParticle">登録する花火パーティクルのポインタ</param>
 void ResultScene::EntryFireWorksParticle(FireWorksParticle* newFireWorksParticle)
 {
 	fireWorksParticle.emplace_back(newFireWorksParticle);
@@ -80,7 +85,7 @@ void ResultScene::EntryFireWorksParticle(FireWorksParticle* newFireWorksParticle
 /// <summary>
 /// 花火パーティクルを削除
 /// </summary>
-/// <param name="deleteFireWorksParticle"></param>
+/// <param name="deleteFireWorksParticle">削除する花火パーティクルのポインタ</param>
 void ResultScene::DeleteFireWorksParticle(FireWorksParticle* deleteFireWorksParticle)
 {
 	//花火のパーティクルオブジェクトから検索して削除
@@ -127,7 +132,7 @@ void ResultScene::FireWorksParticlePop()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 SceneType ResultScene::Update(float deltaTime)
 {
 	camera->SelectionAndResultCamera();
@@ -193,7 +198,7 @@ void ResultScene::SceneChange()
 /// <summary>
 /// シーンを入力
 /// </summary>
-/// <param name="sceneType"></param>
+/// <param name="sceneType">シーンの種類</param>
 void ResultScene::InputScene(SceneType sceneType)
 {
 	fadeManager->FadeMove();
@@ -231,7 +236,7 @@ void ResultScene::Blink()
 	if (alpha > MAX_ALPHA && inc > 0 ||
 		alpha < 0 && inc < 0)
 	{
-		inc *= -1;
+		inc *= INC_SPEED;
 	}
 
 	alpha += inc;
@@ -253,7 +258,7 @@ void ResultScene::BackGroundMove()
 	//Y座標がスクリーン端になったら
 	if (backGroundY == SCREEN_HEIGHT)
 	{
-		backGroundY = 0;
+		backGroundY = INITIAL_BACKGROUND_Y;
 	}
 }
 
@@ -274,12 +279,12 @@ void ResultScene::Draw()
 			fireWorksParticlePtr->Draw();
 		}
 
-		DrawFormatStringToHandle(600, 400, GetColor(255, 215, 0), fontHandle, "%s", gameClear);
+		DrawFormatStringToHandle(600, 400, GetColor(255, 215, 0), resultFontHandle, "%s", gameClear);
 	}
 	//ゲームオーバーならば
 	else
 	{
-		DrawFormatStringToHandle(600, 400, GetColor(255, 0, 0), fontHandle, "%s", gameOver);
+		DrawFormatStringToHandle(600, 400, GetColor(255, 0, 0), resultFontHandle, "%s", gameOver);
 	}
 
 	Blink();

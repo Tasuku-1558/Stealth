@@ -10,6 +10,7 @@ UiManager::UiManager()
 	, alpha(255)
 	, inc(-3)
 	, MAX_ALPHA(255)
+	, INC_SPEED(-1)
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, UI_GRAPHIC_PATH("ui")
 	, IMAGE_FILENAME_EXTENSION(".png")
@@ -59,7 +60,7 @@ void UiManager::Finalize()
 /// 描画処理
 /// </summary>
 /// <param name="gameState">ゲームの状態</param>
-/// <param name="playerCount"></param>
+/// <param name="playerCount">プレイヤーが見つかった回数</param>
 /// <param name="hitUi"></param>
 void UiManager::Draw(GameScene::GameState gameState, int playerCount, bool hitUi)
 {
@@ -91,7 +92,7 @@ void UiManager::StartGameDraw(Graphic graphic)
 {
 	if (alpha > MAX_ALPHA && inc > 0)
 	{
-		inc *= -1;
+		inc *= INC_SPEED;
 	}
 
 	alpha += inc;

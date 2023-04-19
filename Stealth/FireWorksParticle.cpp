@@ -44,7 +44,7 @@ void FireWorksParticle::Initialize()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void FireWorksParticle::Update(float deltaTime)
 {
 	//パーティクルの半径を調整する
@@ -62,7 +62,7 @@ void FireWorksParticle::Update(float deltaTime)
 	{
 		endFlag = true;
 
-		particlePopCount = 0.0f;
+		particlePopCount = INITIAL_PARTICLE_POP_COUNT;
 	}
 }
 

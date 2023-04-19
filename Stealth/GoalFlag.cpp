@@ -56,7 +56,7 @@ void GoalFlag::Finalize()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void GoalFlag::Update(float deltaTime)
 {
 	//モデルを回転させる

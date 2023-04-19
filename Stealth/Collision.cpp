@@ -8,9 +8,9 @@ namespace My3dLib
 	/// 球体コンストラクタ(引数なし)
 	/// </summary>
 	Sphere::Sphere()
-		: localCenter()
+		: radius(0.0f)
+		, localCenter()
 		, worldCenter()
-		, radius(0.0f)
 	{
 		//処理なし
 	}
@@ -21,9 +21,9 @@ namespace My3dLib
 	/// <param name="center">中心座標</param>
 	/// <param name="radius">半径</param>
 	Sphere::Sphere(const VECTOR& center, float radius)
-		: localCenter(center)
+		: radius(radius)
+		, localCenter(center)
 		, worldCenter(center)
-		, radius(radius)
 	{
 		//処理なし
 	}

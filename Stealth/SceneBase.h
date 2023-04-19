@@ -26,9 +26,9 @@ public:
 	SceneBase* CreateScene(SceneType nowScene);		//新しいシーンを生成する
 
 protected:
-	SceneType nowSceneType;						//今のシーン
+	SceneType nowSceneType;			//今のシーン
 
 private:
-	SceneBase(const SceneBase&);				//コピーコンストラクタ
+	SceneBase(const SceneBase&);	//コピーコンストラクタ
 
 };

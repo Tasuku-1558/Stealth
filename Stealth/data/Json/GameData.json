@@ -13,6 +13,11 @@
     }
   },
 
+  "EnemyMovePattern": {
+    "stage1": 0,
+    "stage2": 1
+  },
+
   "EnemySpeed": {
     "stage1": 1000.0,
     "stage2": 100.0

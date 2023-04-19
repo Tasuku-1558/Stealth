@@ -2,8 +2,6 @@
 
 #include "DxLib.h"
 
-const bool IS_WINDOW_MODE = true;					//ウィンドウモードにするかしないか
-
 const int  SCREEN_WIDTH   = 1920;					//ウィンドウの幅
 const int  SCREEN_HEIGHT  = 1080;					//ウィンドウの高さ
 const int  COLOR_BIT      = 32;                     //カラービット数
@@ -11,6 +9,9 @@ const int  COLOR_BIT      = 32;                     //カラービット数
 const int MAX_PARTICLE_NUMBER = 2200;               //画面に表示する最大パーティクル数
 
 const float WAIT_FRAME_TIME = 16667.0f;				//待機フレーム時間(60fps)
+const float NOMAL_DELETA_TIME_DIVISION = 1000000.0f;//通常時のデルタタイムを割る値
+
+const bool IS_WINDOW_MODE = true;					//ウィンドウモードにするかしないか
 
 const VECTOR ZERO_VECTOR  = { 0.0f, 0.0f, 0.0f };	//ゼロベクトル
 

@@ -12,7 +12,6 @@ using namespace Math3d;		//VECTORの計算に使用
 class ParticleBase
 {
 public:
-
 	ParticleBase();
 	virtual ~ParticleBase();
 
@@ -32,7 +31,8 @@ protected:
 	VECTOR position;			//位置
 
 	//定数
-	const int DIVNUM;		//ポリゴンの細かさ
-	const int ALPHA;		//アルファブレンド
-	const int NOBLEND;		//デフォルトブレンド処理
+	const int	DIVNUM;							//ポリゴンの細かさ
+	const int	ALPHA;							//アルファブレンド
+	const int	NOBLEND;						//デフォルトブレンド処理
+	const float INITIAL_PARTICLE_POP_COUNT;		//初期のパーティクル出現カウント
 };

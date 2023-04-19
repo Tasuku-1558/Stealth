@@ -13,6 +13,7 @@ ParticleBase::ParticleBase()
 	, DIVNUM(8)
 	, ALPHA(128)
 	, NOBLEND(255)
+	, INITIAL_PARTICLE_POP_COUNT(0.0f)
 {
 	//èàóùÇ»Çµ
 }

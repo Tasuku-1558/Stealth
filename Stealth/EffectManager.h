@@ -25,9 +25,9 @@ public:
 private:
 	EffectManager(const EffectManager&);		//コピーコンストラクタ
 
-	void Initialize();							//初期化処理
+	void Initialize();					//初期化処理
 
-	EffectBase* effect[EFFECT_AMOUNT];			//エフェクト格納用
+	EffectBase* effect[EFFECT_AMOUNT];	//エフェクト格納用
 
 	//エフェクト
 	const string EFFECT_FOLDER_PATH;	//Effectフォルダまでのパス

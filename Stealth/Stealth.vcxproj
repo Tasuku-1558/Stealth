@@ -180,7 +180,6 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="SceneBase.cpp" />
-    <ClCompile Include="SecondStage.cpp" />
     <ClCompile Include="SelectionUi.cpp" />
     <ClCompile Include="Set.cpp" />
     <ClCompile Include="SoundManager.cpp" />

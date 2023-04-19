@@ -13,16 +13,17 @@
 StageSelection::StageSelection()
 	: SceneBase(SceneType::SELECTION)
 	, fontHandle(0)
-	, stageMax(0)
-	, stageNo(0)
+	, stageNo(1)
 	, changeTimeCount(0)
 	, pushCount(0.0f)
 	, frame(0.0f)
 	, changeScene(false)
-	, STAGE_NUMBER(6)
-	, MAX_TIME(80)
-	, FIRST_STAGE_NUMBER(1)
+	, MAX_STAGE(6)
+	, ADD_STAGE_NUMBER(1)
+	, SELECTION_FONT_SIZE(120)
+	, FONT_THICK(1)
 	, PUSH_INTERVAL(0.2f)
+	, FADE_START_FRAME(1.0f)
 {
 	Initialize();
 }
@@ -46,24 +47,20 @@ void StageSelection::Initialize()
 
 	fadeManager = new FadeManager();
 
-	stageNo = FIRST_STAGE_NUMBER;
-
-	stageMax = STAGE_NUMBER;
-
 	//フォントデータの作成
-	fontHandle = CreateFontToHandle("Oranienbaum", 120, 1);
+	fontHandle = CreateFontToHandle("Oranienbaum", SELECTION_FONT_SIZE, FONT_THICK);
 }
 
 /// <summary>
 /// 選択ステージを1つ先に持っていく
 /// </summary>
-/// <param name="stageNum"></param>
-/// <returns></returns>
+/// <param name="stageNum">ステージの番号</param>
+/// <returns>ステージの番号を返す</returns>
 int StageSelection::stageIncrement(int stageNumber)
 {
-	if (stageNumber > 0 && stageNumber < stageMax)
+	if (stageNumber > 0 && stageNumber < MAX_STAGE)
 	{
-		return stageNumber + 1;
+		return stageNumber + ADD_STAGE_NUMBER;
 	}
 
 	return 1;
@@ -72,23 +69,24 @@ int StageSelection::stageIncrement(int stageNumber)
 /// <summary>
 /// 選択ステージを1つ前に持っていく
 /// </summary>
-/// <param name="stageNumber"></param>
-/// <returns></returns>
+/// <param name="stageNumber">ステージの番号</param>
+/// <returns>ステージの番号を返す</returns>
 int StageSelection::stageDecrement(int stageNumber)
 {
 	//最初のステージに来た時
 	if (stageNumber == 1)
 	{
-		return stageMax;
+		return MAX_STAGE;
 	}
 
-	return stageNumber - 1;
+	return stageNumber - ADD_STAGE_NUMBER;
 }
 
 /// <summary>
 /// 各シーンへ遷移
 /// </summary>
-/// <param name="stageNumber"></param>
+/// <param name="stageNumber">ステージの番号</param>
+/// <returns>ステージの番号を返す</returns>
 int StageSelection::StageCreator(int stageNumber)
 {
 	//各シーン
@@ -111,7 +109,8 @@ int StageSelection::StageCreator(int stageNumber)
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
+/// <returns>今のシーンを返す</returns>
 SceneType StageSelection::Update(float deltaTime)
 {
 	camera->SelectionAndResultCamera();
@@ -124,7 +123,7 @@ SceneType StageSelection::Update(float deltaTime)
 /// <summary>
 /// キー操作
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void StageSelection::KeyMove(float deltaTime)
 {
 	pushCount -= deltaTime;
@@ -160,7 +159,7 @@ void StageSelection::KeyMove(float deltaTime)
 		frame += deltaTime;
 
 		//1秒経過したら
-		if (frame > 1.0f)
+		if (frame > FADE_START_FRAME)
 		{
 			fadeManager->FadeMove();
 

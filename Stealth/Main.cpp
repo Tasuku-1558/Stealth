@@ -86,7 +86,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		nowTime = GetNowHiPerformanceCount();
 
 		//差分を100万分の1にして保存する(マイクロ秒換算)
-		deltaTime = (nowTime - prevTime) / 1000000.0f;
+		deltaTime = (nowTime - prevTime) / NOMAL_DELETA_TIME_DIVISION;
 
 		//マウスカーソルを表示しない
 		SetMouseDispFlag(FALSE);
