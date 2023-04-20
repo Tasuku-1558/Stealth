@@ -1,14 +1,9 @@
 #include "Stage.h"
 
 
-char stage1[5][5] =
+char stage1[16][16] =
 {
-	1,1,1,1,1,
-	1,0,0,0,1,
-	1,0,0,0,1,
-	1,0,0,0,1,
-	1,1,1,1,1,
-	/*0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
 	0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
 	0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
@@ -23,7 +18,7 @@ char stage1[5][5] =
 	0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
 	0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
 	0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,*/
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 };
 
 /// <summary>
@@ -42,8 +37,6 @@ Stage::Stage(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECT
 	MV1SetPosition(modelHandle, position);
 
 	stageModel = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE));
-	MV1SetScale(stageModel, VGet(0.5f,0.5f,0.5f));
-
 }
 
 /// <summary>
@@ -70,15 +63,15 @@ void Stage::Draw()
 {
 	MV1DrawModel(modelHandle);
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 16; i++)
 	{
-		for (int j = 0; j < 5; j++)
+		for (int j = 0; j < 16; j++)
 		{
 			//“¹‚Å‚Í‚È‚¢‚Æ‚±‚ë‚Í•`‰æ‚µ‚È‚¢
 			if (stage1[i][j] == 0) continue;
 
 			//•Çƒ‚ƒfƒ‹‚ÌˆÊ’u‚ðÝ’è
-			MV1SetPosition(stageModel, VGet(j * 0.0f, 0.0f, i * 0.0f));
+			MV1SetPosition(stageModel, VGet(j * 500.0f-1000.0f, 0.0f, i * 500.0f-700.0f));
 
 			//‚S•û‚Ì•Ç‚Ìó‘Ô‚Å•`‰æ‚·‚éƒtƒŒ[ƒ€”Ô†‚ð•ÏX‚·‚é
 			int FrameNo = 0;
