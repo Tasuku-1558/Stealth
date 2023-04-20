@@ -15,6 +15,5 @@ public:
 	void Draw()override;					//描画処理
 
 private:
-
 	Effect(const Effect&);	//コピーコンストラクタ
 };

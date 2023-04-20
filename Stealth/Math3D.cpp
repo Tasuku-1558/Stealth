@@ -90,8 +90,8 @@ namespace Math3d
 	/// 2つのベクトルの角度はほぼ同じか
 	/// 異なればfalseを返す
 	/// </summary>
-	/// <param name="v1"></param>
-	/// <param name="v2"></param>
+	/// <param name="v1">1つ目のベクトルの角度</param>
+	/// <param name="v2">2つ目のベクトルの角度</param>
 	/// <returns></returns>
 	bool IsNearAngle(const VECTOR& v1, const VECTOR& v2)
 	{
@@ -109,9 +109,9 @@ namespace Math3d
 	/// nowVecからnextVecの最短の回転方向を調べる（Y軸回転を想定)
 	/// 時計回りの時は1.0、反時計回りの時は-1.0を返す
 	/// </summary>
-	/// <param name="nowVec"></param>
-	/// <param name="nextVec"></param>
-	/// <returns></returns>
+	/// <param name="nowVec">現在のベクトル</param>
+	/// <param name="nextVec">未来のベクトル</param>
+	/// <returns>最短の回転方向を返す</returns>
 	float CalcRotationDirectionYAxis(const VECTOR& nowVec, const VECTOR& nextVec)
 	{
 		VECTOR axis = VCross(nowVec, nextVec);

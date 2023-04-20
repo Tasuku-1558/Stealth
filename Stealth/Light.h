@@ -8,7 +8,6 @@
 class Light final
 {
 public:
-
 	Light();
 	virtual ~Light();
 

@@ -14,7 +14,7 @@ ModelManager::ModelManager()
     , CAKE_PATH("Cake/cake.mv1")
     , CAKE_HALF_PATH("Cake/cakeHalf.mv1")
     , STONE_PATH("Stone/stone.mv1")
-    , KABE_PATH("Stage/kabe.mqo")
+    , STAGE_PATH("Stage/kabe.mqo")
     , STAGE1_PATH("Stage/stage1.mv1")
     , STAGE2_PATH("Stage/stage2.mv1")
     , GOAL_FLAG_PATH("Goal/goal.mv1")
@@ -53,7 +53,7 @@ void ModelManager::LoadAllModel()
         {CAKE_PATH},
         {CAKE_HALF_PATH},
         {STONE_PATH},
-        {KABE_PATH},
+        {STAGE_PATH},
         {STAGE1_PATH},
         {STAGE2_PATH},
         {GOAL_FLAG_PATH},

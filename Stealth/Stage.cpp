@@ -1,9 +1,14 @@
 #include "Stage.h"
 
 
-char stage1[16][16] =
+char stage1[5][5] =
 {
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	1,1,1,1,1,
+	1,0,0,0,1,
+	1,0,0,0,1,
+	1,0,0,0,1,
+	1,1,1,1,1,
+	/*0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
 	0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
 	0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
@@ -18,7 +23,7 @@ char stage1[16][16] =
 	0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
 	0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
 	0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,*/
 };
 
 /// <summary>
@@ -29,14 +34,16 @@ char stage1[16][16] =
 /// <param name="rotate"></param>
 /// <param name="position"></param>
 Stage::Stage(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position)
-	: kabe(0)
+	: stageModel(0)
 {
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(modelType));
 	MV1SetScale(modelHandle, size);
 	MV1SetRotationXYZ(modelHandle, rotate);
 	MV1SetPosition(modelHandle, position);
 
-	kabe = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::KABE));
+	stageModel = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE));
+	MV1SetScale(stageModel, VGet(0.5f,0.5f,0.5f));
+
 }
 
 /// <summary>
@@ -52,7 +59,7 @@ Stage::~Stage()
 /// </summary>
 void Stage::Finalize()
 {
-	MV1DeleteModel(kabe);
+	MV1DeleteModel(stageModel);
 	MV1DeleteModel(modelHandle);
 }
 
@@ -63,15 +70,15 @@ void Stage::Draw()
 {
 	MV1DrawModel(modelHandle);
 
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 5; i++)
 	{
-		for (int j = 0; j < 16; j++)
+		for (int j = 0; j < 5; j++)
 		{
 			//“¹‚Å‚Í‚È‚¢‚Æ‚±‚ë‚Í•`‰æ‚µ‚È‚¢
 			if (stage1[i][j] == 0) continue;
 
 			//•Çƒ‚ƒfƒ‹‚ÌˆÊ’u‚ðÝ’è
-			MV1SetPosition(kabe, VGet(j * 1000.0f, 0.0f, i * 1000.0f));
+			MV1SetPosition(stageModel, VGet(j * 0.0f, 0.0f, i * 0.0f));
 
 			//‚S•û‚Ì•Ç‚Ìó‘Ô‚Å•`‰æ‚·‚éƒtƒŒ[ƒ€”Ô†‚ð•ÏX‚·‚é
 			int FrameNo = 0;
@@ -81,7 +88,7 @@ void Stage::Draw()
 			if (stage1[i - 1][j] == 0) FrameNo += 8;
 
 			//Š„‚èo‚µ‚½”Ô†‚ÌƒtƒŒ[ƒ€‚ð•`‰æ‚·‚é
-			MV1DrawFrame(kabe, FrameNo);
+			MV1DrawFrame(stageModel, FrameNo);
 		}
 	}
 }

@@ -8,6 +8,8 @@
 BackGround::BackGround()
 	: backGroundHandle(0)
 	, PLAY_POSITION(0)
+	, BACKGROUND_MOVIE_POS_X(0)
+	, BACKGROUND_MOVIE_POS_Y(0)
 	, VIDEO_FOLDER_PATH("Data/Video/")
 	, BACKGROUND_VIDEO_PATH("BackGround.mp4")
 {
@@ -61,5 +63,5 @@ void BackGround::Update()
 void BackGround::Draw()
 {
 	//îwåiìÆâÊÇçƒê∂Ç∑ÇÈ
-	DrawGraph(0, 0, backGroundHandle, FALSE);
+	DrawGraph(BACKGROUND_MOVIE_POS_X, BACKGROUND_MOVIE_POS_Y, backGroundHandle, FALSE);
 }

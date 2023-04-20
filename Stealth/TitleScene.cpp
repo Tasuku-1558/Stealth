@@ -25,11 +25,21 @@ TitleScene::TitleScene()
 	, MAX_ALPHA(255)
 	, INC_SPEED(-1)
 	, PLAY_POSITION(0)
+	, START_UI_POS_X(400)
+	, START_UI_POS_Y(700)
+	, EXIT_UI_POS_X(400)
+	, EXIT_UI_POS_Y(850)
+	, TITLE_MOVIE_POS_X(0)
+	, TITLE_MOVIE_POS_Y(0)
+	, TITLE_NAME_POS_X(950)
+	, TITLE_NAME_POS_Y(450)
+	, TITLE_NAME_ANGLE(0)
 	, SPHERE_DIFCOLOR(GetColor(255, 0, 0))
 	, SPHERE_SPCCOLOR(GetColor(255, 255, 255))
 	, START_SPHERE_POS_Z(-220.0f)
 	, EXIT_SPHERE_POS_Z(-350.0f)
 	, SPHERE_RADIUS(20.0f)
+	, TITLE_NAME_SIZE(0.5f)
 	, VIDEO_FOLDER_PATH("Data/Video/")
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, PLAY_VIDEO_PATH("PlayVideo.mp4")
@@ -201,19 +211,19 @@ void TitleScene::Blink()
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 
-		DrawGraph(400, 700, startUi, TRUE);
+		DrawGraph(START_UI_POS_X, START_UI_POS_Y, startUi, TRUE);
 
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
 
-		DrawGraph(400, 850, exitUi, TRUE);
+		DrawGraph(EXIT_UI_POS_X, EXIT_UI_POS_Y, exitUi, TRUE);
 	}
 	else
 	{
-		DrawGraph(400, 700, startUi, TRUE);
+		DrawGraph(START_UI_POS_X, START_UI_POS_Y, startUi, TRUE);
 
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 
-		DrawGraph(400, 850, exitUi, TRUE);
+		DrawGraph(EXIT_UI_POS_X, EXIT_UI_POS_Y, exitUi, TRUE);
 
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
 	}
@@ -225,10 +235,10 @@ void TitleScene::Blink()
 void TitleScene::Draw()
 {
 	//デモ動画を再生する
-	DrawGraph(0, 0, titleMovie, FALSE);
+	DrawGraph(TITLE_MOVIE_POS_X, TITLE_MOVIE_POS_Y, titleMovie, FALSE);
 
 	//タイトル名描画
-	DrawRotaGraph(950, 450, 0.5f, 0, titleName, TRUE);
+	DrawRotaGraph(TITLE_NAME_POS_X, TITLE_NAME_POS_Y, TITLE_NAME_SIZE, TITLE_NAME_ANGLE, titleName, TRUE);
 
 	Blink();
 
