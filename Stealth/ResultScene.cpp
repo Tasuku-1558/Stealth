@@ -137,6 +137,8 @@ SceneType ResultScene::Update(float deltaTime)
 {
 	camera->SelectionAndResultCamera();
 
+	BackGroundMove();
+
 	FireWorksParticlePop();
 	
 	//パーティクルを出したら
@@ -157,8 +159,6 @@ SceneType ResultScene::Update(float deltaTime)
 	{
 		fireWorksParticlePtr->Update(deltaTime);
 	}
-
-	BackGroundMove();
 	
 	//どのシーンにも遷移していないならば
 	if (!titleFlag && !selectionFlag)

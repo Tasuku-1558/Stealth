@@ -18,12 +18,12 @@ Bullet::Bullet(Player* const inPlayer)
 	, SCALE(0.4f)
 	, ANGLE(0.0f)
 	, RADIUS(50.0f)
-	, IMAGE_FOLDER_PATH("Data/Image/")
-	, CURSOR_PATH("pointer.png")
 	, SIZE({ 20.0f, 20.0f, 20.0f })
 	, POSITION({ 0.0f, 30.0f, 0.0f })
 	, ROTATE({ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f })
 	, INITIAL_WORLD_MOUSE({ 0.0f,30.0f,0.0f })
+	, IMAGE_FOLDER_PATH("Data/Image/")
+	, CURSOR_PATH("pointer.png")
 {
 	Initialize();
 	player = inPlayer;
@@ -87,7 +87,7 @@ void Bullet::Update(float deltaTime)
 /// <summary>
 /// マウスカーソルの移動
 /// </summary>
-/// <param name="cake"></param>
+/// <param name="cake">ケーキのポインタ</param>
 void Bullet::MouseMove(Cake* cake)
 {
 	//マウスの座標取得

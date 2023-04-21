@@ -13,6 +13,7 @@ public:
 	Stage(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position);
 	virtual ~Stage();
 
+	void Update();
 	void Draw();    //•`‰æˆ—
 
 private:

@@ -63,6 +63,12 @@ private:
 		CAKE,		//ケーキ
 	};
 
+	struct RotateTime
+	{
+		EnemyReaction enemyReaction;		//オブジェクトごとのエネミーの反応
+		float time; //各オブジェクトの回転時間
+	};
+
 	EnemyState enemyState;				//エネミーの動き
 	EnemyReaction enemyReaction;		//オブジェクトごとのエネミーの反応
 

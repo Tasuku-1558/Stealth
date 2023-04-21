@@ -144,6 +144,7 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 	//プレイヤーがマップに当たったかどうか
 	if (hitPolyDim.HitNum)
 	{	
+		//マップに衝突した
 		mapHit = true;
 
 		//衝突ポリゴンをすべて回って、球のめり込みを解消
@@ -175,7 +176,6 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 				hitPolyDim.Dim[i].Position[2]))
 			{
 				//めり込み解消する位置まで移動
-				VECTOR moveVec;
 				len = player->GetCollide().radius - len;
 				moveVec = planeNormal * len;
 				moveCandidate += moveVec;
@@ -196,7 +196,7 @@ void HitChecker::MapAndPlayer(int model, Player* player)
 /// <summary>
 /// ゴールオブジェクトとプレイヤーの当たり判定
 /// </summary>
-/// <param name="goalFlag"></param>
+/// <param name="goalFlag">ゴールオブジェクトのポインタ</param>
 /// <param name="player">プレイヤーのポインタ</param>
 void HitChecker::FlagAndPlayer(GoalFlag* goalFlag, Player* player)
 {

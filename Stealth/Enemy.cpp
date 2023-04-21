@@ -123,11 +123,11 @@ void Enemy::Move(float deltaTime)
 
 	//エネミーの位置と向きをセット
 	MV1SetPosition(modelHandle, position);
-	MV1SetRotationYUseDir(modelHandle, direction, 0.0f);
+	MV1SetRotationYUseDir(modelHandle, direction, Y_ANGLE);
 
 	//視野の位置と向きをセット
 	MV1SetPosition(visualModelHandle, position);
-	MV1SetRotationYUseDir(visualModelHandle, direction, 0.0f);
+	MV1SetRotationYUseDir(visualModelHandle, direction, Y_ANGLE);
 
 	//当たり判定球の移動処理
 	collisionSphere.Move(position);
@@ -177,7 +177,7 @@ void Enemy::EnemyRotate(float deltaTime)
 		else
 		{
 			//回転させる
-			VECTOR interPolateDir = RotateForAimVecYAxis(direction, nextDirection, 4.0f);
+			VECTOR interPolateDir = RotateForAimVecYAxis(direction, nextDirection, Y_ANGLE_SPEED);
 
 			//回転が目標角度を超えていないか
 			VECTOR cross1 = VCross(direction, nextDirection);
@@ -197,17 +197,25 @@ void Enemy::EnemyRotate(float deltaTime)
 
 	rotateTime += deltaTime;
 
-	//各リアクションによってカウントの時間を変える
-	if (enemyReaction == EnemyReaction::NORMAL && rotateTime > 1.0f ||
-		enemyReaction == EnemyReaction::PLAYER && rotateTime > 2.0f ||
-		enemyReaction == EnemyReaction::CAKE && rotateTime > 6.0f)
+	RotateTime rotate[] =
 	{
-		//スピードを元に戻す
-		speed = changeSpeed;
+		{EnemyReaction::NORMAL, NOMAL_ROTATE_TIME},
+		{EnemyReaction::PLAYER, PLAYER_ROTATE_TIME},
+		{EnemyReaction::CAKE,	CAKE_ROTATE_TIME},
+	};
 
-		rotateTime = INITIAL_ROTATE_TIME;
+	for (int i = 0; i < ROTATE_TIME_CATEGORY; i++)
+	{
+		//各オブジェクトによって回転の時間を変える
+		if (enemyReaction == rotate[i].enemyReaction && rotateTime > rotate[i].time)
+		{
+			//スピードを元に戻す
+			speed = changeSpeed;
 
-		enemyState = EnemyState::ARRIVAL;
+			rotateTime = INITIAL_ROTATE_TIME;
+
+			enemyState = EnemyState::ARRIVAL;
+		}
 	}
 }
 
@@ -221,7 +229,7 @@ void Enemy::VisualAnglePlayer(Player* player)
 	VECTOR sub = player->GetPosition() - position;
 
 	//プレイヤーとエネミーの距離を計算
-	float playerDirection = VSize(sub);
+	playerDirection = VSize(sub);
 
 	//ベクトルの正規化
 	sub = VNorm(sub);
@@ -315,7 +323,7 @@ void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 /// <summary>
 /// 秒数によってケーキの状態変化
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void Enemy::CakeEatCount(float deltaTime)
 {
 	cakeCount += deltaTime;
@@ -372,7 +380,7 @@ void Enemy::Reaction()
 /// <summary>
 /// エネミーの動き
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void Enemy::StateUpdate(float deltaTime)
 {
 	switch (enemyState)

@@ -21,6 +21,7 @@ protected:
 	float speed;					//エネミーの移動速度
 	float changeSpeed;				//ステージごとのエネミーの移動速度
 	float length;					//視野角の距離
+	float playerDirection;			//プレイヤーとエネミーの距離
 	float bulletDirection;			//バレットとエネミーの距離
 	float rotateTime;				//回転時間
 	bool playerSpotted;				//プレイヤーを発見したかどうか
@@ -31,10 +32,16 @@ protected:
 
 
 	//定数
+	const int	ROTATE_TIME_CATEGORY;	//回転時間の種類
 	const float RANGE_DEGREE;			//視野角度
 	const float TARGET_ANGLE;			//回転の目標角度
 	const float INITIAL_ROTATE_TIME;	//初期の回転時間
 	const float RADIUS;					//エネミーの半径
+	const float	Y_ANGLE;				//Y軸の回転値
+	const float Y_ANGLE_SPEED;			//Y軸回転スピード
+	const float NOMAL_ROTATE_TIME;		//通常の回転時間
+	const float PLAYER_ROTATE_TIME;		//プレイヤーだった時の回転時間
+	const float CAKE_ROTATE_TIME;		//ケーキだった時の回転時間
 	const float STOP_SPEED;				//エネミーの移動速度を停止させる
 	
 private:

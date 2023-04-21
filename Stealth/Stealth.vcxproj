@@ -184,6 +184,7 @@
     <ClCompile Include="Set.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="StageCreator.cpp" />
     <ClCompile Include="StageSelection.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="UiManager.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="Set.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="StageCreator.h" />
     <ClInclude Include="StageSelection.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="UiManager.h" />

@@ -19,9 +19,13 @@ StageSelection::StageSelection()
 	, frame(0.0f)
 	, changeScene(false)
 	, MAX_STAGE(6)
+	, FIRST_STAGE_NUMBER(1)
+	, SECOND_STAGE_NUMBER(2)
+	, TITLE_RETURN_NUMBER(6)
 	, ADD_STAGE_NUMBER(1)
 	, SELECTION_FONT_SIZE(120)
 	, FONT_THICK(1)
+	, MAX_PUSH_COUNT(0.0f)
 	, PUSH_INTERVAL(0.2f)
 	, FADE_START_FRAME(1.0f)
 {
@@ -74,7 +78,7 @@ int StageSelection::stageIncrement(int stageNumber)
 int StageSelection::stageDecrement(int stageNumber)
 {
 	//最初のステージに来た時
-	if (stageNumber == 1)
+	if (stageNumber == FIRST_STAGE_NUMBER)
 	{
 		return MAX_STAGE;
 	}
@@ -89,18 +93,20 @@ int StageSelection::stageDecrement(int stageNumber)
 /// <returns>ステージの番号を返す</returns>
 int StageSelection::StageCreator(int stageNumber)
 {
-	//各シーン
-	if (stageNumber == 1)
+	Stage stage[] =
 	{
-		nowSceneType = SceneType::GAME;
-	}
-	if (stageNumber == 2)
+		{FIRST_STAGE_NUMBER,  SceneType::GAME},
+		{SECOND_STAGE_NUMBER, SceneType::GAME},
+		{TITLE_RETURN_NUMBER, SceneType::TITLE},
+	};
+
+	for (int i = 0; i < 3/*MAX_STAGE*/; i++)
 	{
-		nowSceneType = SceneType::GAME;
-	}
-	if (stageNumber == 6)
-	{
-		nowSceneType = SceneType::TITLE;
+		//各シーン
+		if (stageNumber == stage[i].number)
+		{
+			nowSceneType = stage[i].sceneType;
+		}
 	}
 
 	return stageNumber;
@@ -132,14 +138,10 @@ void StageSelection::KeyMove(float deltaTime)
 	if (!changeScene)
 	{
 		//矢印キー操作
-		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_UP) && pushCount < 0.0f)
+		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_UP)   && pushCount < MAX_PUSH_COUNT ||
+			KeyManager::GetInstance().CheckPressed(KEY_INPUT_DOWN) && pushCount < MAX_PUSH_COUNT)
 		{
 			stageNo = stageDecrement(stageNo);
-			pushCount = PUSH_INTERVAL;
-		}
-		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_DOWN) && pushCount < 0.0f)
-		{
-			stageNo = stageIncrement(stageNo);
 			pushCount = PUSH_INTERVAL;
 		}
 	}
@@ -178,7 +180,7 @@ void StageSelection::KeyMove(float deltaTime)
 /// </summary>
 void StageSelection::Draw()
 {
-	//それぞれのステージごとのUI描画処理
+	//それぞれのステージごとのUi描画処理
 	//マップの番号、敵の数、ケーキの数を入力
 	if (stageNo == 1)
 	{
@@ -209,7 +211,7 @@ void StageSelection::Draw()
 	{
 		DrawFormatStringToHandle(200, 250, GetColor(0, 255, 0), fontHandle, "STAGE : %d", stageNo);
 	}
-	
+
 	selectionUi->Draw();
 
 	fadeManager->Draw();

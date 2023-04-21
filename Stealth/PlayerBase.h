@@ -39,6 +39,7 @@ protected:
 	const float	  SPEED;					//移動速度
 	const float	  OPACITY;					//不透明度
 	const float	  RADIUS;					//半径
+	const float	  Y_ANGLE;					//Y軸の回転値
 	const float   MAX_INITIAL_TIME;			//初期位置に戻す最大カウント
 	const float	  INITIAL_TIME;				//初期位置に戻すカウント
 	const float   STOP_SPEED;				//プレイヤーの移動速度を停止させる

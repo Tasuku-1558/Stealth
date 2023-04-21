@@ -7,7 +7,7 @@ namespace Input
 	/// パスの入力
 	/// </summary>
 	/// <param name="folderPath">フォルダまでのパス</param>
-	/// <param name="path">パス</param>
+	/// <param name="path">データまでのパス</param>
 	/// <returns>パスを返す</returns>
 	string InputPath(string folderPath, string path)
 	{

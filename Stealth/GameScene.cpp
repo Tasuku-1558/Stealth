@@ -302,6 +302,8 @@ void GameScene::UpdateGame(float deltaTime)
 {
 	backGround->Update();
 
+	stage->Update();
+
 	camera->Update(player->GetPosition());
 
 	player->Update(deltaTime);

@@ -148,7 +148,7 @@ void Player::Move(float deltaTime)
 
 	//ƒ‚ƒfƒ‹‚ÌˆÊ’u‚ÆŒü‚«‚ğİ’è
 	MV1SetPosition(modelHandle, position);
-	MV1SetRotationYUseDir(modelHandle, direction, 0.0f);
+	MV1SetRotationYUseDir(modelHandle, direction, Y_ANGLE);
 
 	//“–‚½‚è”»’è‹…‚ÌˆÚ“®ˆ—
 	collisionSphere.Move(position);
@@ -184,11 +184,11 @@ void Player::AfterImage()
 	{
 		pastPosition[i] = pastPosition[i - 1];
 		MV1SetPosition(afterImageModel[i], pastPosition[i] - AFTER_IMAGE_ADJUSTMENT);
-		MV1SetRotationYUseDir(afterImageModel[i], direction, 0.0f);
+		MV1SetRotationYUseDir(afterImageModel[i], direction, Y_ANGLE);
 
 		pastPosition[0] = position;
 		MV1SetPosition(afterImageModel[0], pastPosition[0] - AFTER_IMAGE_ADJUSTMENT);
-		MV1SetRotationYUseDir(afterImageModel[0], direction, 0.0f);
+		MV1SetRotationYUseDir(afterImageModel[0], direction, Y_ANGLE);
 	}
 }
 

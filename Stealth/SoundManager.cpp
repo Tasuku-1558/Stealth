@@ -156,6 +156,7 @@ void SoundManager::StopBgm()
 /// <summary>
 /// SE‚ğÄ¶‚·‚é‚©
 /// </summary>
+/// <param name="se">Se‚Ìí—Ş</param>
 void SoundManager::SePlayFlag(Se se)
 {
 	sePlayFlag[se] = true;
