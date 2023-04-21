@@ -16,6 +16,7 @@ class CakeParticle;
 class EffectManager;
 class UiManager;
 class FadeManager;
+class StageCreator;
 
 
 /// <summary>
@@ -55,6 +56,8 @@ private:
 	EffectManager* effectManager;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
+
+	StageCreator* stageCreator;
 
 	void Initialize()override;				//‰Šú‰»ˆ—
 	void InputScene(bool decision);			//ƒV[ƒ“‚ğ“ü—Í

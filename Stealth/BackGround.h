@@ -13,8 +13,8 @@ public:
     BackGround();
     virtual ~BackGround();
 
-    void Update();              //更新処理
-    void Draw();                //描画処理
+    void Update();   //更新処理
+    void Draw();     //描画処理
 
 private:
     BackGround(const BackGround&);      //コピーコンストラクタ

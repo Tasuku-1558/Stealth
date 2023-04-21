@@ -222,7 +222,7 @@ void Enemy::EnemyRotate(float deltaTime)
 /// <summary>
 /// エネミーの視野にプレイヤーが入った場合
 /// </summary>
-/// <param name="player"></param>
+/// <param name="player">プレイヤーのポインタ</param>
 void Enemy::VisualAnglePlayer(Player* player)
 {
 	//プレイヤーからエネミーの座標を引いた値を取得
@@ -266,8 +266,8 @@ void Enemy::VisualAnglePlayer(Player* player)
 /// <summary>
 /// エネミーの視野にケーキが入った場合
 /// </summary>
-/// <param name="bullet"></param>
-/// <param name="deltaTime"></param>
+/// <param name="bullet">バレットのポインタ</param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
 {
 	//バレットからエネミーの座標を引いた値を取得
@@ -448,7 +448,7 @@ void Enemy::ReactionDraw()
 	if (cakeFindFlag)
 	{
 		//ビックリマーク画像を描画
-		DrawBillboard3D(VGet(position.x - 200.0f, 400.0f, position.z + 200.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
+		DrawBillboard3D(VGet(position.x - 200.0f, 0.0f, position.z + 200.0f), 0.5f, 0.5f, 200.0f, 0.0f, markImage, TRUE);
 	}
 }
 

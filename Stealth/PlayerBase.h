@@ -57,4 +57,7 @@ protected:
 	const string  PLAYER_FIND_PATH;			//エネミーに見つかった時の画像のパス
 
 	const COLOR_F AFTER_IMAGE_COLOR;		//残像モデルのエミッシブカラー
+
+private:
+	PlayerBase(const PlayerBase&);			//コピーコンストラクタ
 };

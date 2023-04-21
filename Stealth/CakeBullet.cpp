@@ -32,7 +32,7 @@ CakeBullet::~CakeBullet()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void CakeBullet::Update(float deltaTime)
 {
     //ケーキが生きていないならば
@@ -48,7 +48,7 @@ void CakeBullet::Update(float deltaTime)
 /// <summary>
 /// バレット発射処理
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void CakeBullet::Shoot(float deltaTime)
 {
     //マウスカーソルを左クリックし、且つケーキとバレットが非アクティブならば
@@ -67,7 +67,7 @@ void CakeBullet::Shoot(float deltaTime)
 /// <summary>
 /// バレット再使用カウント
 /// </summary>
-/// <param name="deltaTime"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void CakeBullet::BulletReuse(float deltaTime)
 {
     //バレットが生きてるならば

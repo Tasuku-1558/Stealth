@@ -45,13 +45,14 @@ protected:
 	const float STOP_SPEED;				//エネミーの移動速度を停止させる
 	
 private:
+	EnemyBase(const EnemyBase&);		//コピーコンストラクタ
 
 	//FirstStageでの敵の行動
-	void MapList();                         //敵の行動パターンリスト(左右移動の敵)
+	void MapList();                     //敵の行動パターンリスト(左右移動の敵)
 
 	//SecondStageでの敵の行動
-	void MapList2();                        //敵の行動パターンリスト2(壁の周りを回る敵)
-	void MapList3();                        //敵の行動パターンリスト3(上下移動の敵)
+	void MapList2();                    //敵の行動パターンリスト2(壁の周りを回る敵)
+	void MapList3();                    //敵の行動パターンリスト3(上下移動の敵)
 
 
 	std::vector<VECTOR> positionList[9];

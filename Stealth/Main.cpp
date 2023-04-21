@@ -141,11 +141,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	if (RemoveFontResourceEx(fontPath, FR_PRIVATE, NULL)) {}
 	else { MessageBox(NULL, "remove failure", "", MB_OK); }
 
-	delete sceneBase;		//シーンの解放
+	delete sceneBase;	//シーンの解放
 
-	Effkseer_End();			//Effekseerの終了処理
+	Effkseer_End();		//Effekseerの終了処理
 
-	DxLib_End();			//Dxlibの終了処理
+	DxLib_End();		//Dxlibの終了処理
 
-	return 0;				//ソフトの終了 
+	return 0;			//ソフトの終了 
 }

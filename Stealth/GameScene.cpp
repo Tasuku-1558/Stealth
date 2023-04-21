@@ -18,6 +18,8 @@
 #include "FadeManager.h"
 #include "Set.h"
 
+#include "StageCreator.h"
+
 //デバック用
 #define DEBUG
 
@@ -81,9 +83,11 @@ void GameScene::Initialize()
 
 	if (stageNo == 1)
 	{
-		//マップモデルの種類、サイズ、回転値、位置を入力する
-		stage = new Stage(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
-			{ 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }, { -780.0f, -100.0f, 2400.0f });
+		////マップモデルの種類、サイズ、回転値、位置を入力する
+		//stage = new Stage(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
+		//	{ 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }, { -780.0f, -100.0f, 2400.0f });
+
+		stageCreator = new StageCreator();
 
 		//エネミーに行動パターンのナンバーとスピードを設定
 		enemy = new Enemy(GameData::doc["EnemyMovePattern"]["stage1"].GetInt(), GameData::doc["EnemySpeed"]["stage1"].GetFloat());
@@ -95,9 +99,9 @@ void GameScene::Initialize()
 	}
 	if (stageNo == 2)
 	{
-		//マップモデルの種類、サイズ、回転値、位置を入力する
-		stage = new Stage(ModelManager::STAGE2, { 80.0f, 60.0f, 80.0f },
-			{ 0.0f, 0.0f, 0.0f }, { -7000.0f, -100.0f, -2900.0f });
+		////マップモデルの種類、サイズ、回転値、位置を入力する
+		//stage = new Stage(ModelManager::STAGE2, { 80.0f, 60.0f, 80.0f },
+		//	{ 0.0f, 0.0f, 0.0f }, { -7000.0f, -100.0f, -2900.0f });
 
 		//エネミーに行動パターンのナンバーとスピードを設定
 		enemy = new Enemy(GameData::doc["EnemyMovePattern"]["stage2"].GetInt(), GameData::doc["EnemySpeed"]["stage1"].GetFloat());
@@ -130,8 +134,6 @@ SceneType GameScene::Update(float deltaTime)
 	if (pUpdate != nullptr)
 	{
 		(this->*pUpdate)(deltaTime);		//状態ごとに更新
-
-		return nowSceneType;
 	}
 
 	return nowSceneType;
@@ -302,8 +304,6 @@ void GameScene::UpdateGame(float deltaTime)
 {
 	backGround->Update();
 
-	stage->Update();
-
 	camera->Update(player->GetPosition());
 
 	player->Update(deltaTime);
@@ -352,7 +352,7 @@ void GameScene::UpdateGame(float deltaTime)
 		particlePtr->Update(deltaTime);
 	}
 
-	hitChecker->Check(stage->GetModelHandle(), player, &cakeBullet, /*&enemy,*/ goalFlag);
+	//hitChecker->Check(stage->GetModelHandle(), player, &cakeBullet, /*&enemy,*/ goalFlag);
 	hitChecker->EnemyAndPlayer(player, enemy);
 	
 	ChangeScreen();
@@ -392,7 +392,7 @@ void GameScene::Draw()
 {
 	backGround->Draw();
 
-	stage->Draw();
+	stageCreator->Draw();
 
 	enemy->Draw();
 

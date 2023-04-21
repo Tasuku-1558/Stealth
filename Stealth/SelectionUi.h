@@ -12,7 +12,6 @@ using namespace std;
 class SelectionUi final
 {
 public:
-
 	SelectionUi();
 	virtual ~SelectionUi();
 

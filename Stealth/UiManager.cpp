@@ -85,7 +85,7 @@ void UiManager::Draw(GameScene::GameState gameState, int playerCount, bool hitUi
 }
 
 /// <summary>
-/// ゲーム開始UI
+/// ゲーム開始Ui
 /// </summary>
 /// <param name="graphic">Ui画像の種類</param>
 void UiManager::StartGameDraw(Graphic graphic)
@@ -105,7 +105,7 @@ void UiManager::StartGameDraw(Graphic graphic)
 }
 
 /// <summary>
-/// 操作方法説明UI
+/// 操作方法説明Ui
 /// </summary>
 /// <param name="hitUi"></param>
 void UiManager::OperationMethodDraw(bool hitUi)
@@ -118,7 +118,7 @@ void UiManager::OperationMethodDraw(bool hitUi)
 }
 
 /// <summary>
-/// ケーキを持っているかのUI
+/// ケーキを持っているかのUi
 /// </summary>
 /// <param name="cakeGet"></param>
 void UiManager::CakeGetDraw(bool cakeGet)
@@ -131,7 +131,7 @@ void UiManager::CakeGetDraw(bool cakeGet)
 }
 
 /// <summary>
-/// プレイヤーHPUI
+/// プレイヤーHPUi
 /// </summary>
 /// <param name="playerCount"></param>
 void UiManager::PlayerHpDraw(int playerCount)

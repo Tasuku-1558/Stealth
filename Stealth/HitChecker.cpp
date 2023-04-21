@@ -80,7 +80,7 @@ void HitChecker::CakeAndPlayer(Player* player, vector<CakeBullet*>* cakeBullet)
 /// エネミーとプレイヤーの当たり判定
 /// </summary>
 /// <param name="player">プレイヤーのポインタ</param>
-/// <param name="enemy"></param>
+/// <param name="enemy">エネミーのポインタ</param>
 void HitChecker::EnemyAndPlayer(Player* player, /*vector<Enemy*>* enemy*/Enemy* enemy)
 {
 	//for (auto itr = enemy->begin(); itr != enemy->end(); ++itr)
@@ -128,7 +128,7 @@ void HitChecker::PlayerAndUi(Player* player)
 /// <summary>
 /// マップとプレイヤーの当たり判定
 /// </summary>
-/// <param name="model">ステージモデル</param>
+/// <param name="model">ステージのモデル</param>
 /// <param name="player">プレイヤーのポインタ</param>
 void HitChecker::MapAndPlayer(int model, Player* player)
 {

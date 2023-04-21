@@ -35,4 +35,7 @@ protected:
 	const int	ALPHA;							//アルファブレンド
 	const int	NOBLEND;						//デフォルトブレンド処理
 	const float INITIAL_PARTICLE_POP_COUNT;		//初期のパーティクル出現カウント
+
+private:
+	ParticleBase(const ParticleBase&);			//コピーコンストラクタ
 };

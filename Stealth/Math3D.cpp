@@ -92,7 +92,7 @@ namespace Math3d
 	/// </summary>
 	/// <param name="v1">1つ目のベクトルの角度</param>
 	/// <param name="v2">2つ目のベクトルの角度</param>
-	/// <returns></returns>
+	/// <returns>2つのベクトルの角度が同じかどうかを返す</returns>
 	bool IsNearAngle(const VECTOR& v1, const VECTOR& v2)
 	{
 		float dot = VDot(v1, v2);

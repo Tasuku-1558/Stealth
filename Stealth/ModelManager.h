@@ -34,7 +34,7 @@ public:
 
 private:
 	ModelManager();
-	ModelManager(const ModelManager&);			//コピーコンストラクタ
+	ModelManager(const ModelManager&);		//コピーコンストラクタ
 	virtual ~ModelManager();
 
 	void LoadAllModel();		//全てのモデルの読み込み

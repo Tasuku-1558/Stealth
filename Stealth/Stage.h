@@ -1,8 +1,6 @@
 #pragma once
 
 #include "ObjectBase.h"
-#include "ModelManager.h"
-
 
 /// <summary>
 /// ステージクラス
@@ -10,16 +8,13 @@
 class Stage final : public ObjectBase
 {
 public:
-	Stage(ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, VECTOR position);
+	Stage(/*ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, */VECTOR position);
 	virtual ~Stage();
 
-	void Update();
 	void Draw();    //描画処理
 
 private:
 	Stage(const Stage&);	//コピーコンストラクタ
-
-	void Finalize();	//終了処理
 
 	int stageModel;
 };

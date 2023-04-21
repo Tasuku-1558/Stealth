@@ -22,4 +22,8 @@ private:
 	int  keyReleaseCount;         //連続キー入力がないカウント
 	char currentKeyState[256];    //現在のキー押下状態
 	char prevKeyState[256];       //前フレームのキー押下状態
+
+	//定数
+	const int KEY_NUMBER;				//キーの数
+	const int INITIAL_RELEASE_COUNT;	//初期の連続キー入力がないカウント
 };

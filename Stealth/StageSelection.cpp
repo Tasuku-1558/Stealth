@@ -95,6 +95,7 @@ int StageSelection::StageCreator(int stageNumber)
 {
 	Stage stage[] =
 	{
+		//各シーン
 		{FIRST_STAGE_NUMBER,  SceneType::GAME},
 		{SECOND_STAGE_NUMBER, SceneType::GAME},
 		{TITLE_RETURN_NUMBER, SceneType::TITLE},
@@ -102,7 +103,6 @@ int StageSelection::StageCreator(int stageNumber)
 
 	for (int i = 0; i < 3/*MAX_STAGE*/; i++)
 	{
-		//各シーン
 		if (stageNumber == stage[i].number)
 		{
 			nowSceneType = stage[i].sceneType;

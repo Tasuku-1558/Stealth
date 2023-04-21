@@ -12,10 +12,10 @@ public:
 	virtual ~Light();
 
 private:
-	Light(const Light&);			//コピーコンストラクタ
+	Light(const Light&);	//コピーコンストラクタ
 
-	void Initialize();				//初期化処理
+	void Initialize();		//初期化処理
 
 	//定数
-	const VECTOR DIRECTION;			//ライトの向き
+	const VECTOR DIRECTION;	//ライトの向き
 };

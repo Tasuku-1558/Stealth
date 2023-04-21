@@ -17,7 +17,7 @@ public:
 	void Draw(GameScene::GameState gameState,
 			  int playerCount, bool hitUi);	//描画処理
 
-	void CakeGetDraw(bool cakeGet);			//ケーキを持っているかのUI
+	void CakeGetDraw(bool cakeGet);			//ケーキを持っているかのUi
 
 private:
 	UiManager(const UiManager&);			//コピーコンストラクタ
@@ -42,9 +42,9 @@ private:
 
 	void Initialize();								//初期化処理
 	void Finalize();								//終了処理
-	void StartGameDraw(UiManager::Graphic graphic);	//ゲーム開始UI
-	void PlayerHpDraw(int playerCount);				//プレイヤーHPUI
-	void OperationMethodDraw(bool hitUi);			//操作方法説明UI
+	void StartGameDraw(UiManager::Graphic graphic);	//ゲーム開始Ui
+	void PlayerHpDraw(int playerCount);				//プレイヤーHPUi
+	void OperationMethodDraw(bool hitUi);			//操作方法説明Ui
 
 	int uiHandle[GRAPHIC_AMOUNT];			//画像ハンドル格納用
 	int alpha;								//透過度

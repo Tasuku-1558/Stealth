@@ -195,8 +195,8 @@ void Player::AfterImage()
 /// <summary>
 /// エネミーに見つかった場合
 /// </summary>
-/// <param name="deltaTime"></param>
-/// <param name="spotted"></param>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
+/// <param name="spotted">エネミーに見つかったかどうか</param>
 void Player::FoundEnemy(float deltaTime, bool spotted)
 {
 	//エネミーに見つかったら

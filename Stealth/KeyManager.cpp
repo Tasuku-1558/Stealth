@@ -10,6 +10,8 @@ KeyManager::KeyManager()
     : keyReleaseCount(0)
     , currentKeyState()
     , prevKeyState()
+    , KEY_NUMBER(256)
+    , INITIAL_RELEASE_COUNT(0)
 {
     //処理なし
 }
@@ -37,7 +39,7 @@ KeyManager& KeyManager::GetInstance()
 /// </summary>
 void KeyManager::Update()
 {
-    for (int i = 0; i < 256; ++i)
+    for (int i = 0; i < KEY_NUMBER; ++i)
     {
         prevKeyState[i] = currentKeyState[i];  //prevを更新
     }
@@ -45,12 +47,12 @@ void KeyManager::Update()
     //キーの押下状態を取得
     GetHitKeyStateAll(currentKeyState);
 
-    //何かキーが押されていたらカウントリセット
-    for (int i = 0; i < 256; ++i)
+    //何かキーが押されていたらカウントをリセット
+    for (int i = 0; i < KEY_NUMBER; ++i)
     {
         if (currentKeyState[i])
         {
-            keyReleaseCount = 0;
+            keyReleaseCount = INITIAL_RELEASE_COUNT;
             return;
         }
     }
