@@ -352,9 +352,9 @@ void GameScene::UpdateGame(float deltaTime)
 		particlePtr->Update(deltaTime);
 	}
 
-	//hitChecker->Check(stage->GetModelHandle(), player, &cakeBullet, /*&enemy,*/ goalFlag);
+	hitChecker->Check(0, player, &cakeBullet, /*&enemy,*/ goalFlag);
 	hitChecker->EnemyAndPlayer(player, enemy);
-	
+
 	ChangeScreen();
 
 	for (auto particlePtr : cakeParticle)
@@ -426,7 +426,7 @@ void GameScene::Draw()
 #ifdef DEBUG
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), gameFontHandle, "X : %.0f", player->GetPosition().x);
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), gameFontHandle, "Z : %.0f", player->GetPosition().z);
-	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), gameFontHandle, "PlayerCount : %d", player->FindCount());
-	DrawFormatStringToHandle(100, 520, GetColor(255, 0, 0), gameFontHandle, "ParticleSize : %d", cakeParticle.size());
+	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), gameFontHandle, "PlayerCount : %d", player->FindCount());
+	DrawFormatStringToHandle(100, 250, GetColor(255, 0, 0), gameFontHandle, "ParticleSize : %d", cakeParticle.size());
 #endif // DEBUG
 }

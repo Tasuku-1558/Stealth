@@ -23,5 +23,4 @@ private:
 
 
 	std::vector<Stage*> stage;
-
 };

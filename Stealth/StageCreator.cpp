@@ -22,6 +22,7 @@ char stage1[16][16] =
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 };
 
+
 StageCreator::StageCreator()
 {
 	StagePop();
@@ -42,12 +43,12 @@ void StageCreator::EntryStage(Stage* newStage)
 
 void StageCreator::DeleteStage(Stage* deleteStage)
 {
-	//ケーキのパーティクルオブジェクトから検索して削除
+	//ステージオブジェクトから検索して削除
 	auto iter = std::find(stage.begin(), stage.end(), deleteStage);
 
 	if (iter != stage.end())
 	{
-		//ケーキのパーティクルオブジェクトを最後尾に移動してデータを消す
+		//ステージオブジェクトを最後尾に移動してデータを消す
 		std::iter_swap(iter, stage.end() - 1);
 		stage.pop_back();
 
@@ -61,7 +62,10 @@ void StageCreator::StagePop()
 	{
 		for (int j = 0; j < 16; j++)
 		{
-			Stage* newStage = new Stage(VGet(j * 300.0f, 0.0f, i * 300.0f));
+			float x = (i * 300.0f) + 50.0f;
+			float z = (j * 300.0f) + 50.0f;
+
+			Stage* newStage = new Stage({ z, 0.0f, x });
 			EntryStage(newStage);
 		}
 	}

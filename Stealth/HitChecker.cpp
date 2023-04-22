@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include "CakeBullet.h"
 #include "GoalFlag.h"
+#include "StageCreator.h"
 
 using namespace Math3d;		//VECTORの計算に使用
 
@@ -132,64 +133,67 @@ void HitChecker::PlayerAndUi(Player* player)
 /// <param name="player">プレイヤーのポインタ</param>
 void HitChecker::MapAndPlayer(int model, Player* player)
 {
-	//モデル全体のコリジョン情報を構築
-	MV1SetupCollInfo(model, 0, 8, 8, 8);
-
-	//ステージモデルとプレイヤーの当たり判定
-	hitPolyDim = MV1CollCheck_Sphere(model, -1, player->GetCollide().worldCenter, player->GetCollide().radius);
-
-	VECTOR moveCandidate = player->GetCollide().worldCenter;	//球中心候補
-	VECTOR newCenter = player->GetCollide().worldCenter;		//移動候補
-
-	//プレイヤーがマップに当たったかどうか
-	if (hitPolyDim.HitNum)
-	{	
-		//マップに衝突した
-		mapHit = true;
-
-		//衝突ポリゴンをすべて回って、球のめり込みを解消
-		for (int i = 0; i < hitPolyDim.HitNum; ++i)
-		{
-			//衝突ポリゴンの辺 
-			VECTOR edge1 = hitPolyDim.Dim[i].Position[1] - hitPolyDim.Dim[i].Position[0];
-			VECTOR edge2 = hitPolyDim.Dim[i].Position[2] - hitPolyDim.Dim[i].Position[0];
-
-			//衝突ポリゴンの辺より、ポリゴン面の法線ベクトルを求める
-			planeNormal = VCross(edge1, edge2);
-			planeNormal = VNorm(planeNormal);
-
-			//プレイヤー中心に最も近いポリゴン平面の点を求める
-			VECTOR tmp = moveCandidate - hitPolyDim.Dim[i].Position[0];
-			float dot = VDot(planeNormal, tmp);
-
-			//衝突点
-			VECTOR hitPos = moveCandidate - planeNormal * dot;
-
-			//プレイヤーがどれくらいめり込んでいるかを算出
-			VECTOR tmp2 = moveCandidate - hitPos;
-			float len = VSize(tmp2);
-
-			//めり込んでいる場合はプレイヤーの中心を押し戻し
-			if (HitCheck_Sphere_Triangle(moveCandidate, player->GetCollide().radius,
-				hitPolyDim.Dim[i].Position[0],
-				hitPolyDim.Dim[i].Position[1],
-				hitPolyDim.Dim[i].Position[2]))
-			{
-				//めり込み解消する位置まで移動
-				len = player->GetCollide().radius - len;
-				moveVec = planeNormal * len;
-				moveCandidate += moveVec;
-			}
-
-			//移動候補を移動位置にする
-			newCenter = moveCandidate;
-
-			pushBack = newCenter - player->GetDirection() + VScale(player->GetDirection(), SCALE);
-		}
-	}
-	else
+	//for (auto itr = stageCreator->begin(); itr != stageCreator->end(); ++itr)
 	{
-		mapHit = false;
+		//モデル全体のコリジョン情報を構築
+		MV1SetupCollInfo(model, 0, 8, 8, 8);
+
+		//ステージモデルとプレイヤーの当たり判定
+		hitPolyDim = MV1CollCheck_Sphere(model, -1, player->GetCollide().worldCenter, player->GetCollide().radius);
+
+		VECTOR moveCandidate = player->GetCollide().worldCenter;	//球中心候補
+		VECTOR newCenter = player->GetCollide().worldCenter;		//移動候補
+
+		//プレイヤーがマップに当たったかどうか
+		if (hitPolyDim.HitNum)
+		{
+			//マップに衝突した
+			mapHit = true;
+
+			//衝突ポリゴンをすべて回って、球のめり込みを解消
+			for (int i = 0; i < hitPolyDim.HitNum; ++i)
+			{
+				//衝突ポリゴンの辺 
+				VECTOR edge1 = hitPolyDim.Dim[i].Position[1] - hitPolyDim.Dim[i].Position[0];
+				VECTOR edge2 = hitPolyDim.Dim[i].Position[2] - hitPolyDim.Dim[i].Position[0];
+
+				//衝突ポリゴンの辺より、ポリゴン面の法線ベクトルを求める
+				planeNormal = VCross(edge1, edge2);
+				planeNormal = VNorm(planeNormal);
+
+				//プレイヤー中心に最も近いポリゴン平面の点を求める
+				VECTOR tmp = moveCandidate - hitPolyDim.Dim[i].Position[0];
+				float dot = VDot(planeNormal, tmp);
+
+				//衝突点
+				VECTOR hitPos = moveCandidate - planeNormal * dot;
+
+				//プレイヤーがどれくらいめり込んでいるかを算出
+				VECTOR tmp2 = moveCandidate - hitPos;
+				float len = VSize(tmp2);
+
+				//めり込んでいる場合はプレイヤーの中心を押し戻し
+				if (HitCheck_Sphere_Triangle(moveCandidate, player->GetCollide().radius,
+					hitPolyDim.Dim[i].Position[0],
+					hitPolyDim.Dim[i].Position[1],
+					hitPolyDim.Dim[i].Position[2]))
+				{
+					//めり込み解消する位置まで移動
+					len = player->GetCollide().radius - len;
+					moveVec = planeNormal * len;
+					moveCandidate += moveVec;
+				}
+
+				//移動候補を移動位置にする
+				newCenter = moveCandidate;
+
+				pushBack = newCenter - player->GetDirection() + VScale(player->GetDirection(), SCALE);
+			}
+		}
+		else
+		{
+			mapHit = false;
+		}
 	}
 }
 

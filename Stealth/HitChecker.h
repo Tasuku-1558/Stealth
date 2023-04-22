@@ -8,6 +8,7 @@ class Player;
 class Enemy;
 class CakeBullet;
 class GoalFlag;
+class StageCreator;
 
 using namespace std;
 
