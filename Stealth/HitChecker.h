@@ -30,8 +30,8 @@ public:
 	void EnemyAndPlayer(Player* player, /*vector<Enemy*>* enemy*/Enemy* enemy);	//エネミーとプレイヤーの当たり判定
 
 	const bool UiHit() { return uiHit; }					//Ui画像に当たったかどうかを返す
-	const bool MapHit() { return mapHit; }					//マップにプレイヤーが衝突したかどうかを返す
 	const bool FlagHit() { return flagHit; }				//ゴールオブジェクトにプレイヤーが当たったかどうかを返す
+	const bool MapHit() { return mapHit; }					//マップにプレイヤーが衝突したかどうかを返す
 	const VECTOR Back() { return pushBack; }				//マップの壁にプレイヤーが衝突したときの押し戻し値を返す
 
 private:
@@ -56,6 +56,7 @@ private:
 
 	//定数
 	const int	 FRAME_INDEX;	//当たり判定情報を更新するフレームの番号
+	const int	 DIV_NUMBER;	//コリジョン情報の軸方向の空間分割数
 	const float  SCALE;			//スケーリング値
 	const VECTOR UI_POSITION;	//Ui画像の位置
 

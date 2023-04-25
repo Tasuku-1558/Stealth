@@ -142,7 +142,6 @@ void Player::Move(float deltaTime)
 		//十字キーの移動方向に移動
 		nextPosition += direction * speed * deltaTime;
 
-		//マップに衝突した
 		HitMap();
 	}
 
@@ -155,7 +154,7 @@ void Player::Move(float deltaTime)
 }
 
 /// <summary>
-/// マップに衝突した
+/// マップに衝突したかどうか
 /// </summary>
 void Player::HitMap()
 {

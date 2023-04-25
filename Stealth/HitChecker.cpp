@@ -15,13 +15,14 @@ using namespace Math3d;		//VECTORの計算に使用
 HitChecker::HitChecker()
 	: moveLengh(0.0f)
 	, uiHit(false)
-	, mapHit(false)
 	, flagHit(false)
+	, mapHit(false)
 	, uiPosition()
 	, pushBack()
 	, moveVec()
 	, planeNormal()
 	, hitPolyDim()
+	, DIV_NUMBER(8)
 	, FRAME_INDEX(-1)
 	, SCALE(10.0f)
 	, UI_POSITION({ 0.0f, 30.0f, 800.0f })
@@ -137,7 +138,7 @@ void HitChecker::MapAndPlayer(vector<Stage*>* stage, Player* player)
 	for (auto itr = stage->begin(); itr != stage->end(); ++itr)
 	{
 		//モデル全体のコリジョン情報を構築
-		MV1SetupCollInfo((*itr)->GetModelHandle(), 0, 8, 8, 8);
+		MV1SetupCollInfo((*itr)->GetModelHandle(), FRAME_INDEX, DIV_NUMBER, DIV_NUMBER, DIV_NUMBER);
 
 		//ステージモデルとプレイヤーの当たり判定
 		hitPolyDim = MV1CollCheck_Sphere((*itr)->GetModelHandle(), FRAME_INDEX, player->GetCollide().worldCenter, player->GetCollide().radius);

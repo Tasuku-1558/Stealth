@@ -85,7 +85,7 @@ private:
 	void UpdateOver(float deltaTime);				//ゲームオーバー
 	void (GameScene::* pUpdate)(float deltaTime);	//Update関数ポインタ
 
-	struct S
+	struct StageList
 	{
 		int number;				//ステージの番号
 		char name[7];			//ステージの名前

@@ -31,8 +31,8 @@ GameScene::GameScene()
 	, gameFontHandle(0)
 	, stageNo(0)
 	, frame(0.0f)
-	, particleFlag(false)
 	, particleInterval(0.0f)
+	, particleFlag(false)
 	, clear(true)
 	, FIRST_STAGE_NUMBER(1)
 	, SECOND_STAGE_NUMBER(2)
@@ -56,11 +56,6 @@ GameScene::GameScene()
 GameScene::~GameScene()
 {
 	DeleteFontToHandle(gameFontHandle);
-
-	for (auto CakeBulletPtr : cakeBullet)
-	{
-		DeleteCakeBullet(CakeBulletPtr);
-	}
 }
 
 /// <summary>
@@ -82,29 +77,29 @@ void GameScene::Initialize()
 
 	stageNo = Set::GetInstance().GetStage();
 
-	S stage[] =
+	StageList stageList[] =
 	{
-		{FIRST_STAGE_NUMBER,"stage1"},
+		{FIRST_STAGE_NUMBER,  "stage1"},
 		{SECOND_STAGE_NUMBER, "stage2"},
 	};
 
 	for (int i = 0; i < 2; i++)
 	{
-		if (stageNo == stage[i].number)
+		if (stageNo == stageList[i].number)
 		{
 			StagePop(StageData::stage1);
 
 			//エネミーに行動パターンのナンバーとスピードを設定
-			enemy = new Enemy(GameData::doc["EnemyMovePattern"][stage[i].name].GetInt(), GameData::doc["EnemySpeed"][stage[i].name].GetFloat());
+			enemy = new Enemy(GameData::doc["EnemyMovePattern"][stageList[i].name].GetInt(), GameData::doc["EnemySpeed"][stageList[i].name].GetFloat());
 
 			//ゴールフラグの初期位置を設定
-			goalFlag = new GoalFlag({ GameData::doc["GoalPosition"][stage[i].name]["x"].GetFloat(),
-									  GameData::doc["GoalPosition"][stage[i].name]["y"].GetFloat(),
-									  GameData::doc["GoalPosition"][stage[i].name]["z"].GetFloat() });
+			goalFlag = new GoalFlag({ GameData::doc["GoalPosition"][stageList[i].name]["x"].GetFloat(),
+									  GameData::doc["GoalPosition"][stageList[i].name]["y"].GetFloat(),
+									  GameData::doc["GoalPosition"][stageList[i].name]["z"].GetFloat() });
 
-			CakeBulletPop(stage[i].number);
+			CakeBulletPop(stageList[i].number);
 
-			EnemyPop(stage[i].number);
+			EnemyPop(stageList[i].number);
 		}
 	}
 	

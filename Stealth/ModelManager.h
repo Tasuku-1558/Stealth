@@ -59,5 +59,4 @@ private:
 	const string STAGE1_PATH;		//stage1モデルファイルのパス
 	const string STAGE2_PATH;		//stage2モデルファイルのパス
 	const string GOAL_FLAG_PATH;	//goal_flagモデルファイルのパス
-
 };

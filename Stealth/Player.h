@@ -1,6 +1,5 @@
 #pragma once
 
-#include "DxLib.h"
 #include "PlayerBase.h"
 #include "Math3D.h"
 #include "Collision.h"
@@ -33,7 +32,7 @@ private:
 	void KeyInput();				//キー入力処理
 	void AfterImage();				//プレイヤーの残像処理
 	void FoundCount();				//エネミーに見つかった時の初期位置へ戻すカウント
-	void HitMap();					//マップに衝突した
+	void HitMap();					//マップに衝突したかどうか
 
 	//キー入力
 	struct Key
