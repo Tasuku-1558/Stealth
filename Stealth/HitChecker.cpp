@@ -5,7 +5,7 @@
 #include "Enemy.h"
 #include "CakeBullet.h"
 #include "GoalFlag.h"
-#include "StageCreator.h"
+#include "Stage.h"
 
 using namespace Math3d;		//VECTORの計算に使用
 
@@ -22,6 +22,7 @@ HitChecker::HitChecker()
 	, moveVec()
 	, planeNormal()
 	, hitPolyDim()
+	, FRAME_INDEX(-1)
 	, SCALE(10.0f)
 	, UI_POSITION({ 0.0f, 30.0f, 800.0f })
 {
@@ -39,16 +40,16 @@ HitChecker::~HitChecker()
 /// <summary>
 /// 衝突判定
 /// </summary>
-/// <param name="model">ステージモデル</param>
+/// <param name="stage">ステージのポインタ</param>
 /// <param name="player">プレイヤーのポインタ</param>
 /// <param name="cakeBullet">ケーキバレットのポインタ</param>
 /// <param name="goalFlag">ゴールオブジェクトのポインタ</param>
-void HitChecker::Check(int model, Player* player, vector<CakeBullet*>* cakeBullet, /*vector<Enemy*>* enemy,*/ GoalFlag* goalFlag)
+void HitChecker::Check(vector<Stage*>* stage, Player* player, vector<CakeBullet*>* cakeBullet, /*vector<Enemy*>* enemy,*/ GoalFlag* goalFlag)
 {
 	CakeAndPlayer(player, cakeBullet);
 	//EnemyAndPlayer(player, enemy);
 	PlayerAndUi(player);
-	MapAndPlayer(model, player);
+	MapAndPlayer(stage, player);
 	FlagAndPlayer(goalFlag, player);
 }
 
@@ -129,17 +130,17 @@ void HitChecker::PlayerAndUi(Player* player)
 /// <summary>
 /// マップとプレイヤーの当たり判定
 /// </summary>
-/// <param name="model">ステージのモデル</param>
+/// <param name="stage">ステージのポインタ</param>
 /// <param name="player">プレイヤーのポインタ</param>
-void HitChecker::MapAndPlayer(int model, Player* player)
+void HitChecker::MapAndPlayer(vector<Stage*>* stage, Player* player)
 {
-	//for (auto itr = stageCreator->begin(); itr != stageCreator->end(); ++itr)
+	for (auto itr = stage->begin(); itr != stage->end(); ++itr)
 	{
 		//モデル全体のコリジョン情報を構築
-		MV1SetupCollInfo(model, 0, 8, 8, 8);
+		MV1SetupCollInfo((*itr)->GetModelHandle(), 0, 8, 8, 8);
 
 		//ステージモデルとプレイヤーの当たり判定
-		hitPolyDim = MV1CollCheck_Sphere(model, -1, player->GetCollide().worldCenter, player->GetCollide().radius);
+		hitPolyDim = MV1CollCheck_Sphere((*itr)->GetModelHandle(), FRAME_INDEX, player->GetCollide().worldCenter, player->GetCollide().radius);
 
 		VECTOR moveCandidate = player->GetCollide().worldCenter;	//球中心候補
 		VECTOR newCenter = player->GetCollide().worldCenter;		//移動候補

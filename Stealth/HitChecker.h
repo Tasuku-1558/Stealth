@@ -8,7 +8,7 @@ class Player;
 class Enemy;
 class CakeBullet;
 class GoalFlag;
-class StageCreator;
+class Stage;
 
 using namespace std;
 
@@ -21,7 +21,7 @@ public:
 	HitChecker();
 	virtual ~HitChecker();
 
-	void Check(int model, 
+	void Check(vector<Stage*>* stage, 
 			   Player* player, 
 			   vector<CakeBullet*>* cakeBullet, 
 			  /* vector<Enemy*>* enemy, */
@@ -38,9 +38,9 @@ private:
 	HitChecker(const HitChecker&);							//コピーコンストラクタ
 
 	void CakeAndPlayer(Player* player, vector<CakeBullet*>* cakeBullet);	//ケーキとプレイヤーの当たり判定
-	void PlayerAndUi(Player* player);							//プレイヤーとUi画像の当たり判定
-	void MapAndPlayer(int model, Player* player);				//マップとプレイヤーの当たり判定
-	void FlagAndPlayer(GoalFlag* goalFlag, Player* player);		//ゴールオブジェクトとプレイヤーの当たり判定
+	void PlayerAndUi(Player* player);										//プレイヤーとUi画像の当たり判定
+	void MapAndPlayer(vector<Stage*>* stage, Player* player);				//マップとプレイヤーの当たり判定
+	void FlagAndPlayer(GoalFlag* goalFlag, Player* player);					//ゴールオブジェクトとプレイヤーの当たり判定
 
 
 	float moveLengh;		//移動量
@@ -55,7 +55,8 @@ private:
 	MV1_COLL_RESULT_POLY_DIM hitPolyDim;
 
 	//定数
-	const float SCALE;			//スケーリング値
+	const int	 FRAME_INDEX;	//当たり判定情報を更新するフレームの番号
+	const float  SCALE;			//スケーリング値
 	const VECTOR UI_POSITION;	//Ui画像の位置
 
 };

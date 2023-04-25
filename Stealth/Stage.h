@@ -3,7 +3,7 @@
 #include "ObjectBase.h"
 
 /// <summary>
-/// ステージクラス
+/// ステージブロッククラス
 /// </summary>
 class Stage final : public ObjectBase
 {

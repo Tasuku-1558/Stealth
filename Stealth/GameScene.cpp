@@ -1,7 +1,6 @@
 #include "Json.h"
 #include "GameScene.h"
 #include "DxLib.h"
-#include "PreCompiledHeader.h"
 
 #include "Camera.h"
 #include "Light.h"
@@ -18,7 +17,6 @@
 #include "FadeManager.h"
 #include "Set.h"
 
-#include "StageCreator.h"
 
 //デバック用
 #define DEBUG
@@ -36,6 +34,8 @@ GameScene::GameScene()
 	, particleFlag(false)
 	, particleInterval(0.0f)
 	, clear(true)
+	, FIRST_STAGE_NUMBER(1)
+	, SECOND_STAGE_NUMBER(2)
 	, GAME_FONT_SIZE(50)
 	, FONT_THICK(1)
 	, PARTICLE_NUMBER(500)
@@ -43,6 +43,7 @@ GameScene::GameScene()
 	, GAME_START_COUNT(1.3f)
 	, MAX_PARTICLE_INTERVAL(5.0f)
 	, PARTICLE_INTERVAL(0.0f)
+	, STAGE_POS_Y(0.0f)
 {
 	GameData::doc.ParseStream(GameData::isw);
 
@@ -81,46 +82,35 @@ void GameScene::Initialize()
 
 	stageNo = Set::GetInstance().GetStage();
 
-	if (stageNo == 1)
+	S stage[] =
 	{
-		for (auto itr = stageCreator.begin(); itr != stageCreator.end(); ++itr) 
-		{
-			(*itr) = new StageCreator();
-		}
+		{FIRST_STAGE_NUMBER,"stage1"},
+		{SECOND_STAGE_NUMBER, "stage2"},
+	};
 
-		//エネミーに行動パターンのナンバーとスピードを設定
-		enemy = new Enemy(GameData::doc["EnemyMovePattern"]["stage1"].GetInt(), GameData::doc["EnemySpeed"]["stage1"].GetFloat());
-
-		//ゴールフラグの初期位置を設定
-		goalFlag = new GoalFlag({ GameData::doc["GoalPosition"]["x"].GetFloat(),
-								  GameData::doc["GoalPosition"]["y"].GetFloat(),
-								  GameData::doc["GoalPosition"]["z"].GetFloat() });
-	}
-	if (stageNo == 2)
+	for (int i = 0; i < 2; i++)
 	{
-		for (auto itr = stageCreator.begin(); itr != stageCreator.end(); ++itr)
+		if (stageNo == stage[i].number)
 		{
-			(*itr) = new StageCreator();
+			StagePop(StageData::stage1);
+
+			//エネミーに行動パターンのナンバーとスピードを設定
+			enemy = new Enemy(GameData::doc["EnemyMovePattern"][stage[i].name].GetInt(), GameData::doc["EnemySpeed"][stage[i].name].GetFloat());
+
+			//ゴールフラグの初期位置を設定
+			goalFlag = new GoalFlag({ GameData::doc["GoalPosition"][stage[i].name]["x"].GetFloat(),
+									  GameData::doc["GoalPosition"][stage[i].name]["y"].GetFloat(),
+									  GameData::doc["GoalPosition"][stage[i].name]["z"].GetFloat() });
+
+			CakeBulletPop(stage[i].number);
+
+			EnemyPop(stage[i].number);
 		}
-
-		//エネミーに行動パターンのナンバーとスピードを設定
-		enemy = new Enemy(GameData::doc["EnemyMovePattern"]["stage2"].GetInt(), GameData::doc["EnemySpeed"]["stage1"].GetFloat());
-
-		//ゴールフラグの初期位置を設定
-		goalFlag = new GoalFlag({ GameData::doc["GoalPosition"]["x"].GetFloat(),
-								  GameData::doc["GoalPosition"]["y"].GetFloat(),
-								  GameData::doc["GoalPosition"]["z"].GetFloat() });
 	}
 	
 	uiManager = new UiManager();
 
 	fadeManager = new FadeManager();
-
-	//ケーキの初期位置を設定
-	CakeBulletPop();
-
-	//エネミーの初期位置を設定
-	EnemyPop();
 
 	//ゲームフォントの読み込み
 	gameFontHandle = CreateFontToHandle("Oranienbaum", GAME_FONT_SIZE, FONT_THICK);
@@ -140,6 +130,56 @@ SceneType GameScene::Update(float deltaTime)
 	}
 
 	return nowSceneType;
+}
+
+/// <summary>
+/// ステージを登録
+/// </summary>
+/// <param name="newStage">登録するステージのポインタ</param>
+void GameScene::EntryStage(Stage* newStage)
+{
+	stage.emplace_back(newStage);
+}
+
+/// <summary>
+/// ステージの削除
+/// </summary>
+/// <param name="deleteStage">削除するステージのポインタ</param>
+void GameScene::DeleteStage(Stage* deleteStage)
+{
+	//ステージオブジェクトから検索して削除
+	auto iter = std::find(stage.begin(), stage.end(), deleteStage);
+
+	if (iter != stage.end())
+	{
+		//ステージオブジェクトを最後尾に移動してデータを消す
+		std::iter_swap(iter, stage.end() - 1);
+		stage.pop_back();
+
+		return;
+	}
+}
+
+/// <summary>
+/// ステージの出現
+/// </summary>
+/// <param name="stageData">ステージのデータ</param>
+void GameScene::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
+{
+	for (int i = 0; i < BLOCK_NUM_Z; i++)
+	{
+		for (int j = 0; j < BLOCK_NUM_X; j++)
+		{
+			float posX = (j * 300.0f) + 50.0f;
+			float posZ = (i * 300.0f) + 50.0f;
+
+			if (stageData[j][i] == 0)
+			{
+				Stage* newStage = new Stage({ posX, STAGE_POS_Y, posZ });
+				EntryStage(newStage);
+			}
+		}
+	}
 }
 
 /// <summary>
@@ -173,18 +213,21 @@ void GameScene::DeleteCakeBullet(CakeBullet* deleteCakeBullet)
 /// <summary>
 /// ケーキバレットの出現
 /// </summary>
-void GameScene::CakeBulletPop()
+/// <param name="number">ステージの番号</param>
+void GameScene::CakeBulletPop(int number)
 {
-	//ケーキの座標を設定
-	CakeBullet* newCakeBullet = new CakeBullet({ GameData::doc["CakePosition"]["stage1"]["x"].GetFloat(),
-												 GameData::doc["CakePosition"]["stage1"]["y"].GetFloat(),
-												 GameData::doc["CakePosition"]["stage1"]["z"].GetFloat() }, effectManager, player);
-	EntryCakeBullet(newCakeBullet);
+	if (number == FIRST_STAGE_NUMBER)
+	{
+		CakeBullet* newCakeBullet = new CakeBullet({ GameData::doc["CakePosition"]["stage1"]["x"].GetFloat(),
+													 GameData::doc["CakePosition"]["stage1"]["y"].GetFloat(),
+													 GameData::doc["CakePosition"]["stage1"]["z"].GetFloat() }, effectManager, player);
+		EntryCakeBullet(newCakeBullet);
 
-	CakeBullet* newCakeBullet2 = new CakeBullet({ GameData::doc["CakePosition"]["stage2"]["x"].GetFloat(),
-												  GameData::doc["CakePosition"]["stage2"]["y"].GetFloat(),
-												  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() }, effectManager, player);
-	EntryCakeBullet(newCakeBullet2);
+		CakeBullet* newCakeBullet2 = new CakeBullet({ GameData::doc["CakePosition"]["stage2"]["x"].GetFloat(),
+													  GameData::doc["CakePosition"]["stage2"]["y"].GetFloat(),
+													  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() }, effectManager, player);
+		EntryCakeBullet(newCakeBullet2);
+	}
 }
 
 /// <summary>
@@ -206,7 +249,8 @@ void GameScene::DeleteEnemy(Enemy* deleteEnemy)
 /// <summary>
 /// エネミーの出現
 /// </summary>
-void GameScene::EnemyPop()
+/// <param name="number">ステージの番号</param>
+void GameScene::EnemyPop(int number)
 {
 }
 
@@ -378,7 +422,7 @@ void GameScene::UpdateGame(float deltaTime)
 		particlePtr->Update(deltaTime);
 	}
 
-	hitChecker->Check(0, player, &cakeBullet, /*&enemy,*/ goalFlag);
+	hitChecker->Check(&stage, player, &cakeBullet, /*&enemy,*/ goalFlag);
 	hitChecker->EnemyAndPlayer(player, enemy);
 
 	ChangeScreen();
@@ -418,9 +462,9 @@ void GameScene::Draw()
 {
 	backGround->Draw();
 
-	for (auto itr = stageCreator.begin(); itr != stageCreator.end(); ++itr)
+	for (auto StagePtr : stage)
 	{
-		(*itr)->Draw();
+		StagePtr->Draw();
 	}
 
 	enemy->Draw();
