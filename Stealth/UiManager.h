@@ -54,6 +54,6 @@ private:
 	const int	 MAX_ALPHA;					//最大透過度
 	const int	 INC_SPEED;					//透過スピード
 	const string IMAGE_FOLDER_PATH;			//画像格納フォルダ
-	const string UI_GRAPHIC_PATH;			//UI画像
+	const string UI_GRAPHIC_PATH;			//Ui画像
 	const string IMAGE_FILENAME_EXTENSION;	//画像拡張子
 };

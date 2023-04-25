@@ -103,15 +103,15 @@ void HitChecker::EnemyAndPlayer(Player* player, /*vector<Enemy*>* enemy*/Enemy* 
 }
 
 /// <summary>
-/// プレイヤーとUI画像の当たり判定
+/// プレイヤーとUi画像の当たり判定
 /// </summary>
 /// <param name="player">プレイヤーのポインタ</param>
 void HitChecker::PlayerAndUi(Player* player)
 {
-	//プレイヤーからUI画像の座標を引いた値を取得
+	//プレイヤーからUi画像の座標を引いた値を取得
 	VECTOR sub = player->GetPosition() - uiPosition;
 
-	//プレイヤーとUI画像の距離を計算
+	//プレイヤーとUi画像の距離を計算
 	float distance = VSize(sub);
 	float radius = player->GetCollide().radius + 50.0f;
 

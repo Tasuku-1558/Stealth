@@ -18,8 +18,7 @@ ResultScene::ResultScene()
 	, alpha(255)
 	, inc(-3)
 	, backGroundImage(0)
-	, backGroundX(0)
-	, backGroundY(0)
+	, backGroundPosY(0)
 	, frame(0.0f)
 	, fireWorksParticle()
 	, particleFlag(false)
@@ -27,16 +26,26 @@ ResultScene::ResultScene()
 	, clear(false)
 	, titleFlag(false)
 	, selectionFlag(false)
-	, gameClear("GAME CLEAR")
-	, gameOver("GAME OVER")
 	, RESULT_FONT_SIZE(150)
 	, FONT_THICK(1)
 	, PARTICLE_NUMBER(500)
 	, MAX_ALPHA(255)
 	, INC_SPEED(-1)
+	, RESULT_UI_POS_X(1500)
+	, RESULT_UI_POS_Y(1000)
+	, BACKGROUND_POS_X(0)
 	, BACKGROUND_Y_INCREASE(2)
-	, INITIAL_BACKGROUND_Y(0)
+	, INITIAL_BACKGROUND_POS_Y(0)
+	, RESULT_STRING_POS_X(600)
+	, RESULT_STRING_POS_Y(400)
+	, GAME_CLEAR_COLOR(GetColor(255, 215, 0))
+	, GAME_OVER_COLOR(GetColor(255, 0, 0))
 	, MAX_PARTICLE_INTERVAL(2.0f)
+	, PARTICLE_INTERVAL(0.0f)
+	, RESULT_UI_SIZE(0.5)
+	, RESULT_UI_ANGLE(0.0)
+	, GAME_CLEAR("GAME CLEAR")
+	, GAME_OVER("GAME OVER")
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, RESULT_UI_PATH("resultUi.png")
 	, RESULT_BACKGROUND_PATH("resultBackGround.png")
@@ -151,7 +160,7 @@ SceneType ResultScene::Update(float deltaTime)
 		if (particleInterval > MAX_PARTICLE_INTERVAL)
 		{
 			particleFlag = false;
-			particleInterval = 0.0f;
+			particleInterval = PARTICLE_INTERVAL;
 		}
 	}
 	
@@ -243,7 +252,7 @@ void ResultScene::Blink()
 
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 
-	DrawRotaGraph(1500, 1000, 0.5f, 0, resultUiImage, TRUE);
+	DrawRotaGraph(RESULT_UI_POS_X, RESULT_UI_POS_Y, RESULT_UI_SIZE, RESULT_UI_ANGLE, resultUiImage, TRUE);
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
 }
@@ -253,12 +262,12 @@ void ResultScene::Blink()
 /// </summary>
 void ResultScene::BackGroundMove()
 {
-	backGroundY += BACKGROUND_Y_INCREASE;
+	backGroundPosY += BACKGROUND_Y_INCREASE;
 
-	//Y座標がスクリーン端になったら
-	if (backGroundY == SCREEN_HEIGHT)
+	//背景画像のY座標がスクリーンの端にいったら
+	if (backGroundPosY == SCREEN_HEIGHT)
 	{
-		backGroundY = INITIAL_BACKGROUND_Y;
+		backGroundPosY = INITIAL_BACKGROUND_POS_Y;
 	}
 }
 
@@ -267,9 +276,9 @@ void ResultScene::BackGroundMove()
 /// </summary>
 void ResultScene::Draw()
 {
-	DrawGraph(backGroundX, backGroundY,  backGroundImage, TRUE);
+	DrawGraph(BACKGROUND_POS_X, backGroundPosY,  backGroundImage, TRUE);
 
-	DrawGraph(backGroundX, backGroundY - SCREEN_HEIGHT, backGroundImage, TRUE);
+	DrawGraph(BACKGROUND_POS_X, backGroundPosY - SCREEN_HEIGHT, backGroundImage, TRUE);
 
 	//ゲームクリアならば
 	if (clear)
@@ -279,12 +288,12 @@ void ResultScene::Draw()
 			fireWorksParticlePtr->Draw();
 		}
 
-		DrawFormatStringToHandle(600, 400, GetColor(255, 215, 0), resultFontHandle, "%s", gameClear);
+		DrawFormatStringToHandle(RESULT_STRING_POS_X, RESULT_STRING_POS_Y, GAME_CLEAR_COLOR, resultFontHandle, "%s", GAME_CLEAR);
 	}
 	//ゲームオーバーならば
 	else
 	{
-		DrawFormatStringToHandle(600, 400, GetColor(255, 0, 0), resultFontHandle, "%s", gameOver);
+		DrawFormatStringToHandle(RESULT_STRING_POS_X, RESULT_STRING_POS_Y, GAME_OVER_COLOR, resultFontHandle, "%s", GAME_OVER);
 	}
 
 	Blink();

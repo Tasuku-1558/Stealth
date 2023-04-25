@@ -5,22 +5,12 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="modelType"></param>
-/// <param name="size"></param>
-/// <param name="rotate"></param>
-/// <param name="position"></param>
-Stage::Stage(/*ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, */VECTOR position)
-	: stageModel(0)
+/// <param name="position">壁モデルの位置</param>
+Stage::Stage(VECTOR position)
 {
-	/*modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(modelType));
-	MV1SetScale(modelHandle, size);
-	MV1SetRotationXYZ(modelHandle, rotate);
-	MV1SetPosition(modelHandle, position);*/
-
-	stageModel = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE));
-
-	//壁モデルの位置を設定
-	MV1SetPosition(stageModel, position);
+	//壁モデルの読み込みと位置を設定
+	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE));
+	MV1SetPosition(modelHandle, position);
 }
 
 /// <summary>
@@ -28,9 +18,7 @@ Stage::Stage(/*ModelManager::ModelType modelType, VECTOR size, VECTOR rotate, */
 /// </summary>
 Stage::~Stage()
 {
-	MV1DeleteModel(stageModel);
-
-	//MV1DeleteModel(modelHandle);
+	MV1DeleteModel(modelHandle);
 }
 
 /// <summary>
@@ -38,7 +26,5 @@ Stage::~Stage()
 /// </summary>
 void Stage::Draw()
 {
-	//MV1DrawModel(modelHandle);
-
-	MV1DrawModel(stageModel);
+	MV1DrawModel(modelHandle);
 }

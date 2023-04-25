@@ -45,6 +45,7 @@ private:
 	void CakeEatCount(float deltaTime);			//秒数によってケーキの状態変化
 	void ReactionDraw();						//リアクション画像の描画処理
 	void EnemyRotate(float deltaTime);			//エネミーの回転処理
+	void EnemyRotateTime(float deltaTime);		//エネミーの回転の時間
 	bool IsGoal(float deltaTime);				//目的地に到達したならば
 
 	//エネミーの動き

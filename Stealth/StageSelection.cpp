@@ -21,6 +21,9 @@ StageSelection::StageSelection()
 	, MAX_STAGE(6)
 	, FIRST_STAGE_NUMBER(1)
 	, SECOND_STAGE_NUMBER(2)
+	, THIRD_STAGE_NUMBER(3)
+	, FOURTH_STAGE_NUMBER(4)
+	, FIFTH_STAGE_NUMBER(5)
 	, TITLE_RETURN_NUMBER(6)
 	, ADD_STAGE_NUMBER(1)
 	, SELECTION_FONT_SIZE(120)
@@ -98,10 +101,13 @@ int StageSelection::StageCreator(int stageNumber)
 		//各シーン
 		{FIRST_STAGE_NUMBER,  SceneType::GAME},
 		{SECOND_STAGE_NUMBER, SceneType::GAME},
+		{THIRD_STAGE_NUMBER,  SceneType::GAME},
+		{FOURTH_STAGE_NUMBER, SceneType::GAME},
+		{FIFTH_STAGE_NUMBER,  SceneType::GAME},
 		{TITLE_RETURN_NUMBER, SceneType::TITLE},
 	};
 
-	for (int i = 0; i < 3/*MAX_STAGE*/; i++)
+	for (int i = 0; i < MAX_STAGE; i++)
 	{
 		if (stageNumber == stage[i].number)
 		{
@@ -138,8 +144,8 @@ void StageSelection::KeyMove(float deltaTime)
 	if (!changeScene)
 	{
 		//矢印キー操作
-		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_UP)   && pushCount < MAX_PUSH_COUNT ||
-			KeyManager::GetInstance().CheckPressed(KEY_INPUT_DOWN) && pushCount < MAX_PUSH_COUNT)
+		if ((KeyManager::GetInstance().CheckPressed(KEY_INPUT_UP) || 
+			 KeyManager::GetInstance().CheckPressed(KEY_INPUT_DOWN)) && pushCount < MAX_PUSH_COUNT)
 		{
 			stageNo = stageDecrement(stageNo);
 			pushCount = PUSH_INTERVAL;
@@ -182,27 +188,27 @@ void StageSelection::Draw()
 {
 	//それぞれのステージごとのUi描画処理
 	//マップの番号、敵の数、ケーキの数を入力
-	if (stageNo == 1)
+	if (stageNo == FIRST_STAGE_NUMBER)
 	{
 		selectionUi->StageUiDraw(0, 1, 1);
 	}
-	else if (stageNo == 2)
+	else if (stageNo == SECOND_STAGE_NUMBER)
 	{
 		selectionUi->StageUiDraw(1, 2, 2);
 	}
-	else if (stageNo == 3)
+	else if (stageNo == THIRD_STAGE_NUMBER)
 	{
 		selectionUi->StageUiDraw(2, 4, 2);
 	}
-	else if (stageNo == 4)
+	else if (stageNo == FOURTH_STAGE_NUMBER)
 	{
 		selectionUi->StageUiDraw(3, 3, 1);
 	}
-	else if (stageNo == 5)
+	else if (stageNo == FIFTH_STAGE_NUMBER)
 	{
 		selectionUi->StageUiDraw(4, 4, 1);
 	}
-	if (stageNo == 6)
+	if (stageNo == TITLE_RETURN_NUMBER)
 	{
 		selectionUi->TitleUiDraw();
 	}

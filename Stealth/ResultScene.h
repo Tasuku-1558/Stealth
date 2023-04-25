@@ -23,7 +23,7 @@ public:
 	void Draw()override;						//描画処理
 
 private:
-	ResultScene(const ResultScene&);	//コピーコンストラクタ
+	ResultScene(const ResultScene&);		//コピーコンストラクタ
 	
 	void Initialize()override;				//初期化処理
 	void SceneChange();						//シーン切り替え
@@ -42,31 +42,45 @@ private:
 
 
 	int resultFontHandle;	//ゲームフォント
-	int resultUiImage;		//リザルト画面のUI画像格納用
+	int resultUiImage;		//遷移キーのUi画像格納用
 	int alpha;				//透過度
 	int inc;				//透過スピード
 	int backGroundImage;	//リザルト画面の背景格納用
-	int backGroundX;		//背景のX座標
-	int backGroundY;		//背景のY座標
+	int backGroundPosY;		//背景のY座標
 	float frame;			//フレーム数
 	float particleInterval;	//パーティクル出現のインターバル
 	bool  particleFlag;		//パーティクルを出したら
 	bool clear;				//ゲームをクリアしてるかしていないか
 	bool titleFlag;			//タイトル画面へ遷移するかしないか
 	bool selectionFlag;		//ステージセレクション画面へ遷移するかしないか
-	char gameClear[11];		//ゲームクリアの文字格納用
-	char gameOver[10];		//ゲームオーバーの文字格納用
 
 	//定数
-	const int	 RESULT_FONT_SIZE;			//ゲームフォントのサイズ
-	const int	 FONT_THICK;				//フォントの太さ
-	const int    PARTICLE_NUMBER;			//パーティクルの数
-	const int	 MAX_ALPHA;					//最大透過度
-	const int	 INC_SPEED;					//透過スピード
-	const int	 BACKGROUND_Y_INCREASE;		//背景のY座標の増加量
-	const int	 INITIAL_BACKGROUND_Y;		//初期のY座標
-	const float  MAX_PARTICLE_INTERVAL;		//パーティクル出現の最大インターバル
+	const int RESULT_FONT_SIZE;				//ゲームフォントのサイズ
+	const int FONT_THICK;					//フォントの太さ
+	const int PARTICLE_NUMBER;				//パーティクルの数
+	const int MAX_ALPHA;					//最大透過度
+	const int INC_SPEED;					//透過スピード
+	const int RESULT_UI_POS_X;				//遷移キーのUi画像のX座標
+	const int RESULT_UI_POS_Y;				//遷移キーのUi画像のY座標
+	const int BACKGROUND_POS_X;				//背景のX座標
+	const int BACKGROUND_Y_INCREASE;		//背景のY座標の増加量
+	const int INITIAL_BACKGROUND_POS_Y;		//初期のY座標
+	const int RESULT_STRING_POS_X;			//リザルト文字のX座標
+	const int RESULT_STRING_POS_Y;			//リザルト文字のY座標
+
+	const unsigned int GAME_CLEAR_COLOR;	//ゲームクリアのカラー
+	const unsigned int GAME_OVER_COLOR;		//ゲームオーバーのカラー
+
+	const float MAX_PARTICLE_INTERVAL;		//パーティクル出現の最大インターバル
+	const float PARTICLE_INTERVAL;			//初期のパーティクル出現インターバル
+
+	const double RESULT_UI_SIZE;			//遷移キーのUi画像の大きさ
+	const double RESULT_UI_ANGLE;			//遷移キーのUi画像の回転値
+
+	const char GAME_CLEAR[11];				//ゲームクリアの文字
+	const char GAME_OVER[10];				//ゲームオーバーの文字
+
 	const string IMAGE_FOLDER_PATH;			//Imageフォルダまでのパス
-	const string RESULT_UI_PATH;			//リザルト画面のUIのパス
+	const string RESULT_UI_PATH;			//リザルト画面のUiのパス
 	const string RESULT_BACKGROUND_PATH;	//リザルト画面の背景画像のパス
 };

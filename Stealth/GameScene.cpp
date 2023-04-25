@@ -83,11 +83,10 @@ void GameScene::Initialize()
 
 	if (stageNo == 1)
 	{
-		////マップモデルの種類、サイズ、回転値、位置を入力する
-		//stage = new Stage(ModelManager::STAGE1, { 80.0f, 50.0f, 80.0f },
-		//	{ 0.0f, 180.0f * DX_PI_F / 180.0f, 0.0f }, { -780.0f, -100.0f, 2400.0f });
-
-		stageCreator = new StageCreator();
+		for (auto itr = stageCreator.begin(); itr != stageCreator.end(); ++itr) 
+		{
+			(*itr) = new StageCreator();
+		}
 
 		//エネミーに行動パターンのナンバーとスピードを設定
 		enemy = new Enemy(GameData::doc["EnemyMovePattern"]["stage1"].GetInt(), GameData::doc["EnemySpeed"]["stage1"].GetFloat());
@@ -99,9 +98,10 @@ void GameScene::Initialize()
 	}
 	if (stageNo == 2)
 	{
-		////マップモデルの種類、サイズ、回転値、位置を入力する
-		//stage = new Stage(ModelManager::STAGE2, { 80.0f, 60.0f, 80.0f },
-		//	{ 0.0f, 0.0f, 0.0f }, { -7000.0f, -100.0f, -2900.0f });
+		for (auto itr = stageCreator.begin(); itr != stageCreator.end(); ++itr)
+		{
+			(*itr) = new StageCreator();
+		}
 
 		//エネミーに行動パターンのナンバーとスピードを設定
 		enemy = new Enemy(GameData::doc["EnemyMovePattern"]["stage2"].GetInt(), GameData::doc["EnemySpeed"]["stage1"].GetFloat());
@@ -118,6 +118,9 @@ void GameScene::Initialize()
 
 	//ケーキの初期位置を設定
 	CakeBulletPop();
+
+	//エネミーの初期位置を設定
+	EnemyPop();
 
 	//ゲームフォントの読み込み
 	gameFontHandle = CreateFontToHandle("Oranienbaum", GAME_FONT_SIZE, FONT_THICK);
@@ -182,6 +185,29 @@ void GameScene::CakeBulletPop()
 												  GameData::doc["CakePosition"]["stage2"]["y"].GetFloat(),
 												  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() }, effectManager, player);
 	EntryCakeBullet(newCakeBullet2);
+}
+
+/// <summary>
+/// エネミーを登録
+/// </summary>
+/// <param name="newEnemy">登録するエネミーのポインタ</param>
+void GameScene::EntryEnemy(Enemy* newEnemy)
+{
+}
+
+/// <summary>
+/// エネミーの削除
+/// </summary>
+/// <param name="deleteEnemy">削除するエネミーのポインタ</param>
+void GameScene::DeleteEnemy(Enemy* deleteEnemy)
+{
+}
+
+/// <summary>
+/// エネミーの出現
+/// </summary>
+void GameScene::EnemyPop()
+{
 }
 
 /// <summary>
@@ -392,7 +418,10 @@ void GameScene::Draw()
 {
 	backGround->Draw();
 
-	stageCreator->Draw();
+	for (auto itr = stageCreator.begin(); itr != stageCreator.end(); ++itr)
+	{
+		(*itr)->Draw();
+	}
 
 	enemy->Draw();
 

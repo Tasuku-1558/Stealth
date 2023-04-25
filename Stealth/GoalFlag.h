@@ -31,5 +31,4 @@ private:
 	const float  ROTATE_SPEED;		//モデルの回転スピード
 	const float  RADIUS;			//ゴールフラグの半径
 	const VECTOR SIZE;				//モデルの倍率
-
 };

@@ -18,11 +18,9 @@ SelectionUi::SelectionUi()
 	, STAGE1_POSITION({ 500.0f, 700.0f, 250.0f })
 	, STAGE1_SIZE({ 14.0f, 14.0f, 14.0f })
 	, STAGE1_ROTATE({ 0.0f, 180.0f * DX_PI_F / 180.0f, 15.0f * DX_PI_F / 180.0f })
-
 	, STAGE2_POSITION({ -100.0f, 800.0f, 600.0f })
 	, STAGE2_SIZE({ 11.0f, 11.0f, 11.0f })
 	, STAGE2_ROTATE({ 80.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f })
-
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, SELECTION_KEY_PATH("selection_key.png")
 	, SELECTION_TITLE_PATH("selection_Ui.png")
@@ -103,7 +101,7 @@ void SelectionUi::Finalize()
 }
 
 /// <summary>
-/// ステージのUI描画処理
+/// ステージのUi描画処理
 /// </summary>
 /// <param name="mapNumber"></param>
 /// <param name="enemyNumber"></param>
@@ -119,11 +117,11 @@ void SelectionUi::StageUiDraw(int mapNumber, int enemyNumber, int cakeNumber)
 }
 
 /// <summary>
-/// タイトルへ遷移するUI描画処理
+/// タイトルへ遷移するUi描画処理
 /// </summary>
 void SelectionUi::TitleUiDraw()
 {
-	DrawRotaGraph(950, 550, 0.7f, 0, selectionUiImage, TRUE);
+	DrawRotaGraph(950, 550, 0.7, 0.0, selectionUiImage, TRUE);
 }
 
 /// <summary>
@@ -131,7 +129,7 @@ void SelectionUi::TitleUiDraw()
 /// </summary>
 void SelectionUi::Draw()
 {
-	DrawRotaGraph(500, 950, 0.85f, 0, operationMethod, TRUE);
+	DrawRotaGraph(500, 950, 0.85, 0.0, operationMethod, TRUE);
 
-	DrawRotaGraph(1450, 950, 0.6f, 0, selectionKeyImage, TRUE);
+	DrawRotaGraph(1450, 950, 0.6, 0.0, selectionKeyImage, TRUE);
 }

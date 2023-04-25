@@ -46,9 +46,9 @@ private:
 	Player* player;						//プレイヤーのポインタ
 
 	//定数
-	const float	 SCALE;					//カーソル画像の大きさ
-	const float  ANGLE;					//カーソル画像の回転値
 	const float  RADIUS;				//ケーキの半径
+	const double SCALE;					//カーソル画像の大きさ
+	const double ANGLE;					//カーソル画像の回転値
 	const VECTOR SIZE;					//モデルの倍率
 	const VECTOR POSITION;				//モデルの位置
 	const VECTOR ROTATE;				//モデルの回転値

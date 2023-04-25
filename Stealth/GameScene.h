@@ -57,7 +57,7 @@ private:
 	UiManager* uiManager;
 	FadeManager* fadeManager;
 
-	StageCreator* stageCreator;
+	std::vector<StageCreator*> stageCreator;
 
 	void Initialize()override;				//‰Šú‰»ˆ—
 	void InputScene(bool decision);			//ƒV[ƒ“‚ğ“ü—Í

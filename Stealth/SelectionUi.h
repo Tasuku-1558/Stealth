@@ -7,7 +7,7 @@
 using namespace std;
 
 /// <summary>
-/// ステージ選択画面用UIクラス
+/// ステージ選択画面用Uiクラス
 /// </summary>
 class SelectionUi final
 {
@@ -17,9 +17,9 @@ public:
 
 	void Draw();		//描画処理
 	void StageUiDraw(int mapNumber, int enemyNumber, 
-					 int cakeNumber);		//ステージのUI描画処理
+					 int cakeNumber);		//ステージのUi描画処理
 
-	void TitleUiDraw();		//タイトルへ遷移するUI描画処理
+	void TitleUiDraw();		//タイトルへ遷移するUi描画処理
 
 private:
 	SelectionUi(const SelectionUi&);	//コピーコンストラクタ
@@ -31,8 +31,8 @@ private:
 				  VECTOR mapPos, VECTOR size, VECTOR rotate);		//マップ情報入力
 
 	int fontHandle;				//ゲームフォント
-	int selectionKeyImage;		//ステージセレクションUI画像
-	int selectionUiImage;		//ステージセレクションからタイトルへ遷移のUI画像
+	int selectionKeyImage;		//ステージセレクションUi画像
+	int selectionUiImage;		//ステージセレクションからタイトルへ遷移のUi画像
 	int stageDescription;		//ステージの説明画像ハンドル
 	int operationMethod;		//操作方法説明画像のハンドル
 	int modelHandle[2];			//マップモデルハンドル
@@ -52,8 +52,8 @@ private:
 	const VECTOR STAGE2_ROTATE;				//ステージ2モデルの回転値
 
 	const string IMAGE_FOLDER_PATH;			//Imageフォルダまでのパス
-	const string SELECTION_KEY_PATH;		//ステージセレクションUI画像のパス
-	const string SELECTION_TITLE_PATH;		//ステージセレクションからタイトルへ遷移のUI画像
+	const string SELECTION_KEY_PATH;		//ステージセレクションUi画像のパス
+	const string SELECTION_TITLE_PATH;		//ステージセレクションからタイトルへ遷移のUi画像
 	const string STAGE_DESCRIPTION_PATH;	//ステージの説明画像のパス
 	const string OPERATION_METHOD_PATH;		//操作方法説明画像のパス
 };

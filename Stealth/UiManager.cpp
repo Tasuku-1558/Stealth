@@ -79,7 +79,7 @@ void UiManager::Draw(GameScene::GameState gameState, int playerCount, bool hitUi
 		break;
 
 	case GameScene::GameState::GOAL:
-		DrawRotaGraph(950, 900, 0.5f, 0, uiHandle[CLEAR], TRUE);
+		DrawRotaGraph(950, 900, 0.5, 0.0, uiHandle[CLEAR], TRUE);
 		break;
 	}
 }
@@ -126,7 +126,7 @@ void UiManager::CakeGetDraw(bool cakeGet)
 	//ケーキを持っているなら
 	if (cakeGet)
 	{
-		DrawRotaGraph(110, 220, 0.05f, 0, uiHandle[CAKE], TRUE);
+		DrawRotaGraph(110, 220, 0.05, 0.0, uiHandle[CAKE], TRUE);
 	}
 }
 
@@ -136,19 +136,19 @@ void UiManager::CakeGetDraw(bool cakeGet)
 /// <param name="playerCount"></param>
 void UiManager::PlayerHpDraw(int playerCount)
 {
-	DrawRotaGraph(160, 80, 0.7f, 0, uiHandle[FRAME], TRUE);
+	DrawRotaGraph(160, 80, 0.7, 0.0, uiHandle[FRAME], TRUE);
 
-	DrawRotaGraph(205, 70, 0.5f, 0, uiHandle[PLAYER_HP_FRAME], TRUE);
+	DrawRotaGraph(205, 70, 0.5, 0.0, uiHandle[PLAYER_HP_FRAME], TRUE);
 
 	//プレイヤーのHPが2の場合
 	if (playerCount == 0)
 	{
-		DrawRotaGraph(100, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
-		DrawRotaGraph(205, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
+		DrawRotaGraph(100, 70, 0.5, 0.0, uiHandle[PLAYER_HP], TRUE);
+		DrawRotaGraph(205, 70, 0.5, 0.0, uiHandle[PLAYER_HP], TRUE);
 	}
 	//プレイヤーのHPが1の場合
 	else
 	{
-		DrawRotaGraph(100, 70, 0.5f, 0, uiHandle[PLAYER_HP], TRUE);
+		DrawRotaGraph(100, 70, 0.5, 0.0, uiHandle[PLAYER_HP], TRUE);
 	}
 }

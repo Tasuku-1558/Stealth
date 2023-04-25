@@ -33,13 +33,13 @@ TitleScene::TitleScene()
 	, TITLE_MOVIE_POS_Y(0)
 	, TITLE_NAME_POS_X(950)
 	, TITLE_NAME_POS_Y(450)
-	, TITLE_NAME_ANGLE(0)
 	, SPHERE_DIFCOLOR(GetColor(255, 0, 0))
 	, SPHERE_SPCCOLOR(GetColor(255, 255, 255))
 	, START_SPHERE_POS_Z(-220.0f)
 	, EXIT_SPHERE_POS_Z(-350.0f)
 	, SPHERE_RADIUS(20.0f)
-	, TITLE_NAME_SIZE(0.5f)
+	, TITLE_NAME_SIZE(0.5)
+	, TITLE_NAME_ANGLE(0.0)
 	, VIDEO_FOLDER_PATH("Data/Video/")
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, PLAY_VIDEO_PATH("PlayVideo.mp4")
@@ -215,11 +215,13 @@ void TitleScene::Blink()
 
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha);
 
+
 		DrawGraph(EXIT_UI_POS_X, EXIT_UI_POS_Y, exitUi, TRUE);
 	}
 	else
 	{
 		DrawGraph(START_UI_POS_X, START_UI_POS_Y, startUi, TRUE);
+
 
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 

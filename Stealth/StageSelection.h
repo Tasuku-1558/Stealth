@@ -50,6 +50,9 @@ private:
 	const int   MAX_STAGE;					//最大ステージ数
 	const int	FIRST_STAGE_NUMBER;			//ステージ1の番号
 	const int	SECOND_STAGE_NUMBER;		//ステージ2の番号
+	const int	THIRD_STAGE_NUMBER;			//ステージ3の番号
+	const int	FOURTH_STAGE_NUMBER;		//ステージ4の番号
+	const int	FIFTH_STAGE_NUMBER;			//ステージ5の番号
 	const int	TITLE_RETURN_NUMBER;		//タイトルへ戻る番号
 	const int   ADD_STAGE_NUMBER;			//ステージを切り替える数
 	const int	SELECTION_FONT_SIZE;		//ゲームフォントのサイズ

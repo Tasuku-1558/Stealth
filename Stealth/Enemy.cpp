@@ -195,6 +195,15 @@ void Enemy::EnemyRotate(float deltaTime)
 		}
 	}
 
+	EnemyRotateTime(deltaTime);
+}
+
+/// <summary>
+/// エネミーの回転の時間
+/// </summary>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
+void Enemy::EnemyRotateTime(float deltaTime)
+{
 	rotateTime += deltaTime;
 
 	RotateTime rotate[] =
