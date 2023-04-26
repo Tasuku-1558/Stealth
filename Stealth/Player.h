@@ -4,7 +4,6 @@
 #include "Math3D.h"
 #include "Collision.h"
 #include "EffectManager.h"
-#include "HitChecker.h"
 
 
 /// <summary>
@@ -13,7 +12,7 @@
 class Player final : public PlayerBase
 {
 public:
-	Player(EffectManager* const inEffect, HitChecker* const inHitChecker);
+	Player(EffectManager* const inEffect, bool inMapHit, VECTOR inPushBack);
 	virtual ~Player();
 
 	void Update(float deltaTime);									//更新処理
@@ -42,7 +41,6 @@ private:
 	};
 
 	EffectManager* effectManager;	//エフェクトマネージャーのポインタ
-	HitChecker* hitChecker;			//ヒットチェッカーのポインタ
 
 	My3dLib::Sphere collisionSphere;	//当たり判定球
 };

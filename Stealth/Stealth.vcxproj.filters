@@ -151,6 +151,9 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
+    <ClCompile Include="Entry.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ObjectBase.h">
@@ -262,6 +265,9 @@
       <Filter>ソース ファイル\Goal</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
+      <Filter>ソース ファイル\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Entry.h">
       <Filter>ソース ファイル\System</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,5 @@
 #include "Enemy.h"
 #include "ModelManager.h"
-#include "Player.h"
-#include "Bullet.h"
 #include "InputManager.h"
 
 using namespace Math3d;		//VECTORの計算に使用
@@ -88,14 +86,14 @@ void Enemy::Finalize()
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime">前フレームと現在のフレームの差分</param>
-/// <param name="player">プレイヤーのポインタ</param>
-void Enemy::Update(float deltaTime, Player* player)
+/// <param name="playerPosition">プレイヤーの座標</param>
+void Enemy::Update(float deltaTime, VECTOR playerPosition)
 {
 	StateUpdate(deltaTime);
 
 	Move(deltaTime);
 
-	VisualAnglePlayer(player);
+	VisualAnglePlayer(playerPosition);
 }
 
 /// <summary>
@@ -231,11 +229,11 @@ void Enemy::EnemyRotateTime(float deltaTime)
 /// <summary>
 /// エネミーの視野にプレイヤーが入った場合
 /// </summary>
-/// <param name="player">プレイヤーのポインタ</param>
-void Enemy::VisualAnglePlayer(Player* player)
+/// <param name="playerPosition">プレイヤーの座標</param>
+void Enemy::VisualAnglePlayer(VECTOR playerPosition)
 {
 	//プレイヤーからエネミーの座標を引いた値を取得
-	VECTOR sub = player->GetPosition() - position;
+	VECTOR sub = playerPosition - position;
 
 	//プレイヤーとエネミーの距離を計算
 	playerDirection = VSize(sub);
@@ -275,12 +273,12 @@ void Enemy::VisualAnglePlayer(Player* player)
 /// <summary>
 /// エネミーの視野にケーキが入った場合
 /// </summary>
-/// <param name="bullet">バレットのポインタ</param>
+/// <param name="bulletPosition">バレットの座標</param>
 /// <param name="deltaTime">前フレームと現在のフレームの差分</param>
-void Enemy::VisualAngleCake(Bullet* bullet, float deltaTime)
+void Enemy::VisualAngleCake(VECTOR bulletPosition, float deltaTime)
 {
 	//バレットからエネミーの座標を引いた値を取得
-	VECTOR sub = bullet->GetPosition() - position;
+	VECTOR sub = bulletPosition - position;
 
 	//バレットとエネミーの距離を計算
 	bulletDirection = VSize(sub);

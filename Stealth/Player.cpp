@@ -11,12 +11,15 @@ using namespace Math3d;		//VECTORの計算に使用
 /// コンストラクタ
 /// </summary>
 /// <param name="inEffect">エフェクトマネージャーのポインタ</param>
-/// <param name="inHitChecker">ヒットチェッカーのポインタ</param>
-Player::Player(EffectManager* const inEffect, HitChecker* const inHitChecker)
+/// <param name="inMapHit">マップと衝突したかどうか</param>
+/// <param name="inPushBack">プレイヤーへの押し戻し量</param>
+Player::Player(EffectManager* const inEffect, bool inMapHit, VECTOR inPushBack)
 {
 	effectManager = inEffect;
 
-	hitChecker = inHitChecker;
+	mapHit = inMapHit;
+
+	pushBack = inPushBack;
 
 	Initialize();
 }
@@ -127,7 +130,7 @@ void Player::Move(float deltaTime)
 
 	KeyInput();
 
-	//十字キーの入力があったら
+	//キーの入力があったら
 	if (inputFlag)
 	{
 		//左右・上下同時押しなどで入力ベクトルが0の時は移動できない
@@ -136,10 +139,10 @@ void Player::Move(float deltaTime)
 			return;
 		}
 
-		//十字キーの入力方向を正規化
+		//キーの入力方向を正規化
 		direction = VNorm(inputDirection);
 		
-		//十字キーの移動方向に移動
+		//キーの移動方向に移動
 		nextPosition += direction * speed * deltaTime;
 
 		HitMap();
@@ -159,10 +162,10 @@ void Player::Move(float deltaTime)
 void Player::HitMap()
 {
 	//マップにプレイヤーが衝突したならば
-	if (hitChecker->MapHit())
+	if (mapHit)
 	{
 		//未来の位置に押し戻しの値を加える
-		nextPosition = hitChecker->Back();
+		nextPosition = pushBack;
 
 		position = nextPosition;
 		nextPosition = position;

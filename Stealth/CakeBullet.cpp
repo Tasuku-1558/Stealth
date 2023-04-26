@@ -7,15 +7,15 @@
 /// </summary>
 /// <param name="cakePosition">ケーキの座標</param>
 /// <param name="inEffect">エフェクトマネージャーのポインタ</param>
-/// <param name="player">プレイヤーのポインタ</param>
-CakeBullet::CakeBullet(const VECTOR& cakePosition, EffectManager* const inEffect, Player* player)
+/// <param name="playerPosition">プレイヤーの座標</param>
+CakeBullet::CakeBullet(const VECTOR& cakePosition, EffectManager* const inEffect, VECTOR playerPosition)
     : bulletCount(0.0f)
     , cakeGet(false)
     , RESPAWN_EFFECT_POP_COUNT(5.7f)
     , MAX_BULLET_TIME(6.0f)
 {
     cake = new Cake(cakePosition);
-    bullet = new Bullet(player);
+    bullet = new Bullet(playerPosition);
 
     effectManager = inEffect;
 }
@@ -61,7 +61,7 @@ void CakeBullet::Shoot(float deltaTime)
         SoundManager::GetInstance().SePlayFlag(SoundManager::CAKE_SHOOT);
 	}
 
-    bullet->MouseMove(cake);
+    bullet->MouseMove(cake->GetAlive());
 }
 
 /// <summary>

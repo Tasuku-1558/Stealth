@@ -6,9 +6,6 @@
 #include "Math3D.h"
 #include "Collision.h"
 
-class Player;
-class Bullet;
-
 using namespace std;
 
 /// <summary>
@@ -20,11 +17,11 @@ public:
 	Enemy(int number, float enemySpeed);
 	virtual ~Enemy();
 
-	void Update(float deltaTime, Player* player);		//更新処理
-	void Draw();										//描画処理
+	void Update(float deltaTime, VECTOR playerPosition);	//更新処理
+	void Draw();											//描画処理
 
-	void VisualAngleCake(Bullet* bullet, float deltaTime);	//エネミーの視野にケーキが入った場合
-	void HitPlayer();										//プレイヤーと衝突した
+	void VisualAngleCake(VECTOR bulletPosition, float deltaTime);	//エネミーの視野にケーキが入った場合
+	void HitPlayer();												//プレイヤーと衝突した
 
 	const float GetCollideRadius() { return collisionSphere.radius; }	//当たり判定球の半径を返す
 	const bool Spotted() { return playerSpotted; }						//プレイヤーを見つけたかどうかを返す
@@ -32,21 +29,21 @@ public:
 	const bool CakeEatFlag() { return cakeEat; }
 
 private:
-	Enemy(const Enemy&);						//コピーコンストラクタ
+	Enemy(const Enemy&);							//コピーコンストラクタ
 
-	void Initialize();							//初期化処理
-	void Finalize();							//終了処理
-	void Move(float deltaTime);					//移動処理
-	void Position(vector<VECTOR>& id);			//エネミー位置設定
-	void StateUpdate(float deltaTime);			//エネミーの状態変化
-	void SetTargetPosition();					//目的地まで移動処理
-	void VisualAnglePlayer(Player* player);		//エネミーの視野にプレイヤーが入った場合
-	void Reaction();							//エネミーのオブジェクトごとの反応
-	void CakeEatCount(float deltaTime);			//秒数によってケーキの状態変化
-	void ReactionDraw();						//リアクション画像の描画処理
-	void EnemyRotate(float deltaTime);			//エネミーの回転処理
-	void EnemyRotateTime(float deltaTime);		//エネミーの回転の時間
-	bool IsGoal(float deltaTime);				//目的地に到達したならば
+	void Initialize();								//初期化処理
+	void Finalize();								//終了処理
+	void Move(float deltaTime);						//移動処理
+	void Position(vector<VECTOR>& id);				//エネミー位置設定
+	void StateUpdate(float deltaTime);				//エネミーの状態変化
+	void SetTargetPosition();						//目的地まで移動処理
+	void VisualAnglePlayer(VECTOR playerPosition);	//エネミーの視野にプレイヤーが入った場合
+	void Reaction();								//エネミーのオブジェクトごとの反応
+	void CakeEatCount(float deltaTime);				//秒数によってケーキの状態変化
+	void ReactionDraw();							//リアクション画像の描画処理
+	void EnemyRotate(float deltaTime);				//エネミーの回転処理
+	void EnemyRotateTime(float deltaTime);			//エネミーの回転の時間
+	bool IsGoal(float deltaTime);					//目的地に到達したならば
 
 	//エネミーの動き
 	enum class EnemyState

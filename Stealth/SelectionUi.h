@@ -1,8 +1,8 @@
 #pragma once
 
+#include <string>
 #include "DxLib.h"
 #include "ModelManager.h"
-#include <string>
 
 using namespace std;
 

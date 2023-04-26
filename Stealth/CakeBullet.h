@@ -4,7 +4,6 @@
 #include "Cake.h"
 #include "Bullet.h"
 #include "EffectManager.h"
-#include "Player.h"
 
 
 /// <summary>
@@ -15,7 +14,7 @@ class CakeBullet final
 {
 public:
 
-    CakeBullet(const VECTOR& cakePosition, EffectManager* const inEffect, Player* player);
+    CakeBullet(const VECTOR& cakePosition, EffectManager* const inEffect, VECTOR playerPosition);
     virtual ~CakeBullet();
 
     void Update(float deltaTime);                   //çXêVèàóù

@@ -5,8 +5,6 @@
 #include "ObjectBase.h"
 #include "Math3D.h"
 #include "Collision.h"
-#include "Cake.h"
-#include "Player.h"
 
 using namespace std;
 
@@ -16,13 +14,13 @@ using namespace std;
 class Bullet final : public ObjectBase
 {
 public:
-	Bullet(Player* const inPlayer);
+	Bullet(VECTOR playerPosition);
 	virtual ~Bullet();
 
 	void Update(float deltaTime);				//更新処理
 	void Draw();								//描画処理
 
-	void MouseMove(Cake* cake);					//マウスカーソルの移動
+	void MouseMove(bool alive);					//マウスカーソルの移動
 	void BulletDead();							//バレットを非アクティブ化
 	void BulletAlive();							//バレットをアクティブ化
 
@@ -40,10 +38,10 @@ private:
 	int mouseY;							//マウスY座標
 	bool alive;							//バレットが生きてるか死んでるか
 	VECTOR worldMouse;					//ワールドマウス座標
+	VECTOR playerPosition;				//プレイヤーの座標格納用
 
 	My3dLib::Sphere collisionSphere;	//当たり判定球
 
-	Player* player;						//プレイヤーのポインタ
 
 	//定数
 	const float  RADIUS;				//ケーキの半径

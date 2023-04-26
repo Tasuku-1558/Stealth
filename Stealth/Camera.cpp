@@ -41,7 +41,7 @@ void Camera::Initialize()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="playerPosition">プレイヤーの位置</param>
+/// <param name="playerPosition">プレイヤーの座標</param>
 void Camera::Update(VECTOR playerPosition)
 {
 	//プレイヤーの位置を保存

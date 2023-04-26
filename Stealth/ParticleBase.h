@@ -1,8 +1,8 @@
 #pragma once
 
+#include <math.h>
 #include "DxLib.h"
 #include "Math3D.h"
-#include <math.h>
 
 using namespace Math3d;		//VECTOR‚ÌŒvŽZ‚ÉŽg—p
 

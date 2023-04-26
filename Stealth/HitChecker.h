@@ -1,14 +1,14 @@
 #pragma once
 
+#include <vector>
 #include "DxLib.h"
 #include "Math3D.h"
-#include <vector>
 
-class Player;
-class Enemy;
-class CakeBullet;
-class GoalFlag;
 class Stage;
+class Player;
+class CakeBullet;
+class Enemy;
+class GoalFlag;
 
 using namespace std;
 

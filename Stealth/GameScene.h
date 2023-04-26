@@ -1,8 +1,8 @@
 #pragma once
 
+#include <vector>
 #include "SceneBase.h"
 #include "PreCompiledHeader.h"
-#include <vector>
 
 class Camera;
 class Light;
@@ -17,6 +17,7 @@ class CakeParticle;
 class EffectManager;
 class UiManager;
 class FadeManager;
+class Entry;
 
 
 /// <summary>
@@ -56,7 +57,7 @@ private:
 	EffectManager* effectManager;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
-	
+	Entry* entry;
 
 	void Initialize()override;				//初期化処理
 	void InputScene(bool decision);			//シーンを入力
@@ -110,5 +111,4 @@ private:
 	const float MAX_PARTICLE_INTERVAL;	//最大パーティクル出現のインタ―バル
 	const float PARTICLE_INTERVAL;		//初期のパーティクル出現インターバル
 	const float STAGE_POS_Y;			//ステージのY座標
-
 };

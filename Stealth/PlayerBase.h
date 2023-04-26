@@ -1,7 +1,7 @@
 #pragma once
 
-#include "ObjectBase.h"
 #include <string>
+#include "ObjectBase.h"
 
 using namespace std;
 
@@ -24,9 +24,11 @@ protected:
 	bool   inputFlag;			//キー入力フラグ
 	bool   findImageFlag;		//エネミーに見つかった画像を表示するかしないか
 	bool   spottedSeFlag;		//エネミーに見つかった時のSE音を流すか流さないか
+	bool   mapHit;				//マップと衝突したかどうか
 	VECTOR inputDirection;		//入力された方向
 	VECTOR nextPosition;		//未来のプレイヤーの位置
 	VECTOR pastPosition[12];	//プレイヤーの過去の位置
+	VECTOR pushBack;			//プレイヤーへの押し戻し量
 
 
 	//定数

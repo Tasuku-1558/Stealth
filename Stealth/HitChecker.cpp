@@ -1,11 +1,11 @@
 #include "HitChecker.h"
 #include "PreCompiledHeader.h"
 
-#include "Player.h"
-#include "Enemy.h"
-#include "CakeBullet.h"
-#include "GoalFlag.h"
 #include "Stage.h"
+#include "Player.h"
+#include "CakeBullet.h"
+#include "Enemy.h"
+#include "GoalFlag.h"
 
 using namespace Math3d;		//VECTORの計算に使用
 
@@ -24,7 +24,7 @@ HitChecker::HitChecker()
 	, hitPolyDim()
 	, DIV_NUMBER(8)
 	, FRAME_INDEX(-1)
-	, SCALE(10.0f)
+	, SCALE(5.0f)
 	, UI_POSITION({ 0.0f, 30.0f, 800.0f })
 {
 	uiPosition = UI_POSITION;
@@ -142,8 +142,8 @@ void HitChecker::MapAndPlayer(vector<Stage*>* stage, Player* player)
 
 		//ステージモデルとプレイヤーの当たり判定
 		hitPolyDim = MV1CollCheck_Sphere((*itr)->GetModelHandle(), FRAME_INDEX, player->GetCollide().worldCenter, player->GetCollide().radius);
-
-		VECTOR moveCandidate = player->GetCollide().worldCenter;	//球中心候補
+		
+		VECTOR moveCandidate = player->GetCollide().worldCenter;	//プレイヤー中心候補
 		VECTOR newCenter = player->GetCollide().worldCenter;		//移動候補
 
 		//プレイヤーがマップに当たったかどうか
@@ -152,7 +152,7 @@ void HitChecker::MapAndPlayer(vector<Stage*>* stage, Player* player)
 			//マップに衝突した
 			mapHit = true;
 
-			//衝突ポリゴンをすべて回って、球のめり込みを解消
+			//衝突ポリゴンをすべて回ってめり込みを解消
 			for (int i = 0; i < hitPolyDim.HitNum; ++i)
 			{
 				//衝突ポリゴンの辺 

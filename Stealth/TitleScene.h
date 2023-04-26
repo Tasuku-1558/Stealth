@@ -1,8 +1,8 @@
 #pragma once
 
+#include <string>
 #include "SceneBase.h"
 #include "DxLib.h"
-#include <string>
 
 class Light;
 class Camera;

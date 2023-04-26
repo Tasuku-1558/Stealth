@@ -15,6 +15,7 @@
 #include "EffectManager.h"
 #include "UiManager.h"
 #include "FadeManager.h"
+#include "Entry.h"
 #include "Set.h"
 
 
@@ -73,7 +74,9 @@ void GameScene::Initialize()
 
 	hitChecker = new HitChecker();
 
-	player = new Player(effectManager, hitChecker);
+	//entry = new Entry();
+
+	player = new Player(effectManager, hitChecker->MapHit(), hitChecker->Back());
 
 	stageNo = Set::GetInstance().GetStage();
 
@@ -106,6 +109,7 @@ void GameScene::Initialize()
 	uiManager = new UiManager();
 
 	fadeManager = new FadeManager();
+
 
 	//ゲームフォントの読み込み
 	gameFontHandle = CreateFontToHandle("Oranienbaum", GAME_FONT_SIZE, FONT_THICK);
@@ -165,8 +169,8 @@ void GameScene::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 	{
 		for (int j = 0; j < BLOCK_NUM_X; j++)
 		{
-			float posX = (j * 300.0f) + 50.0f;
-			float posZ = (i * 300.0f) + 50.0f;
+			float posX = i * 300.0f;
+			float posZ = j * 300.0f;
 
 			if (stageData[j][i] == 0)
 			{
@@ -215,12 +219,12 @@ void GameScene::CakeBulletPop(int number)
 	{
 		CakeBullet* newCakeBullet = new CakeBullet({ GameData::doc["CakePosition"]["stage1"]["x"].GetFloat(),
 													 GameData::doc["CakePosition"]["stage1"]["y"].GetFloat(),
-													 GameData::doc["CakePosition"]["stage1"]["z"].GetFloat() }, effectManager, player);
+													 GameData::doc["CakePosition"]["stage1"]["z"].GetFloat() }, effectManager, player->GetPosition());
 		EntryCakeBullet(newCakeBullet);
 
 		CakeBullet* newCakeBullet2 = new CakeBullet({ GameData::doc["CakePosition"]["stage2"]["x"].GetFloat(),
 													  GameData::doc["CakePosition"]["stage2"]["y"].GetFloat(),
-													  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() }, effectManager, player);
+													  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() }, effectManager, player->GetPosition());
 		EntryCakeBullet(newCakeBullet2);
 	}
 }
@@ -347,7 +351,7 @@ void GameScene::UpdateStart(float deltaTime)
 
 	camera->Update(player->GetPosition());
 
-	enemy->Update(deltaTime, player);
+	enemy->Update(deltaTime, player->GetPosition());
 
 	effectManager->CreateEffect(player->GetPosition(), EffectManager::RESPAWN);
 
@@ -375,11 +379,11 @@ void GameScene::UpdateGame(float deltaTime)
 
 	player->FoundEnemy(deltaTime, enemy->Spotted());
 
-	enemy->Update(deltaTime, player);
+	enemy->Update(deltaTime, player->GetPosition());
 
 	for (auto CakeBulletPtr : cakeBullet)
 	{
-		enemy->VisualAngleCake(CakeBulletPtr->bullet, deltaTime);
+		enemy->VisualAngleCake(CakeBulletPtr->bullet->GetPosition(), deltaTime);
 		
 		//エネミーがケーキを見つけたならば
 		if (enemy->CakeFlag())
@@ -496,5 +500,6 @@ void GameScene::Draw()
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), gameFontHandle, "Z : %.0f", player->GetPosition().z);
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), gameFontHandle, "PlayerCount : %d", player->FindCount());
 	DrawFormatStringToHandle(100, 250, GetColor(255, 0, 0), gameFontHandle, "ParticleSize : %d", cakeParticle.size());
+	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), gameFontHandle, "MapHit : %d", hitChecker->MapHit());
 #endif // DEBUG
 }
