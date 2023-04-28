@@ -8,14 +8,12 @@ using namespace Math3d;		//VECTORの計算に使用
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="inPlayerPosition">プレイヤーの座標</param>
-Bullet::Bullet(VECTOR inPlayerPosition)
+Bullet::Bullet()
 	: cursorImage(0)
 	, mouseX(0)
 	, mouseY(0)
 	, alive(false)
 	, worldMouse()
-	, playerPosition()
 	, RADIUS(50.0f)
 	, SCALE(0.4)
 	, ANGLE(0.0)
@@ -27,7 +25,6 @@ Bullet::Bullet(VECTOR inPlayerPosition)
 	, CURSOR_PATH("pointer.png")
 {
 	Initialize();
-	playerPosition = inPlayerPosition;
 }
 
 /// <summary>
@@ -89,7 +86,8 @@ void Bullet::Update(float deltaTime)
 /// マウスカーソルの移動
 /// </summary>
 /// <param name="alive">ケーキが生きているか死んでいるか</param>
-void Bullet::MouseMove(bool alive)
+/// <param name="playerPosition">プレイヤーの座標</param>
+void Bullet::MouseMove(bool alive, VECTOR playerPosition)
 {
 	//マウスの座標取得
 	GetMousePoint(&mouseX, &mouseY);
@@ -99,8 +97,8 @@ void Bullet::MouseMove(bool alive)
 	//ケーキが死んだら
 	if (!alive)
 	{
-		//マウスのX,Z座標のワールド座標を計算
-		worldMouse.x = (float)mouseY * (3000.0f / 1920.0f) * 1.7f + playerPosition.z;
+		//マウスのX、Z座標のワールド座標を計算
+		worldMouse.x = (float)mouseY * (-3000.0f / 1920.0f) * 1.7f + playerPosition.z;
 		worldMouse.z = (float)mouseX * (1900.0f / 1080.0f) * 1.5f + playerPosition.x;
 	}
 }
@@ -127,7 +125,7 @@ void Bullet::BulletAlive()
 /// </summary>
 void Bullet::OnShot()
 {
-	position = VGet(worldMouse.z, worldMouse.y, worldMouse.x);
+	position = { worldMouse.z, worldMouse.y, worldMouse.x };
 
 	//ケーキの位置を設定
 	MV1SetPosition(modelHandle, position);

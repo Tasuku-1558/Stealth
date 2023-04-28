@@ -110,7 +110,6 @@ void GameScene::Initialize()
 
 	fadeManager = new FadeManager();
 
-
 	//ゲームフォントの読み込み
 	gameFontHandle = CreateFontToHandle("Oranienbaum", GAME_FONT_SIZE, FONT_THICK);
 
@@ -170,7 +169,7 @@ void GameScene::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 		for (int j = 0; j < BLOCK_NUM_X; j++)
 		{
 			float posX = i * 300.0f;
-			float posZ = j * 300.0f;
+			float posZ = j * -300.0f;
 
 			if (stageData[j][i] == 0)
 			{
@@ -219,12 +218,12 @@ void GameScene::CakeBulletPop(int number)
 	{
 		CakeBullet* newCakeBullet = new CakeBullet({ GameData::doc["CakePosition"]["stage1"]["x"].GetFloat(),
 													 GameData::doc["CakePosition"]["stage1"]["y"].GetFloat(),
-													 GameData::doc["CakePosition"]["stage1"]["z"].GetFloat() }, effectManager, player->GetPosition());
+													 GameData::doc["CakePosition"]["stage1"]["z"].GetFloat() }, effectManager, player);
 		EntryCakeBullet(newCakeBullet);
 
 		CakeBullet* newCakeBullet2 = new CakeBullet({ GameData::doc["CakePosition"]["stage2"]["x"].GetFloat(),
 													  GameData::doc["CakePosition"]["stage2"]["y"].GetFloat(),
-													  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() }, effectManager, player->GetPosition());
+													  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() }, effectManager, player);
 		EntryCakeBullet(newCakeBullet2);
 	}
 }

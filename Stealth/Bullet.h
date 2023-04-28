@@ -14,17 +14,17 @@ using namespace std;
 class Bullet final : public ObjectBase
 {
 public:
-	Bullet(VECTOR playerPosition);
+	Bullet();
 	virtual ~Bullet();
 
 	void Update(float deltaTime);				//更新処理
 	void Draw();								//描画処理
 
-	void MouseMove(bool alive);					//マウスカーソルの移動
-	void BulletDead();							//バレットを非アクティブ化
-	void BulletAlive();							//バレットをアクティブ化
+	void MouseMove(bool alive, VECTOR playerPosition);	//マウスカーソルの移動
+	void BulletDead();									//バレットを非アクティブ化
+	void BulletAlive();									//バレットをアクティブ化
 
-	const bool GetAlive() { return alive; }		//バレットが生きてるか死んでるかを返す
+	const bool GetAlive() { return alive; }				//バレットが生きてるか死んでるかを返す
 	
 private:
 	Bullet(const Bullet&);				//コピーコンストラクタ
@@ -38,7 +38,6 @@ private:
 	int mouseY;							//マウスY座標
 	bool alive;							//バレットが生きてるか死んでるか
 	VECTOR worldMouse;					//ワールドマウス座標
-	VECTOR playerPosition;				//プレイヤーの座標格納用
 
 	My3dLib::Sphere collisionSphere;	//当たり判定球
 
