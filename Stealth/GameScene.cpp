@@ -35,6 +35,7 @@ GameScene::GameScene()
 	, particleInterval(0.0f)
 	, particleFlag(false)
 	, clear(true)
+	, MAX_STAGE_NUMBER(2)
 	, FIRST_STAGE_NUMBER(1)
 	, SECOND_STAGE_NUMBER(2)
 	, GAME_FONT_SIZE(50)
@@ -44,7 +45,7 @@ GameScene::GameScene()
 	, GAME_START_COUNT(1.3f)
 	, MAX_PARTICLE_INTERVAL(5.0f)
 	, PARTICLE_INTERVAL(0.0f)
-	, STAGE_POS_Y(0.0f)
+	, STAGE_POS_Y(-100.0f)
 {
 	GameData::doc.ParseStream(GameData::isw);
 
@@ -76,7 +77,7 @@ void GameScene::Initialize()
 
 	//entry = new Entry();
 
-	player = new Player(effectManager, hitChecker->MapHit(), hitChecker->Back());
+	player = new Player(effectManager);
 
 	stageNo = Set::GetInstance().GetStage();
 
@@ -86,7 +87,7 @@ void GameScene::Initialize()
 		{SECOND_STAGE_NUMBER, "stage2"},
 	};
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < MAX_STAGE_NUMBER; i++)
 	{
 		if (stageNo == stageList[i].number)
 		{
@@ -176,6 +177,9 @@ void GameScene::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 				Stage* newStage = new Stage({ posX, STAGE_POS_Y, posZ });
 				EntryStage(newStage);
 			}
+
+			Stage* newStage2 = new Stage({ 300.0f, STAGE_POS_Y, 0.0f });
+			EntryStage(newStage2);
 		}
 	}
 }
@@ -374,7 +378,7 @@ void GameScene::UpdateGame(float deltaTime)
 
 	camera->Update(player->GetPosition());
 
-	player->Update(deltaTime);
+	player->Update(deltaTime, hitChecker->MapHit(), hitChecker->Back());
 
 	player->FoundEnemy(deltaTime, enemy->Spotted());
 
@@ -383,7 +387,7 @@ void GameScene::UpdateGame(float deltaTime)
 	for (auto CakeBulletPtr : cakeBullet)
 	{
 		enemy->VisualAngleCake(CakeBulletPtr->bullet->GetPosition(), deltaTime);
-		
+
 		//エネミーがケーキを見つけたならば
 		if (enemy->CakeFlag())
 		{
@@ -418,21 +422,18 @@ void GameScene::UpdateGame(float deltaTime)
 	for (auto particlePtr : cakeParticle)
 	{
 		particlePtr->Update(deltaTime);
-	}
 
-	hitChecker->Check(&stage, player, &cakeBullet, /*&enemy,*/ goalFlag);
-	hitChecker->EnemyAndPlayer(player, enemy);
-
-	ChangeScreen();
-
-	for (auto particlePtr : cakeParticle)
-	{
 		//パーティクルを出し終わったら
 		if (particlePtr->IsParticleEnd())
 		{
 			DeleteCakeParticle(particlePtr);
 		}
 	}
+
+	hitChecker->Check(&stage, player, &cakeBullet, /*&enemy,*/ goalFlag);
+	hitChecker->EnemyAndPlayer(player, enemy);
+
+	ChangeScreen();
 }
 
 /// <summary>

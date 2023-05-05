@@ -54,6 +54,7 @@ private:
 
 	MV1_COLL_RESULT_POLY_DIM hitPolyDim;
 
+
 	//定数
 	const int	 FRAME_INDEX;	//当たり判定情報を更新するフレームの番号
 	const int	 DIV_NUMBER;	//コリジョン情報の軸方向の空間分割数

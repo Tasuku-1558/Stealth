@@ -167,6 +167,12 @@ SceneType ResultScene::Update(float deltaTime)
 	for (auto fireWorksParticlePtr : fireWorksParticle)
 	{
 		fireWorksParticlePtr->Update(deltaTime);
+
+		//パーティクルを出し終わったら
+		if (fireWorksParticlePtr->IsParticleEnd())
+		{
+			DeleteFireWorksParticle(fireWorksParticlePtr);
+		}
 	}
 	
 	//どのシーンにも遷移していないならば
@@ -176,15 +182,6 @@ SceneType ResultScene::Update(float deltaTime)
 	}
 
 	ReturnScreen();
-
-	for (auto fireWorksParticlePtr : fireWorksParticle)
-	{
-		//パーティクルを出し終わったら
-		if (fireWorksParticlePtr->IsParticleEnd())
-		{
-			DeleteFireWorksParticle(fireWorksParticlePtr);
-		}
-	}
 
 	return nowSceneType;
 }

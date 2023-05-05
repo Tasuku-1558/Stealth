@@ -7,6 +7,7 @@
 /// </summary>
 /// <param name="position">壁モデルの位置</param>
 Stage::Stage(VECTOR position)
+	: hitPolyDim()
 {
 	//壁モデルの読み込みと位置を設定
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE));

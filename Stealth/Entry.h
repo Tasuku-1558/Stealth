@@ -3,7 +3,6 @@
 #include <vector>
 
 class Stage;
-class CakeBullet;
 
 class Entry final
 {

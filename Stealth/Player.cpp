@@ -11,17 +11,11 @@ using namespace Math3d;		//VECTORの計算に使用
 /// コンストラクタ
 /// </summary>
 /// <param name="inEffect">エフェクトマネージャーのポインタ</param>
-/// <param name="inMapHit">マップと衝突したかどうか</param>
-/// <param name="inPushBack">プレイヤーへの押し戻し量</param>
-Player::Player(EffectManager* const inEffect, bool inMapHit, VECTOR inPushBack)
+Player::Player(EffectManager* const inEffect)
 {
-	effectManager = inEffect;
-
-	mapHit = inMapHit;
-
-	pushBack = inPushBack;
-
 	Initialize();
+
+	effectManager = inEffect;
 }
 
 /// <summary>
@@ -89,11 +83,15 @@ void Player::Finalize()
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime">前フレームと現在のフレームの差分</param>
-void Player::Update(float deltaTime)
+/// <param name="mapHit">マップと衝突したかどうか</param>
+/// <param name="pushBack">プレイヤーへの押し戻しの量</param>
+void Player::Update(float deltaTime, bool mapHit, VECTOR pushBack)
 {
 	Move(deltaTime);
 
 	AfterImage();
+
+	HitMap(mapHit, pushBack);
 }
 
 /// <summary>
@@ -144,8 +142,6 @@ void Player::Move(float deltaTime)
 		
 		//キーの移動方向に移動
 		nextPosition += direction * speed * deltaTime;
-
-		HitMap();
 	}
 
 	//モデルの位置と向きを設定
@@ -159,7 +155,9 @@ void Player::Move(float deltaTime)
 /// <summary>
 /// マップに衝突したかどうか
 /// </summary>
-void Player::HitMap()
+/// <param name="mapHit">マップと衝突したかどうか</param>
+/// <param name="pushBack">プレイヤーへの押し戻しの量</param>
+void Player::HitMap(bool mapHit, VECTOR pushBack)
 {
 	//マップにプレイヤーが衝突したならば
 	if (mapHit)

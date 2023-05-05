@@ -24,7 +24,7 @@ HitChecker::HitChecker()
 	, hitPolyDim()
 	, DIV_NUMBER(8)
 	, FRAME_INDEX(-1)
-	, SCALE(5.0f)
+	, SCALE(20.0f)
 	, UI_POSITION({ 0.0f, 30.0f, 800.0f })
 {
 	uiPosition = UI_POSITION;
