@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "SceneBase.h"
+#include "DxLib.h"
 
 class Camera;
 class FireWorksParticle;
@@ -31,15 +32,15 @@ private:
 	void BackGroundMove();					//背景画像の動き
 	void ReturnScreen();					//画面を遷移する
 	void InputScene(SceneType sceneType);	//シーンを入力
-
-	void EntryFireWorksParticle(FireWorksParticle* newFireWorksParticle);		//花火パーティクルを登録
-	void DeleteFireWorksParticle(FireWorksParticle* deleteFireWorksParticle);	//花火パーティクルを削除
-	void FireWorksParticlePop();												//花火パーティクルの出現
+	void FireWorksParticlePop();			//花火パーティクルの出現
 
 	Camera* camera;
-	vector<FireWorksParticle*> fireWorksParticle;
+	FireWorksParticle* fireWorksParticle;
 	FadeManager* fadeManager;
 
+	vector<FireWorksParticle*> activeFireWorksParticle;
+	vector<VECTOR> position;
+	vector<unsigned int> color;
 
 	int resultFontHandle;	//ゲームフォント
 	int resultUiImage;		//遷移キーのUi画像格納用
@@ -53,6 +54,7 @@ private:
 	bool clear;				//ゲームをクリアしてるかしていないか
 	bool titleFlag;			//タイトル画面へ遷移するかしないか
 	bool selectionFlag;		//ステージセレクション画面へ遷移するかしないか
+
 
 	//定数
 	const int RESULT_FONT_SIZE;				//ゲームフォントのサイズ

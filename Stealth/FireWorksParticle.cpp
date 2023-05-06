@@ -57,7 +57,7 @@ void FireWorksParticle::Update(float deltaTime)
 	//パーティクルを出したらカウントを開始する
 	particlePopCount += deltaTime;
 
-	//パーティクルの出現時間を超えたらパーティクルを消す
+	//パーティクルの出現時間を超えたら
 	if (particlePopCount > MAX_POP_TIME)
 	{
 		endFlag = true;
@@ -74,4 +74,8 @@ void FireWorksParticle::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, ALPHA);
 	DrawSphere3D(position, radius, DIVNUM, color, color, FALSE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, NOBLEND);
+}
+
+void FireWorksParticle::DeleteParticle()
+{
 }

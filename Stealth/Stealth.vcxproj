@@ -158,7 +158,6 @@
     <ClCompile Include="EffectBase.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
-    <ClCompile Include="Entry.cpp" />
     <ClCompile Include="FireWorksParticle.cpp" />
     <ClCompile Include="GoalFlag.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -194,7 +193,6 @@
     <ClInclude Include="CakeBullet.h" />
     <ClInclude Include="CakeParticle.h" />
     <ClInclude Include="Collision.h" />
-    <ClInclude Include="Entry.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Json.h" />
     <ClInclude Include="Effect.h" />

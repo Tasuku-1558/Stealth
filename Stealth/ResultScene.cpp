@@ -83,55 +83,34 @@ void ResultScene::Initialize()
 }
 
 /// <summary>
-/// 花火パーティクルを登録
-/// </summary>
-/// <param name="newFireWorksParticle">登録する花火パーティクルのポインタ</param>
-void ResultScene::EntryFireWorksParticle(FireWorksParticle* newFireWorksParticle)
-{
-	fireWorksParticle.emplace_back(newFireWorksParticle);
-}
-
-/// <summary>
-/// 花火パーティクルを削除
-/// </summary>
-/// <param name="deleteFireWorksParticle">削除する花火パーティクルのポインタ</param>
-void ResultScene::DeleteFireWorksParticle(FireWorksParticle* deleteFireWorksParticle)
-{
-	//花火のパーティクルオブジェクトから検索して削除
-	auto iter = std::find(fireWorksParticle.begin(), fireWorksParticle.end(), deleteFireWorksParticle);
-
-	if (iter != fireWorksParticle.end())
-	{
-		//花火のパーティクルオブジェクトを最後尾に移動してデータを消す
-		std::iter_swap(iter, fireWorksParticle.end() - 1);
-		fireWorksParticle.pop_back();
-		return;
-	}
-}
-
-/// <summary>
 /// 花火パーティクルの出現
 /// </summary>
 void ResultScene::FireWorksParticlePop()
 {
+	//パーティクルの位置と色を入力する
+	position =
+	{
+		{ -500.0f,0.0f,0.0f },
+		{ 600.0f,0.0f,0.0f },
+		{ 50.0f,0.0f,200.0f }
+	};
+
+	color =
+	{
+		{GetColor(255, 255, 0)},
+		{GetColor(0, 128, 0)},
+		{GetColor(240, 100, 100)}
+	};
+
 	if (!particleFlag)
 	{
 		//パーティクルの個数分エントリーする
 		for (int i = 0; i < PARTICLE_NUMBER; i++)
 		{
-			//パーティクルの位置と色を入力する
-			FireWorksParticle* newFireWorksParticle = new FireWorksParticle({ -500.0f,0.0f,0.0f }, GetColor(255, 255, 0));
-			EntryFireWorksParticle(newFireWorksParticle);
-
-			FireWorksParticle* newFireWorksParticle2 = new FireWorksParticle({ 600.0f,0.0f,0.0f }, GetColor(0, 128, 0));
-			EntryFireWorksParticle(newFireWorksParticle2);
-
-			FireWorksParticle* newFireWorksParticle3 = new FireWorksParticle({ 50.0f,0.0f,200.0f }, GetColor(240, 100, 100));
-			EntryFireWorksParticle(newFireWorksParticle3);
-
-			/*FireWorksParticle* newFireWorksParticle4 = new FireWorksParticle({ 50.0f,0.0f,-200.0f }, GetColor(128, 0, 128));
-			EntryFireWorksParticle(newFireWorksParticle4);*/
-
+			for (int j = 0; j < 3; j++)
+			{
+				activeFireWorksParticle.push_back(new FireWorksParticle(position[j], color[j]));
+			}
 		}
 
 		particleFlag = true;
@@ -164,14 +143,13 @@ SceneType ResultScene::Update(float deltaTime)
 		}
 	}
 	
-	for (auto fireWorksParticlePtr : fireWorksParticle)
+	for (auto itr = activeFireWorksParticle.begin(); itr != activeFireWorksParticle.end(); ++itr)
 	{
-		fireWorksParticlePtr->Update(deltaTime);
+		(*itr)->Update(deltaTime);
 
 		//パーティクルを出し終わったら
-		if (fireWorksParticlePtr->IsParticleEnd())
+		if ((*itr)->IsParticleEnd())
 		{
-			DeleteFireWorksParticle(fireWorksParticlePtr);
 		}
 	}
 	
@@ -280,9 +258,9 @@ void ResultScene::Draw()
 	//ゲームクリアならば
 	if (clear)
 	{
-		for (auto fireWorksParticlePtr : fireWorksParticle)
+		for (auto itr = activeFireWorksParticle.begin(); itr != activeFireWorksParticle.end(); ++itr)
 		{
-			fireWorksParticlePtr->Draw();
+			(*itr)->Draw();
 		}
 
 		DrawFormatStringToHandle(RESULT_STRING_POS_X, RESULT_STRING_POS_Y, GAME_CLEAR_COLOR, resultFontHandle, "%s", GAME_CLEAR);

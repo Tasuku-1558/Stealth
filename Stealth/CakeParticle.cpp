@@ -53,12 +53,10 @@ void CakeParticle::Update(float deltaTime)
 	//パーティクルを出したらカウントを開始する
 	particlePopCount += deltaTime;
 
-	//パーティクルの出現時間を超えたらパーティクルを消す
+	//パーティクルの出現時間を超えたら
 	if (particlePopCount > MAX_POP_TIME)
 	{
 		endFlag = true;
-
-		particlePopCount = INITIAL_PARTICLE_POP_COUNT;
 	}
 }
 
@@ -70,4 +68,14 @@ void CakeParticle::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, ALPHA);
 	DrawSphere3D(position, radius, DIVNUM, PINK, PINK, FALSE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, NOBLEND);
+}
+
+/// <summary>
+/// 削除処理
+/// </summary>
+void CakeParticle::DeleteParticle()
+{
+	endFlag = false;
+
+	particlePopCount = INITIAL_PARTICLE_POP_COUNT;
 }
