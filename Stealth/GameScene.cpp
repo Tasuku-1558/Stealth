@@ -170,7 +170,7 @@ void GameScene::CakeBulletPop(int number)
 	{
 		if (number == FIRST_STAGE_NUMBER)
 		{
-			activeCakeBullet.push_back(new CakeBullet(cakeBulletPosition[i], effectManager, player));
+			activeCakeBullet.emplace_back(new CakeBullet(cakeBulletPosition[i], effectManager, player));
 		}
 	}
 }
@@ -324,7 +324,7 @@ void GameScene::UpdateGame(float deltaTime)
 		//パーティクルを出し終わったら
 		if ((*itr)->IsParticleEnd())
 		{
-			(*itr)->DeleteParticle();
+			
 		}
 	}
 

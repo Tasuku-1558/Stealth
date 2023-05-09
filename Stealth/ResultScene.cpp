@@ -29,6 +29,7 @@ ResultScene::ResultScene()
 	, RESULT_FONT_SIZE(150)
 	, FONT_THICK(1)
 	, PARTICLE_NUMBER(500)
+	, PARTICLE_CATEGORY(3)
 	, MAX_ALPHA(255)
 	, INC_SPEED(-1)
 	, RESULT_UI_POS_X(1500)
@@ -40,12 +41,18 @@ ResultScene::ResultScene()
 	, RESULT_STRING_POS_Y(400)
 	, GAME_CLEAR_COLOR(GetColor(255, 215, 0))
 	, GAME_OVER_COLOR(GetColor(255, 0, 0))
+	, YELLOW_PARTICLE_COLOR(GetColor(255, 255, 0))
+	, GREEN_PARTICLE_COLOR(GetColor(0, 128, 0))
+	, RED_PARTICLE_COLOR(GetColor(240, 100, 100))
 	, MAX_PARTICLE_INTERVAL(2.0f)
 	, PARTICLE_INTERVAL(0.0f)
 	, RESULT_UI_SIZE(0.5)
 	, RESULT_UI_ANGLE(0.0)
 	, GAME_CLEAR("GAME CLEAR")
 	, GAME_OVER("GAME OVER")
+	, YELLOW_PARTICLE_POSITION({ -500.0f, 0.0f, 0.0f })
+	, GREEN_PARTICLE_POSITION({ 600.0f,0.0f,0.0f })
+	, RED_PARTICLE_POSITION({ 50.0f,0.0f,200.0f })
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, RESULT_UI_PATH("resultUi.png")
 	, RESULT_BACKGROUND_PATH("resultBackGround.png")
@@ -88,18 +95,11 @@ void ResultScene::Initialize()
 void ResultScene::FireWorksParticlePop()
 {
 	//パーティクルの位置と色を入力する
-	position =
+	Particle particle[] =
 	{
-		{ -500.0f,0.0f,0.0f },
-		{ 600.0f,0.0f,0.0f },
-		{ 50.0f,0.0f,200.0f }
-	};
-
-	color =
-	{
-		{GetColor(255, 255, 0)},
-		{GetColor(0, 128, 0)},
-		{GetColor(240, 100, 100)}
+		{YELLOW_PARTICLE_POSITION, YELLOW_PARTICLE_COLOR},
+		{GREEN_PARTICLE_POSITION,  GREEN_PARTICLE_COLOR},
+		{RED_PARTICLE_POSITION,	   RED_PARTICLE_COLOR},
 	};
 
 	if (!particleFlag)
@@ -107,9 +107,9 @@ void ResultScene::FireWorksParticlePop()
 		//パーティクルの個数分エントリーする
 		for (int i = 0; i < PARTICLE_NUMBER; i++)
 		{
-			for (int j = 0; j < 3; j++)
+			for (int j = 0; j < PARTICLE_CATEGORY; j++)
 			{
-				activeFireWorksParticle.push_back(new FireWorksParticle(position[j], color[j]));
+				activeFireWorksParticle.emplace_back(new FireWorksParticle(particle[j].position, particle[j].color));
 			}
 		}
 
@@ -150,6 +150,8 @@ SceneType ResultScene::Update(float deltaTime)
 		//パーティクルを出し終わったら
 		if ((*itr)->IsParticleEnd())
 		{
+			std::iter_swap(itr, activeFireWorksParticle.end() - 1);
+			activeFireWorksParticle.pop_back();
 		}
 	}
 	

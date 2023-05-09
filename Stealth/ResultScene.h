@@ -39,8 +39,12 @@ private:
 	FadeManager* fadeManager;
 
 	vector<FireWorksParticle*> activeFireWorksParticle;
-	vector<VECTOR> position;
-	vector<unsigned int> color;
+
+	struct Particle
+	{
+		VECTOR position;		//パーティクルの位置
+		unsigned int color;		//パーティクルのカラー
+	};
 
 	int resultFontHandle;	//ゲームフォント
 	int resultUiImage;		//遷移キーのUi画像格納用
@@ -60,6 +64,7 @@ private:
 	const int RESULT_FONT_SIZE;				//ゲームフォントのサイズ
 	const int FONT_THICK;					//フォントの太さ
 	const int PARTICLE_NUMBER;				//パーティクルの数
+	const int PARTICLE_CATEGORY;			//パーティクルの種類
 	const int MAX_ALPHA;					//最大透過度
 	const int INC_SPEED;					//透過スピード
 	const int RESULT_UI_POS_X;				//遷移キーのUi画像のX座標
@@ -70,8 +75,11 @@ private:
 	const int RESULT_STRING_POS_X;			//リザルト文字のX座標
 	const int RESULT_STRING_POS_Y;			//リザルト文字のY座標
 
-	const unsigned int GAME_CLEAR_COLOR;	//ゲームクリアのカラー
-	const unsigned int GAME_OVER_COLOR;		//ゲームオーバーのカラー
+	const unsigned int GAME_CLEAR_COLOR;		//ゲームクリアのカラー
+	const unsigned int GAME_OVER_COLOR;			//ゲームオーバーのカラー
+	const unsigned int YELLOW_PARTICLE_COLOR;	//黄色のパーティクルのカラー
+	const unsigned int GREEN_PARTICLE_COLOR;	//緑色のパーティクルのカラー
+	const unsigned int RED_PARTICLE_COLOR;		//赤色のパーティクルのカラー
 
 	const float MAX_PARTICLE_INTERVAL;		//パーティクル出現の最大インターバル
 	const float PARTICLE_INTERVAL;			//初期のパーティクル出現インターバル
@@ -81,6 +89,10 @@ private:
 
 	const char GAME_CLEAR[11];				//ゲームクリアの文字
 	const char GAME_OVER[10];				//ゲームオーバーの文字
+
+	const VECTOR YELLOW_PARTICLE_POSITION;	//黄色のパーティクルの位置
+	const VECTOR GREEN_PARTICLE_POSITION;	//緑色のパーティクルの位置
+	const VECTOR RED_PARTICLE_POSITION;		//赤色のパーティクルの位置
 
 	const string IMAGE_FOLDER_PATH;			//Imageフォルダまでのパス
 	const string RESULT_UI_PATH;			//リザルト画面のUiのパス
