@@ -20,7 +20,6 @@ private:
     BackGround(const BackGround&);      //コピーコンストラクタ
 
     void Initialize();          //初期化処理
-    void Finalize();            //終了処理
 
     int backGroundHandle;       //背景動画格納用
 

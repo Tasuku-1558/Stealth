@@ -1,14 +1,10 @@
 #pragma once
 
-#include <string>
 #include "SceneBase.h"
-#include "DxLib.h"
 
 class Light;
 class Camera;
 class FadeManager;
-
-using namespace std;
 
 /// <summary>
 /// タイトルシーンクラス

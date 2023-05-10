@@ -153,7 +153,6 @@
   <ItemGroup>
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="CakeBullet.cpp" />
-    <ClCompile Include="CakeParticle.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="EffectBase.cpp" />
     <ClCompile Include="Effect.cpp" />
@@ -191,7 +190,6 @@
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="CakeBullet.h" />
-    <ClInclude Include="CakeParticle.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Json.h" />

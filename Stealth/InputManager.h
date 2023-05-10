@@ -6,7 +6,7 @@ using namespace std;
 
 namespace Input
 {
-	//パスの入力
+	//データのパスの入力
 	string InputPath(string folderPath,
-					 string path);
+					 string dataPath);
 }

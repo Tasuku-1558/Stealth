@@ -75,7 +75,3 @@ void FireWorksParticle::Draw()
 	DrawSphere3D(position, radius, DIVNUM, color, color, FALSE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, NOBLEND);
 }
-
-void FireWorksParticle::DeleteParticle()
-{
-}

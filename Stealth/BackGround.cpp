@@ -21,7 +21,7 @@ BackGround::BackGround()
 /// </summary>
 BackGround::~BackGround()
 {
-	Finalize();
+	DeleteGraph(backGroundHandle);
 }
 
 /// <summary>
@@ -31,14 +31,6 @@ void BackGround::Initialize()
 {
 	//”wŒi“®‰æ‚Ì“Ç‚İ‚İ
 	backGroundHandle = LoadGraph(Input::InputPath(VIDEO_FOLDER_PATH, BACKGROUND_VIDEO_PATH).c_str());
-}
-
-/// <summary>
-/// I—¹ˆ—
-/// </summary>
-void BackGround::Finalize()
-{
-	DeleteGraph(backGroundHandle);
 }
 
 /// <summary>

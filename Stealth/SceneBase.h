@@ -1,5 +1,11 @@
 #pragma once
 
+#include <vector>
+#include <string>
+#include "DxLib.h"
+#include "PreCompiledHeader.h"
+
+
 //シーンの種類
 enum class SceneType
 {
@@ -9,6 +15,8 @@ enum class SceneType
 	RESULT,		//リザルト画面
 	END,		//終了
 };
+
+using namespace std;
 
 /// <summary>
 /// シーン基底クラス

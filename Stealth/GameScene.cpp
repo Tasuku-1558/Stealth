@@ -11,7 +11,6 @@
 #include "CakeBullet.h"
 #include "GoalFlag.h"
 #include "HitChecker.h"
-#include "CakeParticle.h"
 #include "EffectManager.h"
 #include "UiManager.h"
 #include "FadeManager.h"
@@ -31,19 +30,14 @@ GameScene::GameScene()
 	, gameFontHandle(0)
 	, stageNo(0)
 	, frame(0.0f)
-	, particleInterval(0.0f)
-	, particleFlag(false)
 	, clear(true)
 	, MAX_STAGE_NUMBER(2)
 	, FIRST_STAGE_NUMBER(1)
 	, SECOND_STAGE_NUMBER(2)
 	, GAME_FONT_SIZE(50)
 	, FONT_THICK(1)
-	, PARTICLE_NUMBER(500)
 	, PLAYER_HP(2)
 	, GAME_START_COUNT(1.3f)
-	, MAX_PARTICLE_INTERVAL(5.0f)
-	, PARTICLE_INTERVAL(0.0f)
 	, STAGE_POS_Y(-100.0f)
 {
 	GameData::doc.ParseStream(GameData::isw);
@@ -80,8 +74,8 @@ void GameScene::Initialize()
 
 	StageList stageList[] =
 	{
-		{FIRST_STAGE_NUMBER,  "stage1"},
-		{SECOND_STAGE_NUMBER, "stage2"},
+		{FIRST_STAGE_NUMBER,  "stage1", 2},
+		{SECOND_STAGE_NUMBER, "stage2", 1},
 	};
 
 	for (int i = 0; i < MAX_STAGE_NUMBER; i++)
@@ -98,7 +92,7 @@ void GameScene::Initialize()
 									  GameData::doc["GoalPosition"][stageList[i].name]["y"].GetFloat(),
 									  GameData::doc["GoalPosition"][stageList[i].name]["z"].GetFloat() });
 
-			CakeBulletPop(stageList[i].number);
+			CakeBulletPop(stageList[i].cakeNumber, stageList[i].number);
 
 			EnemyPop(stageList[i].number);
 		}
@@ -143,7 +137,7 @@ void GameScene::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 
 			if (stageData[j][i] == 0)
 			{
-				activeStage.push_back(new Stage({ posX, STAGE_POS_Y, posZ }));
+				activeStage.emplace_back(new Stage({ posX, STAGE_POS_Y, posZ }));
 			}
 		}
 	}
@@ -152,23 +146,36 @@ void GameScene::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 /// <summary>
 /// ケーキバレットの出現
 /// </summary>
+/// <param name="cakeNumber">ケーキの数</param>
 /// <param name="number">ステージの番号</param>
-void GameScene::CakeBulletPop(int number)
+void GameScene::CakeBulletPop(int cakeNumber, int number)
 {
-	cakeBulletPosition =
+	if (number == FIRST_STAGE_NUMBER)
 	{
-		{ GameData::doc["CakePosition"]["stage1"]["x"].GetFloat(),
-		  GameData::doc["CakePosition"]["stage1"]["y"].GetFloat(),
-		  GameData::doc["CakePosition"]["stage1"]["z"].GetFloat() },
+		cakeBulletPosition =
+		{
+			{ GameData::doc["CakePosition"]["stage1"]["x"].GetFloat(),
+			  GameData::doc["CakePosition"]["stage1"]["y"].GetFloat(),
+			  GameData::doc["CakePosition"]["stage1"]["z"].GetFloat() },
 
-		{ GameData::doc["CakePosition"]["stage2"]["x"].GetFloat(),
-		  GameData::doc["CakePosition"]["stage2"]["y"].GetFloat(),
-		  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() }
-	};
-
-	for (int i = 0; i < 2; i++)
+			{ GameData::doc["CakePosition"]["stage2"]["x"].GetFloat(),
+			  GameData::doc["CakePosition"]["stage2"]["y"].GetFloat(),
+			  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() }
+		};
+	}
+	else
 	{
-		if (number == FIRST_STAGE_NUMBER)
+		cakeBulletPosition =
+		{
+			{ GameData::doc["CakePosition"]["stage2"]["x"].GetFloat(),
+			  GameData::doc["CakePosition"]["stage2"]["y"].GetFloat(),
+			  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() },
+		};
+	}
+
+	for (int i = 0; i < cakeNumber; i++)
+	{
+		if (stageNo == number)
 		{
 			activeCakeBullet.emplace_back(new CakeBullet(cakeBulletPosition[i], effectManager, player));
 		}
@@ -181,27 +188,6 @@ void GameScene::CakeBulletPop(int number)
 /// <param name="number">ステージの番号</param>
 void GameScene::EnemyPop(int number)
 {
-}
-
-/// <summary>
-/// ケーキのパーティクルの出現
-/// </summary>
-void GameScene::CakeParticlePop()
-{
-	for (auto itr = activeCakeBullet.begin(); itr != activeCakeBullet.end(); ++itr)
-	{
-		//マウスカーソルを左クリックし、且つケーキとバレットが非アクティブ且つパーティクルが出ていないならば
-		if ((GetMouseInput() & MOUSE_INPUT_LEFT) && (*itr)->bullet->GetAlive() && !(*itr)->cake->GetAlive() && !particleFlag)
-		{
-			//パーティクルの個数分エントリーする
-			for (int i = 0; i < PARTICLE_NUMBER; i++)
-			{
-				activeCakeParticle.push_back(new CakeParticle((*itr)->bullet->GetPosition()));
-			}
-
-			particleFlag = true;
-		}
-	}
 }
 
 /// <summary>
@@ -300,34 +286,6 @@ void GameScene::UpdateGame(float deltaTime)
 
 	goalFlag->Update(deltaTime);
 
-	//ケーキのパーティクル出現
-	CakeParticlePop();
-
-	//パーティクルを出したら
-	if (particleFlag)
-	{
-		particleInterval += deltaTime;
-
-		//5秒経過したら
-		//パーティクルを再度出せるようにする
-		if (particleInterval > MAX_PARTICLE_INTERVAL)
-		{
-			particleFlag = false;
-			particleInterval = PARTICLE_INTERVAL;
-		}
-	}
-	
-	for (auto itr = activeCakeParticle.begin(); itr != activeCakeParticle.end(); ++itr)
-	{
-		(*itr)->Update(deltaTime);
-
-		//パーティクルを出し終わったら
-		if ((*itr)->IsParticleEnd())
-		{
-			
-		}
-	}
-
 	hitChecker->Check(&activeStage, player, &activeCakeBullet, /*&enemy,*/ goalFlag);
 	hitChecker->EnemyAndPlayer(player, enemy);
 
@@ -385,11 +343,6 @@ void GameScene::Draw()
 
 	uiManager->Draw(gameState, player->FindCount(), hitChecker->UiHit());
 	
-	for (auto itr = activeCakeParticle.begin(); itr != activeCakeParticle.end(); ++itr)
-	{
-		(*itr)->Draw();
-	}
-
 	fadeManager->Draw();
 
 	//デバック用
@@ -397,6 +350,6 @@ void GameScene::Draw()
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), gameFontHandle, "X : %.0f", player->GetPosition().x);
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), gameFontHandle, "Z : %.0f", player->GetPosition().z);
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), gameFontHandle, "PlayerCount : %d", player->FindCount());
-	DrawFormatStringToHandle(100, 300, GetColor(255, 0, 0), gameFontHandle, "MapHit : %d", hitChecker->MapHit());
+	DrawFormatStringToHandle(100, 250, GetColor(255, 0, 0), gameFontHandle, "MapHit : %d", hitChecker->MapHit());
 #endif // DEBUG
 }

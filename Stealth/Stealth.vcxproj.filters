@@ -115,9 +115,6 @@
     <ClCompile Include="KeyManager.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
-    <ClCompile Include="CakeParticle.cpp">
-      <Filter>ソース ファイル\Particle</Filter>
-    </ClCompile>
     <ClCompile Include="FireWorksParticle.cpp">
       <Filter>ソース ファイル\Particle</Filter>
     </ClCompile>
@@ -233,9 +230,6 @@
     </ClInclude>
     <ClInclude Include="KeyManager.h">
       <Filter>ソース ファイル\System</Filter>
-    </ClInclude>
-    <ClInclude Include="CakeParticle.h">
-      <Filter>ソース ファイル\Particle</Filter>
     </ClInclude>
     <ClInclude Include="FireWorksParticle.h">
       <Filter>ソース ファイル\Particle</Filter>

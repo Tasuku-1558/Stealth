@@ -1,8 +1,6 @@
 #pragma once
 
-#include <vector>
 #include "SceneBase.h"
-#include "PreCompiledHeader.h"
 
 class Camera;
 class Light;
@@ -13,13 +11,10 @@ class Enemy;
 class CakeBullet;
 class HitChecker;
 class GoalFlag;
-class CakeParticle;
 class EffectManager;
 class UiManager;
 class FadeManager;
 class Set;
-
-using namespace std;
 
 /// <summary>
 /// ゲームシーンクラス
@@ -54,23 +49,20 @@ private:
 	CakeBullet* cakeBullet;
 	HitChecker* hitChecker;
 	GoalFlag* goalFlag;
-	CakeParticle* cakeParticle;
 	EffectManager* effectManager;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
 
 	vector<CakeBullet*> activeCakeBullet;
 	vector<Stage*> activeStage;
-	vector<CakeParticle*> activeCakeParticle;
 	vector<VECTOR> cakeBulletPosition;
 
 
 	void Initialize()override;				//初期化処理
 	void InputScene(bool decision);			//シーンを入力
 	void ChangeScreen();					//画面を変える
-	void CakeBulletPop(int number);			//ケーキバレットの出現
+	void CakeBulletPop(int cakeNumber, int number);			//ケーキバレットの出現
 	void EnemyPop(int number);				//エネミーの出現
-	void CakeParticlePop();					//ケーキのパーティクルの出現
 	void StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X]);		//ステージの出現
 
 	//各状態に応じた更新処理
@@ -82,16 +74,15 @@ private:
 
 	struct StageList
 	{
-		int number;				//ステージの番号
-		char name[7];			//ステージの名前
+		int number;			//ステージの番号
+		char name[7];		//ステージの名前
+		int cakeNumber;		//ケーキの数
 	};
 
 	GameState gameState;	//ゲームの状態
 	int	gameFontHandle;		//ゲームフォント
 	int stageNo;			//選択したステージ格納用
 	float frame;			//フレーム数
-	float particleInterval;	//パーティクル出現のインターバル
-	bool  particleFlag;		//パーティクルを出したら
 	bool clear;				//ゲームをクリアしたかどうか
 
 	//定数
@@ -100,10 +91,7 @@ private:
 	const int	SECOND_STAGE_NUMBER;	//ステージ2の番号
 	const int	GAME_FONT_SIZE;			//ゲームフォントのサイズ
 	const int	FONT_THICK;				//フォントの太さ
-	const int	PARTICLE_NUMBER;		//パーティクルの数
 	const int	PLAYER_HP;				//プレイヤーのHP数
 	const float GAME_START_COUNT;		//ゲーム開始カウント
-	const float MAX_PARTICLE_INTERVAL;	//最大パーティクル出現のインタ―バル
-	const float PARTICLE_INTERVAL;		//初期のパーティクル出現インターバル
 	const float STAGE_POS_Y;			//ステージのY座標
 };

@@ -1,15 +1,10 @@
 #pragma once
 
-#include <vector>
-#include <string>
 #include "SceneBase.h"
-#include "DxLib.h"
 
 class Camera;
 class FireWorksParticle;
 class FadeManager;
-
-using namespace std;
 
 /// <summary>
 /// リザルトシーンクラス

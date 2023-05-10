@@ -42,7 +42,7 @@ private:
 
 	struct Model
 	{
-		string modelPath;	//モデルのパス
+		string modelPath;		//モデルのパス
 	};
 
 	int modelHandle[MODEL_AMOUNT];	//モデルハンドル

@@ -14,7 +14,6 @@ public:
 
 	void Update(float deltaTime)override;	//更新処理
 	void Draw()override;					//描画処理
-	void DeleteParticle()override;			//削除処理
 
 private:
 	FireWorksParticle(const FireWorksParticle&);	//コピーコンストラクタ
