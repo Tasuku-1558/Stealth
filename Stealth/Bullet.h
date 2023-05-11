@@ -43,13 +43,18 @@ private:
 
 
 	//定数
+	const int	 SCREEN_WIDTH_HALF;		//半分のウィンドウの幅
+	const int	 SCREEN_HEIGHT_HALF;	//半分のウィンドウの高さ
 	const float  RADIUS;				//ケーキの半径
+	const float  MOUSE_X_WIDTH;			//マウスXの幅
+	const float  MOUSE_Z_HEIGHT;		//マウスZの高さ
+	const float  MOUSE_X_ADJUSTMENT;	//マウスXの調整値
+	const float  MOUSE_Z_ADJUSTMENT;	//マウスZの調整値
 	const double SCALE;					//カーソル画像の大きさ
 	const double ANGLE;					//カーソル画像の回転値
 	const VECTOR SIZE;					//モデルの倍率
-	const VECTOR POSITION;				//モデルの位置
+	const VECTOR INITIAL_POSITION;		//初期のモデルの位置
 	const VECTOR ROTATE;				//モデルの回転値
-	const VECTOR INITIAL_WORLD_MOUSE;	//初期のワールドマウス座標
 	const string IMAGE_FOLDER_PATH;		//Imageフォルダまでのパス
 	const string CURSOR_PATH;			//カーソル画像のパス
 };

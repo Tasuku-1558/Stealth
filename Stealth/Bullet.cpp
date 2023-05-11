@@ -14,13 +14,18 @@ Bullet::Bullet()
 	, mouseY(0)
 	, alive(false)
 	, worldMouse()
+	, SCREEN_WIDTH_HALF(960)
+	, SCREEN_HEIGHT_HALF(540)
 	, RADIUS(50.0f)
+	, MOUSE_X_WIDTH(-3000.0f)
+	, MOUSE_Z_HEIGHT(1900.0f)
+	, MOUSE_X_ADJUSTMENT(1.7f)
+	, MOUSE_Z_ADJUSTMENT(1.5f)
 	, SCALE(0.4)
 	, ANGLE(0.0)
 	, SIZE({ 20.0f, 20.0f, 20.0f })
-	, POSITION({ 0.0f, 30.0f, 0.0f })
+	, INITIAL_POSITION({ 0.0f, 30.0f, 0.0f })
 	, ROTATE({ 0.0f, 90.0f * DX_PI_F / 180.0f, 0.0f })
-	, INITIAL_WORLD_MOUSE({ 0.0f,30.0f,0.0f })
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, CURSOR_PATH("pointer.png")
 {
@@ -50,13 +55,9 @@ void Bullet::Initialize()
 	//カーソル画像の読み込み
 	cursorImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, CURSOR_PATH).c_str());
 
-	position = POSITION;
-
-	worldMouse = INITIAL_WORLD_MOUSE;
-
 	//当たり判定球の情報設定
 	collisionSphere.localCenter = ZERO_VECTOR;
-	collisionSphere.worldCenter = POSITION;
+	collisionSphere.worldCenter = INITIAL_POSITION;
 	collisionSphere.radius = RADIUS;
 }
 
@@ -91,15 +92,15 @@ void Bullet::MouseMove(bool alive, VECTOR playerPosition)
 {
 	//マウスの座標取得
 	GetMousePoint(&mouseX, &mouseY);
-	mouseX -= 960;
-	mouseY -= 540;
+	mouseX -= SCREEN_WIDTH_HALF;
+	mouseY -= SCREEN_HEIGHT_HALF;
 
 	//ケーキが死んだら
 	if (!alive)
 	{
 		//マウスのX、Z座標のワールド座標を計算
-		worldMouse.x = (float)mouseY * (-3000.0f / 1920.0f) * 1.7f + playerPosition.z;
-		worldMouse.z = (float)mouseX * (1900.0f / 1080.0f) * 1.5f + playerPosition.x;
+		worldMouse.x = (float)mouseY * (MOUSE_X_WIDTH / SCREEN_WIDTH) * MOUSE_X_ADJUSTMENT + playerPosition.z;
+		worldMouse.z = (float)mouseX * (MOUSE_Z_HEIGHT / SCREEN_HEIGHT) * MOUSE_Z_ADJUSTMENT + playerPosition.x;
 	}
 }
 
@@ -109,7 +110,7 @@ void Bullet::MouseMove(bool alive, VECTOR playerPosition)
 void Bullet::BulletDead()
 {
 	alive = false;
-	position = POSITION;
+	position = INITIAL_POSITION;
 }
 
 /// <summary>
@@ -142,5 +143,5 @@ void Bullet::Draw()
 		MV1DrawModel(modelHandle);
 	}
 
-	DrawRotaGraph(mouseX + 960, mouseY + 540, SCALE, ANGLE, cursorImage, TRUE);
+	DrawRotaGraph(mouseX + SCREEN_WIDTH_HALF, mouseY + SCREEN_HEIGHT_HALF, SCALE, ANGLE, cursorImage, TRUE);
 }
