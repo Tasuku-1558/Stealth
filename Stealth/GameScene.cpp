@@ -37,7 +37,7 @@ GameScene::GameScene()
 	, GAME_FONT_SIZE(50)
 	, FONT_THICK(1)
 	, PLAYER_HP(2)
-	, GAME_START_COUNT(1.3f)
+	, GAME_START_COUNT(1.5f)
 	, STAGE_POS_Y(-100.0f)
 {
 	GameData::doc.ParseStream(GameData::isw);
@@ -244,7 +244,7 @@ void GameScene::UpdateStart(float deltaTime)
 
 	frame += deltaTime;
 
-	//1.3•bŒo‰ß‚µ‚½‚çƒQ[ƒ€‰æ–Ê‚ÖˆÚs
+	//1.5•bŒo‰ß‚µ‚½‚çƒQ[ƒ€‰æ–Ê‚ÖˆÚs
 	if (frame > GAME_START_COUNT)
 	{
 		gameState = GameState::GAME;

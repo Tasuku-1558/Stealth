@@ -73,8 +73,8 @@ void CakeBullet::Shoot(float deltaTime)
         //ケーキを置いた時のSE音を再生
         SoundManager::GetInstance().SePlayFlag(SoundManager::CAKE_SHOOT);
 
-        //リスポーンエフェクトを出す
-        effectManager->CreateEffect(bullet->GetPosition(), EffectManager::RESPAWN);
+        //ケーキ発射エフェクトを出す
+        effectManager->CreateEffect(bullet->GetPosition(), EffectManager::SHOT);
 	}
 }
 

@@ -8,7 +8,9 @@
 EffectManager::EffectManager()
 	: EFFECT_FOLDER_PATH("Data/Effect/")
 	, RESPAWN_EFFECT_PATH("Respawn/Respawn.efkefc")
+	, SHOT_EFFECT_PATH("Shot/Shot.efkefc")
 	, RESPAWN_SIZE(30.0f)
+	, SHOT_SIZE(50.0f)
 {
 	Initialize();
 }
@@ -18,10 +20,7 @@ EffectManager::EffectManager()
 /// </summary>
 EffectManager::~EffectManager()
 {
-	for (int i = 0; i < EFFECT_AMOUNT; i++)
-	{
-		delete effect[i];
-	}
+	DeleteEffect();
 }
 
 /// <summary>
@@ -29,8 +28,32 @@ EffectManager::~EffectManager()
 /// </summary>
 void EffectManager::Initialize()
 {
-	//各エフェクトの読み込み
-	effect[RESPAWN] = new Effect(Input::InputPath(EFFECT_FOLDER_PATH, RESPAWN_EFFECT_PATH), RESPAWN_SIZE);
+	Effects effects[] =
+	{
+		{RESPAWN_EFFECT_PATH, RESPAWN_SIZE},
+		{SHOT_EFFECT_PATH,	  SHOT_SIZE},
+	};
+
+	for (int i = 0; i < EFFECT_AMOUNT; i++)
+	{
+		//各エフェクトの読み込み
+		effect[i] = new Effect(Input::InputPath(EFFECT_FOLDER_PATH, effects[i].effectPath), effects[i].effectSize);
+	}
+}
+
+/// <summary>
+/// エフェクトの削除
+/// </summary>
+void EffectManager::DeleteEffect()
+{
+	for (int i = 0; i < EFFECT_AMOUNT; i++)
+	{
+		if (effect[i] != NULL)
+		{
+			delete effect[i];
+			effect[i] = NULL;
+		}
+	}
 }
 
 /// <summary>

@@ -155,7 +155,7 @@ void HitChecker::MapAndPlayer(vector<Stage*>* stage, Player* player)
 			//Õ“Ëƒ|ƒŠƒSƒ“‚ğ‚·‚×‚Ä‰ñ‚Á‚Ä‚ß‚è‚İ‚ğ‰ğÁ
 			for (int i = 0; i < hitPolyDim.HitNum; ++i)
 			{
-				//Õ“Ëƒ|ƒŠƒSƒ“‚Ì•Ó 
+				//Õ“Ëƒ|ƒŠƒSƒ“‚Ì•Ó
 				VECTOR edge1 = hitPolyDim.Dim[i].Position[1] - hitPolyDim.Dim[i].Position[0];
 				VECTOR edge2 = hitPolyDim.Dim[i].Position[2] - hitPolyDim.Dim[i].Position[0];
 
