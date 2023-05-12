@@ -30,7 +30,6 @@ void Effect::Update(VECTOR position)
 	//時間を経過
 	effectTime++;
 
-	//エフェクトを再生
 	if (effectTime % PLAY_EFFECT_TIME == 0)
 	{
 		//エフェクトを再生
