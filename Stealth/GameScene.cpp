@@ -262,7 +262,7 @@ void GameScene::UpdateGame(float deltaTime)
 
 	camera->Update(player->GetPosition());
 
-	player->Update(deltaTime, hitChecker->MapHit(), hitChecker->Back());
+	player->Update(deltaTime);
 
 	player->FoundEnemy(deltaTime, enemy->Spotted());
 
@@ -350,6 +350,5 @@ void GameScene::Draw()
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), gameFontHandle, "X : %.0f", player->GetPosition().x);
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), gameFontHandle, "Z : %.0f", player->GetPosition().z);
 	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), gameFontHandle, "PlayerCount : %d", player->FindCount());
-	DrawFormatStringToHandle(100, 250, GetColor(255, 0, 0), gameFontHandle, "MapHit : %d", hitChecker->MapHit());
 #endif // DEBUG
 }

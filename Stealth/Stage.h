@@ -15,5 +15,4 @@ public:
 
 private:
 	Stage(const Stage&);	//コピーコンストラクタ
-
 };

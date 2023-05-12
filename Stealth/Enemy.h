@@ -35,7 +35,7 @@ private:
 	void Finalize();								//終了処理
 	void Move(float deltaTime);						//移動処理
 	void Position(vector<VECTOR>& id);				//エネミー位置設定
-	void StateUpdate(float deltaTime);				//エネミーの状態変化
+	void StateUpdate(float deltaTime);				//エネミーの状態の変化
 	void SetTargetPosition();						//目的地まで移動処理
 	void VisualAnglePlayer(VECTOR playerPosition);	//エネミーの視野にプレイヤーが入った場合
 	void Reaction();								//エネミーのオブジェクトごとの反応

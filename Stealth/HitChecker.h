@@ -31,8 +31,6 @@ public:
 
 	const bool UiHit() { return uiHit; }					//Ui画像に当たったかどうかを返す
 	const bool FlagHit() { return flagHit; }				//ゴールオブジェクトにプレイヤーが当たったかどうかを返す
-	const bool MapHit() { return mapHit; }					//マップにプレイヤーが衝突したかどうかを返す
-	const VECTOR Back() { return pushBack; }				//マップの壁にプレイヤーが衝突したときの押し戻し値を返す
 
 private:
 	HitChecker(const HitChecker&);							//コピーコンストラクタ
@@ -46,14 +44,12 @@ private:
 	float moveLengh;		//移動量
 	bool uiHit;				//Ui画像を描画するかどうか
 	bool flagHit;			//ゴールオブジェクトに衝突したかどうか
-	bool mapHit;			//マップモデルに衝突したかどうか
 	VECTOR uiPosition;		//Ui画像の位置
 	VECTOR pushBack;		//マップに衝突した時の押し戻し量
 	VECTOR moveVec;			//移動ベクトル
 	VECTOR planeNormal;		//ポリゴン平面法線
 
-	MV1_COLL_RESULT_POLY_DIM hitPolyDim;
-
+	MV1_COLL_RESULT_POLY_DIM hitPolyDim;	//コリジョン結果代入用ポリゴン配列
 
 	//定数
 	const int	 FRAME_INDEX;	//当たり判定情報を更新するフレームの番号

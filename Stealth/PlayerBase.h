@@ -44,7 +44,7 @@ protected:
 	const float   STOP_SPEED;				//プレイヤーの移動速度を停止させる
 	const float	  MAX_INPUT_DIRECTION;		//最大の入力された方向
 
-	const VECTOR  POSITION;					//モデルの位置
+	const VECTOR  INITIAL_POSITION;			//初期のプレイヤーの位置
 	const VECTOR  DIRECTION;				//モデルの向き
 	const VECTOR  UP;						//上方向
 	const VECTOR  DOWN;						//下方向

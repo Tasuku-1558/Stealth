@@ -16,7 +16,6 @@ HitChecker::HitChecker()
 	: moveLengh(0.0f)
 	, uiHit(false)
 	, flagHit(false)
-	, mapHit(false)
 	, uiPosition()
 	, pushBack()
 	, moveVec()
@@ -24,7 +23,7 @@ HitChecker::HitChecker()
 	, hitPolyDim()
 	, DIV_NUMBER(8)
 	, FRAME_INDEX(-1)
-	, SCALE(15.0f)
+	, SCALE(10.0f)
 	, UI_POSITION({ 0.0f, 30.0f, 800.0f })
 {
 	uiPosition = UI_POSITION;
@@ -143,14 +142,12 @@ void HitChecker::MapAndPlayer(vector<Stage*>* stage, Player* player)
 		//ステージモデルとプレイヤーの当たり判定
 		hitPolyDim = MV1CollCheck_Sphere((*itr)->GetModelHandle(), FRAME_INDEX, player->GetCollide().worldCenter, player->GetCollide().radius);
 		
-		VECTOR moveCandidate = player->GetCollide().worldCenter;	//プレイヤー中心候補
-		VECTOR newCenter = player->GetCollide().worldCenter;		//移動候補
+		VECTOR moveCandidate;													//プレイヤー中心候補
+		VECTOR newCenter = moveCandidate = player->GetCollide().worldCenter;	//移動候補
 
 		//プレイヤーがマップに当たったかどうか
 		if (hitPolyDim.HitNum)
 		{
-			//マップに衝突した
-			mapHit = true;
 
 			//衝突ポリゴンをすべて回ってめり込みを解消
 			for (int i = 0; i < hitPolyDim.HitNum; ++i)
@@ -160,8 +157,7 @@ void HitChecker::MapAndPlayer(vector<Stage*>* stage, Player* player)
 				VECTOR edge2 = hitPolyDim.Dim[i].Position[2] - hitPolyDim.Dim[i].Position[0];
 
 				//衝突ポリゴンの辺より、ポリゴン面の法線ベクトルを求める
-				planeNormal = VCross(edge1, edge2);
-				planeNormal = VNorm(planeNormal);
+				planeNormal = VNorm(VCross(edge1, edge2));
 
 				//プレイヤー中心に最も近いポリゴン平面の点を求める
 				VECTOR tmp = moveCandidate - hitPolyDim.Dim[i].Position[0];
@@ -190,11 +186,9 @@ void HitChecker::MapAndPlayer(vector<Stage*>* stage, Player* player)
 				newCenter = moveCandidate;
 
 				pushBack = newCenter - player->GetDirection() + VScale(player->GetDirection(), SCALE);
+
+				player->HitMap(pushBack);
 			}
-		}
-		else
-		{
-			mapHit = false;
 		}
 	}
 }

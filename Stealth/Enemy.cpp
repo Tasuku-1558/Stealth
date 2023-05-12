@@ -385,7 +385,7 @@ void Enemy::Reaction()
 }
 
 /// <summary>
-/// エネミーの動き
+/// エネミーの状態の変化
 /// </summary>
 /// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void Enemy::StateUpdate(float deltaTime)

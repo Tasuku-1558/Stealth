@@ -46,21 +46,21 @@ void Player::Initialize()
 		//モデルのエミッシブカラーを変更
 		MV1SetMaterialEmiColor(afterImageModel[i], MATERIAL_INDEX, AFTER_IMAGE_COLOR);
 
-		pastPosition[i] = POSITION;
+		pastPosition[i] = INITIAL_POSITION;
 	}
 
 	//見つかった画像の読み込み
 	playerFindImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, PLAYER_FIND_PATH).c_str());
 
-	position = POSITION;
-	nextPosition = POSITION;
+	position = INITIAL_POSITION;
+	nextPosition = INITIAL_POSITION;
 
 	direction = DIRECTION;
 	speed = SPEED;
 
 	//当たり判定球の情報設定
 	collisionSphere.localCenter = ZERO_VECTOR;
-	collisionSphere.worldCenter = POSITION;
+	collisionSphere.worldCenter = INITIAL_POSITION;
 	collisionSphere.radius = RADIUS;
 }
 
@@ -83,15 +83,11 @@ void Player::Finalize()
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime">前フレームと現在のフレームの差分</param>
-/// <param name="mapHit">マップと衝突したかどうか</param>
-/// <param name="pushBack">プレイヤーへの押し戻しの量</param>
-void Player::Update(float deltaTime, bool mapHit, VECTOR pushBack)
+void Player::Update(float deltaTime)
 {
 	Move(deltaTime);
 
 	AfterImage();
-
-	HitMap(mapHit, pushBack);
 }
 
 /// <summary>
@@ -139,6 +135,9 @@ void Player::Move(float deltaTime)
 
 		//キーの入力方向を正規化
 		direction = VNorm(inputDirection);
+
+		position = nextPosition;
+		nextPosition = position;
 		
 		//キーの移動方向に移動
 		nextPosition += direction * speed * deltaTime;
@@ -153,26 +152,13 @@ void Player::Move(float deltaTime)
 }
 
 /// <summary>
-/// マップに衝突したかどうか
+/// マップに衝突した
 /// </summary>
-/// <param name="mapHit">マップと衝突したかどうか</param>
 /// <param name="pushBack">プレイヤーへの押し戻しの量</param>
-void Player::HitMap(bool mapHit, VECTOR pushBack)
+void Player::HitMap(VECTOR pushBack)
 {
-	//マップにプレイヤーが衝突したならば
-	if (mapHit)
-	{
-		//未来の位置に押し戻しの値を加える
-		nextPosition = pushBack;
-
-		position = nextPosition;
-		nextPosition = position;
-	}
-	else
-	{
-		position = nextPosition;
-		nextPosition = position;
-	}
+	//未来の位置に押し戻しの値を加える
+	nextPosition = pushBack;
 }
 
 /// <summary>
@@ -234,13 +220,13 @@ void Player::FoundCount()
 	{
 		//位置と向きを初期位置に
 		//スピードを元に戻す
-		position = POSITION;
-		nextPosition = POSITION;
+		position = INITIAL_POSITION;
+		nextPosition = INITIAL_POSITION;
 		inputFlag = false;
 
 		for (int i = 0; i < AFTER_IMAGE_NUMBER; i++)
 		{
-			pastPosition[i] = POSITION;
+			pastPosition[i] = INITIAL_POSITION;
 		}
 
 		direction = DIRECTION;
