@@ -43,13 +43,14 @@ HitChecker::~HitChecker()
 /// <param name="stage">ステージのポインタ</param>
 /// <param name="player">プレイヤーのポインタ</param>
 /// <param name="cakeBullet">ケーキバレットのポインタ</param>
+/// <param name="enemy">エネミーのポインタ</param>
 /// <param name="goalFlag">ゴールオブジェクトのポインタ</param>
-void HitChecker::Check(vector<Stage*>* stage, Player* player, vector<CakeBullet*>* cakeBullet, /*vector<Enemy*>* enemy,*/ GoalFlag* goalFlag)
+void HitChecker::Check(vector<Stage*>* stage, Player* player, vector<CakeBullet*>* cakeBullet, vector<Enemy*>* enemy, GoalFlag* goalFlag)
 {
-	CakeAndPlayer(player, cakeBullet);
-	//EnemyAndPlayer(player, enemy);
-	PlayerAndUi(player);
 	MapAndPlayer(stage, player);
+	CakeAndPlayer(player, cakeBullet);
+	EnemyAndPlayer(player, enemy);
+	PlayerAndUi(player);
 	FlagAndPlayer(goalFlag, player);
 }
 
@@ -83,22 +84,22 @@ void HitChecker::CakeAndPlayer(Player* player, vector<CakeBullet*>* cakeBullet)
 /// </summary>
 /// <param name="player">プレイヤーのポインタ</param>
 /// <param name="enemy">エネミーのポインタ</param>
-void HitChecker::EnemyAndPlayer(Player* player, /*vector<Enemy*>* enemy*/Enemy* enemy)
+void HitChecker::EnemyAndPlayer(Player* player, vector<Enemy*>* enemy)
 {
-	//for (auto itr = enemy->begin(); itr != enemy->end(); ++itr)
+	for (auto itr = enemy->begin(); itr != enemy->end(); ++itr)
 	{
 		//プレイヤーからエネミーの座標を引いた値を取得
-		VECTOR sub = player->GetPosition() - /*(*itr)*/enemy->GetPosition();
+		VECTOR sub = player->GetPosition() - (*itr)->GetPosition();
 
 		//プレイヤーとエネミーの距離を計算
 		float distance = VSize(sub);
-		float radius = player->GetCollide().radius + /*(*itr)*/enemy->GetCollideRadius();
+		float radius = player->GetCollide().radius + (*itr)->GetCollideRadius();
 
 		//衝突しているならば
 		if (distance <= radius)
 		{
 			//エネミーの反応
-			/*(*itr)*/enemy->HitPlayer();
+			(*itr)->HitPlayer();
 		}
 	}
 }
@@ -212,9 +213,5 @@ void HitChecker::FlagAndPlayer(GoalFlag* goalFlag, Player* player)
 	if (distance <= radius)
 	{
 		flagHit = true;
-	}
-	else
-	{
-		flagHit = false;
 	}
 }

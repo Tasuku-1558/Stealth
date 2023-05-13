@@ -21,21 +21,20 @@ public:
 	HitChecker();
 	virtual ~HitChecker();
 
-	void Check(vector<Stage*>* stage, 
-			   Player* player, 
-			   vector<CakeBullet*>* cakeBullet, 
-			  /* vector<Enemy*>* enemy, */
+	void Check(vector<Stage*>* stage,
+			   Player* player,
+			   vector<CakeBullet*>* cakeBullet,
+			   vector<Enemy*>* enemy,
 			   GoalFlag* goalFlag);				//衝突判定
 
-	void EnemyAndPlayer(Player* player, /*vector<Enemy*>* enemy*/Enemy* enemy);	//エネミーとプレイヤーの当たり判定
-
-	const bool UiHit() { return uiHit; }					//Ui画像に当たったかどうかを返す
-	const bool FlagHit() { return flagHit; }				//ゴールオブジェクトにプレイヤーが当たったかどうかを返す
+	const bool UiHit() { return uiHit; }		//Ui画像に当たったかどうかを返す
+	const bool GoalHit() { return flagHit; }	//ゴールオブジェクトに当たったかどうかを返す
 
 private:
-	HitChecker(const HitChecker&);							//コピーコンストラクタ
+	HitChecker(const HitChecker&);				//コピーコンストラクタ
 
 	void CakeAndPlayer(Player* player, vector<CakeBullet*>* cakeBullet);	//ケーキとプレイヤーの当たり判定
+	void EnemyAndPlayer(Player* player, vector<Enemy*>* enemy);				//エネミーとプレイヤーの当たり判定
 	void PlayerAndUi(Player* player);										//プレイヤーとUi画像の当たり判定
 	void MapAndPlayer(vector<Stage*>* stage, Player* player);				//マップとプレイヤーの当たり判定
 	void FlagAndPlayer(GoalFlag* goalFlag, Player* player);					//ゴールオブジェクトとプレイヤーの当たり判定

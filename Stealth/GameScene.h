@@ -55,14 +55,18 @@ private:
 
 	vector<CakeBullet*> activeCakeBullet;
 	vector<Stage*> activeStage;
+	vector<Enemy*> activeEnemy;
+
 	vector<VECTOR> cakeBulletPosition;
+	vector<VECTOR> enemyPosition;
 
 
 	void Initialize()override;				//初期化処理
 	void InputScene(bool decision);			//シーンを入力
 	void ChangeScreen();					//画面を変える
-	void CakeBulletPop(int cakeNumber, int number);			//ケーキバレットの出現
-	void EnemyPop(int number);				//エネミーの出現
+
+	void CakeBulletPop(int number, int cakeNumber);					//ケーキバレットの出現
+	void EnemyPop(int number, char stageName[7], int enemyNumber);	//エネミーの出現
 	void StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X]);		//ステージの出現
 
 	//各状態に応じた更新処理
@@ -77,12 +81,13 @@ private:
 		int number;			//ステージの番号
 		char name[7];		//ステージの名前
 		int cakeNumber;		//ケーキの数
+		int enemyNumber;	//エネミーの数
 	};
 
 	GameState gameState;	//ゲームの状態
 	int	gameFontHandle;		//ゲームフォント
 	int stageNo;			//選択したステージ格納用
-	float frame;			//フレーム数
+	float gameStartCount;	//ゲーム開始カウント
 	bool clear;				//ゲームをクリアしたかどうか
 
 	//定数
@@ -92,6 +97,6 @@ private:
 	const int	GAME_FONT_SIZE;			//ゲームフォントのサイズ
 	const int	FONT_THICK;				//フォントの太さ
 	const int	PLAYER_HP;				//プレイヤーのHP数
-	const float GAME_START_COUNT;		//ゲーム開始カウント
+	const float MAX_GAME_START_COUNT;	//最大ゲーム開始カウント
 	const float STAGE_POS_Y;			//ステージのY座標
 };

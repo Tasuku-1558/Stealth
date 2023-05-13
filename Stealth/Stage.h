@@ -8,7 +8,7 @@
 class Stage final : public ObjectBase
 {
 public:
-	Stage(VECTOR position);
+	Stage(VECTOR position, VECTOR scale);
 	virtual ~Stage();
 
 	void Draw();			//•`‰æˆ—

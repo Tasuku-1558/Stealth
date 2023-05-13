@@ -1,8 +1,10 @@
 #pragma once
 
 #include <string>
-#include "DxLib.h"
-#include "ModelManager.h"
+#include <vector>
+#include "PreCompiledHeader.h"
+
+class Stage;
 
 using namespace std;
 
@@ -15,41 +17,34 @@ public:
 	SelectionUi();
 	virtual ~SelectionUi();
 
-	void Draw();		//描画処理
-	void StageUiDraw(int mapNumber, int enemyNumber, 
-					 int cakeNumber);		//ステージのUi描画処理
+	void Draw();						//描画処理
 
-	void TitleUiDraw();		//タイトルへ遷移するUi描画処理
+	void StageUiDraw(int mapNumber,
+					 int enemyNumber,
+					 int cakeNumber);	//ステージのUi描画処理
+
+	void TitleUiDraw();					//タイトルへ遷移するUi描画処理
 
 private:
 	SelectionUi(const SelectionUi&);	//コピーコンストラクタ
 
+	Stage* stage;
+	vector<Stage*> activeStage;
+
 	void Initialize();			//初期化処理
 	void Finalize();			//終了処理
-
-	void MapInput(int number, ModelManager::ModelType modelType, 
-				  VECTOR mapPos, VECTOR size, VECTOR rotate);		//マップ情報入力
+	void StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X]);		//ステージの出現
 
 	int fontHandle;				//ゲームフォント
 	int selectionKeyImage;		//ステージセレクションUi画像
 	int selectionUiImage;		//ステージセレクションからタイトルへ遷移のUi画像
 	int stageDescription;		//ステージの説明画像ハンドル
 	int operationMethod;		//操作方法説明画像のハンドル
-	int modelHandle[2];			//マップモデルハンドル
-	VECTOR position[2];			//マップモデルの位置
 
 	//定数
 	const int	 SELECTION_FONT_SIZE;		//ゲームフォントのサイズ
 	const int	 FONT_THICK;				//フォントの太さ
 	const int	 STAGE_NUMBER;				//ステージ数
-
-	const VECTOR STAGE1_POSITION;			//ステージ1モデルの位置
-	const VECTOR STAGE1_SIZE;				//ステージ1モデルの倍率
-	const VECTOR STAGE1_ROTATE;				//ステージ1モデルの回転値
-
-	const VECTOR STAGE2_POSITION;			//ステージ2モデルの位置
-	const VECTOR STAGE2_SIZE;				//ステージ2モデルの倍率
-	const VECTOR STAGE2_ROTATE;				//ステージ2モデルの回転値
 
 	const string IMAGE_FOLDER_PATH;			//Imageフォルダまでのパス
 	const string SELECTION_KEY_PATH;		//ステージセレクションUi画像のパス

@@ -1,5 +1,26 @@
 #include "SelectionUi.h"
+#include "Stage.h"
 #include "InputManager.h"
+
+char stage1[16][16] =
+{
+	1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,
+	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
+	1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,
+	1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,
+	1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,
+	1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,
+	1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,
+	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
+	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
+	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
+	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
+	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
+	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
+	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
+	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
+	1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,
+};
 
 /// <summary>
 /// コンストラクタ
@@ -10,17 +31,9 @@ SelectionUi::SelectionUi()
 	, selectionUiImage(0)
 	, stageDescription(0)
 	, operationMethod(0)
-	, modelHandle()
-	, position()
 	, SELECTION_FONT_SIZE(90)
 	, FONT_THICK(1)
 	, STAGE_NUMBER(2)
-	, STAGE1_POSITION({ 500.0f, 700.0f, 250.0f })
-	, STAGE1_SIZE({ 14.0f, 14.0f, 14.0f })
-	, STAGE1_ROTATE({ 0.0f, 180.0f * DX_PI_F / 180.0f, 15.0f * DX_PI_F / 180.0f })
-	, STAGE2_POSITION({ -100.0f, 800.0f, 600.0f })
-	, STAGE2_SIZE({ 11.0f, 11.0f, 11.0f })
-	, STAGE2_ROTATE({ 80.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f, 90.0f * DX_PI_F / 180.0f })
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, SELECTION_KEY_PATH("selection_key.png")
 	, SELECTION_TITLE_PATH("selection_Ui.png")
@@ -43,11 +56,6 @@ SelectionUi::~SelectionUi()
 /// </summary>
 void SelectionUi::Initialize()
 {
-	//マップモデルの読み込み
-	MapInput(0, ModelManager::STAGE1, STAGE1_POSITION, STAGE1_SIZE, STAGE1_ROTATE);
-
-	MapInput(1, ModelManager::STAGE2, STAGE2_POSITION, STAGE2_SIZE, STAGE2_ROTATE);
-
 	//セレクションUi画像の読み込み
 	stageDescription = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, STAGE_DESCRIPTION_PATH).c_str());
 
@@ -57,25 +65,10 @@ void SelectionUi::Initialize()
 
 	operationMethod = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, OPERATION_METHOD_PATH).c_str());
 
+	StagePop(stage1);
+
 	//フォントデータの作成
 	fontHandle = CreateFontToHandle("Oranienbaum", SELECTION_FONT_SIZE, 1);
-}
-
-/// <summary>
-/// マップ情報入力
-/// </summary>
-/// <param name="number"></param>
-/// <param name="modelType"></param>
-/// <param name="mapPos"></param>
-/// <param name="size"></param>
-/// <param name="rotate"></param>
-void SelectionUi::MapInput(int number, ModelManager::ModelType modelType, VECTOR mapPos, VECTOR size, VECTOR rotate)
-{
-	modelHandle[number] = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(modelType));
-	position[number] = mapPos;
-	MV1SetScale(modelHandle[number], size);
-	MV1SetRotationXYZ(modelHandle[number], rotate);
-	MV1SetPosition(modelHandle[number], position[number]);
 }
 
 /// <summary>
@@ -83,11 +76,6 @@ void SelectionUi::MapInput(int number, ModelManager::ModelType modelType, VECTOR
 /// </summary>
 void SelectionUi::Finalize()
 {
-	for (int i = 0; i < STAGE_NUMBER; i++)
-	{
-		MV1DeleteModel(modelHandle[i]);
-	}
-
 	DeleteGraph(selectionKeyImage);
 
 	DeleteGraph(stageDescription);
@@ -101,6 +89,27 @@ void SelectionUi::Finalize()
 }
 
 /// <summary>
+/// ステージ出現
+/// </summary>
+/// <param name="stageData">ステージのデータ</param>
+void SelectionUi::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
+{
+	for (int i = 0; i < BLOCK_NUM_Z; i++)
+	{
+		for (int j = 0; j < BLOCK_NUM_X; j++)
+		{
+			float posX = i * 200.0f;
+			float posZ = j * -200.0f;
+
+			if (stageData[j][i] == 0)
+			{
+				activeStage.emplace_back(new Stage({ posX, 0.0f, posZ }, { 0.5f, 0.5f, 0.5f }));
+			}
+		}
+	}
+}
+
+/// <summary>
 /// ステージのUi描画処理
 /// </summary>
 /// <param name="mapNumber"></param>
@@ -109,11 +118,15 @@ void SelectionUi::Finalize()
 void SelectionUi::StageUiDraw(int mapNumber, int enemyNumber, int cakeNumber)
 {
 	DrawGraph(100, 150, stageDescription, TRUE);
-	MV1DrawModel(modelHandle[mapNumber]);
 
 	//敵とケーキの数を表示
 	DrawFormatStringToHandle(370, 470, GetColor(255, 255, 255), fontHandle, "%d", enemyNumber);
 	DrawFormatStringToHandle(520, 570, GetColor(255, 255, 255), fontHandle, "%d", cakeNumber);
+
+	for (auto itr = activeStage.begin(); itr != activeStage.end(); ++itr)
+	{
+		(*itr)->Draw();
+	}
 }
 
 /// <summary>

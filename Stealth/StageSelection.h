@@ -38,10 +38,18 @@ private:
 		SceneType sceneType;	//シーンの種類
 	};
 
+	struct StageUi
+	{
+		int number;			//ステージ番号
+		int mapNumber;		//マップの番号
+		int enemyNumber;	//敵の数
+		int cakeNumber;		//ケーキの数
+	};
+
 	int fontHandle;							//ゲームフォント
 	int stageNo;							//ステージ番号
 	int changeTimeCount;					//文字点滅カウント
-	float frame;							//フレーム数
+	float fadeCount;						//フェードカウント
 	float pushCount;						//ステージ切り替えカウント
 	bool changeScene;						//シーンを切り替える
 	
@@ -59,6 +67,6 @@ private:
 	const int	FONT_THICK;					//フォントの太さ
 	const float MAX_PUSH_COUNT;				//最大切り替えカウント
 	const float PUSH_INTERVAL;				//切り替えカウントのインターバル
-	const float FADE_START_FRAME;			//フェード開始フレーム
+	const float FADE_START_COUNT;			//フェード開始カウント
 
 };

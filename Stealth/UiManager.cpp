@@ -51,8 +51,11 @@ void UiManager::Finalize()
 {
 	for (int i = 0; i < GRAPHIC_AMOUNT; ++i)
 	{
-		DeleteGraph(uiHandle[i]);
-		uiHandle[i] = NULL;
+		if (uiHandle[i] != NULL)
+		{
+			DeleteGraph(uiHandle[i]);
+			uiHandle[i] = NULL;
+		}
 	}
 }
 

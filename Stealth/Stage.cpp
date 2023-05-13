@@ -6,10 +6,14 @@
 /// コンストラクタ
 /// </summary>
 /// <param name="position">壁モデルの位置</param>
-Stage::Stage(VECTOR position)
+/// <param name="scale">壁モデルの大きさ</param>
+Stage::Stage(VECTOR position, VECTOR scale)
 {
-	//壁モデルの読み込みと位置を設定
+	//壁モデルの読み込み
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE));
+
+	//大きさと位置を設定
+	MV1SetScale(modelHandle, scale);
 	MV1SetPosition(modelHandle, position);
 }
 

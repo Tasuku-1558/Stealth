@@ -29,7 +29,7 @@ GameScene::GameScene()
 	, pUpdate(nullptr)
 	, gameFontHandle(0)
 	, stageNo(0)
-	, frame(0.0f)
+	, gameStartCount(0.0f)
 	, clear(true)
 	, MAX_STAGE_NUMBER(2)
 	, FIRST_STAGE_NUMBER(1)
@@ -37,7 +37,7 @@ GameScene::GameScene()
 	, GAME_FONT_SIZE(50)
 	, FONT_THICK(1)
 	, PLAYER_HP(2)
-	, GAME_START_COUNT(1.5f)
+	, MAX_GAME_START_COUNT(1.5f)
 	, STAGE_POS_Y(-100.0f)
 {
 	GameData::doc.ParseStream(GameData::isw);
@@ -66,16 +66,16 @@ void GameScene::Initialize()
 
 	effectManager = new EffectManager();
 
-	hitChecker = new HitChecker();
-
 	player = new Player(effectManager);
+
+	hitChecker = new HitChecker();
 
 	stageNo = Set::GetInstance().GetStage();
 
 	StageList stageList[] =
 	{
-		{FIRST_STAGE_NUMBER,  "stage1", 2},
-		{SECOND_STAGE_NUMBER, "stage2", 1},
+		{FIRST_STAGE_NUMBER,  "stage1", 2, 1},
+		{SECOND_STAGE_NUMBER, "stage2", 1, 1},
 	};
 
 	for (int i = 0; i < MAX_STAGE_NUMBER; i++)
@@ -84,17 +84,15 @@ void GameScene::Initialize()
 		{
 			StagePop(StageData::stage1);
 
-			//エネミーに行動パターンのナンバーとスピードを設定
-			enemy = new Enemy(GameData::doc["EnemyMovePattern"][stageList[i].name].GetInt(), GameData::doc["EnemySpeed"][stageList[i].name].GetFloat());
 
 			//ゴールフラグの初期位置を設定
 			goalFlag = new GoalFlag({ GameData::doc["GoalPosition"][stageList[i].name]["x"].GetFloat(),
 									  GameData::doc["GoalPosition"][stageList[i].name]["y"].GetFloat(),
 									  GameData::doc["GoalPosition"][stageList[i].name]["z"].GetFloat() });
 
-			CakeBulletPop(stageList[i].cakeNumber, stageList[i].number);
+			CakeBulletPop(stageList[i].number, stageList[i].cakeNumber);
 
-			EnemyPop(stageList[i].number);
+			EnemyPop(stageList[i].number, stageList[i].name, stageList[i].enemyNumber);
 		}
 	}
 	
@@ -137,7 +135,7 @@ void GameScene::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 
 			if (stageData[j][i] == 0)
 			{
-				activeStage.emplace_back(new Stage({ posX, STAGE_POS_Y, posZ }));
+				activeStage.emplace_back(new Stage({ posX, STAGE_POS_Y, posZ }, { 1.0f,1.0f,1.0f }));
 			}
 		}
 	}
@@ -146,9 +144,9 @@ void GameScene::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 /// <summary>
 /// ケーキバレットの出現
 /// </summary>
-/// <param name="cakeNumber">ケーキの数</param>
 /// <param name="number">ステージの番号</param>
-void GameScene::CakeBulletPop(int cakeNumber, int number)
+/// <param name="cakeNumber">ケーキの数</param>
+void GameScene::CakeBulletPop(int number, int cakeNumber)
 {
 	if (number == FIRST_STAGE_NUMBER)
 	{
@@ -186,8 +184,18 @@ void GameScene::CakeBulletPop(int cakeNumber, int number)
 /// エネミーの出現
 /// </summary>
 /// <param name="number">ステージの番号</param>
-void GameScene::EnemyPop(int number)
+/// <param name="stageName">ステージの名前</param>
+/// <param name="enemyNumber">敵の数</param>
+void GameScene::EnemyPop(int number, char stageName[7], int enemyNumber)
 {
+	for (int i = 0; i < enemyNumber; i++)
+	{
+		if (stageNo == number)
+		{
+			//エネミーに行動パターンのナンバーとスピードを設定
+			activeEnemy.emplace_back(new Enemy(GameData::doc["EnemyMovePattern"][stageName].GetInt(), GameData::doc["EnemySpeed"][stageName].GetFloat()));
+		}
+	}
 }
 
 /// <summary>
@@ -221,7 +229,7 @@ void GameScene::ChangeScreen()
 	}
 
 	//プレイヤーがゴール地点に辿り着いたら
-	if (hitChecker->FlagHit())
+	if (hitChecker->GoalHit())
 	{
 		gameState = GameState::GOAL;
 		pUpdate = &GameScene::UpdateGoal;
@@ -234,18 +242,21 @@ void GameScene::ChangeScreen()
 /// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void GameScene::UpdateStart(float deltaTime)
 {
+	gameStartCount += deltaTime;
+
 	backGround->Update();
 
 	camera->Update(player->GetPosition());
 
-	enemy->Update(deltaTime, player->GetPosition());
+	for (auto itr = activeEnemy.begin(); itr != activeEnemy.end(); ++itr)
+	{
+		(*itr)->Update(deltaTime, player->GetPosition());
+	}
 
 	effectManager->CreateEffect(player->GetPosition(), EffectManager::RESPAWN);
 
-	frame += deltaTime;
-
 	//1.5秒経過したらゲーム画面へ移行
-	if (frame > GAME_START_COUNT)
+	if (gameStartCount > MAX_GAME_START_COUNT)
 	{
 		gameState = GameState::GAME;
 		pUpdate = &GameScene::UpdateGame;
@@ -264,18 +275,21 @@ void GameScene::UpdateGame(float deltaTime)
 
 	player->Update(deltaTime);
 
-	player->FoundEnemy(deltaTime, enemy->Spotted());
-
-	enemy->Update(deltaTime, player->GetPosition());
-
-	for (auto itr = activeCakeBullet.begin(); itr != activeCakeBullet.end(); ++itr)
+	for (auto itr = activeEnemy.begin(); itr != activeEnemy.end(); ++itr)
 	{
-		enemy->VisualAngleCake((*itr)->bullet->GetPosition(), deltaTime);
+		player->FoundEnemy(deltaTime, (*itr)->Spotted());
 
-		//エネミーがケーキを見つけたならば
-		if (enemy->CakeFlag())
+		(*itr)->Update(deltaTime, player->GetPosition());
+
+		for (auto itre = activeCakeBullet.begin(); itre != activeCakeBullet.end(); ++itre)
 		{
-			break;
+			(*itr)->VisualAngleCake((*itre)->bullet->GetPosition(), deltaTime);
+
+			//エネミーがケーキを見つけたならば
+			if ((*itr)->CakeFlag())
+			{
+				break;
+			}
 		}
 	}
 
@@ -286,8 +300,7 @@ void GameScene::UpdateGame(float deltaTime)
 
 	goalFlag->Update(deltaTime);
 
-	hitChecker->Check(&activeStage, player, &activeCakeBullet, /*&enemy,*/ goalFlag);
-	hitChecker->EnemyAndPlayer(player, enemy);
+	hitChecker->Check(&activeStage, player, &activeCakeBullet, &activeEnemy, goalFlag);
 
 	ChangeScreen();
 }
@@ -322,7 +335,10 @@ void GameScene::Draw()
 		(*itr)->Draw();
 	}
 
-	enemy->Draw();
+	for (auto itr = activeEnemy.begin(); itr != activeEnemy.end(); ++itr)
+	{
+		(*itr)->Draw();
+	}
 
 	//ゲーム状態がスタートではないならば
 	if (gameState != GameState::START)
@@ -349,6 +365,5 @@ void GameScene::Draw()
 #ifdef DEBUG
 	DrawFormatStringToHandle(100, 100, GetColor(255, 0, 0), gameFontHandle, "X : %.0f", player->GetPosition().x);
 	DrawFormatStringToHandle(100, 150, GetColor(255, 0, 0), gameFontHandle, "Z : %.0f", player->GetPosition().z);
-	DrawFormatStringToHandle(100, 200, GetColor(255, 0, 0), gameFontHandle, "PlayerCount : %d", player->FindCount());
 #endif // DEBUG
 }

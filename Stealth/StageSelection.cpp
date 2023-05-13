@@ -16,7 +16,7 @@ StageSelection::StageSelection()
 	, stageNo(1)
 	, changeTimeCount(0)
 	, pushCount(0.0f)
-	, frame(0.0f)
+	, fadeCount(0.0f)
 	, changeScene(false)
 	, MAX_STAGE(6)
 	, FIRST_STAGE_NUMBER(1)
@@ -30,7 +30,7 @@ StageSelection::StageSelection()
 	, FONT_THICK(1)
 	, MAX_PUSH_COUNT(0.0f)
 	, PUSH_INTERVAL(0.2f)
-	, FADE_START_FRAME(1.0f)
+	, FADE_START_COUNT(1.0f)
 {
 	Initialize();
 }
@@ -70,7 +70,7 @@ int StageSelection::stageIncrement(int stageNumber)
 		return stageNumber + ADD_STAGE_NUMBER;
 	}
 
-	return 1;
+	return ADD_STAGE_NUMBER;
 }
 
 /// <summary>
@@ -164,10 +164,10 @@ void StageSelection::KeyMove(float deltaTime)
 		//文字点滅カウントを開始する
 		changeTimeCount++;
 
-		frame += deltaTime;
+		fadeCount += deltaTime;
 
 		//1秒経過したら
-		if (frame > FADE_START_FRAME)
+		if (fadeCount > FADE_START_COUNT)
 		{
 			fadeManager->FadeMove();
 
@@ -186,28 +186,24 @@ void StageSelection::KeyMove(float deltaTime)
 /// </summary>
 void StageSelection::Draw()
 {
-	//それぞれのステージごとのUi描画処理
 	//マップの番号、敵の数、ケーキの数を入力
-	if (stageNo == FIRST_STAGE_NUMBER)
+	StageUi stageUi[] =
 	{
-		selectionUi->StageUiDraw(0, 1, 1);
-	}
-	else if (stageNo == SECOND_STAGE_NUMBER)
+		{FIRST_STAGE_NUMBER, 0, 1, 1},
+		{SECOND_STAGE_NUMBER, 1, 2, 2},
+		{THIRD_STAGE_NUMBER, 2, 4, 2},
+		{FOURTH_STAGE_NUMBER, 3, 3, 1},
+		{FIFTH_STAGE_NUMBER, 4, 4, 1},
+	};
+
+	for (int i = 0; i < 5; i++)
 	{
-		selectionUi->StageUiDraw(1, 2, 2);
+		if (stageNo == stageUi[i].number)
+		{
+			selectionUi->StageUiDraw(stageUi[i].mapNumber, stageUi[i].enemyNumber, stageUi[i].cakeNumber);
+		}
 	}
-	else if (stageNo == THIRD_STAGE_NUMBER)
-	{
-		selectionUi->StageUiDraw(2, 4, 2);
-	}
-	else if (stageNo == FOURTH_STAGE_NUMBER)
-	{
-		selectionUi->StageUiDraw(3, 3, 1);
-	}
-	else if (stageNo == FIFTH_STAGE_NUMBER)
-	{
-		selectionUi->StageUiDraw(4, 4, 1);
-	}
+
 	if (stageNo == TITLE_RETURN_NUMBER)
 	{
 		selectionUi->TitleUiDraw();
