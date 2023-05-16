@@ -84,8 +84,6 @@ void GameScene::Initialize()
 		{
 			StagePop(StageData::stage1);
 
-
-			//ゴールフラグの初期位置を設定
 			goalFlag = new GoalFlag({ GameData::doc["GoalPosition"][stageList[i].name]["x"].GetFloat(),
 									  GameData::doc["GoalPosition"][stageList[i].name]["y"].GetFloat(),
 									  GameData::doc["GoalPosition"][stageList[i].name]["z"].GetFloat() });
@@ -173,7 +171,7 @@ void GameScene::CakeBulletPop(int number, int cakeNumber)
 
 	for (int i = 0; i < cakeNumber; i++)
 	{
-		if (stageNo == number)
+		//if (stageNo == number)
 		{
 			activeCakeBullet.emplace_back(new CakeBullet(cakeBulletPosition[i], effectManager, player));
 		}
@@ -190,7 +188,7 @@ void GameScene::EnemyPop(int number, char stageName[7], int enemyNumber)
 {
 	for (int i = 0; i < enemyNumber; i++)
 	{
-		if (stageNo == number)
+		//if (stageNo == number)
 		{
 			//エネミーに行動パターンのナンバーとスピードを設定
 			activeEnemy.emplace_back(new Enemy(GameData::doc["EnemyMovePattern"][stageName].GetInt(), GameData::doc["EnemySpeed"][stageName].GetFloat()));

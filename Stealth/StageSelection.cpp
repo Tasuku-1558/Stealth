@@ -144,10 +144,14 @@ void StageSelection::KeyMove(float deltaTime)
 	if (!changeScene)
 	{
 		//矢印キー操作
-		if ((KeyManager::GetInstance().CheckPressed(KEY_INPUT_UP) || 
-			 KeyManager::GetInstance().CheckPressed(KEY_INPUT_DOWN)) && pushCount < MAX_PUSH_COUNT)
+		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_UP) && pushCount < MAX_PUSH_COUNT)
 		{
 			stageNo = stageDecrement(stageNo);
+			pushCount = PUSH_INTERVAL;
+		}
+		if (KeyManager::GetInstance().CheckPressed(KEY_INPUT_DOWN) && pushCount < MAX_PUSH_COUNT)
+		{
+			stageNo = stageIncrement(stageNo);
 			pushCount = PUSH_INTERVAL;
 		}
 	}

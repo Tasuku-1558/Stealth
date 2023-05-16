@@ -27,13 +27,12 @@ char stage1[16][16] =
 /// </summary>
 SelectionUi::SelectionUi()
 	: fontHandle(0)
-	, selectionKeyImage(0)
-	, selectionUiImage(0)
-	, stageDescription(0)
-	, operationMethod(0)
+	, selectionUiImage()
+	, SELECTION_UI_NUMBER(4)
 	, SELECTION_FONT_SIZE(90)
 	, FONT_THICK(1)
 	, STAGE_NUMBER(2)
+	, STAGE_POS_Y(150.0f)
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, SELECTION_KEY_PATH("selection_key.png")
 	, SELECTION_TITLE_PATH("selection_Ui.png")
@@ -56,19 +55,24 @@ SelectionUi::~SelectionUi()
 /// </summary>
 void SelectionUi::Initialize()
 {
+	Ui ui[] =
+	{
+		{STAGE_DESCRIPTION_PATH},
+		{SELECTION_KEY_PATH},
+		{SELECTION_TITLE_PATH},
+		{OPERATION_METHOD_PATH},
+	};
+
 	//セレクションUi画像の読み込み
-	stageDescription = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, STAGE_DESCRIPTION_PATH).c_str());
-
-	selectionKeyImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, SELECTION_KEY_PATH).c_str());
-
-	selectionUiImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, SELECTION_TITLE_PATH).c_str());
-
-	operationMethod = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, OPERATION_METHOD_PATH).c_str());
+	for (int i = 0; i < SELECTION_UI_NUMBER; i++)
+	{
+		selectionUiImage[i] = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, ui[i].imagePath).c_str());
+	}
 
 	StagePop(stage1);
 
 	//フォントデータの作成
-	fontHandle = CreateFontToHandle("Oranienbaum", SELECTION_FONT_SIZE, 1);
+	fontHandle = CreateFontToHandle("Oranienbaum", SELECTION_FONT_SIZE, FONT_THICK);
 }
 
 /// <summary>
@@ -76,13 +80,10 @@ void SelectionUi::Initialize()
 /// </summary>
 void SelectionUi::Finalize()
 {
-	DeleteGraph(selectionKeyImage);
-
-	DeleteGraph(stageDescription);
-
-	DeleteGraph(operationMethod);
-
-	DeleteGraph(selectionUiImage);
+	for (int i = 0; i < SELECTION_UI_NUMBER; i++)
+	{
+		DeleteGraph(selectionUiImage[i]);
+	}
 
 	//作成したフォントデータの削除
 	DeleteFontToHandle(fontHandle);
@@ -98,12 +99,12 @@ void SelectionUi::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 	{
 		for (int j = 0; j < BLOCK_NUM_X; j++)
 		{
-			float posX = i * 200.0f;
-			float posZ = j * -200.0f;
+			float posX = i * 100.0f;
+			float posZ = (j * -100.0f) + 900.0f;
 
 			if (stageData[j][i] == 0)
 			{
-				activeStage.emplace_back(new Stage({ posX, 0.0f, posZ }, { 0.5f, 0.5f, 0.5f }));
+				activeStage.emplace_back(new Stage({ posX, STAGE_POS_Y, posZ }, { 0.3f, 0.3f, 0.3f }));
 			}
 		}
 	}
@@ -117,7 +118,7 @@ void SelectionUi::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 /// <param name="cakeNumber"></param>
 void SelectionUi::StageUiDraw(int mapNumber, int enemyNumber, int cakeNumber)
 {
-	DrawGraph(100, 150, stageDescription, TRUE);
+	DrawGraph(100, 150, selectionUiImage[0], TRUE);
 
 	//敵とケーキの数を表示
 	DrawFormatStringToHandle(370, 470, GetColor(255, 255, 255), fontHandle, "%d", enemyNumber);
@@ -134,7 +135,7 @@ void SelectionUi::StageUiDraw(int mapNumber, int enemyNumber, int cakeNumber)
 /// </summary>
 void SelectionUi::TitleUiDraw()
 {
-	DrawRotaGraph(950, 550, 0.7, 0.0, selectionUiImage, TRUE);
+	DrawRotaGraph(950, 550, 0.7, 0.0, selectionUiImage[2], TRUE);
 }
 
 /// <summary>
@@ -142,7 +143,7 @@ void SelectionUi::TitleUiDraw()
 /// </summary>
 void SelectionUi::Draw()
 {
-	DrawRotaGraph(500, 950, 0.85, 0.0, operationMethod, TRUE);
+	DrawRotaGraph(500, 950, 0.85, 0.0, selectionUiImage[3], TRUE);
 
-	DrawRotaGraph(1450, 950, 0.6, 0.0, selectionKeyImage, TRUE);
+	DrawRotaGraph(1450, 950, 0.6, 0.0, selectionUiImage[1], TRUE);
 }

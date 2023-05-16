@@ -35,16 +35,21 @@ private:
 	void Finalize();			//終了処理
 	void StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X]);		//ステージの出現
 
+	struct Ui
+	{
+		string imagePath;		//Ui画像のパス
+	};
+
 	int fontHandle;				//ゲームフォント
-	int selectionKeyImage;		//ステージセレクションUi画像
-	int selectionUiImage;		//ステージセレクションからタイトルへ遷移のUi画像
-	int stageDescription;		//ステージの説明画像ハンドル
-	int operationMethod;		//操作方法説明画像のハンドル
+	int selectionUiImage[4];	//セレクションUi画像の格納用
 
 	//定数
+	const int	 SELECTION_UI_NUMBER;		//セレクションUi画像の数
 	const int	 SELECTION_FONT_SIZE;		//ゲームフォントのサイズ
 	const int	 FONT_THICK;				//フォントの太さ
 	const int	 STAGE_NUMBER;				//ステージ数
+
+	const float  STAGE_POS_Y;				//ステージのY座標
 
 	const string IMAGE_FOLDER_PATH;			//Imageフォルダまでのパス
 	const string SELECTION_KEY_PATH;		//ステージセレクションUi画像のパス
