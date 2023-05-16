@@ -1,5 +1,4 @@
 #include "ResultScene.h"
-#include "PreCompiledHeader.h"
 #include "Camera.h"
 #include "FireWorksParticle.h"
 #include "FadeManager.h"

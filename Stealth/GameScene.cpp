@@ -1,6 +1,6 @@
 #include "Json.h"
 #include "GameScene.h"
-#include "DxLib.h"
+#include "StageData.h"
 
 #include "Camera.h"
 #include "Light.h"
@@ -171,10 +171,7 @@ void GameScene::CakeBulletPop(int number, int cakeNumber)
 
 	for (int i = 0; i < cakeNumber; i++)
 	{
-		//if (stageNo == number)
-		{
-			activeCakeBullet.emplace_back(new CakeBullet(cakeBulletPosition[i], effectManager, player));
-		}
+		activeCakeBullet.emplace_back(new CakeBullet(cakeBulletPosition[i], effectManager, player));
 	}
 }
 
@@ -188,11 +185,8 @@ void GameScene::EnemyPop(int number, char stageName[7], int enemyNumber)
 {
 	for (int i = 0; i < enemyNumber; i++)
 	{
-		//if (stageNo == number)
-		{
-			//エネミーに行動パターンのナンバーとスピードを設定
-			activeEnemy.emplace_back(new Enemy(GameData::doc["EnemyMovePattern"][stageName].GetInt(), GameData::doc["EnemySpeed"][stageName].GetFloat()));
-		}
+		//エネミーに行動パターンのナンバーとスピードを設定
+		activeEnemy.emplace_back(new Enemy(GameData::doc["EnemyMovePattern"][stageName].GetInt(), GameData::doc["EnemySpeed"][stageName].GetFloat()));
 	}
 }
 

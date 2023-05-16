@@ -1,6 +1,5 @@
 ﻿#include "StageSelection.h"
 
-#include "PreCompiledHeader.h"
 #include "Camera.h"
 #include "SelectionUi.h"
 #include "KeyManager.h"

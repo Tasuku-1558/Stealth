@@ -7,11 +7,11 @@
 
 namespace GameData
 {
-	const char* filePath = "Data/Json/GameData.json";
+	const char* FILE_PATH = "Data/Json/GameData.json";
 
 	//jsonファイルの解析
 	//解析・・・キーの名前をコンテンツとして扱えるようにするための作業
-	std::ifstream ifs(filePath);
+	std::ifstream ifs(FILE_PATH);
 	rapidjson::IStreamWrapper isw(ifs);
 	rapidjson::Document doc;
 }
