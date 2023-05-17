@@ -14,7 +14,7 @@ using namespace std;
 class Enemy final : public EnemyBase
 {
 public:
-	Enemy(int number, float enemySpeed);
+	Enemy(int movePattern, float enemySpeed);
 	virtual ~Enemy();
 
 	void Update(float deltaTime, VECTOR playerPosition);	//XVˆ—

@@ -74,8 +74,8 @@ void GameScene::Initialize()
 
 	StageList stageList[] =
 	{
-		{FIRST_STAGE_NUMBER,  "stage1", 2, 1},
-		{SECOND_STAGE_NUMBER, "stage2", 1, 1},
+		{FIRST_STAGE_NUMBER,  "Stage1", 2, 1},
+		{SECOND_STAGE_NUMBER, "Stage2", 1, 1},
 	};
 
 	for (int i = 0; i < MAX_STAGE_NUMBER; i++)
@@ -88,7 +88,7 @@ void GameScene::Initialize()
 									  GameData::doc["GoalPosition"][stageList[i].name]["y"].GetFloat(),
 									  GameData::doc["GoalPosition"][stageList[i].name]["z"].GetFloat() });
 
-			CakeBulletPop(stageList[i].number, stageList[i].cakeNumber);
+			CakeBulletPop(stageList[i].number, stageList[i].name, stageList[i].cakeNumber);
 
 			EnemyPop(stageList[i].number, stageList[i].name, stageList[i].enemyNumber);
 		}
@@ -143,29 +143,30 @@ void GameScene::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 /// ケーキバレットの出現
 /// </summary>
 /// <param name="number">ステージの番号</param>
+/// <param name="stageName">ステージの名前</param>
 /// <param name="cakeNumber">ケーキの数</param>
-void GameScene::CakeBulletPop(int number, int cakeNumber)
+void GameScene::CakeBulletPop(int number, char stageName[7], int cakeNumber)
 {
 	if (number == FIRST_STAGE_NUMBER)
 	{
 		cakeBulletPosition =
 		{
-			{ GameData::doc["CakePosition"]["stage1"]["x"].GetFloat(),
-			  GameData::doc["CakePosition"]["stage1"]["y"].GetFloat(),
-			  GameData::doc["CakePosition"]["stage1"]["z"].GetFloat() },
+			{ GameData::doc["CakePosition"]["Stage1"]["x"].GetFloat(),
+			  GameData::doc["CakePosition"]["Stage1"]["y"].GetFloat(),
+			  GameData::doc["CakePosition"]["Stage1"]["z"].GetFloat() },
 
-			{ GameData::doc["CakePosition"]["stage2"]["x"].GetFloat(),
-			  GameData::doc["CakePosition"]["stage2"]["y"].GetFloat(),
-			  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() }
+			{ GameData::doc["CakePosition"]["Stage2"]["x"].GetFloat(),
+			  GameData::doc["CakePosition"]["Stage2"]["y"].GetFloat(),
+			  GameData::doc["CakePosition"]["Stage2"]["z"].GetFloat() }
 		};
 	}
 	else
 	{
 		cakeBulletPosition =
 		{
-			{ GameData::doc["CakePosition"]["stage2"]["x"].GetFloat(),
-			  GameData::doc["CakePosition"]["stage2"]["y"].GetFloat(),
-			  GameData::doc["CakePosition"]["stage2"]["z"].GetFloat() },
+			{ GameData::doc["CakePosition"]["Stage1"]["x"].GetFloat(),
+			  GameData::doc["CakePosition"]["Stage1"]["y"].GetFloat(),
+			  GameData::doc["CakePosition"]["Stage1"]["z"].GetFloat() },
 		};
 	}
 
@@ -183,10 +184,35 @@ void GameScene::CakeBulletPop(int number, int cakeNumber)
 /// <param name="enemyNumber">敵の数</param>
 void GameScene::EnemyPop(int number, char stageName[7], int enemyNumber)
 {
+	if (number == FIRST_STAGE_NUMBER)
+	{
+		enemyMovePattern =
+		{
+			{GameData::doc["EnemyMovePattern"][stageName].GetInt()},
+		};
+
+		enemySpeed =
+		{
+			{GameData::doc["EnemySpeed"][stageName].GetFloat()},
+		};
+	}
+	else
+	{
+		enemyMovePattern =
+		{
+			{GameData::doc["EnemyMovePattern"][stageName].GetInt()},
+		};
+
+		enemySpeed =
+		{
+			{GameData::doc["EnemySpeed"][stageName].GetFloat()},
+		};
+	}
+
 	for (int i = 0; i < enemyNumber; i++)
 	{
 		//エネミーに行動パターンのナンバーとスピードを設定
-		activeEnemy.emplace_back(new Enemy(GameData::doc["EnemyMovePattern"][stageName].GetInt(), GameData::doc["EnemySpeed"][stageName].GetFloat()));
+		activeEnemy.emplace_back(new Enemy(enemyMovePattern[i], enemySpeed[i]));
 	}
 }
 

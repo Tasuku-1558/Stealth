@@ -7,9 +7,9 @@ using namespace Math3d;		//VECTORの計算に使用
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="number">行動パターンの番号</param>
+/// <param name="movePattern">行動パターンの番号</param>
 /// <param name="enemySpeed">エネミーのスピード</param>
-Enemy::Enemy(int number, float enemySpeed)
+Enemy::Enemy(int movePattern, float enemySpeed)
 	: enemyReaction(EnemyReaction::NORMAL)
 	, cakeCount(0.0f)
 	, cakeFindFlag(false)
@@ -19,7 +19,7 @@ Enemy::Enemy(int number, float enemySpeed)
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, MARK_PATH("mark.png")
 {
-	Position(GetList(number));
+	Position(GetList(movePattern));
 
 	changeSpeed = enemySpeed;
 

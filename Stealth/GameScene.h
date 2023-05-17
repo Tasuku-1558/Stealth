@@ -58,14 +58,14 @@ private:
 	vector<Enemy*> activeEnemy;
 
 	vector<VECTOR> cakeBulletPosition;
-	vector<VECTOR> enemyPosition;
-
+	vector<int> enemyMovePattern;
+	vector<float> enemySpeed;
 
 	void Initialize()override;				//初期化処理
 	void InputScene(bool decision);			//シーンを入力
 	void ChangeScreen();					//画面を変える
 
-	void CakeBulletPop(int number, int cakeNumber);					//ケーキバレットの出現
+	void CakeBulletPop(int number, char stageName[7], int cakeNumber);					//ケーキバレットの出現
 	void EnemyPop(int number, char stageName[7], int enemyNumber);	//エネミーの出現
 	void StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X]);		//ステージの出現
 
