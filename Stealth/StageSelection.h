@@ -32,12 +32,6 @@ private:
 	SelectionUi* selectionUi;
 	FadeManager* fadeManager;
 
-	struct Stage
-	{
-		int number;				//ステージ番号
-		SceneType sceneType;	//シーンの種類
-	};
-
 	struct StageUi
 	{
 		int number;			//ステージ番号
@@ -62,7 +56,7 @@ private:
 	const int	FOURTH_STAGE_NUMBER;		//ステージ4の番号
 	const int	FIFTH_STAGE_NUMBER;			//ステージ5の番号
 	const int	TITLE_RETURN_NUMBER;		//タイトルへ戻る番号
-	const int   ADD_STAGE_NUMBER;			//ステージを切り替える数
+	const int   ADD_STAGE_NUMBER;			//ステージに加える数
 	const int	SELECTION_FONT_SIZE;		//ゲームフォントのサイズ
 	const int	FONT_THICK;					//フォントの太さ
 	const float MAX_PUSH_COUNT;				//最大切り替えカウント

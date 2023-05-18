@@ -31,6 +31,7 @@ GameScene::GameScene()
 	, stageNo(0)
 	, gameStartCount(0.0f)
 	, clear(true)
+	, stagePos()
 	, MAX_STAGE_NUMBER(2)
 	, FIRST_STAGE_NUMBER(1)
 	, SECOND_STAGE_NUMBER(2)
@@ -101,6 +102,8 @@ void GameScene::Initialize()
 	//ゲームフォントの読み込み
 	gameFontHandle = CreateFontToHandle("Oranienbaum", GAME_FONT_SIZE, FONT_THICK);
 
+	stagePos.y = STAGE_POS_Y;
+
 	pUpdate = &GameScene::UpdateStart;
 }
 
@@ -128,12 +131,12 @@ void GameScene::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 	{
 		for (int j = 0; j < BLOCK_NUM_X; j++)
 		{
-			float posX = i * 300.0f;
-			float posZ = j * -300.0f;
+			stagePos.x = i * 300.0f;
+			stagePos.z = j * -300.0f;
 
 			if (stageData[j][i] == 0)
 			{
-				activeStage.emplace_back(new Stage({ posX, STAGE_POS_Y, posZ }, { 1.0f,1.0f,1.0f }));
+				activeStage.emplace_back(new Stage(stagePos, { 1.0f,1.0f,1.0f }));
 			}
 		}
 	}
@@ -151,22 +154,22 @@ void GameScene::CakeBulletPop(int number, char stageName[7], int cakeNumber)
 	{
 		cakeBulletPosition =
 		{
-			{ GameData::doc["CakePosition"]["Stage1"]["x"].GetFloat(),
-			  GameData::doc["CakePosition"]["Stage1"]["y"].GetFloat(),
-			  GameData::doc["CakePosition"]["Stage1"]["z"].GetFloat() },
+			{ GameData::doc["CakePosition"][stageName]["1"]["x"].GetFloat(),
+			  GameData::doc["CakePosition"][stageName]["1"]["y"].GetFloat(),
+			  GameData::doc["CakePosition"][stageName]["1"]["z"].GetFloat() },
 
-			{ GameData::doc["CakePosition"]["Stage2"]["x"].GetFloat(),
-			  GameData::doc["CakePosition"]["Stage2"]["y"].GetFloat(),
-			  GameData::doc["CakePosition"]["Stage2"]["z"].GetFloat() }
+			{ GameData::doc["CakePosition"][stageName]["2"]["x"].GetFloat(),
+			  GameData::doc["CakePosition"][stageName]["2"]["y"].GetFloat(),
+			  GameData::doc["CakePosition"][stageName]["2"]["z"].GetFloat() }
 		};
 	}
 	else
 	{
 		cakeBulletPosition =
 		{
-			{ GameData::doc["CakePosition"]["Stage1"]["x"].GetFloat(),
-			  GameData::doc["CakePosition"]["Stage1"]["y"].GetFloat(),
-			  GameData::doc["CakePosition"]["Stage1"]["z"].GetFloat() },
+			{ GameData::doc["CakePosition"][stageName]["1"]["x"].GetFloat(),
+			  GameData::doc["CakePosition"][stageName]["1"]["y"].GetFloat(),
+			  GameData::doc["CakePosition"][stageName]["1"]["z"].GetFloat() },
 		};
 	}
 

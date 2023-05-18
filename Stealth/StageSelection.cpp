@@ -95,23 +95,14 @@ int StageSelection::stageDecrement(int stageNumber)
 /// <returns>ステージの番号を返す</returns>
 int StageSelection::StageCreator(int stageNumber)
 {
-	Stage stage[] =
+	//ステージの番号がタイトルの数ではなかったら
+	if (stageNumber != TITLE_RETURN_NUMBER)
 	{
-		//各シーン
-		{FIRST_STAGE_NUMBER,  SceneType::GAME},
-		{SECOND_STAGE_NUMBER, SceneType::GAME},
-		{THIRD_STAGE_NUMBER,  SceneType::GAME},
-		{FOURTH_STAGE_NUMBER, SceneType::GAME},
-		{FIFTH_STAGE_NUMBER,  SceneType::GAME},
-		{TITLE_RETURN_NUMBER, SceneType::TITLE},
-	};
-
-	for (int i = 0; i < MAX_STAGE; i++)
+		nowSceneType = SceneType::GAME;
+	}
+	else
 	{
-		if (stageNumber == stage[i].number)
-		{
-			nowSceneType = stage[i].sceneType;
-		}
+		nowSceneType = SceneType::TITLE;
 	}
 
 	return stageNumber;
@@ -189,7 +180,7 @@ void StageSelection::KeyMove(float deltaTime)
 /// </summary>
 void StageSelection::Draw()
 {
-	//マップの番号、敵の数、ケーキの数を入力
+	//ステージの番号、敵の数、ケーキの数を入力
 	StageUi stageUi[] =
 	{
 		{FIRST_STAGE_NUMBER, 0, 1, 1},

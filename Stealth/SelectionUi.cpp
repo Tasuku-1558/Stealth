@@ -28,11 +28,13 @@ char stage1[16][16] =
 SelectionUi::SelectionUi()
 	: fontHandle(0)
 	, selectionUiImage()
+	, stagePos()
 	, SELECTION_UI_NUMBER(4)
 	, SELECTION_FONT_SIZE(90)
 	, FONT_THICK(1)
 	, STAGE_NUMBER(2)
 	, STAGE_POS_Y(150.0f)
+	, STAGE_SIZE({ 0.3f, 0.3f, 0.3f })
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, SELECTION_KEY_PATH("selection_key.png")
 	, SELECTION_TITLE_PATH("selection_Ui.png")
@@ -69,6 +71,8 @@ void SelectionUi::Initialize()
 		selectionUiImage[i] = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, ui[i].imagePath).c_str());
 	}
 
+	stagePos.y = STAGE_POS_Y;
+
 	StagePop(stage1);
 
 	//フォントデータの作成
@@ -99,12 +103,12 @@ void SelectionUi::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 	{
 		for (int j = 0; j < BLOCK_NUM_X; j++)
 		{
-			float posX = i * 100.0f;
-			float posZ = (j * -100.0f) + 900.0f;
+			stagePos.x = i * 100.0f;
+			stagePos.z = (j * -100.0f) + 900.0f;
 
 			if (stageData[j][i] == 0)
 			{
-				activeStage.emplace_back(new Stage({ posX, STAGE_POS_Y, posZ }, { 0.3f, 0.3f, 0.3f }));
+				activeStage.emplace_back(new Stage(stagePos, STAGE_SIZE));
 			}
 		}
 	}
@@ -113,10 +117,10 @@ void SelectionUi::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 /// <summary>
 /// ステージのUi描画処理
 /// </summary>
-/// <param name="mapNumber"></param>
-/// <param name="enemyNumber"></param>
-/// <param name="cakeNumber"></param>
-void SelectionUi::StageUiDraw(int mapNumber, int enemyNumber, int cakeNumber)
+/// <param name="stageNumber">ステージの番号</param>
+/// <param name="enemyNumber">敵の数</param>
+/// <param name="cakeNumber">ケーキの数</param>
+void SelectionUi::StageUiDraw(int stageNumber, int enemyNumber, int cakeNumber)
 {
 	DrawGraph(100, 150, selectionUiImage[0], TRUE);
 

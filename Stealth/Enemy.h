@@ -1,12 +1,8 @@
 #pragma once
 
-#include <string>
-
 #include "EnemyBase.h"
 #include "Math3D.h"
 #include "Collision.h"
-
-using namespace std;
 
 /// <summary>
 /// エネミークラス
@@ -73,15 +69,11 @@ private:
 	My3dLib::Sphere collisionSphere;	//当たり判定球
 
 	vector<VECTOR>::iterator itr;
-	vector<VECTOR> pointList;
+	vector<VECTOR> positionList;		//エネミーの座標リスト
 
 	float cakeCount;		//エネミーのケーキの反応カウント
 	bool cakeFindFlag;		//エネミーがケーキを見つけたかどうか
 	bool rotateFlag;		//回転させるかさせないか
 	bool cakeEat;
 	VECTOR nextDirection;	//回転したい向き
-
-	//定数
-	const string IMAGE_FOLDER_PATH;	//Imageフォルダまでのパス
-	const string MARK_PATH;			//ビックリマーク画像のパス
 };

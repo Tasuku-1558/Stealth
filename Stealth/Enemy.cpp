@@ -16,8 +16,6 @@ Enemy::Enemy(int movePattern, float enemySpeed)
 	, rotateFlag(false)
 	, cakeEat(false)
 	, nextDirection()
-	, IMAGE_FOLDER_PATH("Data/Image/")
-	, MARK_PATH("mark.png")
 {
 	Position(GetList(movePattern));
 
@@ -62,9 +60,9 @@ void Enemy::Initialize()
 /// <param name="id">敵の行動パターンリスト</param>
 void Enemy::Position(vector<VECTOR>& id)
 {
-	pointList = id;					//座標リストを受け取る
+	positionList = id;				//座標リストを受け取る
 
-	itr = pointList.begin();		//イテレータを先頭に設定
+	itr = positionList.begin();		//イテレータを先頭に設定
 
 	position = *itr++;				//イテレータから敵座標を設定
 
@@ -139,9 +137,9 @@ void Enemy::SetTargetPosition()
 	targetPosition = *itr++;
 
 	//最終目的地に到着したら次の目的地に向かう
-	if (itr == pointList.end())
+	if (itr == positionList.end())
 	{
-		itr = pointList.begin();
+		itr = positionList.begin();
 	}
 
 	enemyState = EnemyState::CRAWL;
@@ -400,9 +398,9 @@ void Enemy::StateUpdate(float deltaTime)
 			targetPosition = *itr;
 
 			//最終目的地に到着したら次の目的地に向かう
-			if (itr == pointList.end())
+			if (itr == positionList.end())
 			{
-				itr = pointList.begin();
+				itr = positionList.begin();
 			}
 
 			enemyState = EnemyState::ROTATION;

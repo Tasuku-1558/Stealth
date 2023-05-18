@@ -35,7 +35,7 @@ protected:
 	const int	  MATERIAL_INDEX;			//エミッシブカラーを変更するマテリアルの番号
 	const int	  KEY_INPUT_PATTERN;		//キー入力パターン
 
-	const float	  SPEED;					//移動速度
+	const float	  INITIAL_SPEED;			//初期の移動速度
 	const float	  OPACITY;					//不透明度
 	const float	  RADIUS;					//半径
 	const float	  Y_ANGLE;					//Y軸の回転値
@@ -45,7 +45,7 @@ protected:
 	const float	  MAX_INPUT_DIRECTION;		//最大の入力された方向
 
 	const VECTOR  INITIAL_POSITION;			//初期のプレイヤーの位置
-	const VECTOR  DIRECTION;				//モデルの向き
+	const VECTOR  INITIAL_DIRECTION;		//初期のプレイヤーの向き
 	const VECTOR  UP;						//上方向
 	const VECTOR  DOWN;						//下方向
 	const VECTOR  LEFT;						//左方向

@@ -55,8 +55,8 @@ void Player::Initialize()
 	position = INITIAL_POSITION;
 	nextPosition = INITIAL_POSITION;
 
-	direction = DIRECTION;
-	speed = SPEED;
+	direction = INITIAL_DIRECTION;
+	speed = INITIAL_SPEED;
 
 	//ìñÇΩÇËîªíËãÖÇÃèÓïÒê›íË
 	collisionSphere.localCenter = ZERO_VECTOR;
@@ -229,9 +229,9 @@ void Player::FoundCount()
 			pastPosition[i] = INITIAL_POSITION;
 		}
 
-		direction = DIRECTION;
+		direction = INITIAL_DIRECTION;
 
-		speed = SPEED;
+		speed = INITIAL_SPEED;
 
 		initialTime = INITIAL_TIME;
 

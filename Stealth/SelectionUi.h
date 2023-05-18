@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include "DxLib.h"
 #include "PreCompiledHeader.h"
 
 class Stage;
@@ -19,7 +20,7 @@ public:
 
 	void Draw();						//描画処理
 
-	void StageUiDraw(int mapNumber,
+	void StageUiDraw(int stageNumber,
 					 int enemyNumber,
 					 int cakeNumber);	//ステージのUi描画処理
 
@@ -42,6 +43,7 @@ private:
 
 	int fontHandle;				//ゲームフォント
 	int selectionUiImage[4];	//セレクションUi画像の格納用
+	VECTOR stagePos;			//ステージの座標
 
 	//定数
 	const int	 SELECTION_UI_NUMBER;		//セレクションUi画像の数
@@ -50,6 +52,8 @@ private:
 	const int	 STAGE_NUMBER;				//ステージ数
 
 	const float  STAGE_POS_Y;				//ステージのY座標
+
+	const VECTOR STAGE_SIZE;				//ステージのサイズ
 
 	const string IMAGE_FOLDER_PATH;			//Imageフォルダまでのパス
 	const string SELECTION_KEY_PATH;		//ステージセレクションUi画像のパス

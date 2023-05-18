@@ -89,6 +89,7 @@ private:
 	int stageNo;			//選択したステージ格納用
 	float gameStartCount;	//ゲーム開始カウント
 	bool clear;				//ゲームをクリアしたかどうか
+	VECTOR stagePos;		//ステージの座標
 
 	//定数
 	const int	MAX_STAGE_NUMBER;		//最大ステージ数

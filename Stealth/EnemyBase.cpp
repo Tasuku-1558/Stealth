@@ -29,8 +29,9 @@ EnemyBase::EnemyBase()
 	, PLAYER_ROTATE_TIME(2.0f)
 	, CAKE_ROTATE_TIME(6.0f)
 	, STOP_SPEED(0.0f)
+	, IMAGE_FOLDER_PATH("Data/Image/")
+	, MARK_PATH("mark.png")
 {
-	//エネミーの行動パターンリスト
 	MapList();
 	MapList2();
 	MapList3();

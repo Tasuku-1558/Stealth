@@ -1,7 +1,10 @@
 #pragma once
 
+#include <string>
 #include <vector>
 #include "ObjectBase.h"
+
+using namespace std;
 
 /// <summary>
 /// エネミー基底クラス
@@ -14,7 +17,7 @@ public:
 
 protected:
 
-	std::vector<VECTOR>& GetList(int number) { return positionList[number]; }      //敵の行動パターンリストを返す
+	vector<VECTOR>& GetList(int number) { return positionList[number]; }      //敵の行動パターンリストを返す
 
 	int markImage;					//ビックリマーク画像格納用
 	int visualModelHandle;			//視野モデルハンドル
@@ -32,17 +35,19 @@ protected:
 
 
 	//定数
-	const int	ROTATE_TIME_CATEGORY;	//回転時間の種類
-	const float RANGE_DEGREE;			//視野角度
-	const float TARGET_ANGLE;			//回転の目標角度
-	const float INITIAL_ROTATE_TIME;	//初期の回転時間
-	const float RADIUS;					//エネミーの半径
-	const float	Y_ANGLE;				//Y軸の回転値
-	const float Y_ANGLE_SPEED;			//Y軸回転スピード
-	const float NOMAL_ROTATE_TIME;		//通常の回転時間
-	const float PLAYER_ROTATE_TIME;		//プレイヤーだった時の回転時間
-	const float CAKE_ROTATE_TIME;		//ケーキだった時の回転時間
-	const float STOP_SPEED;				//エネミーの移動速度を停止させる
+	const int	 ROTATE_TIME_CATEGORY;	//回転時間の種類
+	const float  RANGE_DEGREE;			//視野角度
+	const float  TARGET_ANGLE;			//回転の目標角度
+	const float  INITIAL_ROTATE_TIME;	//初期の回転時間
+	const float  RADIUS;				//エネミーの半径
+	const float	 Y_ANGLE;				//Y軸の回転値
+	const float  Y_ANGLE_SPEED;			//Y軸回転スピード
+	const float  NOMAL_ROTATE_TIME;		//通常の回転時間
+	const float  PLAYER_ROTATE_TIME;	//プレイヤーだった時の回転時間
+	const float  CAKE_ROTATE_TIME;		//ケーキだった時の回転時間
+	const float  STOP_SPEED;			//エネミーの移動速度を停止させる
+	const string IMAGE_FOLDER_PATH;		//Imageフォルダまでのパス
+	const string MARK_PATH;				//ビックリマーク画像のパス
 	
 private:
 	EnemyBase(const EnemyBase&);		//コピーコンストラクタ
@@ -54,8 +59,7 @@ private:
 	void MapList2();                    //敵の行動パターンリスト2(壁の周りを回る敵)
 	void MapList3();                    //敵の行動パターンリスト3(上下移動の敵)
 
-
-	std::vector<VECTOR> positionList[9];
-	std::vector<VECTOR>::iterator itr[9];
+	vector<VECTOR> positionList[9];
+	vector<VECTOR>::iterator itr[9];
 
 };
