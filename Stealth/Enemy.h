@@ -18,6 +18,7 @@ public:
 
 	void VisualAngleCake(float deltaTime, VECTOR bulletPosition);	//エネミーの視野にケーキが入った場合
 	void Reaction();								//エネミーのオブジェクトごとの反応
+	void Reset();
 	void HitPlayer();												//プレイヤーと衝突した
 
 	const float GetCollideRadius() { return collisionSphere.radius; }	//当たり判定球の半径を返す

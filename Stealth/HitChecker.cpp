@@ -247,9 +247,9 @@ void HitChecker::VisualAngleCake(vector<Enemy*>* enemy, vector<CakeBullet*>* cak
 				//バレットがエネミーの視野範囲内にいるならば
 				if (radian <= dot)
 				{
-					(*itre)->enemyReaction
+					enemyReaction = EnemyReaction::CAKE;
 
-					direction = sub;
+					//direction = sub;
 
 					(*itre)->Reaction();
 
@@ -258,8 +258,7 @@ void HitChecker::VisualAngleCake(vector<Enemy*>* enemy, vector<CakeBullet*>* cak
 			}
 			else
 			{
-				//エネミーの視野範囲外ならスピードを元のスピードに戻す
-				speed = changeSpeed;
+				(*itre)->Reset();
 
 				cakeFlag = false;
 
@@ -267,8 +266,6 @@ void HitChecker::VisualAngleCake(vector<Enemy*>* enemy, vector<CakeBullet*>* cak
 
 				//カウントの初期化
 				cakeCount = 0.0f;
-
-				enemyReaction = EnemyReaction::NORMAL;
 			}
 		}
 	}

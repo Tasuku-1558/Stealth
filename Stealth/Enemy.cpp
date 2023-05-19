@@ -377,6 +377,14 @@ void Enemy::Reaction()
 	}
 }
 
+void Enemy::Reset()
+{
+	//エネミーの視野範囲外ならスピードを元のスピードに戻す
+	speed = changeSpeed;
+
+	enemyReaction = EnemyReaction::NORMAL;
+}
+
 /// <summary>
 /// エネミーの状態の変化
 /// </summary>
