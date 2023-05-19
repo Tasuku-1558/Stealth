@@ -9,7 +9,8 @@ using namespace Math3d;		//VECTORの計算に使用
 /// コンストラクタ
 /// </summary>
 Bullet::Bullet()
-	: cursorImage(0)
+	: halfModel(0)
+	, cursorImage(0)
 	, mouseX(0)
 	, mouseY(0)
 	, alive(false)
@@ -48,9 +49,16 @@ void Bullet::Initialize()
 	//ケーキモデルの読み込み
 	modelHandle = ModelManager::GetInstance().GetModelHandle(ModelManager::CAKE);
 
+	//ケーキ半分のモデルの読み込み
+	halfModel = ModelManager::GetInstance().GetModelHandle(ModelManager::CAKE_HALF);
+
 	//ケーキモデルのサイズと回転値を設定
 	MV1SetScale(modelHandle, SIZE);
 	MV1SetRotationXYZ(modelHandle, ROTATE);
+
+	//ケーキ半分のモデルのサイズと回転値を設定
+	MV1SetScale(halfModel, SIZE);
+	MV1SetRotationXYZ(halfModel, ROTATE);
 
 	//カーソル画像の読み込み
 	cursorImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, CURSOR_PATH).c_str());
@@ -67,6 +75,8 @@ void Bullet::Initialize()
 void Bullet::Finalize()
 {
 	MV1DeleteModel(modelHandle);
+
+	MV1DeleteModel(halfModel);
 
 	DeleteGraph(cursorImage);
 }
@@ -142,6 +152,8 @@ void Bullet::Draw()
 	{
 		MV1DrawModel(modelHandle);
 	}
+	
+	MV1DrawModel(halfModel);
 
 	DrawRotaGraph(mouseX + SCREEN_WIDTH_HALF, mouseY + SCREEN_HEIGHT_HALF, SCALE, ANGLE, cursorImage, TRUE);
 }

@@ -23,7 +23,6 @@ protected:
 	int visualModelHandle;			//視野モデルハンドル
 	float speed;					//エネミーの移動速度
 	float changeSpeed;				//ステージごとのエネミーの移動速度
-	float length;					//視野角の距離
 	float playerDirection;			//プレイヤーとエネミーの距離
 	float bulletDirection;			//バレットとエネミーの距離
 	float rotateTime;				//回転時間
@@ -37,6 +36,7 @@ protected:
 	//定数
 	const int	 ROTATE_TIME_CATEGORY;	//回転時間の種類
 	const float  RANGE_DEGREE;			//視野角度
+	const float  LENGTH;				//視野角の距離
 	const float  TARGET_ANGLE;			//回転の目標角度
 	const float  INITIAL_ROTATE_TIME;	//初期の回転時間
 	const float  RADIUS;				//エネミーの半径

@@ -102,8 +102,6 @@ void GameScene::Initialize()
 	//ゲームフォントの読み込み
 	gameFontHandle = CreateFontToHandle("Oranienbaum", GAME_FONT_SIZE, FONT_THICK);
 
-	stagePos.y = STAGE_POS_Y;
-
 	pUpdate = &GameScene::UpdateStart;
 }
 
@@ -140,6 +138,8 @@ void GameScene::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 			}
 		}
 	}
+
+	stagePos.y = STAGE_POS_Y;
 }
 
 /// <summary>
@@ -304,7 +304,7 @@ void GameScene::UpdateGame(float deltaTime)
 
 		for (auto itre = activeCakeBullet.begin(); itre != activeCakeBullet.end(); ++itre)
 		{
-			(*itr)->VisualAngleCake((*itre)->bullet->GetPosition(), deltaTime);
+			(*itr)->VisualAngleCake(deltaTime, (*itre)->bullet->GetPosition());
 
 			//エネミーがケーキを見つけたならば
 			if ((*itr)->CakeFlag())
@@ -356,6 +356,8 @@ void GameScene::Draw()
 		(*itr)->Draw();
 	}
 
+	goalFlag->Draw();
+
 	for (auto itr = activeEnemy.begin(); itr != activeEnemy.end(); ++itr)
 	{
 		(*itr)->Draw();
@@ -373,8 +375,6 @@ void GameScene::Draw()
 			uiManager->CakeGetDraw((*itr)->CakeGet());
 		}
 	}
-
-	goalFlag->Draw();
 
 	effectManager->Draw();
 

@@ -39,6 +39,9 @@ private:
 	void MapAndPlayer(vector<Stage*>* stage, Player* player);				//マップとプレイヤーの当たり判定
 	void FlagAndPlayer(GoalFlag* goalFlag, Player* player);					//ゴールオブジェクトとプレイヤーの当たり判定
 
+	void VisualAngleCake(vector<Enemy*>* enemy, vector<CakeBullet*>* cakeBullet);	//エネミーの視野にケーキが入った場合
+
+
 
 	float moveLengh;		//移動量
 	bool uiHit;				//Ui画像を描画するかどうか
@@ -54,6 +57,7 @@ private:
 	const int	 FRAME_INDEX;	//当たり判定情報を更新するフレームの番号
 	const int	 DIV_NUMBER;	//コリジョン情報の軸方向の空間分割数
 	const float  SCALE;			//スケーリング値
+	const float  PI;
 	const VECTOR UI_POSITION;	//Ui画像の位置
 
 };

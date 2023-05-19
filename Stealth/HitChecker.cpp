@@ -24,6 +24,7 @@ HitChecker::HitChecker()
 	, DIV_NUMBER(8)
 	, FRAME_INDEX(-1)
 	, SCALE(10.0f)
+	, PI(DX_PI_F / 180.0f)
 	, UI_POSITION({ 0.0f, 30.0f, 800.0f })
 {
 	uiPosition = UI_POSITION;
@@ -52,6 +53,7 @@ void HitChecker::Check(vector<Stage*>* stage, Player* player, vector<CakeBullet*
 	EnemyAndPlayer(player, enemy);
 	PlayerAndUi(player);
 	FlagAndPlayer(goalFlag, player);
+	VisualAngleCake(enemy, cakeBullet);
 }
 
 /// <summary>
@@ -213,5 +215,61 @@ void HitChecker::FlagAndPlayer(GoalFlag* goalFlag, Player* player)
 	if (distance <= radius)
 	{
 		flagHit = true;
+	}
+}
+
+void HitChecker::VisualAngleCake(vector<Enemy*>* enemy, vector<CakeBullet*>* cakeBullet)
+{
+	for (auto itre = enemy->begin(); itre != enemy->end(); ++itre)
+	{
+		for (auto itr = cakeBullet->begin(); itr != cakeBullet->end(); ++itr)
+		{
+			//バレットからエネミーの座標を引いた値を取得
+			VECTOR sub = (*itr)->bullet->GetPosition() - (*itre)->GetPosition();
+
+			//バレットとエネミーの距離を計算
+			float bulletDirection = VSize(sub);
+
+			//ベクトルの正規化
+			sub = VNorm(sub);
+
+			//内積計算
+			float dot = VDot(sub, (*itre)->GetDirection());
+
+			float range = 27.0f * PI;
+
+			//エネミーの視野をcosにする
+			float radian = cosf(range / 2.0f);
+
+			//ベクトルとエネミーの長さの比較
+			if (900.0f > bulletDirection)
+			{
+				//バレットがエネミーの視野範囲内にいるならば
+				if (radian <= dot)
+				{
+					(*itre)->enemyReaction
+
+					direction = sub;
+
+					(*itre)->Reaction();
+
+					CakeEatCount(deltaTime);
+				}
+			}
+			else
+			{
+				//エネミーの視野範囲外ならスピードを元のスピードに戻す
+				speed = changeSpeed;
+
+				cakeFlag = false;
+
+				cakeFindFlag = false;
+
+				//カウントの初期化
+				cakeCount = 0.0f;
+
+				enemyReaction = EnemyReaction::NORMAL;
+			}
+		}
 	}
 }

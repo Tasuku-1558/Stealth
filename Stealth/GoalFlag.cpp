@@ -1,5 +1,6 @@
 #include "GoalFlag.h"
 #include "ModelManager.h"
+#include "InputManager.h"
 
 
 using namespace Math3d;		//VECTORの計算に使用
@@ -9,10 +10,16 @@ using namespace Math3d;		//VECTORの計算に使用
 /// </summary>
 /// <param name="goalPosition">ゴールオブジェクトの位置</param>
 GoalFlag::GoalFlag(VECTOR goalPosition)
-	: rotate()
+	: goalImage(0)
+	, rotate()
 	, ROTATE_SPEED(3.0f)
 	, RADIUS(50.0f)
+	, GOAL_CENTER_POSITION(0.5f)
+	, GOAL_SIZE(4000.0f)
+	, GOAL_ANGLE(0.0f)
 	, SIZE({ 1.0f, 1.0f, 1.0f })
+	, IMAGE_FOLDER_PATH("Data/Image/")
+	, GOAL_PATH("goal.png")
 {
 	position = goalPosition;
 
@@ -39,6 +46,9 @@ void GoalFlag::Initialize()
 	MV1SetScale(modelHandle, SIZE);
 	MV1SetPosition(modelHandle, position);
 
+	//ゴール文字の画像の読み込み
+	goalImage = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, GOAL_PATH).c_str());
+
 	//当たり判定球の情報設定
 	collisionSphere.localCenter = ZERO_VECTOR;
 	collisionSphere.worldCenter = position;
@@ -51,6 +61,8 @@ void GoalFlag::Initialize()
 void GoalFlag::Finalize()
 {
 	MV1DeleteModel(modelHandle);
+
+	DeleteGraph(goalImage);
 }
 
 /// <summary>
@@ -72,4 +84,6 @@ void GoalFlag::Update(float deltaTime)
 void GoalFlag::Draw()
 {
 	MV1DrawModel(modelHandle);
+
+	DrawBillboard3D(position, GOAL_CENTER_POSITION, GOAL_CENTER_POSITION, GOAL_SIZE, GOAL_ANGLE, goalImage, TRUE);
 }

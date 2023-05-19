@@ -70,9 +70,6 @@ void SelectionUi::Initialize()
 	{
 		selectionUiImage[i] = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, ui[i].imagePath).c_str());
 	}
-
-	stagePos.y = STAGE_POS_Y;
-
 	StagePop(stage1);
 
 	//フォントデータの作成
@@ -112,6 +109,8 @@ void SelectionUi::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 			}
 		}
 	}
+
+	stagePos.y = STAGE_POS_Y;
 }
 
 /// <summary>

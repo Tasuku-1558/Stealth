@@ -33,6 +33,7 @@ private:
 	void Finalize();					//終了処理
 	void OnShot();						//球が撃たれた時
 
+	int halfModel;						//半分のケーキのモデル
 	int cursorImage;					//照準画像格納用
 	int mouseX;							//マウスX座標
 	int mouseY;							//マウスY座標

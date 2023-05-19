@@ -16,13 +16,23 @@ public:
 	void Update(float deltaTime, VECTOR playerPosition);	//更新処理
 	void Draw();											//描画処理
 
-	void VisualAngleCake(VECTOR bulletPosition, float deltaTime);	//エネミーの視野にケーキが入った場合
+	void VisualAngleCake(float deltaTime, VECTOR bulletPosition);	//エネミーの視野にケーキが入った場合
+	void Reaction();								//エネミーのオブジェクトごとの反応
 	void HitPlayer();												//プレイヤーと衝突した
 
 	const float GetCollideRadius() { return collisionSphere.radius; }	//当たり判定球の半径を返す
 	const bool Spotted() { return playerSpotted; }						//プレイヤーを見つけたかどうかを返す
 	const bool CakeFlag() { return cakeFlag; }							//ケーキを見つけたかどうかを返す
-	const bool CakeEatFlag() { return cakeEat; }
+
+	//オブジェクトごとのエネミーの反応
+	enum class EnemyReaction
+	{
+		NORMAL,		//見つけていない
+		PLAYER,		//プレイヤー
+		CAKE,		//ケーキ
+	};
+
+	EnemyReaction enemyReaction;		//オブジェクトごとのエネミーの反応
 
 private:
 	Enemy(const Enemy&);							//コピーコンストラクタ
@@ -34,7 +44,6 @@ private:
 	void StateUpdate(float deltaTime);				//エネミーの状態の変化
 	void SetTargetPosition();						//目的地まで移動処理
 	void VisualAnglePlayer(VECTOR playerPosition);	//エネミーの視野にプレイヤーが入った場合
-	void Reaction();								//エネミーのオブジェクトごとの反応
 	void CakeEatCount(float deltaTime);				//秒数によってケーキの状態変化
 	void ReactionDraw();							//リアクション画像の描画処理
 	void EnemyRotate(float deltaTime);				//エネミーの回転処理
@@ -49,14 +58,6 @@ private:
 		ROTATION,	//方向転換
 	};
 
-	//オブジェクトごとのエネミーの反応
-	enum class EnemyReaction
-	{
-		NORMAL,		//見つけていない
-		PLAYER,		//プレイヤー
-		CAKE,		//ケーキ
-	};
-
 	struct RotateTime
 	{
 		EnemyReaction enemyReaction;	//オブジェクトごとのエネミーの反応
@@ -64,16 +65,14 @@ private:
 	};
 
 	EnemyState enemyState;				//エネミーの動き
-	EnemyReaction enemyReaction;		//オブジェクトごとのエネミーの反応
 
 	My3dLib::Sphere collisionSphere;	//当たり判定球
 
-	vector<VECTOR>::iterator itr;
+	vector<VECTOR>::iterator itr;		//座標リストのイテレータ
 	vector<VECTOR> positionList;		//エネミーの座標リスト
 
 	float cakeCount;		//エネミーのケーキの反応カウント
 	bool cakeFindFlag;		//エネミーがケーキを見つけたかどうか
 	bool rotateFlag;		//回転させるかさせないか
-	bool cakeEat;
 	VECTOR nextDirection;	//回転したい向き
 };

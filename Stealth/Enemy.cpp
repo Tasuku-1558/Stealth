@@ -14,7 +14,6 @@ Enemy::Enemy(int movePattern, float enemySpeed)
 	, cakeCount(0.0f)
 	, cakeFindFlag(false)
 	, rotateFlag(false)
-	, cakeEat(false)
 	, nextDirection()
 {
 	Position(GetList(movePattern));
@@ -242,13 +241,13 @@ void Enemy::VisualAnglePlayer(VECTOR playerPosition)
 	//内積計算
 	float dot = VDot(sub, direction);
 
-	float range = RANGE_DEGREE * (DX_PI_F / 180.0f);
+	float range = RANGE_DEGREE * (DX_PI / 180.0f);
 
 	//エネミーの視野をcosにする
 	float radian = cosf(range / 2.0f);
 
 	//ベクトルとエネミーの長さの比較
-	if (length > playerDirection)
+	if (LENGTH > playerDirection)
 	{
 		//プレイヤーがエネミーの視野範囲内にいるならば
 		if (radian <= dot)
@@ -271,9 +270,9 @@ void Enemy::VisualAnglePlayer(VECTOR playerPosition)
 /// <summary>
 /// エネミーの視野にケーキが入った場合
 /// </summary>
-/// <param name="bulletPosition">バレットの座標</param>
 /// <param name="deltaTime">前フレームと現在のフレームの差分</param>
-void Enemy::VisualAngleCake(VECTOR bulletPosition, float deltaTime)
+/// <param name="bulletPosition">バレットの座標</param>
+void Enemy::VisualAngleCake(float deltaTime, VECTOR bulletPosition)
 {
 	//バレットからエネミーの座標を引いた値を取得
 	VECTOR sub = bulletPosition - position;
@@ -287,13 +286,13 @@ void Enemy::VisualAngleCake(VECTOR bulletPosition, float deltaTime)
 	//内積計算
 	float dot = VDot(sub, direction);
 
-	float range = RANGE_DEGREE * (DX_PI_F / 180.0f);
+	float range = RANGE_DEGREE * (DX_PI / 180.0f);
 
 	//エネミーの視野をcosにする
 	float radian = cosf(range / 2.0f);
 	
 	//ベクトルとエネミーの長さの比較
-	if (length > bulletDirection)
+	if (LENGTH > bulletDirection)
 	{
 		//バレットがエネミーの視野範囲内にいるならば
 		if (radian <= dot)
@@ -315,8 +314,6 @@ void Enemy::VisualAngleCake(VECTOR bulletPosition, float deltaTime)
 		cakeFlag = false;
 
 		cakeFindFlag = false;
-
-		cakeEat = false;
 
 		//カウントの初期化
 		cakeCount = 0.0f;
@@ -346,8 +343,6 @@ void Enemy::CakeEatCount(float deltaTime)
 	if (/*230.0f > bulletDirection*/!cakeFindFlag)
 	{
 		speed = STOP_SPEED;
-
-		cakeEat = true;
 	}
 }
 

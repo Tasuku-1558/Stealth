@@ -14,7 +14,6 @@ class GoalFlag;
 class EffectManager;
 class UiManager;
 class FadeManager;
-class Set;
 
 /// <summary>
 /// ゲームシーンクラス
