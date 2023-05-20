@@ -123,9 +123,7 @@ void SoundManager::SeUpdate()
 		//“¯‚¶‰¹º‚ªŠù‚ÉÄ¶’†‚È‚ç‚Î
 		if (CheckSoundMem(seData[i]) != 0)
 		{
-			ChangeVolumeSoundMem(0, seData[i]);
 			StopSoundMem(seData[i]);
-			ChangeVolumeSoundMem(SE_VOLUME, seData[i]);
 		}
 
 		PlaySoundMem(seData[i], DX_PLAYTYPE_BACK);		//SE‚ğÄ¶

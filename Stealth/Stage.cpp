@@ -26,6 +26,15 @@ Stage::~Stage()
 }
 
 /// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
+void Stage::Update(float deltaTime)
+{
+	//処理なし
+}
+
+/// <summary>
 /// 描画処理
 /// </summary>
 void Stage::Draw()

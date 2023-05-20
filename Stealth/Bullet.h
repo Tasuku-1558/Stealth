@@ -23,6 +23,7 @@ public:
 	void MouseMove(bool alive, VECTOR playerPosition);	//マウスカーソルの移動
 	void BulletDead();									//バレットを非アクティブ化
 	void BulletAlive();									//バレットをアクティブ化
+	void CakeEatCount(float deltaTime);				//秒数によってケーキの状態変化
 
 	const bool GetAlive() { return alive; }				//バレットが生きてるか死んでるかを返す
 	

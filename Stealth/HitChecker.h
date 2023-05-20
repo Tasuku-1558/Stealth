@@ -4,11 +4,11 @@
 #include "DxLib.h"
 #include "Math3D.h"
 
-class Stage;
-class Player;
-class CakeBullet;
-class Enemy;
-class GoalFlag;
+#include "Stage.h"
+#include "Player.h"
+#include "CakeBullet.h"
+#include "Enemy.h"
+#include "GoalFlag.h"
 
 using namespace std;
 
@@ -21,7 +21,8 @@ public:
 	HitChecker();
 	virtual ~HitChecker();
 
-	void Check(vector<Stage*>* stage,
+	void Check(float deltaTime,
+			   vector<Stage*>* stage,
 			   Player* player,
 			   vector<CakeBullet*>* cakeBullet,
 			   vector<Enemy*>* enemy,
@@ -39,8 +40,8 @@ private:
 	void MapAndPlayer(vector<Stage*>* stage, Player* player);				//マップとプレイヤーの当たり判定
 	void FlagAndPlayer(GoalFlag* goalFlag, Player* player);					//ゴールオブジェクトとプレイヤーの当たり判定
 
-	void VisualAngleCake(vector<Enemy*>* enemy, vector<CakeBullet*>* cakeBullet);	//エネミーの視野にケーキが入った場合
-
+	void VisualAngleCake(float deltaTime, vector<Enemy*>* enemy, vector<CakeBullet*>* cakeBullet);	//エネミーの視野にケーキが入った場合
+	void VisualAnglePlayer(Player* player, vector<Enemy*>* enemy);									//エネミーの視野にプレイヤーが入った場合
 
 
 	float moveLengh;		//移動量
@@ -57,7 +58,6 @@ private:
 	const int	 FRAME_INDEX;	//当たり判定情報を更新するフレームの番号
 	const int	 DIV_NUMBER;	//コリジョン情報の軸方向の空間分割数
 	const float  SCALE;			//スケーリング値
-	const float  PI;
 	const VECTOR UI_POSITION;	//Ui画像の位置
 
 };

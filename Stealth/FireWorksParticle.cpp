@@ -10,6 +10,8 @@ FireWorksParticle::FireWorksParticle(const VECTOR& particlePosition, unsigned in
 	: color(0)
 	, MAX_POP_TIME(3.0f)
 	, POSITION_Y(1000.0f)
+	, RAD((float)(rand() % 200) / 100.0f)
+	, TMP_RADIUS((float)(rand() % 100) / 10.0f)
 {
 	position = particlePosition;
 
@@ -32,8 +34,8 @@ FireWorksParticle::~FireWorksParticle()
 void FireWorksParticle::Initialize()
 {
 	//パーティクルを飛ばす力をランダム値にする
-	float rad = (float)(rand() % 200) / 100.0f;
-	float tmpRadius = (float)(rand() % 100) / 10.0f;
+	float rad = RAD;
+	float tmpRadius = TMP_RADIUS;
 
 	xPower = tmpRadius * cosf(rad * DX_PI_F);
 	zPower = tmpRadius * sinf(rad * DX_PI_F);

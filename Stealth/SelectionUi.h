@@ -4,8 +4,7 @@
 #include <vector>
 #include "DxLib.h"
 #include "PreCompiledHeader.h"
-
-class Stage;
+#include "Stage.h"
 
 using namespace std;
 

@@ -1,11 +1,6 @@
 #include "HitChecker.h"
 #include "PreCompiledHeader.h"
 
-#include "Stage.h"
-#include "Player.h"
-#include "CakeBullet.h"
-#include "Enemy.h"
-#include "GoalFlag.h"
 
 using namespace Math3d;		//VECTORの計算に使用
 
@@ -24,7 +19,6 @@ HitChecker::HitChecker()
 	, DIV_NUMBER(8)
 	, FRAME_INDEX(-1)
 	, SCALE(10.0f)
-	, PI(DX_PI_F / 180.0f)
 	, UI_POSITION({ 0.0f, 30.0f, 800.0f })
 {
 	uiPosition = UI_POSITION;
@@ -41,19 +35,22 @@ HitChecker::~HitChecker()
 /// <summary>
 /// 衝突判定
 /// </summary>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 /// <param name="stage">ステージのポインタ</param>
 /// <param name="player">プレイヤーのポインタ</param>
 /// <param name="cakeBullet">ケーキバレットのポインタ</param>
 /// <param name="enemy">エネミーのポインタ</param>
 /// <param name="goalFlag">ゴールオブジェクトのポインタ</param>
-void HitChecker::Check(vector<Stage*>* stage, Player* player, vector<CakeBullet*>* cakeBullet, vector<Enemy*>* enemy, GoalFlag* goalFlag)
+void HitChecker::Check(float deltaTime, vector<Stage*>* stage, Player* player, vector<CakeBullet*>* cakeBullet, vector<Enemy*>* enemy, GoalFlag* goalFlag)
 {
 	MapAndPlayer(stage, player);
 	CakeAndPlayer(player, cakeBullet);
 	EnemyAndPlayer(player, enemy);
 	PlayerAndUi(player);
 	FlagAndPlayer(goalFlag, player);
-	VisualAngleCake(enemy, cakeBullet);
+
+	VisualAngleCake(deltaTime, enemy, cakeBullet);
+	VisualAnglePlayer(player, enemy);
 }
 
 /// <summary>
@@ -190,6 +187,7 @@ void HitChecker::MapAndPlayer(vector<Stage*>* stage, Player* player)
 
 				pushBack = newCenter - player->GetDirection() + VScale(player->GetDirection(), SCALE);
 
+				//プレイヤーの座標に押し戻し量を加える
 				player->HitMap(pushBack);
 			}
 		}
@@ -218,7 +216,13 @@ void HitChecker::FlagAndPlayer(GoalFlag* goalFlag, Player* player)
 	}
 }
 
-void HitChecker::VisualAngleCake(vector<Enemy*>* enemy, vector<CakeBullet*>* cakeBullet)
+/// <summary>
+/// エネミーの視野にケーキが入った場合
+/// </summary>
+/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
+/// <param name="enemy">エネミーのポインタ</param>
+/// <param name="cakeBullet">ケーキバレットのポインタ</param>
+void HitChecker::VisualAngleCake(float deltaTime, vector<Enemy*>* enemy, vector<CakeBullet*>* cakeBullet)
 {
 	for (auto itre = enemy->begin(); itre != enemy->end(); ++itre)
 	{
@@ -247,26 +251,60 @@ void HitChecker::VisualAngleCake(vector<Enemy*>* enemy, vector<CakeBullet*>* cak
 				//バレットがエネミーの視野範囲内にいるならば
 				if (radian <= dot)
 				{
-					enemyReaction = EnemyReaction::CAKE;
+					(*itre)->CakeFind(deltaTime, sub);
 
-					//direction = sub;
-
-					(*itre)->Reaction();
-
-					CakeEatCount(deltaTime);
+					if ((*itre)->CakeFlag())
+					{
+						break;
+					}
 				}
 			}
 			else
 			{
-				(*itre)->Reset();
-
-				cakeFlag = false;
-
-				cakeFindFlag = false;
-
-				//カウントの初期化
-				cakeCount = 0.0f;
+				(*itre)->CakeReset();
 			}
+		}
+	}
+}
+
+/// <summary>
+/// エネミーの視野にプレイヤーが入った場合
+/// </summary>
+/// <param name="player">プレイヤーのポインタ</param>
+/// <param name="enemy">エネミーのポインタ</param>
+void HitChecker::VisualAnglePlayer(Player* player, vector<Enemy*>* enemy)
+{
+	for (auto itr = enemy->begin(); itr != enemy->end(); ++itr)
+	{
+		//プレイヤーからエネミーの座標を引いた値を取得
+		VECTOR sub = player->GetPosition() - (*itr)->GetPosition();
+
+		//プレイヤーとエネミーの距離を計算
+		float playerDirection = VSize(sub);
+
+		//ベクトルの正規化
+		sub = VNorm(sub);
+
+		//内積計算
+		float dot = VDot(sub, (*itr)->GetDirection());
+
+		float range = 27.0f * PI;
+
+		//エネミーの視野をcosにする
+		float radian = cosf(range / 2.0f);
+
+		//ベクトルとエネミーの長さの比較
+		if (900.0f > playerDirection)
+		{
+			//プレイヤーがエネミーの視野範囲内にいるならば
+			if (radian <= dot)
+			{
+				(*itr)->PlayerFind(sub);
+			}
+		}
+		else
+		{
+			(*itr)->PlayerReset();
 		}
 	}
 }

@@ -26,9 +26,6 @@
     <Filter Include="ソース ファイル\Scene\StageSelection">
       <UniqueIdentifier>{60442f97-7011-45fc-9164-87af64412f18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Particle">
-      <UniqueIdentifier>{1de4d3ce-2e7b-41bb-a6ea-84c61d2e3a88}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Item">
       <UniqueIdentifier>{67df388f-c401-4ff2-8ea9-58dd3a065616}</UniqueIdentifier>
     </Filter>
@@ -40,6 +37,9 @@
     </Filter>
     <Filter Include="ソース ファイル\Goal">
       <UniqueIdentifier>{00c4cb4f-6437-4436-8716-d46b48d402ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Particle">
+      <UniqueIdentifier>{1de4d3ce-2e7b-41bb-a6ea-84c61d2e3a88}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

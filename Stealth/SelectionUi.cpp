@@ -1,5 +1,4 @@
 #include "SelectionUi.h"
-#include "Stage.h"
 #include "InputManager.h"
 
 char stage1[16][16] =

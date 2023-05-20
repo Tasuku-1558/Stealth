@@ -83,14 +83,11 @@ void Enemy::Finalize()
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime">前フレームと現在のフレームの差分</param>
-/// <param name="playerPosition">プレイヤーの座標</param>
-void Enemy::Update(float deltaTime, VECTOR playerPosition)
+void Enemy::Update(float deltaTime)
 {
 	StateUpdate(deltaTime);
 
 	Move(deltaTime);
-
-	VisualAnglePlayer(playerPosition);
 }
 
 /// <summary>
@@ -224,111 +221,15 @@ void Enemy::EnemyRotateTime(float deltaTime)
 }
 
 /// <summary>
-/// エネミーの視野にプレイヤーが入った場合
-/// </summary>
-/// <param name="playerPosition">プレイヤーの座標</param>
-void Enemy::VisualAnglePlayer(VECTOR playerPosition)
-{
-	//プレイヤーからエネミーの座標を引いた値を取得
-	VECTOR sub = playerPosition - position;
-
-	//プレイヤーとエネミーの距離を計算
-	playerDirection = VSize(sub);
-
-	//ベクトルの正規化
-	sub = VNorm(sub);
-
-	//内積計算
-	float dot = VDot(sub, direction);
-
-	float range = RANGE_DEGREE * (DX_PI / 180.0f);
-
-	//エネミーの視野をcosにする
-	float radian = cosf(range / 2.0f);
-
-	//ベクトルとエネミーの長さの比較
-	if (LENGTH > playerDirection)
-	{
-		//プレイヤーがエネミーの視野範囲内にいるならば
-		if (radian <= dot)
-		{
-			enemyReaction = EnemyReaction::PLAYER;
-
-			direction = sub;
-
-			Reaction();
-		}
-	}
-	else
-	{
-		playerSpotted = false;
-
-		enemyReaction = EnemyReaction::NORMAL;
-	}
-}
-
-/// <summary>
-/// エネミーの視野にケーキが入った場合
-/// </summary>
-/// <param name="deltaTime">前フレームと現在のフレームの差分</param>
-/// <param name="bulletPosition">バレットの座標</param>
-void Enemy::VisualAngleCake(float deltaTime, VECTOR bulletPosition)
-{
-	//バレットからエネミーの座標を引いた値を取得
-	VECTOR sub = bulletPosition - position;
-
-	//バレットとエネミーの距離を計算
-	bulletDirection = VSize(sub);
-
-	//ベクトルの正規化
-	sub = VNorm(sub);
-
-	//内積計算
-	float dot = VDot(sub, direction);
-
-	float range = RANGE_DEGREE * (DX_PI / 180.0f);
-
-	//エネミーの視野をcosにする
-	float radian = cosf(range / 2.0f);
-	
-	//ベクトルとエネミーの長さの比較
-	if (LENGTH > bulletDirection)
-	{
-		//バレットがエネミーの視野範囲内にいるならば
-		if (radian <= dot)
-		{
-			enemyReaction = EnemyReaction::CAKE;
-
-			direction = sub;
-
-			Reaction();
-
-			CakeEatCount(deltaTime);
-		}
-	}
-	else
-	{
-		//エネミーの視野範囲外ならスピードを元のスピードに戻す
-		speed = changeSpeed;
-
-		cakeFlag = false;
-
-		cakeFindFlag = false;
-
-		//カウントの初期化
-		cakeCount = 0.0f;
-
-		enemyReaction = EnemyReaction::NORMAL;
-	}
-}
-
-/// <summary>
 /// 秒数によってケーキの状態変化
 /// </summary>
 /// <param name="deltaTime">前フレームと現在のフレームの差分</param>
 void Enemy::CakeEatCount(float deltaTime)
 {
 	cakeCount += deltaTime;
+
+	//ケーキを見つけた
+	cakeFindFlag = true;
 
 	//ケーキを見つけてカウントが1.5秒経過したら
 	if (cakeCount > 1.5f)
@@ -344,6 +245,26 @@ void Enemy::CakeEatCount(float deltaTime)
 	{
 		speed = STOP_SPEED;
 	}
+}
+
+void Enemy::CakeFind(float deltaTime, VECTOR sub)
+{
+	enemyReaction = EnemyReaction::CAKE;
+
+	direction = sub;
+
+	Reaction();
+
+	CakeEatCount(deltaTime);
+}
+
+void Enemy::PlayerFind(VECTOR sub)
+{
+	enemyReaction = EnemyReaction::PLAYER;
+
+	direction = sub;
+
+	Reaction();
 }
 
 /// <summary>
@@ -367,9 +288,6 @@ void Enemy::Reaction()
 
 		cakeFlag = true;
 
-		//ケーキを見つけた
-		cakeFindFlag = true;
-
 		//エネミーの動きを止める
 		speed = STOP_SPEED;
 		
@@ -377,10 +295,24 @@ void Enemy::Reaction()
 	}
 }
 
-void Enemy::Reset()
+void Enemy::CakeReset()
 {
 	//エネミーの視野範囲外ならスピードを元のスピードに戻す
 	speed = changeSpeed;
+
+	enemyReaction = EnemyReaction::NORMAL;
+
+	cakeFindFlag = false;
+
+	cakeFlag = false;
+
+	//カウントの初期化
+	cakeCount = 0.0f;
+}
+
+void Enemy::PlayerReset()
+{
+	playerSpotted = false;
 
 	enemyReaction = EnemyReaction::NORMAL;
 }

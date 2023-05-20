@@ -25,4 +25,6 @@ private:
 	//定数
 	const float MAX_POP_TIME;		//パーティクルの最大出現時間
 	const float POSITION_Y;			//パーティクルのY座標
+	const float RAD;
+	const float TMP_RADIUS;
 };

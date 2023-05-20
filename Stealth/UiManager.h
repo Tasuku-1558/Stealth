@@ -1,9 +1,6 @@
 #pragma once
 
-#include <string>
 #include "GameScene.h"
-
-using namespace std;
 
 /// <summary>
 /// UIŠÇ—ƒNƒ‰ƒX

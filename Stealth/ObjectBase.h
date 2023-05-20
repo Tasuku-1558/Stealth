@@ -12,8 +12,8 @@ public:
 	ObjectBase();
 	virtual~ObjectBase();
 	
-	//virtual void Update(float dltaTime) = 0;		//更新処理
-	virtual void Draw() = 0;						//描画処理
+	virtual void Update(float dltaTime) = 0;	//更新処理
+	virtual void Draw() = 0;					//描画処理
 	
 	const int&	  GetModelHandle() const { return modelHandle; }	//モデルハンドルを返す
 	const VECTOR& GetPosition()	   const { return position; }		//座標ベクトルを返す

@@ -13,27 +13,18 @@ public:
 	Enemy(int movePattern, float enemySpeed);
 	virtual ~Enemy();
 
-	void Update(float deltaTime, VECTOR playerPosition);	//更新処理
-	void Draw();											//描画処理
+	void Update(float deltaTime);					//更新処理
+	void Draw();									//描画処理
 
-	void VisualAngleCake(float deltaTime, VECTOR bulletPosition);	//エネミーの視野にケーキが入った場合
-	void Reaction();								//エネミーのオブジェクトごとの反応
-	void Reset();
-	void HitPlayer();												//プレイヤーと衝突した
+	void CakeReset();
+	void PlayerReset();
+	void CakeFind(float deltaTime, VECTOR sub);
+	void PlayerFind(VECTOR sub);
+	void HitPlayer();								//プレイヤーと衝突した
 
 	const float GetCollideRadius() { return collisionSphere.radius; }	//当たり判定球の半径を返す
-	const bool Spotted() { return playerSpotted; }						//プレイヤーを見つけたかどうかを返す
-	const bool CakeFlag() { return cakeFlag; }							//ケーキを見つけたかどうかを返す
-
-	//オブジェクトごとのエネミーの反応
-	enum class EnemyReaction
-	{
-		NORMAL,		//見つけていない
-		PLAYER,		//プレイヤー
-		CAKE,		//ケーキ
-	};
-
-	EnemyReaction enemyReaction;		//オブジェクトごとのエネミーの反応
+	const bool  Spotted() { return playerSpotted; }						//プレイヤーを見つけたかどうかを返す
+	const bool  CakeFlag() { return cakeFlag; }							//ケーキを見つけたかどうかを返す
 
 private:
 	Enemy(const Enemy&);							//コピーコンストラクタ
@@ -44,8 +35,8 @@ private:
 	void Position(vector<VECTOR>& id);				//エネミー位置設定
 	void StateUpdate(float deltaTime);				//エネミーの状態の変化
 	void SetTargetPosition();						//目的地まで移動処理
-	void VisualAnglePlayer(VECTOR playerPosition);	//エネミーの視野にプレイヤーが入った場合
 	void CakeEatCount(float deltaTime);				//秒数によってケーキの状態変化
+	void Reaction();								//エネミーのオブジェクトごとの反応
 	void ReactionDraw();							//リアクション画像の描画処理
 	void EnemyRotate(float deltaTime);				//エネミーの回転処理
 	void EnemyRotateTime(float deltaTime);			//エネミーの回転の時間
@@ -59,6 +50,14 @@ private:
 		ROTATION,	//方向転換
 	};
 
+	//オブジェクトごとのエネミーの反応
+	enum class EnemyReaction
+	{
+		NORMAL,		//見つけていない
+		PLAYER,		//プレイヤー
+		CAKE,		//ケーキ
+	};
+
 	struct RotateTime
 	{
 		EnemyReaction enemyReaction;	//オブジェクトごとのエネミーの反応
@@ -66,6 +65,7 @@ private:
 	};
 
 	EnemyState enemyState;				//エネミーの動き
+	EnemyReaction enemyReaction;		//オブジェクトごとのエネミーの反応
 
 	My3dLib::Sphere collisionSphere;	//当たり判定球
 

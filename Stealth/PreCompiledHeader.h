@@ -14,6 +14,8 @@ const int BLOCK_NUM_Z = 16;							//ブロックのZサイズ
 const float WAIT_FRAME_TIME = 16667.0f;				//待機フレーム時間(60fps)
 const float NOMAL_DELETA_TIME_DIVISION = 1000000.0f;//通常時のデルタタイムを割る値
 
+const float PI = DX_PI_F / 180.0f;
+
 const bool IS_WINDOW_MODE = true;					//ウィンドウモードにするかしないか
 
 const VECTOR ZERO_VECTOR  = { 0.0f, 0.0f, 0.0f };	//ゼロベクトル

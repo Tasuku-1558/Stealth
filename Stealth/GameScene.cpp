@@ -271,7 +271,7 @@ void GameScene::UpdateStart(float deltaTime)
 
 	for (auto itr = activeEnemy.begin(); itr != activeEnemy.end(); ++itr)
 	{
-		(*itr)->Update(deltaTime, player->GetPosition());
+		(*itr)->Update(deltaTime);
 	}
 
 	effectManager->CreateEffect(player->GetPosition(), EffectManager::RESPAWN);
@@ -300,18 +300,7 @@ void GameScene::UpdateGame(float deltaTime)
 	{
 		player->FoundEnemy(deltaTime, (*itr)->Spotted());
 
-		(*itr)->Update(deltaTime, player->GetPosition());
-
-		for (auto itre = activeCakeBullet.begin(); itre != activeCakeBullet.end(); ++itre)
-		{
-			(*itr)->VisualAngleCake(deltaTime, (*itre)->bullet->GetPosition());
-
-			//エネミーがケーキを見つけたならば
-			if ((*itr)->CakeFlag())
-			{
-				break;
-			}
-		}
+		(*itr)->Update(deltaTime);
 	}
 
 	for (auto itr = activeCakeBullet.begin(); itr != activeCakeBullet.end(); ++itr)
@@ -321,7 +310,7 @@ void GameScene::UpdateGame(float deltaTime)
 
 	goalFlag->Update(deltaTime);
 
-	hitChecker->Check(&activeStage, player, &activeCakeBullet, &activeEnemy, goalFlag);
+	hitChecker->Check(deltaTime, &activeStage, player, &activeCakeBullet, &activeEnemy, goalFlag);
 
 	ChangeScreen();
 }

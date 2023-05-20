@@ -5,8 +5,8 @@
 /// </summary>
 ObjectBase::ObjectBase()
 	: modelHandle(0)
-	, direction()
 	, position()
+	, direction()
 {
 	//ˆ—‚È‚µ
 }
