@@ -1,4 +1,4 @@
-#include "Stage.h"
+#include "StageBlock.h"
 #include "ModelManager.h"
 
 
@@ -7,10 +7,10 @@
 /// </summary>
 /// <param name="position">壁モデルの位置</param>
 /// <param name="scale">壁モデルの大きさ</param>
-Stage::Stage(VECTOR position, VECTOR scale)
+StageBlock::StageBlock(VECTOR position, VECTOR scale)
 {
 	//壁モデルの読み込み
-	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE));
+	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE_BLOCK));
 
 	//大きさと位置を設定
 	MV1SetScale(modelHandle, scale);
@@ -20,7 +20,7 @@ Stage::Stage(VECTOR position, VECTOR scale)
 /// <summary>
 /// デストラクタ
 /// </summary>
-Stage::~Stage()
+StageBlock::~StageBlock()
 {
 	MV1DeleteModel(modelHandle);
 }
@@ -29,7 +29,7 @@ Stage::~Stage()
 /// 更新処理
 /// </summary>
 /// <param name="deltaTime">前フレームと現在のフレームの差分</param>
-void Stage::Update(float deltaTime)
+void StageBlock::Update(float deltaTime)
 {
 	//処理なし
 }
@@ -37,7 +37,7 @@ void Stage::Update(float deltaTime)
 /// <summary>
 /// 描画処理
 /// </summary>
-void Stage::Draw()
+void StageBlock::Draw()
 {
 	MV1DrawModel(modelHandle);
 }

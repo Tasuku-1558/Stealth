@@ -39,14 +39,14 @@ HitChecker::~HitChecker()
 /// 衝突判定
 /// </summary>
 /// <param name="deltaTime">前フレームと現在のフレームの差分</param>
-/// <param name="stage">ステージのポインタ</param>
+/// <param name="stageBlock">ステージブロックのポインタ</param>
 /// <param name="player">プレイヤーのポインタ</param>
 /// <param name="cakeBullet">ケーキバレットのポインタ</param>
 /// <param name="enemy">エネミーのポインタ</param>
 /// <param name="goalFlag">ゴールオブジェクトのポインタ</param>
-void HitChecker::Check(float deltaTime, vector<Stage*>* stage, Player* player, vector<CakeBullet*>* cakeBullet, vector<Enemy*>* enemy, GoalFlag* goalFlag)
+void HitChecker::Check(float deltaTime, vector<StageBlock*>* stageBlock, Player* player, vector<CakeBullet*>* cakeBullet, vector<Enemy*>* enemy, GoalFlag* goalFlag)
 {
-	MapAndPlayer(stage, player);
+	MapAndPlayer(stageBlock, player);
 	CakeAndPlayer(player, cakeBullet);
 	EnemyAndPlayer(player, enemy);
 	PlayerAndUi(player);
@@ -133,11 +133,11 @@ void HitChecker::PlayerAndUi(Player* player)
 /// <summary>
 /// マップとプレイヤーの当たり判定
 /// </summary>
-/// <param name="stage">ステージのポインタ</param>
+/// <param name="stageBlock">ステージブロックのポインタ</param>
 /// <param name="player">プレイヤーのポインタ</param>
-void HitChecker::MapAndPlayer(vector<Stage*>* stage, Player* player)
+void HitChecker::MapAndPlayer(vector<StageBlock*>* stageBlock, Player* player)
 {
-	for (auto itr = stage->begin(); itr != stage->end(); ++itr)
+	for (auto itr = stageBlock->begin(); itr != stageBlock->end(); ++itr)
 	{
 		//モデル全体のコリジョン情報を構築
 		MV1SetupCollInfo((*itr)->GetModelHandle(), FRAME_INDEX, DIV_NUMBER, DIV_NUMBER, DIV_NUMBER);

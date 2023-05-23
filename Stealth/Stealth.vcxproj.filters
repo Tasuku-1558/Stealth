@@ -97,7 +97,7 @@
     <ClCompile Include="ResultScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Stage.cpp">
+    <ClCompile Include="StageBlock.cpp">
       <Filter>ソース ファイル\Stage</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
@@ -216,7 +216,7 @@
     <ClInclude Include="PreCompiledHeader.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Stage.h">
+    <ClInclude Include="StageBlock.h">
       <Filter>ソース ファイル\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">

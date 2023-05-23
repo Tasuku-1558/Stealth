@@ -4,7 +4,7 @@
 #include <vector>
 #include "DxLib.h"
 #include "PreCompiledHeader.h"
-#include "Stage.h"
+#include "StageBlock.h"
 
 using namespace std;
 
@@ -28,8 +28,8 @@ public:
 private:
 	SelectionUi(const SelectionUi&);	//コピーコンストラクタ
 
-	Stage* stage;
-	vector<Stage*> activeStage;
+	StageBlock* stageBlock;
+	vector<StageBlock*> activeStage;
 
 	void Initialize();			//初期化処理
 	void Finalize();			//終了処理

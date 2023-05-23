@@ -21,7 +21,7 @@ public:
 		CAKE,			//ケーキモデル
 		CAKE_HALF,		//ケーキが半分のモデル
 		STONE,			//小石モデル
-		STAGE,			//ステージモデル
+		STAGE_BLOCK,	//ステージブロックモデル
 		GOAL,			//ゴールフラッグモデル
 		MODEL_AMOUNT,	//モデルの数
 	};
@@ -53,6 +53,6 @@ private:
 	const string CAKE_PATH;			//cakeモデルファイルのパス
 	const string CAKE_HALF_PATH;	//cake_halfモデルファイルのパス
 	const string STONE_PATH;		//stoneモデルファイルのパス
-	const string STAGE_PATH;		//stageモデルファイルのパス
+	const string STAGE_BLOCK_PATH;	//stage_blockモデルファイルのパス
 	const string GOAL_FLAG_PATH;	//goal_flagモデルファイルのパス
 };

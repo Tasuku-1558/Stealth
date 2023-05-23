@@ -104,7 +104,7 @@ void SelectionUi::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 
 			if (stageData[j][i] == 0)
 			{
-				activeStage.emplace_back(new Stage(stagePos, STAGE_SIZE));
+				activeStage.emplace_back(new StageBlock(stagePos, STAGE_SIZE));
 			}
 		}
 	}

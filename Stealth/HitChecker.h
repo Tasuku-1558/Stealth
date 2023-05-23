@@ -4,7 +4,7 @@
 #include "DxLib.h"
 #include "Math3D.h"
 
-#include "Stage.h"
+#include "StageBlock.h"
 #include "Player.h"
 #include "CakeBullet.h"
 #include "Enemy.h"
@@ -22,7 +22,7 @@ public:
 	virtual ~HitChecker();
 
 	void Check(float deltaTime,
-			   vector<Stage*>* stage,
+			   vector<StageBlock*>* stageBlock,
 			   Player* player,
 			   vector<CakeBullet*>* cakeBullet,
 			   vector<Enemy*>* enemy,
@@ -37,7 +37,7 @@ private:
 	void CakeAndPlayer(Player* player, vector<CakeBullet*>* cakeBullet);	//ケーキとプレイヤーの当たり判定
 	void EnemyAndPlayer(Player* player, vector<Enemy*>* enemy);				//エネミーとプレイヤーの当たり判定
 	void PlayerAndUi(Player* player);										//プレイヤーとUi画像の当たり判定
-	void MapAndPlayer(vector<Stage*>* stage, Player* player);				//マップとプレイヤーの当たり判定
+	void MapAndPlayer(vector<StageBlock*>* stageBlock, Player* player);		//マップとプレイヤーの当たり判定
 	void FlagAndPlayer(GoalFlag* goalFlag, Player* player);					//ゴールオブジェクトとプレイヤーの当たり判定
 
 	void VisualAngleCake(float deltaTime, vector<Enemy*>* enemy, vector<CakeBullet*>* cakeBullet);	//エネミーの視野にケーキが入った場合

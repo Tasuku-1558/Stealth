@@ -1,11 +1,10 @@
 #include "Json.h"
 #include "GameScene.h"
-#include "StageData.h"
 
 #include "Camera.h"
 #include "Light.h"
 #include "BackGround.h"
-#include "Stage.h"
+#include "StageBlock.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "CakeBullet.h"
@@ -14,6 +13,7 @@
 #include "EffectManager.h"
 #include "UiManager.h"
 #include "FadeManager.h"
+#include "StageData.h"
 #include "Set.h"
 
 
@@ -83,7 +83,9 @@ void GameScene::Initialize()
 	{
 		if (stageNo == stageList[i].number)
 		{
-			StagePop(StageData::stage1);
+			stageData = new StageData();
+
+			StagePop(stageData->s);
 
 			goalFlag = new GoalFlag({ GameData::doc["GoalPosition"][stageList[i].name]["x"].GetFloat(),
 									  GameData::doc["GoalPosition"][stageList[i].name]["y"].GetFloat(),
@@ -123,7 +125,7 @@ SceneType GameScene::Update(float deltaTime)
 /// ステージの出現
 /// </summary>
 /// <param name="stageData">ステージのデータ</param>
-void GameScene::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
+void GameScene::StagePop(int stageData[16][16])
 {
 	for (int i = 0; i < BLOCK_NUM_Z; i++)
 	{
@@ -134,7 +136,7 @@ void GameScene::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 
 			if (stageData[j][i] == 0)
 			{
-				activeStage.emplace_back(new Stage(stagePos, { 1.0f,1.0f,1.0f }));
+				activeStage.emplace_back(new StageBlock(stagePos, { 1.0f,1.0f,1.0f }));
 			}
 		}
 	}

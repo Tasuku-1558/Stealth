@@ -5,7 +5,7 @@
 class Camera;
 class Light;
 class BackGround;
-class Stage;
+class StageBlock;
 class Player;
 class Enemy;
 class CakeBullet;
@@ -14,6 +14,7 @@ class GoalFlag;
 class EffectManager;
 class UiManager;
 class FadeManager;
+class StageData;
 
 /// <summary>
 /// ゲームシーンクラス
@@ -42,7 +43,7 @@ private:
 	Camera* camera;
 	Light* light;
 	BackGround* backGround;
-	Stage* stage;
+	StageBlock* stageBlock;
 	Player* player;
 	Enemy* enemy;
 	CakeBullet* cakeBullet;
@@ -51,9 +52,10 @@ private:
 	EffectManager* effectManager;
 	UiManager* uiManager;
 	FadeManager* fadeManager;
+	StageData* stageData;
 
 	vector<CakeBullet*> activeCakeBullet;
-	vector<Stage*> activeStage;
+	vector<StageBlock*> activeStage;
 	vector<Enemy*> activeEnemy;
 
 	vector<VECTOR> cakeBulletPosition;
@@ -66,7 +68,7 @@ private:
 
 	void CakeBulletPop(int number, char stageName[7], int cakeNumber);					//ケーキバレットの出現
 	void EnemyPop(int number, char stageName[7], int enemyNumber);	//エネミーの出現
-	void StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X]);		//ステージの出現
+	void StagePop(int stageData[16][16]);		//ステージの出現
 
 	//各状態に応じた更新処理
 	void UpdateStart(float deltaTime);				//ゲーム開始前

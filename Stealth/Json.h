@@ -16,7 +16,7 @@ namespace GameData
 	rapidjson::Document doc;
 }
 
-namespace StageData
+namespace Data
 {
 	char stage1[16][16] =
 	{
