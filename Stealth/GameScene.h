@@ -68,7 +68,7 @@ private:
 
 	void CakeBulletPop(int number, char stageName[7], int cakeNumber);					//ケーキバレットの出現
 	void EnemyPop(int number, char stageName[7], int enemyNumber);	//エネミーの出現
-	void StagePop(int stageData[16][16]);		//ステージの出現
+	void StagePop(int stageData[BLOCK_NUM_Z][BLOCK_NUM_X]);		//ステージの出現
 
 	//各状態に応じた更新処理
 	void UpdateStart(float deltaTime);				//ゲーム開始前

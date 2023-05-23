@@ -1,6 +1,9 @@
 #pragma once
 #include "PreCompiledHeader.h"
 
+/// <summary>
+/// ステージCSV読み込みクラス
+/// </summary>
 class StageData final
 {
 public:
@@ -20,6 +23,6 @@ private:
 	int columnNum;				//縦方向のタイルナンバー
 	int num;						//タイルの番号
 	char buffer[10];				//文字列変数
-	bool eofFlag;			//eof（end of file）検出フラグ
+	bool endFlag;			//eof（end of file）検出フラグ
 
 };

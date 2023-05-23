@@ -18,7 +18,7 @@ namespace GameData
 
 namespace Data
 {
-	char stage1[16][16] =
+	int stage1[16][16] =
 	{
 		1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,
 		1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,

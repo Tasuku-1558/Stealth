@@ -1,5 +1,6 @@
 #include "StageData.h"
 
+
 StageData::StageData()
 	: stageHandle()
 	, s()
@@ -8,10 +9,15 @@ StageData::StageData()
 	, columnNum(0)
 	, num(0)
 	, buffer()
-	, eofFlag(false)
+	, endFlag(false)
 {
-	FILE* filePointer = nullptr;											//ファイルのポインタを宣言
+	FILE* filePointer = nullptr;								//ファイルのポインタを宣言
 	fopen_s(&filePointer, "Data/Csv/Stage1.csv", "r");			//fopen_s関数でcsvを読み取り形式で開く
+
+	if (filePointer == NULL)									//filePointerが空の場合は
+	{
+		DebugBreak();											//デバッグ中止
+	}
 
 	memset(buffer, 0, sizeof(buffer));							//memset関数でメモリにbufferをセットし、sizeof演算子で要素数を決める
 
@@ -22,7 +28,7 @@ StageData::StageData()
 			characterPack = fgetc(filePointer);										//fgetc関数でfilepointerから文字を読んでcharacterPackに格納
 			if (characterPack == EOF)
 			{
-				eofFlag = true;														//EndOfFileを検出して
+				endFlag = true;														//EndOfFileを検出して
 				break;																//ループを抜ける
 			}
 			if (characterPack != ',' && characterPack != '\n')						//区切りか改行でなければ
@@ -37,7 +43,7 @@ StageData::StageData()
 				break;																//区切りか改行なのでループを抜ける
 			}
 		}
-		if (eofFlag)																//1マップ分になったら
+		if (endFlag)																//1マップ分になったら
 		{
 			break;																	//ループを抜ける
 		}
@@ -57,4 +63,5 @@ StageData::StageData()
 
 StageData::~StageData()
 {
+	//処理なし
 }

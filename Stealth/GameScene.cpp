@@ -125,7 +125,7 @@ SceneType GameScene::Update(float deltaTime)
 /// ステージの出現
 /// </summary>
 /// <param name="stageData">ステージのデータ</param>
-void GameScene::StagePop(int stageData[16][16])
+void GameScene::StagePop(int stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 {
 	for (int i = 0; i < BLOCK_NUM_Z; i++)
 	{
