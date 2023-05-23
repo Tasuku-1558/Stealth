@@ -169,7 +169,7 @@ void Enemy::EnemyRotate(float deltaTime)
 		else
 		{
 			//‰ñ“]‚³‚¹‚é
-			VECTOR interPolateDir = RotateForAimVecYAxis(direction, nextDirection, Y_ANGLE_SPEED);
+			VECTOR interPolateDir = RotateForAimVecYAxis(direction, nextDirection, Y_ROTATE_SPEED);
 
 			//‰ñ“]‚ª–Ú•WŠp“x‚ð’´‚¦‚Ä‚¢‚È‚¢‚©
 			VECTOR cross1 = VCross(direction, nextDirection);

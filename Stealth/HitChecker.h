@@ -57,6 +57,9 @@ private:
 	//定数
 	const int	 FRAME_INDEX;	//当たり判定情報を更新するフレームの番号
 	const int	 DIV_NUMBER;	//コリジョン情報の軸方向の空間分割数
+	const float  RANGE_DEGREE;	//視野角度
+	const float  RANGE_HALF;	//半分の視野範囲
+	const float  LENGTH;		//視野角の距離
 	const float  SCALE;			//スケーリング値
 	const VECTOR UI_POSITION;	//Ui画像の位置
 

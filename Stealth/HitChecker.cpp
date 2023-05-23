@@ -18,6 +18,9 @@ HitChecker::HitChecker()
 	, hitPolyDim()
 	, DIV_NUMBER(8)
 	, FRAME_INDEX(-1)
+	, RANGE_DEGREE(27.0f)
+	, RANGE_HALF(2.0f)
+	, LENGTH(900.0f)
 	, SCALE(10.0f)
 	, UI_POSITION({ 0.0f, 30.0f, 800.0f })
 {
@@ -240,13 +243,13 @@ void HitChecker::VisualAngleCake(float deltaTime, vector<Enemy*>* enemy, vector<
 			//内積計算
 			float dot = VDot(sub, (*itre)->GetDirection());
 
-			float range = 27.0f * PI;
+			float range = RANGE_DEGREE * PI;
 
 			//エネミーの視野をcosにする
-			float radian = cosf(range / 2.0f);
+			float radian = cosf(range / RANGE_HALF);
 
 			//ベクトルとエネミーの長さの比較
-			if (900.0f > bulletDirection)
+			if (LENGTH > bulletDirection)
 			{
 				//バレットがエネミーの視野範囲内にいるならば
 				if (radian <= dot)
@@ -288,13 +291,13 @@ void HitChecker::VisualAnglePlayer(Player* player, vector<Enemy*>* enemy)
 		//内積計算
 		float dot = VDot(sub, (*itr)->GetDirection());
 
-		float range = 27.0f * PI;
+		float range = RANGE_DEGREE * PI;
 
 		//エネミーの視野をcosにする
-		float radian = cosf(range / 2.0f);
+		float radian = cosf(range / RANGE_HALF);
 
 		//ベクトルとエネミーの長さの比較
-		if (900.0f > playerDirection)
+		if (LENGTH > playerDirection)
 		{
 			//プレイヤーがエネミーの視野範囲内にいるならば
 			if (radian <= dot)
