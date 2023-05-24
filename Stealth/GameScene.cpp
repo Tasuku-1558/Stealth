@@ -40,6 +40,7 @@ GameScene::GameScene()
 	, PLAYER_HP(2)
 	, MAX_GAME_START_COUNT(1.5f)
 	, STAGE_POS_Y(-100.0f)
+	, BLOCK_SIZE({ 1.0f,1.0f,1.0f })
 {
 	GameData::doc.ParseStream(GameData::isw);
 
@@ -127,6 +128,8 @@ SceneType GameScene::Update(float deltaTime)
 /// <param name="stageData">ステージのデータ</param>
 void GameScene::StagePop(int stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 {
+	stagePos.y = STAGE_POS_Y;
+
 	for (int i = 0; i < BLOCK_NUM_Z; i++)
 	{
 		for (int j = 0; j < BLOCK_NUM_X; j++)
@@ -136,12 +139,10 @@ void GameScene::StagePop(int stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 
 			if (stageData[j][i] == 0)
 			{
-				activeStage.emplace_back(new StageBlock(stagePos, { 1.0f,1.0f,1.0f }));
+				activeStage.emplace_back(new StageBlock(stagePos, BLOCK_SIZE));
 			}
 		}
 	}
-
-	stagePos.y = STAGE_POS_Y;
 }
 
 /// <summary>

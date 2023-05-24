@@ -5,11 +5,11 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="position">壁モデルの位置</param>
-/// <param name="scale">壁モデルの大きさ</param>
+/// <param name="position">モデルの位置</param>
+/// <param name="scale">モデルの大きさ</param>
 StageBlock::StageBlock(VECTOR position, VECTOR scale)
 {
-	//壁モデルの読み込み
+	//ステージブロックモデルの読み込み
 	modelHandle = MV1DuplicateModel(ModelManager::GetInstance().GetModelHandle(ModelManager::STAGE_BLOCK));
 
 	//大きさと位置を設定

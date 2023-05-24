@@ -93,12 +93,13 @@ private:
 	VECTOR stagePos;		//ステージの座標
 
 	//定数
-	const int	MAX_STAGE_NUMBER;		//最大ステージ数
-	const int	FIRST_STAGE_NUMBER;		//ステージ1の番号
-	const int	SECOND_STAGE_NUMBER;	//ステージ2の番号
-	const int	GAME_FONT_SIZE;			//ゲームフォントのサイズ
-	const int	FONT_THICK;				//フォントの太さ
-	const int	PLAYER_HP;				//プレイヤーのHP数
-	const float MAX_GAME_START_COUNT;	//最大ゲーム開始カウント
-	const float STAGE_POS_Y;			//ステージのY座標
+	const int	 MAX_STAGE_NUMBER;		//最大ステージ数
+	const int	 FIRST_STAGE_NUMBER;	//ステージ1の番号
+	const int	 SECOND_STAGE_NUMBER;	//ステージ2の番号
+	const int	 GAME_FONT_SIZE;		//ゲームフォントのサイズ
+	const int	 FONT_THICK;			//フォントの太さ
+	const int	 PLAYER_HP;				//プレイヤーのHP数
+	const float  MAX_GAME_START_COUNT;	//最大ゲーム開始カウント
+	const float  STAGE_POS_Y;			//ステージのY座標
+	const VECTOR BLOCK_SIZE;			//ステージブロックのサイズ	
 };

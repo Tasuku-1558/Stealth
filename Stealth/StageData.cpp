@@ -2,8 +2,7 @@
 
 
 StageData::StageData()
-	: stageHandle()
-	, s()
+	: s()
 	, characterPack(0)
 	, rawNum(0)
 	, columnNum(0)
@@ -23,26 +22,24 @@ StageData::StageData()
 
 	while (1)
 	{
-		while (1)
+		characterPack = fgetc(filePointer);										//fgetc関数でfilepointerから文字を読んでcharacterPackに格納
+		if (characterPack == EOF)
 		{
-			characterPack = fgetc(filePointer);										//fgetc関数でfilepointerから文字を読んでcharacterPackに格納
-			if (characterPack == EOF)
-			{
-				endFlag = true;														//EndOfFileを検出して
-				break;																//ループを抜ける
-			}
-			if (characterPack != ',' && characterPack != '\n')						//区切りか改行でなければ
-			{
-				strcat_s(buffer, (const char*)&characterPack);						//strcat_s関数でbufferに連結し、const char関数で書き換える
-			}
-			else
-			{
-				num = atoi(buffer);													//atoi関数でbufferをint型に直して、ローカル変数numに代入
-				s[columnNum][rawNum] = stageHandle[num];			//num番目のチップ画像のハンドルを取得
-				memset(buffer, 0, sizeof(buffer));									//bufferをリセット
-				break;																//区切りか改行なのでループを抜ける
-			}
+			endFlag = true;														//EndOfFileを検出して
+			break;																//ループを抜ける
 		}
+		if (characterPack != ',' && characterPack != '\n')						//区切りか改行でなければ
+		{
+			strcat_s(buffer, (const char*)&characterPack);						//strcat_s関数でbufferに連結し、const char関数で書き換える
+		}
+		else
+		{
+			num = atoi(buffer);												//atoi関数でbufferをint型に直して、ローカル変数numに代入
+			s[columnNum][rawNum] = num;
+			memset(buffer, 0, sizeof(buffer));									//bufferをリセット
+			break;																//区切りか改行なのでループを抜ける
+		}
+
 		if (endFlag)																//1マップ分になったら
 		{
 			break;																	//ループを抜ける

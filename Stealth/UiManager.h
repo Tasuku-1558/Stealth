@@ -3,7 +3,7 @@
 #include "GameScene.h"
 
 /// <summary>
-/// UI管理クラス
+/// Ui管理クラス
 /// </summary>
 class UiManager final
 {
