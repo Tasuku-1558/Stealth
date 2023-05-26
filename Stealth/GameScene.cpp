@@ -72,21 +72,22 @@ void GameScene::Initialize()
 
 	hitChecker = new HitChecker();
 
+	//選択したステージ番号の取得
 	stageNo = Set::GetInstance().GetStage();
 
 	StageList stageList[] =
 	{
-		{FIRST_STAGE_NUMBER,  "Stage1", 2, 1},
-		{SECOND_STAGE_NUMBER, "Stage2", 1, 1},
+		{FIRST_STAGE_NUMBER,  "Data/Csv/Stage1.csv", "Stage1", 2, 1},
+		{SECOND_STAGE_NUMBER, "Data/Csv/Stage1.csv", "Stage2", 1, 1},
 	};
 
 	for (int i = 0; i < MAX_STAGE_NUMBER; i++)
 	{
 		if (stageNo == stageList[i].number)
 		{
-			stageData = new StageData();
+			stageData = new StageData(stageList[i].csvName);
 
-			StagePop(stageData->s);
+			StagePop();
 
 			goalFlag = new GoalFlag({ GameData::doc["GoalPosition"][stageList[i].name]["x"].GetFloat(),
 									  GameData::doc["GoalPosition"][stageList[i].name]["y"].GetFloat(),
@@ -125,8 +126,7 @@ SceneType GameScene::Update(float deltaTime)
 /// <summary>
 /// ステージの出現
 /// </summary>
-/// <param name="stageData">ステージのデータ</param>
-void GameScene::StagePop(int stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
+void GameScene::StagePop()
 {
 	stagePos.y = STAGE_POS_Y;
 
@@ -137,7 +137,7 @@ void GameScene::StagePop(int stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
 			stagePos.x = i * 300.0f;
 			stagePos.z = j * -300.0f;
 
-			if (stageData[j][i] == 0)
+			if (stageData->Get() == 0)
 			{
 				activeStage.emplace_back(new StageBlock(stagePos, BLOCK_SIZE));
 			}

@@ -66,9 +66,9 @@ private:
 	void InputScene(bool decision);			//シーンを入力
 	void ChangeScreen();					//画面を変える
 
-	void CakeBulletPop(int number, char stageName[7], int cakeNumber);					//ケーキバレットの出現
-	void EnemyPop(int number, char stageName[7], int enemyNumber);	//エネミーの出現
-	void StagePop(int stageData[BLOCK_NUM_Z][BLOCK_NUM_X]);		//ステージの出現
+	void StagePop();													//ステージの出現
+	void CakeBulletPop(int number, char stageName[7], int cakeNumber);	//ケーキバレットの出現
+	void EnemyPop(int number, char stageName[7], int enemyNumber);		//エネミーの出現
 
 	//各状態に応じた更新処理
 	void UpdateStart(float deltaTime);				//ゲーム開始前
@@ -80,6 +80,7 @@ private:
 	struct StageList
 	{
 		int number;			//ステージの番号
+		char csvName[20];	//Csvファイルの名前
 		char name[7];		//ステージの名前
 		int cakeNumber;		//ケーキの数
 		int enemyNumber;	//エネミーの数

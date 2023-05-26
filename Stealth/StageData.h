@@ -1,26 +1,30 @@
 #pragma once
 
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <vector>
 #include "PreCompiledHeader.h"
 
-/// <summary>
-/// ステージCSV読み込みクラス
-/// </summary>
+using namespace std;
+
+ ///<summary>
+ ///ステージCSV読み込みクラス
+ ///</summary>
 class StageData final
 {
 public:
-	StageData();
+	StageData(const char* csvName);
 	virtual ~StageData();
 
-	int s[BLOCK_NUM_X][BLOCK_NUM_Z];
+	int Get() { return num; }
 
 private:
-	StageData(const StageData&);		//コピーコンストラクタ
+	StageData(const StageData&);	//コピーコンストラクタ
 
-	int characterPack;				//文字を格納する変数
-	int rawNum;					//横方向のタイルナンバー
-	int columnNum;				//縦方向のタイルナンバー
-	int num;						//タイルの番号
-	char buffer[10];				//文字列変数
-	bool endFlag;			//eof（end of file）検出フラグ
+	vector<string> Split(string& input, char delimiter);
+
+	int num;
+	vector<string> strvec;
 
 };
