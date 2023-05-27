@@ -6,7 +6,7 @@
 /// </summary>
 /// <param name="csvName">CSVファイルの名前</param>
 StageData::StageData(const char* csvName)
-	: num(0)
+	: num()
 {
 	ifstream ifs(csvName);
 
@@ -18,7 +18,7 @@ StageData::StageData(const char* csvName)
 
 		for (int i = 0; i < strvec.size(); i++)
 		{
-			num = stoi(strvec.at(i));
+			num[i] = stoi(strvec.at(i));
 		}
 	}
 }
@@ -39,7 +39,7 @@ vector<string> StageData::Split(string& input, char delimiter)
 
 	while (getline(stream, field, delimiter))
 	{
-		result.push_back(field);
+		result.emplace_back(field);
 	}
 
 	return result;

@@ -9,8 +9,13 @@ using namespace Math3d;		//VECTORの計算に使用
 /// </summary>
 HitChecker::HitChecker()
 	: moveLengh(0.0f)
+	, direction(0.0f)
+	, dot(0.0f)
+	, range(0.0f)
+	, radian(0.0f)
 	, uiHit(false)
 	, flagHit(false)
+	, sub()
 	, uiPosition()
 	, pushBack()
 	, moveVec()
@@ -66,7 +71,7 @@ void HitChecker::CakeAndPlayer(Player* player, vector<CakeBullet*>* cakeBullet)
 	for (auto itr = cakeBullet->begin(); itr != cakeBullet->end(); ++itr)
 	{
 		//プレイヤーからケーキの座標を引いた値を取得
-		VECTOR sub = player->GetPosition() - (*itr)->cake->GetPosition();
+		sub = player->GetPosition() - (*itr)->cake->GetPosition();
 
 		//プレイヤーとケーキの距離を計算
 		float distance = VSize(sub);
@@ -91,7 +96,7 @@ void HitChecker::EnemyAndPlayer(Player* player, vector<Enemy*>* enemy)
 	for (auto itr = enemy->begin(); itr != enemy->end(); ++itr)
 	{
 		//プレイヤーからエネミーの座標を引いた値を取得
-		VECTOR sub = player->GetPosition() - (*itr)->GetPosition();
+		sub = player->GetPosition() - (*itr)->GetPosition();
 
 		//プレイヤーとエネミーの距離を計算
 		float distance = VSize(sub);
@@ -113,7 +118,7 @@ void HitChecker::EnemyAndPlayer(Player* player, vector<Enemy*>* enemy)
 void HitChecker::PlayerAndUi(Player* player)
 {
 	//プレイヤーからUi画像の座標を引いた値を取得
-	VECTOR sub = player->GetPosition() - uiPosition;
+	sub = player->GetPosition() - uiPosition;
 
 	//プレイヤーとUi画像の距離を計算
 	float distance = VSize(sub);
@@ -205,7 +210,7 @@ void HitChecker::MapAndPlayer(vector<StageBlock*>* stageBlock, Player* player)
 void HitChecker::FlagAndPlayer(GoalFlag* goalFlag, Player* player)
 {
 	//プレイヤーからゴール旗の座標を引いた値を取得
-	VECTOR sub = player->GetPosition() - goalFlag->GetPosition();
+	sub = player->GetPosition() - goalFlag->GetPosition();
 
 	//プレイヤーとゴールオブジェクトの距離を計算
 	float distance = VSize(sub);
@@ -220,6 +225,32 @@ void HitChecker::FlagAndPlayer(GoalFlag* goalFlag, Player* player)
 }
 
 /// <summary>
+/// 視野角の計算
+/// </summary>
+/// <param name="pos1"></param>
+/// <param name="pos2"></param>
+/// <param name="enemyDirection">エネミーの方向</param>
+void HitChecker::ViewCalculation(VECTOR pos1, VECTOR pos2, VECTOR enemyDirection)
+{
+	//pos1からpos2の座標を引いた値を取得
+	sub = pos1 - pos2;
+
+	//距離を計算
+	direction = VSize(sub);
+
+	//ベクトルの正規化
+	sub = VNorm(sub);
+
+	//内積計算
+	dot = VDot(sub, enemyDirection);
+
+	range = RANGE_DEGREE * PI;
+
+	//エネミーの視野をcosにする
+	radian = cosf(range / RANGE_HALF);
+}
+
+/// <summary>
 /// エネミーの視野にケーキが入った場合
 /// </summary>
 /// <param name="deltaTime">前フレームと現在のフレームの差分</param>
@@ -227,36 +258,21 @@ void HitChecker::FlagAndPlayer(GoalFlag* goalFlag, Player* player)
 /// <param name="cakeBullet">ケーキバレットのポインタ</param>
 void HitChecker::VisualAngleCake(float deltaTime, vector<Enemy*>* enemy, vector<CakeBullet*>* cakeBullet)
 {
-	for (auto itre = enemy->begin(); itre != enemy->end(); ++itre)
+	for (auto itr = enemy->begin(); itr != enemy->end(); ++itr)
 	{
-		for (auto itr = cakeBullet->begin(); itr != cakeBullet->end(); ++itr)
+		for (auto itre = cakeBullet->begin(); itre != cakeBullet->end(); ++itre)
 		{
-			//バレットからエネミーの座標を引いた値を取得
-			VECTOR sub = (*itr)->bullet->GetPosition() - (*itre)->GetPosition();
-
-			//バレットとエネミーの距離を計算
-			float bulletDirection = VSize(sub);
-
-			//ベクトルの正規化
-			sub = VNorm(sub);
-
-			//内積計算
-			float dot = VDot(sub, (*itre)->GetDirection());
-
-			float range = RANGE_DEGREE * PI;
-
-			//エネミーの視野をcosにする
-			float radian = cosf(range / RANGE_HALF);
+			ViewCalculation((*itre)->bullet->GetPosition(), (*itr)->GetPosition(), (*itr)->GetDirection());
 
 			//ベクトルとエネミーの長さの比較
-			if (LENGTH > bulletDirection)
+			if (LENGTH > direction)
 			{
 				//バレットがエネミーの視野範囲内にいるならば
 				if (radian <= dot)
 				{
-					(*itre)->CakeFind(deltaTime, sub);
+					(*itr)->CakeFind(deltaTime, sub);
 
-					if ((*itre)->CakeFlag())
+					if ((*itr)->CakeFlag())
 					{
 						break;
 					}
@@ -264,7 +280,7 @@ void HitChecker::VisualAngleCake(float deltaTime, vector<Enemy*>* enemy, vector<
 			}
 			else
 			{
-				(*itre)->CakeReset();
+				(*itr)->CakeReset();
 			}
 		}
 	}
@@ -279,25 +295,10 @@ void HitChecker::VisualAnglePlayer(Player* player, vector<Enemy*>* enemy)
 {
 	for (auto itr = enemy->begin(); itr != enemy->end(); ++itr)
 	{
-		//プレイヤーからエネミーの座標を引いた値を取得
-		VECTOR sub = player->GetPosition() - (*itr)->GetPosition();
-
-		//プレイヤーとエネミーの距離を計算
-		float playerDirection = VSize(sub);
-
-		//ベクトルの正規化
-		sub = VNorm(sub);
-
-		//内積計算
-		float dot = VDot(sub, (*itr)->GetDirection());
-
-		float range = RANGE_DEGREE * PI;
-
-		//エネミーの視野をcosにする
-		float radian = cosf(range / RANGE_HALF);
+		ViewCalculation(player->GetPosition(), (*itr)->GetPosition(), (*itr)->GetDirection());
 
 		//ベクトルとエネミーの長さの比較
-		if (LENGTH > playerDirection)
+		if (LENGTH > direction)
 		{
 			//プレイヤーがエネミーの視野範囲内にいるならば
 			if (radian <= dot)

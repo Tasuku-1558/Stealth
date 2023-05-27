@@ -1,10 +1,9 @@
 #pragma once
 
 #include <fstream>
-#include <string>
 #include <sstream>
+#include <string>
 #include <vector>
-#include "PreCompiledHeader.h"
 
 using namespace std;
 
@@ -17,14 +16,13 @@ public:
 	StageData(const char* csvName);
 	virtual ~StageData();
 
-	int Get() { return num; }
 
+	vector<string> strvec;
+	int num[128];
+	
 private:
 	StageData(const StageData&);	//コピーコンストラクタ
 
 	vector<string> Split(string& input, char delimiter);
-
-	int num;
-	vector<string> strvec;
 
 };

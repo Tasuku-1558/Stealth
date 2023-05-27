@@ -40,13 +40,19 @@ private:
 	void MapAndPlayer(vector<StageBlock*>* stageBlock, Player* player);		//マップとプレイヤーの当たり判定
 	void FlagAndPlayer(GoalFlag* goalFlag, Player* player);					//ゴールオブジェクトとプレイヤーの当たり判定
 
+	void ViewCalculation(VECTOR pos1, VECTOR pos2, VECTOR enemyDirection);							//視野角の計算
 	void VisualAngleCake(float deltaTime, vector<Enemy*>* enemy, vector<CakeBullet*>* cakeBullet);	//エネミーの視野にケーキが入った場合
 	void VisualAnglePlayer(Player* player, vector<Enemy*>* enemy);									//エネミーの視野にプレイヤーが入った場合
 
 
 	float moveLengh;		//移動量
-	bool uiHit;				//Ui画像を描画するかどうか
-	bool flagHit;			//ゴールオブジェクトに衝突したかどうか
+	float direction;
+	float dot;
+	float range;
+	float radian;
+	bool  uiHit;			//Ui画像を描画するかどうか
+	bool  flagHit;			//ゴールオブジェクトに衝突したかどうか
+	VECTOR sub;
 	VECTOR uiPosition;		//Ui画像の位置
 	VECTOR pushBack;		//マップに衝突した時の押し戻し量
 	VECTOR moveVec;			//移動ベクトル

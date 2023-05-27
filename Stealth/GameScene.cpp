@@ -70,8 +70,6 @@ void GameScene::Initialize()
 
 	player = new Player(effectManager);
 
-	hitChecker = new HitChecker();
-
 	//選択したステージ番号の取得
 	stageNo = Set::GetInstance().GetStage();
 
@@ -89,15 +87,17 @@ void GameScene::Initialize()
 
 			StagePop();
 
-			goalFlag = new GoalFlag({ GameData::doc["GoalPosition"][stageList[i].name]["x"].GetFloat(),
-									  GameData::doc["GoalPosition"][stageList[i].name]["y"].GetFloat(),
-									  GameData::doc["GoalPosition"][stageList[i].name]["z"].GetFloat() });
-
 			CakeBulletPop(stageList[i].number, stageList[i].name, stageList[i].cakeNumber);
 
 			EnemyPop(stageList[i].number, stageList[i].name, stageList[i].enemyNumber);
+
+			goalFlag = new GoalFlag({ GameData::doc["GoalPosition"][stageList[i].name]["x"].GetFloat(),
+									  GameData::doc["GoalPosition"][stageList[i].name]["y"].GetFloat(),
+									  GameData::doc["GoalPosition"][stageList[i].name]["z"].GetFloat() });
 		}
 	}
+
+	hitChecker = new HitChecker();
 	
 	uiManager = new UiManager();
 
@@ -137,7 +137,7 @@ void GameScene::StagePop()
 			stagePos.x = i * 300.0f;
 			stagePos.z = j * -300.0f;
 
-			if (stageData->Get() == 0)
+			if (stageData->num[i] == 0)
 			{
 				activeStage.emplace_back(new StageBlock(stagePos, BLOCK_SIZE));
 			}
