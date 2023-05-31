@@ -12,6 +12,7 @@ StageData::StageData(const char* csvName)
 
 	string line;
 
+	//CSVファイルの最後の行まで回す
 	while (getline(ifs, line))
 	{
 		strvec = Split(line, ',');

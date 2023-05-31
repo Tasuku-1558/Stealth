@@ -153,7 +153,7 @@ void Bullet::Draw()
 		MV1DrawModel(modelHandle);
 	}
 	
-	MV1DrawModel(halfModel);
+	//MV1DrawModel(halfModel);
 
 	DrawRotaGraph(mouseX + SCREEN_WIDTH_HALF, mouseY + SCREEN_HEIGHT_HALF, SCALE, ANGLE, cursorImage, TRUE);
 }

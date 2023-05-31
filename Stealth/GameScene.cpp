@@ -137,7 +137,7 @@ void GameScene::StagePop()
 			stagePos.x = i * 300.0f;
 			stagePos.z = j * -300.0f;
 
-			if (stageData->num[i] == 0)
+			if (stageData->num[i * BLOCK_NUM_X + j] == 0)
 			{
 				activeStage.emplace_back(new StageBlock(stagePos, BLOCK_SIZE));
 			}

@@ -93,6 +93,7 @@ private:
 	bool clear;				//ゲームをクリアしたかどうか
 	VECTOR stagePos;		//ステージの座標
 
+
 	//定数
 	const int	 MAX_STAGE_NUMBER;		//最大ステージ数
 	const int	 FIRST_STAGE_NUMBER;	//ステージ1の番号
