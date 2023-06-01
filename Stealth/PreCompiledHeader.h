@@ -8,8 +8,8 @@ const int  COLOR_BIT      = 32;                     //カラービット数
 
 const int MAX_PARTICLE_NUMBER = 2200;               //画面に表示する最大パーティクル数
 
-const int BLOCK_NUM_X = 16;							//ブロックのXサイズ
-const int BLOCK_NUM_Z = 16;							//ブロックのZサイズ
+const int MAX_STAGE_NUMBER = 6;						//最大ステージ数
+const int BLOCK_NUM = 16;							//ブロックの個数
 
 const float WAIT_FRAME_TIME = 16667.0f;				//待機フレーム時間(60fps)
 const float NOMAL_DELETA_TIME_DIVISION = 1000000.0f;//通常時のデルタタイムを割る値

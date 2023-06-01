@@ -1,10 +1,7 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#include "DxLib.h"
-#include "PreCompiledHeader.h"
 #include "StageBlock.h"
+#include "StageData.h"
 
 using namespace std;
 
@@ -29,15 +26,21 @@ private:
 	SelectionUi(const SelectionUi&);	//コピーコンストラクタ
 
 	StageBlock* stageBlock;
+	StageData* stageData;
 	vector<StageBlock*> activeStage;
 
-	void Initialize();			//初期化処理
-	void Finalize();			//終了処理
-	void StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X]);		//ステージの出現
+	void Initialize();		//初期化処理
+	void Finalize();		//終了処理
+	void StagePop();		//ステージの出現
 
 	struct Ui
 	{
 		string imagePath;		//Ui画像のパス
+	};
+
+	struct StageList
+	{
+		char csvName[20];	//Csvファイルの名前
 	};
 
 	int fontHandle;				//ゲームフォント

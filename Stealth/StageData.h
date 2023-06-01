@@ -16,12 +16,12 @@ public:
 	StageData(const char* csvName);
 	virtual ~StageData();
 
-	vector<string> strvec;
 	int num[256];			//CSVファイルの値格納用
 	
 private:
 	StageData(const StageData&);	//コピーコンストラクタ
 
-	vector<string> Split(string& input, char delimiter);
+	vector<string> Split(string& input, char delimiter);	//CSVファイルの値の読み込み
 
+	vector<string> strvec;
 };

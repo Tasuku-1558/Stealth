@@ -19,6 +19,7 @@ StageData::StageData(const char* csvName)
 
 		for (int i = 0; i < strvec.size(); i++)
 		{
+			//®”Œ^‚Ö•ÏŠ·
 			num[i] = stoi(strvec.at(i));
 		}
 	}
@@ -32,6 +33,12 @@ StageData::~StageData()
 	//ˆ—‚È‚µ
 }
 
+/// <summary>
+/// CSVƒtƒ@ƒCƒ‹‚Ì’l‚Ì“Ç‚İ‚İ
+/// </summary>
+/// <param name="input">string•Ï”Ši”[</param>
+/// <param name="delimiter">ƒJƒ“ƒ}•¶šŠi”[</param>
+/// <returns>string‚Ì’l‚ğ•Ô‚·</returns>
 vector<string> StageData::Split(string& input, char delimiter)
 {
 	istringstream stream(input);

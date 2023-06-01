@@ -32,7 +32,6 @@ GameScene::GameScene()
 	, gameStartCount(0.0f)
 	, clear(true)
 	, stagePos()
-	, MAX_STAGE_NUMBER(2)
 	, FIRST_STAGE_NUMBER(1)
 	, SECOND_STAGE_NUMBER(2)
 	, GAME_FONT_SIZE(50)
@@ -77,6 +76,10 @@ void GameScene::Initialize()
 	{
 		{FIRST_STAGE_NUMBER,  "Data/Csv/Stage1.csv", "Stage1", 2, 1},
 		{SECOND_STAGE_NUMBER, "Data/Csv/Stage1.csv", "Stage2", 1, 1},
+		{SECOND_STAGE_NUMBER, "Data/Csv/Stage1.csv", "Stage2", 1, 1},
+		{SECOND_STAGE_NUMBER, "Data/Csv/Stage1.csv", "Stage2", 1, 1},
+		{SECOND_STAGE_NUMBER, "Data/Csv/Stage1.csv", "Stage2", 1, 1},
+		{SECOND_STAGE_NUMBER, "Data/Csv/Stage1.csv", "Stage2", 1, 1},
 	};
 
 	for (int i = 0; i < MAX_STAGE_NUMBER; i++)
@@ -84,8 +87,6 @@ void GameScene::Initialize()
 		if (stageNo == stageList[i].number)
 		{
 			stageData = new StageData(stageList[i].csvName);
-
-			StagePop();
 
 			CakeBulletPop(stageList[i].number, stageList[i].name, stageList[i].cakeNumber);
 
@@ -96,6 +97,8 @@ void GameScene::Initialize()
 									  GameData::doc["GoalPosition"][stageList[i].name]["z"].GetFloat() });
 		}
 	}
+
+	StagePop();
 
 	hitChecker = new HitChecker();
 	
@@ -130,14 +133,14 @@ void GameScene::StagePop()
 {
 	stagePos.y = STAGE_POS_Y;
 
-	for (int i = 0; i < BLOCK_NUM_Z; i++)
+	for (int i = 0; i < BLOCK_NUM; i++)
 	{
-		for (int j = 0; j < BLOCK_NUM_X; j++)
+		for (int j = 0; j < BLOCK_NUM; j++)
 		{
 			stagePos.x = i * 300.0f;
 			stagePos.z = j * -300.0f;
 
-			if (stageData->num[i * BLOCK_NUM_X + j] == 0)
+			if (stageData->num[i * BLOCK_NUM + j] == 0)
 			{
 				activeStage.emplace_back(new StageBlock(stagePos, BLOCK_SIZE));
 			}

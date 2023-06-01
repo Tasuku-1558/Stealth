@@ -1,26 +1,6 @@
 #include "SelectionUi.h"
 #include "InputManager.h"
 
-char stage1[16][16] =
-{
-	1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,
-	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
-	1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,
-	1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,
-	1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,
-	1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,
-	1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,
-	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
-	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
-	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
-	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
-	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
-	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
-	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
-	1,1,1,1,1,0,1,1,1,1,0,1,1,1,1,1,
-	1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,
-};
-
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -69,7 +49,24 @@ void SelectionUi::Initialize()
 	{
 		selectionUiImage[i] = LoadGraph(Input::InputPath(IMAGE_FOLDER_PATH, ui[i].imagePath).c_str());
 	}
-	StagePop(stage1);
+
+	StageList stageList[] =
+	{
+		{"Data/Csv/Stage1.csv"},
+		{"Data/Csv/Stage1.csv"},
+		{"Data/Csv/Stage1.csv"},
+		{"Data/Csv/Stage1.csv"},
+		{"Data/Csv/Stage1.csv"},
+		{"Data/Csv/Stage1.csv"},
+	};
+
+	//CSVファイルの読み込み
+	for (int i = 0; i < MAX_STAGE_NUMBER; i++)
+	{
+		stageData = new StageData(stageList[i].csvName);
+	}
+
+	StagePop();
 
 	//フォントデータの作成
 	fontHandle = CreateFontToHandle("Oranienbaum", SELECTION_FONT_SIZE, FONT_THICK);
@@ -90,26 +87,25 @@ void SelectionUi::Finalize()
 }
 
 /// <summary>
-/// ステージ出現
+/// ステージの出現
 /// </summary>
-/// <param name="stageData">ステージのデータ</param>
-void SelectionUi::StagePop(char stageData[BLOCK_NUM_Z][BLOCK_NUM_X])
+void SelectionUi::StagePop()
 {
-	for (int i = 0; i < BLOCK_NUM_Z; i++)
+	stagePos.y = STAGE_POS_Y;
+
+	for (int i = 0; i < BLOCK_NUM; i++)
 	{
-		for (int j = 0; j < BLOCK_NUM_X; j++)
+		for (int j = 0; j < BLOCK_NUM; j++)
 		{
 			stagePos.x = i * 100.0f;
 			stagePos.z = (j * -100.0f) + 900.0f;
 
-			if (stageData[j][i] == 0)
+			if (stageData->num[i * BLOCK_NUM + j] == 0)
 			{
 				activeStage.emplace_back(new StageBlock(stagePos, STAGE_SIZE));
 			}
 		}
 	}
-
-	stagePos.y = STAGE_POS_Y;
 }
 
 /// <summary>

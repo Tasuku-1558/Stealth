@@ -49,7 +49,6 @@ private:
 	
 
 	//定数
-	const int   MAX_STAGE;					//最大ステージ数
 	const int	FIRST_STAGE_NUMBER;			//ステージ1の番号
 	const int	SECOND_STAGE_NUMBER;		//ステージ2の番号
 	const int	THIRD_STAGE_NUMBER;			//ステージ3の番号

@@ -17,7 +17,6 @@ StageSelection::StageSelection()
 	, pushCount(0.0f)
 	, fadeCount(0.0f)
 	, changeScene(false)
-	, MAX_STAGE(6)
 	, FIRST_STAGE_NUMBER(1)
 	, SECOND_STAGE_NUMBER(2)
 	, THIRD_STAGE_NUMBER(3)
@@ -64,7 +63,7 @@ void StageSelection::Initialize()
 /// <returns>ステージの番号を返す</returns>
 int StageSelection::stageIncrement(int stageNumber)
 {
-	if (stageNumber > 0 && stageNumber < MAX_STAGE)
+	if (stageNumber > 0 && stageNumber < MAX_STAGE_NUMBER)
 	{
 		return stageNumber + ADD_STAGE_NUMBER;
 	}
@@ -82,7 +81,7 @@ int StageSelection::stageDecrement(int stageNumber)
 	//最初のステージに来た時
 	if (stageNumber == FIRST_STAGE_NUMBER)
 	{
-		return MAX_STAGE;
+		return MAX_STAGE_NUMBER;
 	}
 
 	return stageNumber - ADD_STAGE_NUMBER;
