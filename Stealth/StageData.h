@@ -16,7 +16,7 @@ public:
 	StageData(const char* csvName);
 	virtual ~StageData();
 
-	int num[256];			//CSVファイルの値格納用
+	int stageNum[256];			//CSVファイルの値格納用
 	
 private:
 	StageData(const StageData&);	//コピーコンストラクタ

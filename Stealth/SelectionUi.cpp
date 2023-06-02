@@ -13,7 +13,7 @@ SelectionUi::SelectionUi()
 	, FONT_THICK(1)
 	, STAGE_NUMBER(2)
 	, STAGE_POS_Y(150.0f)
-	, STAGE_SIZE({ 0.3f, 0.3f, 0.3f })
+	, BLOCK_SIZE({ 0.3f, 0.3f, 0.3f })
 	, IMAGE_FOLDER_PATH("Data/Image/")
 	, SELECTION_KEY_PATH("selection_key.png")
 	, SELECTION_TITLE_PATH("selection_Ui.png")
@@ -38,9 +38,9 @@ void SelectionUi::Initialize()
 {
 	Ui ui[] =
 	{
-		{STAGE_DESCRIPTION_PATH},
 		{SELECTION_KEY_PATH},
 		{SELECTION_TITLE_PATH},
+		{STAGE_DESCRIPTION_PATH},
 		{OPERATION_METHOD_PATH},
 	};
 
@@ -52,12 +52,11 @@ void SelectionUi::Initialize()
 
 	StageList stageList[] =
 	{
-		{"Data/Csv/Stage1.csv"},
-		{"Data/Csv/Stage1.csv"},
-		{"Data/Csv/Stage1.csv"},
-		{"Data/Csv/Stage1.csv"},
-		{"Data/Csv/Stage1.csv"},
-		{"Data/Csv/Stage1.csv"},
+		{1, "Data/Csv/Stage1.csv"},
+		{2, "Data/Csv/Stage2.csv"},
+		{3, "Data/Csv/Stage1.csv"},
+		{4, "Data/Csv/Stage1.csv"},
+		{5, "Data/Csv/Stage1.csv"},
 	};
 
 	//CSVファイルの読み込み
@@ -100,9 +99,9 @@ void SelectionUi::StagePop()
 			stagePos.x = i * 100.0f;
 			stagePos.z = (j * -100.0f) + 900.0f;
 
-			if (stageData->num[i * BLOCK_NUM + j] == 0)
+			if (stageData->stageNum[j * BLOCK_NUM + i] == 0)
 			{
-				activeStage.emplace_back(new StageBlock(stagePos, STAGE_SIZE));
+				activeStage.emplace_back(new StageBlock(stagePos, BLOCK_SIZE));
 			}
 		}
 	}
@@ -116,7 +115,7 @@ void SelectionUi::StagePop()
 /// <param name="cakeNumber">ケーキの数</param>
 void SelectionUi::StageUiDraw(int stageNumber, int enemyNumber, int cakeNumber)
 {
-	DrawGraph(100, 150, selectionUiImage[0], TRUE);
+	DrawGraph(100, 150, selectionUiImage[Image::DESCRIPTION], TRUE);
 
 	//敵とケーキの数を表示
 	DrawFormatStringToHandle(370, 470, GetColor(255, 255, 255), fontHandle, "%d", enemyNumber);
@@ -133,7 +132,7 @@ void SelectionUi::StageUiDraw(int stageNumber, int enemyNumber, int cakeNumber)
 /// </summary>
 void SelectionUi::TitleUiDraw()
 {
-	DrawRotaGraph(950, 550, 0.7, 0.0, selectionUiImage[2], TRUE);
+	DrawRotaGraph(950, 550, 0.7, 0.0, selectionUiImage[Image::TITLE], TRUE);
 }
 
 /// <summary>
@@ -141,7 +140,7 @@ void SelectionUi::TitleUiDraw()
 /// </summary>
 void SelectionUi::Draw()
 {
-	DrawRotaGraph(500, 950, 0.85, 0.0, selectionUiImage[3], TRUE);
+	DrawRotaGraph(500, 950, 0.85, 0.0, selectionUiImage[Image::OPERATION_METHOD], TRUE);
 
-	DrawRotaGraph(1450, 950, 0.6, 0.0, selectionUiImage[1], TRUE);
+	DrawRotaGraph(1450, 950, 0.6, 0.0, selectionUiImage[Image::KEY], TRUE);
 }

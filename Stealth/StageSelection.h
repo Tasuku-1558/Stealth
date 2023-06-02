@@ -35,7 +35,6 @@ private:
 	struct StageUi
 	{
 		int number;			//ステージ番号
-		int mapNumber;		//マップの番号
 		int enemyNumber;	//敵の数
 		int cakeNumber;		//ケーキの数
 	};
@@ -49,6 +48,7 @@ private:
 	
 
 	//定数
+	const int   MAX_STAGE;					//ステージの数
 	const int	FIRST_STAGE_NUMBER;			//ステージ1の番号
 	const int	SECOND_STAGE_NUMBER;		//ステージ2の番号
 	const int	THIRD_STAGE_NUMBER;			//ステージ3の番号

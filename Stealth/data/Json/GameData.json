@@ -22,6 +22,14 @@
     }
   },
 
+  "Csv": {
+    "Stage1": "Data/Csv/Stage1.csv",
+    "Stage2": "Data/Csv/Stage2.csv",
+    "Stage3": "Data/Csv/Stage3.csv",
+    "Stage4": "Data/Csv/Stage4.csv",
+    "Stage5": "Data/Csv/Stage5.csv"
+  },
+
   "EnemyMovePattern": {
     "Stage1": 0,
     "Stage2": 1,
@@ -46,6 +54,24 @@
     },
 
     "Stage2": {
+      "x": -50.0,
+      "y": 0.0,
+      "z": 3700.0
+    },
+
+    "Stage3": {
+      "x": -50.0,
+      "y": 0.0,
+      "z": 3700.0
+    },
+
+    "Stage4": {
+      "x": -50.0,
+      "y": 0.0,
+      "z": 3700.0
+    },
+
+    "Stage5": {
       "x": -50.0,
       "y": 0.0,
       "z": 3700.0

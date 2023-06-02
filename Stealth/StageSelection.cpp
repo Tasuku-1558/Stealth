@@ -17,6 +17,7 @@ StageSelection::StageSelection()
 	, pushCount(0.0f)
 	, fadeCount(0.0f)
 	, changeScene(false)
+	, MAX_STAGE(6)
 	, FIRST_STAGE_NUMBER(1)
 	, SECOND_STAGE_NUMBER(2)
 	, THIRD_STAGE_NUMBER(3)
@@ -63,7 +64,7 @@ void StageSelection::Initialize()
 /// <returns>ステージの番号を返す</returns>
 int StageSelection::stageIncrement(int stageNumber)
 {
-	if (stageNumber > 0 && stageNumber < MAX_STAGE_NUMBER)
+	if (stageNumber > 0 && stageNumber < MAX_STAGE)
 	{
 		return stageNumber + ADD_STAGE_NUMBER;
 	}
@@ -81,7 +82,7 @@ int StageSelection::stageDecrement(int stageNumber)
 	//最初のステージに来た時
 	if (stageNumber == FIRST_STAGE_NUMBER)
 	{
-		return MAX_STAGE_NUMBER;
+		return MAX_STAGE;
 	}
 
 	return stageNumber - ADD_STAGE_NUMBER;
@@ -182,18 +183,18 @@ void StageSelection::Draw()
 	//ステージの番号、敵の数、ケーキの数を入力
 	StageUi stageUi[] =
 	{
-		{FIRST_STAGE_NUMBER, 0, 1, 1},
-		{SECOND_STAGE_NUMBER, 1, 2, 2},
-		{THIRD_STAGE_NUMBER, 2, 4, 2},
-		{FOURTH_STAGE_NUMBER, 3, 3, 1},
-		{FIFTH_STAGE_NUMBER, 4, 4, 1},
+		{FIRST_STAGE_NUMBER, 1, 1},
+		{SECOND_STAGE_NUMBER, 2, 2},
+		{THIRD_STAGE_NUMBER, 4, 2},
+		{FOURTH_STAGE_NUMBER, 3, 1},
+		{FIFTH_STAGE_NUMBER, 4, 1},
 	};
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < MAX_STAGE_NUMBER; i++)
 	{
 		if (stageNo == stageUi[i].number)
 		{
-			selectionUi->StageUiDraw(stageUi[i].mapNumber, stageUi[i].enemyNumber, stageUi[i].cakeNumber);
+			selectionUi->StageUiDraw(stageUi[i].number, stageUi[i].enemyNumber, stageUi[i].cakeNumber);
 		}
 	}
 

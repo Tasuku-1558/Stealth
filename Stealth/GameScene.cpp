@@ -34,6 +34,9 @@ GameScene::GameScene()
 	, stagePos()
 	, FIRST_STAGE_NUMBER(1)
 	, SECOND_STAGE_NUMBER(2)
+	, THIRD_STAGE_NUMBER(3)
+	, FOURTH_STAGE_NUMBER(4)
+	, FIFTH_STAGE_NUMBER(5)
 	, GAME_FONT_SIZE(50)
 	, FONT_THICK(1)
 	, PLAYER_HP(2)
@@ -74,19 +77,18 @@ void GameScene::Initialize()
 
 	StageList stageList[] =
 	{
-		{FIRST_STAGE_NUMBER,  "Data/Csv/Stage1.csv", "Stage1", 2, 1},
-		{SECOND_STAGE_NUMBER, "Data/Csv/Stage1.csv", "Stage2", 1, 1},
-		{SECOND_STAGE_NUMBER, "Data/Csv/Stage1.csv", "Stage2", 1, 1},
-		{SECOND_STAGE_NUMBER, "Data/Csv/Stage1.csv", "Stage2", 1, 1},
-		{SECOND_STAGE_NUMBER, "Data/Csv/Stage1.csv", "Stage2", 1, 1},
-		{SECOND_STAGE_NUMBER, "Data/Csv/Stage1.csv", "Stage2", 1, 1},
+		{FIRST_STAGE_NUMBER,  "Stage1", 2, 1},
+		{SECOND_STAGE_NUMBER, "Stage2", 1, 1},
+		{THIRD_STAGE_NUMBER,  "Stage3", 1, 1},
+		{FOURTH_STAGE_NUMBER, "Stage4", 1, 1},
+		{FIFTH_STAGE_NUMBER,  "Stage5", 1, 1},
 	};
 
 	for (int i = 0; i < MAX_STAGE_NUMBER; i++)
 	{
 		if (stageNo == stageList[i].number)
 		{
-			stageData = new StageData(stageList[i].csvName);
+			stageData = new StageData("Data/Csv/Stage1.csv");
 
 			CakeBulletPop(stageList[i].number, stageList[i].name, stageList[i].cakeNumber);
 
@@ -140,7 +142,7 @@ void GameScene::StagePop()
 			stagePos.x = i * 300.0f;
 			stagePos.z = j * -300.0f;
 
-			if (stageData->num[i * BLOCK_NUM + j] == 0)
+			if (stageData->stageNum[j * BLOCK_NUM + i] == 0)
 			{
 				activeStage.emplace_back(new StageBlock(stagePos, BLOCK_SIZE));
 			}

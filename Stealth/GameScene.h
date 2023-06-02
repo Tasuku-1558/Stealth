@@ -80,7 +80,6 @@ private:
 	struct StageList
 	{
 		int number;			//ステージの番号
-		char csvName[20];	//Csvファイルの名前
 		char name[7];		//ステージの名前
 		int cakeNumber;		//ケーキの数
 		int enemyNumber;	//エネミーの数
@@ -97,6 +96,9 @@ private:
 	//定数
 	const int	 FIRST_STAGE_NUMBER;	//ステージ1の番号
 	const int	 SECOND_STAGE_NUMBER;	//ステージ2の番号
+	const int	 THIRD_STAGE_NUMBER;	//ステージ3の番号
+	const int	 FOURTH_STAGE_NUMBER;	//ステージ4の番号
+	const int	 FIFTH_STAGE_NUMBER;	//ステージ5の番号
 	const int	 GAME_FONT_SIZE;		//ゲームフォントのサイズ
 	const int	 FONT_THICK;			//フォントの太さ
 	const int	 PLAYER_HP;				//プレイヤーのHP数

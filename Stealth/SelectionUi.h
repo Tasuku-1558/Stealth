@@ -33,19 +33,30 @@ private:
 	void Finalize();		//終了処理
 	void StagePop();		//ステージの出現
 
+	//セレクションUi画像の種類
+	enum Image
+	{
+		KEY,				//キー操作の画像
+		TITLE,				//タイトルへ遷移する説明画像
+		DESCRIPTION,		//ステージの説明画像
+		OPERATION_METHOD,	//ゲーム操作説明画像
+		IMAGE_AMOUNT,		//セレクションUi画像の数
+	};
+
 	struct Ui
 	{
-		string imagePath;		//Ui画像のパス
+		string imagePath;	//Ui画像のパス
 	};
 
 	struct StageList
 	{
+		int number;
 		char csvName[20];	//Csvファイルの名前
 	};
 
-	int fontHandle;				//ゲームフォント
-	int selectionUiImage[4];	//セレクションUi画像の格納用
-	VECTOR stagePos;			//ステージの座標
+	int fontHandle;						//ゲームフォント
+	int selectionUiImage[IMAGE_AMOUNT];	//セレクションUi画像の格納用
+	VECTOR stagePos;					//ステージの座標
 
 	//定数
 	const int	 SELECTION_UI_NUMBER;		//セレクションUi画像の数
@@ -55,11 +66,11 @@ private:
 
 	const float  STAGE_POS_Y;				//ステージのY座標
 
-	const VECTOR STAGE_SIZE;				//ステージのサイズ
+	const VECTOR BLOCK_SIZE;				//ブロックのサイズ
 
 	const string IMAGE_FOLDER_PATH;			//Imageフォルダまでのパス
-	const string SELECTION_KEY_PATH;		//ステージセレクションUi画像のパス
-	const string SELECTION_TITLE_PATH;		//ステージセレクションからタイトルへ遷移のUi画像
+	const string SELECTION_KEY_PATH;		//キー操作の画像のパス
+	const string SELECTION_TITLE_PATH;		//ステージセレクションからタイトルへ遷移の画像のパス
 	const string STAGE_DESCRIPTION_PATH;	//ステージの説明画像のパス
 	const string OPERATION_METHOD_PATH;		//操作方法説明画像のパス
 };
