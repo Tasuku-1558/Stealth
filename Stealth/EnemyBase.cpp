@@ -33,6 +33,8 @@ EnemyBase::EnemyBase()
 	MapList();
 	MapList2();
 	MapList3();
+	MapList4();
+	MapList5();
 }
 
 /// <summary>
@@ -79,4 +81,20 @@ void EnemyBase::MapList3()
 	positionList[2].push_back({ -4400.0f, 0.0f, 0.0f });
 
 	itr[2] = positionList[2].begin();   //イテレータを先頭に設定
+}
+
+void EnemyBase::MapList4()
+{
+	positionList[3].push_back({ -5000.0f, 0.0f, 0.0f });
+	positionList[3].push_back({ -4400.0f, 0.0f, 0.0f });
+
+	itr[3] = positionList[2].begin();   //イテレータを先頭に設定
+}
+
+void EnemyBase::MapList5()
+{
+	positionList[4].push_back({ -5000.0f, 0.0f, 0.0f });
+	positionList[4].push_back({ -4400.0f, 0.0f, 0.0f });
+
+	itr[4] = positionList[2].begin();   //イテレータを先頭に設定
 }

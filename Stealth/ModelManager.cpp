@@ -62,7 +62,7 @@ void ModelManager::LoadAllModel()
         //読み込み失敗ならエラー
         if (modelHandle[i] < 0)
         {
-            printfDx("モデルデータ読み込み失敗[%d]\n", i);
+            printfDx("モデルデータ読み込みに失敗[%d]\n", i);
         }
     }
 }

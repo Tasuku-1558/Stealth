@@ -15,7 +15,7 @@ StageData::StageData(const char* csvName)
 	//読み込み失敗ならエラー
 	if (!ifs)
 	{
-		printfDx("CSVファイルの読み込み失敗[%s]\n", csvName);
+		printfDx("CSVファイルの読み込みに失敗[%s]\n", csvName);
 	}
 
 	//CSVファイルの最後の行まで回す
@@ -44,7 +44,7 @@ StageData::~StageData()
 /// </summary>
 /// <param name="input">string変数格納</param>
 /// <param name="delimiter">カンマ文字格納</param>
-/// <returns>stringの値を返す</returns>
+/// <returns>読み込んだ値を返す</returns>
 vector<string> StageData::Split(string& input, char delimiter)
 {
 	istringstream stream(input);

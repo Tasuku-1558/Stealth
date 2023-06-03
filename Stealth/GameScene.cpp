@@ -88,7 +88,7 @@ void GameScene::Initialize()
 	{
 		if (stageNo == stageList[i].number)
 		{
-			stageData = new StageData("Data/Csv/Stage1.csv");
+			stageData = new StageData(GameData::doc["Csv"][stageList[i].name].GetString());
 
 			CakeBulletPop(stageList[i].number, stageList[i].name, stageList[i].cakeNumber);
 

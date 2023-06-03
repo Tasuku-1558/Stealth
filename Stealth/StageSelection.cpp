@@ -194,7 +194,7 @@ void StageSelection::Draw()
 	{
 		if (stageNo == stageUi[i].number)
 		{
-			selectionUi->StageUiDraw(stageUi[i].number, stageUi[i].enemyNumber, stageUi[i].cakeNumber);
+			selectionUi->StageUiDraw(stageUi[i].enemyNumber, stageUi[i].cakeNumber);
 		}
 	}
 

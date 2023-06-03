@@ -16,8 +16,7 @@ public:
 
 	void Draw();						//描画処理
 
-	void StageUiDraw(int stageNumber,
-					 int enemyNumber,
+	void StageUiDraw(int enemyNumber,
 					 int cakeNumber);	//ステージのUi描画処理
 
 	void TitleUiDraw();					//タイトルへ遷移するUi描画処理

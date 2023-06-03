@@ -54,15 +54,18 @@ void SelectionUi::Initialize()
 	{
 		{1, "Data/Csv/Stage1.csv"},
 		{2, "Data/Csv/Stage2.csv"},
-		{3, "Data/Csv/Stage1.csv"},
-		{4, "Data/Csv/Stage1.csv"},
-		{5, "Data/Csv/Stage1.csv"},
+		{3, "Data/Csv/Stage3.csv"},
+		{4, "Data/Csv/Stage4.csv"},
+		{5, "Data/Csv/Stage5.csv"},
 	};
 
 	//CSVファイルの読み込み
 	for (int i = 0; i < MAX_STAGE_NUMBER; i++)
 	{
-		stageData = new StageData(stageList[i].csvName);
+		if (stageList[i].number)
+		{
+			stageData = new StageData(stageList[i].csvName);
+		}
 	}
 
 	StagePop();
@@ -110,10 +113,9 @@ void SelectionUi::StagePop()
 /// <summary>
 /// ステージのUi描画処理
 /// </summary>
-/// <param name="stageNumber">ステージの番号</param>
 /// <param name="enemyNumber">敵の数</param>
 /// <param name="cakeNumber">ケーキの数</param>
-void SelectionUi::StageUiDraw(int stageNumber, int enemyNumber, int cakeNumber)
+void SelectionUi::StageUiDraw(int enemyNumber, int cakeNumber)
 {
 	DrawGraph(100, 150, selectionUiImage[Image::DESCRIPTION], TRUE);
 

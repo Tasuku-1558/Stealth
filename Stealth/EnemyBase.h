@@ -56,8 +56,11 @@ private:
 	//SecondStageでの敵の行動
 	void MapList2();                    //敵の行動パターンリスト2(壁の周りを回る敵)
 	void MapList3();                    //敵の行動パターンリスト3(上下移動の敵)
+	void MapList4();                    //敵の行動パターンリスト4(上下移動の敵)
+	void MapList5();                    //敵の行動パターンリスト5(上下移動の敵)
 
-	vector<VECTOR> positionList[9];
-	vector<VECTOR>::iterator itr[9];
+
+	vector<VECTOR> positionList[5];
+	vector<VECTOR>::iterator itr[5];
 
 };
